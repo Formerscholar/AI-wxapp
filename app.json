@@ -5,15 +5,15 @@
     "pages/good_list/index",
     "pages/goods_detail/index",
     "pages/search/index",
-    "pages/pay/index"
+    "pages/pay/index",
+    "pages/bindInfo/bindInfo"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#E50304",
+    "navigationBarBackgroundColor": "#e50304",
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "white"
   },
-
   "sitemapLocation": "sitemap.json",
   "usingComponents": {}
 }

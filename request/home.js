@@ -1,8 +1,9 @@
 import request from './index'
 
-export function getlogin(data) {
+export function get_settings(data) {
   return request({
-    url: '/login/login',
+    url: '/v1/main/get_settings',
+    method: 'POST',
     data: {
       ...data,
     },
