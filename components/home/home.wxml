@@ -1,0 +1,7 @@
+<view class="container">
+  <!-- 获取全局状态中的数据 -->
+  <!-- <view>{{$state.user.name}}:{{$state.msg}}</view>
+	<button bindtap="mycarClick">商品详情对象</button>
+  <button bindtap="myClick">商品列表ID</button>-->
+  <button class="bg-gradual-blue padding radius text-center shadow-blur">test</button>
+</view>

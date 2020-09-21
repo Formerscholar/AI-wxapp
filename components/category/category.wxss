@@ -1,0 +1,4 @@
+/* components/category/category.wxss */
+@import '../../assets/style/main.wxss';
+@import '../../assets/style/icon.wxss';
+@import '../../assets/style/animation.wxss';

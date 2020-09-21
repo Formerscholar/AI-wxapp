@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/login/index",
+    "pages/index/index",
+    "pages/good_list/index",
+    "pages/goods_detail/index",
+    "pages/search/index",
+    "pages/pay/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#E50304",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "white"
+  },
+
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {}
+}

@@ -1,0 +1,4 @@
+<!-- components/user/user.wxml -->
+<view>
+  <van-button type="primary" bind:click="handClick">登录</van-button>
+</view>
