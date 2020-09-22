@@ -1,11 +1,12 @@
 import request from './index'
 
-export function get_settings(data) {
+export function getbanner(data) {
   return request({
-    url: '/v1/main/get_settings',
-    method: 'POST',
-    data: {
-      ...data,
+    url: '/v1/main/banner/',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
     },
+    method: 'POST',
+    data,
   })
 }

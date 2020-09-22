@@ -6,7 +6,8 @@
     "pages/goods_detail/index",
     "pages/search/index",
     "pages/pay/index",
-    "pages/bindInfo/bindInfo"
+    "pages/bindInfo/bindInfo",
+    "pages/student_bind_info/student_bind_info"
   ],
   "window": {
     "backgroundTextStyle": "light",

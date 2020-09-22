@@ -1,4 +1,3 @@
-@import './assets/icon/iconfont.wxss';
 @import './assets/style/main.wxss';
 @import './assets/style/animation.wxss';
 @import './assets/style/animation';

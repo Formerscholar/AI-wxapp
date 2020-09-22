@@ -3,7 +3,7 @@ import bus from 'iny-bus'
 // 全局状态+方法
 let store = new Store({
   state: {
-    msg: '这是一个全局状态',
+    token: '',
     user: {
       name: '李四',
     },
