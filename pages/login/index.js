@@ -36,6 +36,9 @@ Page({
               this.getstudent_login()
             }
           },
+          fail: () => {
+            console.log('fail');
+          }
         })
       },
     })
@@ -51,6 +54,7 @@ Page({
       tpmid,
     })
     console.log('get_settings', this.data.tpmid)
+    
   },
   async getstudent_login() {
     const { code, data } = await student_login({
@@ -65,8 +69,9 @@ Page({
       data,
     })
     const { token } = data
-    app.store.setState({
-      token,
+    wx.setStorage({
+      key: 'token',
+      data: token,
     })
     if (code == 200) {
       console.log('跳转学生选择信息绑定')

@@ -1,9 +1,7 @@
 import Store from 'wxministore'
 import bus from 'iny-bus'
-// 全局状态+方法
 let store = new Store({
   state: {
-    token: '',
     user: {
       name: '李四',
     },

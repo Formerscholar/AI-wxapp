@@ -1,8 +1,8 @@
 import request from './index'
 
-export function getbanner(data) {
+export function getuserinfo(data) {
   return request({
-    url: '/v1/main/banner/',
+    url: '/v1/user/get_user_info/',
     header: {
       'content-type': 'application/x-www-form-urlencoded',
     },
@@ -11,9 +11,10 @@ export function getbanner(data) {
   })
 }
 
-export function getUserIndex(data) {
+
+export function getVip(data) {
   return request({
-    url: '/v1/user/index/',
+    url: '/v1/user/vip/',
     header: {
       'content-type': 'application/x-www-form-urlencoded',
     },

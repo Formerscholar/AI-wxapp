@@ -1,4 +1,0 @@
-/* components/cart/cart.wxss */
-@import '../../assets/style/main.wxss';
-@import '../../assets/style/icon.wxss';
-@import '../../assets/style/animation.wxss';

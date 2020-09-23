@@ -35,6 +35,7 @@ Page({
     area_id: '',
     grade_id: '',
     Scholl_id: '',
+    token: '',
   },
   onSchollClick() {
     this.setData({
@@ -71,7 +72,7 @@ Page({
           true_name: this.data.name,
           parent_mobile: null,
           email: null,
-          token: app.store.getState().token,
+          token: this.data.token,
           user_id: data.data.user_id,
         })
         console.log('bind_info', res)
@@ -82,7 +83,7 @@ Page({
             success: () => {
               console.log('跳转学生首页')
               wx.reLaunch({
-                url: '../index/index',
+                url: '/pages/home/index',
               })
             },
           })
@@ -124,7 +125,7 @@ Page({
   },
   async getlocation_list() {
     const { data } = await location_list({
-      token: app.store.getState().token,
+      token: this.data.token,
     })
     let arr = []
     data[0].map((item) => {
@@ -149,7 +150,7 @@ Page({
   },
   async getGradeList() {
     const { data } = await getGrade({
-      token: app.store.getState().token,
+      token: this.data.token,
     })
     let arr = data.grade_list.map((item) => item.name)
     this.setData({
@@ -164,8 +165,17 @@ Page({
     })
   },
   onLoad: function (options) {
-    this.getlocation_list()
-    this.getGradeList()
+    wx.getStorage({
+      key: 'token',
+      success: ({ data }) => {
+        console.log('token', data)
+        this.setData({
+          token: data,
+        })
+        this.getlocation_list()
+        this.getGradeList()
+      },
+    })
   },
   onAreaCancel() {
     this.setData({
@@ -269,7 +279,7 @@ Page({
       province_id: this.data.province_id,
       city_id: this.data.city_id,
       area_id: this.data.area_id,
-      token: app.store.getState().token,
+      token: this.data.token,
     })
     console.log('school_list', data)
     let arr = data.map((item) => item.name)

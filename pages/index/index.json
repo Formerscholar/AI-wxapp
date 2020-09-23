@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "tabbar": "/components/tabbar/tabbar",
-    "home": "/components/home/home",
-    "category": "/components/category/category",
-    "cart": "/components/cart/cart",
-    "user": "/components/user/user"
-  }
-}

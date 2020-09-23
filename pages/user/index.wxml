@@ -1,0 +1,16 @@
+<view class="user">
+  <!-- <van-button type="primary" bind:click="handClick">登录</van-button> -->
+  <view class="top_box">
+    <view class="top_info">
+      <view class="left_portrait">
+        <image class="title_logo" src="{{userInfo.avatar}}" mode="widthFix" />
+      </view>
+      <view class="conter_info">
+        <text class="topname">{{userInfo.true_name}}</text>
+        <text class="botscholl">{{userInfo.school_list.school_name}}</text>
+      </view>
+      <div class="right_icon"></div>
+    </view>
+    <view class="botmember"></view>
+  </view>
+</view>
