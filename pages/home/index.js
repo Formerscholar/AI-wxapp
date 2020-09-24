@@ -11,7 +11,7 @@ Page({
     recent_paper: '',
     error_exercises_total: '',
   },
-  onLoad: function () {
+  onShow: function () {
     wx.getStorage({
       key: 'token',
       success: ({ data }) => {
@@ -40,6 +40,12 @@ Page({
         choose_index: e.detail.index,
       })
     }
+  },
+  shotSearchClick(e) {
+    console.log(e)
+    wx.navigateTo({
+      url:'/pages/shotSearch/index'
+    })
   },
   async getUserIndexList() {
     const { data } = await getUserIndex({
@@ -92,4 +98,8 @@ Page({
       },
     })
   },
+  Myteachingassistant(e) {
+    console.log(e);
+    // 
+  }
 })

@@ -6,13 +6,19 @@
   width: 100%;
   height: 518rpx;
 }
-.logo_box .title_flex_logo {
-  width: 100%;
+.logo_box .title_flex_logo_warp {
+  margin-top: 72rpx;
+  margin-bottom: 39rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo_box .title_flex_logo_warp .title_flex_logo {
+  margin: 0 auto;
+  width: 367rpx;
   height: 80rpx;
-  margin-top: 73rpx;
 }
 .logo_box .content {
-  margin-top: 39rpx;
   padding-left: 76rpx;
 }
 .logo_box .content .text_box {

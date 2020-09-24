@@ -6,8 +6,11 @@
 </view>-->
 <!-- <van-button type="info" size="large" bind:click="handleClick">登录</van-button> -->
 <view class="logo_box">
-  <image class="title_logo" src="/assets/image/loginBg.png" mode="scaleToFill" />
-  <image class="title_flex_logo" mode="aspectFit" src="/assets/image/aiFalse.png" />
+  <image class="title_logo" src="/assets/image/loginBg.png" mode="widthFix" />
+  <view class="title_flex_logo_warp" >
+    <image class="title_flex_logo" mode="widthFix" src="/assets/image/aiFalse.png" />
+  </view>
+  
   <div class="content">
     <text class="text_box">请选择您的身份</text>
     <button class="all_btn" data-type="0" bindtap="handleClick" open-type="getUserInfo">我是学生</button>

@@ -7,10 +7,10 @@
     "pages/user/index",
     "pages/good_list/index",
     "pages/goods_detail/index",
-    "pages/search/index",
-    "pages/pay/index",
-    "pages/bindInfo/bindInfo",
-    "pages/student_bind_info/student_bind_info"
+    "pages/bindInfo/index",
+    "pages/student_bind_info/index",
+    "pages/shotSearch/index",
+    "pages/teachassistant/index" 
   ],
   "window": {
     "backgroundTextStyle": "light",

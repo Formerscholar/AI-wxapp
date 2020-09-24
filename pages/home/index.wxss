@@ -1,18 +1,30 @@
 .home .bg {
   width: 100%;
-  height: 278rpx;
+  height: 150rpx;
   background-color: #e50304;
-  margin-bottom: 140rpx;
+  margin-bottom: 150rpx;
 }
-.home .card-swiper {
+.home .screen-swiper {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
+  min-height: 300rpx !important;
+}
+.home .screen-swiper .item_swiper .item_img_warp {
+  border-radius: 15rpx;
+  padding: 0 24rpx;
+  overflow: hidden;
+  height: 300rpx !important;
+}
+.home .screen-swiper .item_swiper .item_img {
+  border-radius: 15rpx;
+  overflow: hidden;
+  height: 300rpx !important;
 }
 .home .title_info_text {
   display: flex;
-  padding: 0 24rpx 24rpx;
+  padding: 24rpx;
 }
 .home .title_info_text .title_info_img {
   width: 37rpx;

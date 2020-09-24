@@ -22,7 +22,7 @@
     "uploadWithSourceMap": true,
     "compileHotReLoad": true,
     "useMultiFrameRuntime": false,
-    "useApiHook": true,
+    "useApiHook": false,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -36,8 +36,8 @@
     "packNpmRelationList": []
   },
   "compileType": "miniprogram",
-  "libVersion": "2.12.2",
-  "appid": "wxd93ca3c030d8475b",
+  "libVersion": "2.13.0",
+  "appid": "wx64468960ba0a610e",
   "projectname": "错题宝",
   "debugOptions": {
     "hidedInDevtools": []
@@ -82,6 +82,12 @@
           "name": "pages/user/index",
           "pathName": "pages/user/index",
           "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/shotSearch/index",
+          "pathName": "pages/shotSearch/index",
           "scene": null
         }
       ]

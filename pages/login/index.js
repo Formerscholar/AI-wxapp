@@ -11,7 +11,8 @@ Page({
   handleClick(e) {
     console.log(e)
     wx.login({
-      success: async ({ code }) => {
+      success: ({ code }) => {
+        console.log('wx.login', code)
         this.setData({
           wxCode: code,
         })
@@ -37,8 +38,8 @@ Page({
             }
           },
           fail: () => {
-            console.log('fail');
-          }
+            console.log('fail')
+          },
         })
       },
     })
@@ -54,7 +55,6 @@ Page({
       tpmid,
     })
     console.log('get_settings', this.data.tpmid)
-    
   },
   async getstudent_login() {
     const { code, data } = await student_login({
@@ -68,16 +68,25 @@ Page({
       key: 'userInfo',
       data,
     })
-    const { token } = data
+    const { token, is_bind ,is_vip} = data
     wx.setStorage({
       key: 'token',
       data: token,
     })
+    wx.setStorage({
+      key: 'is_vip',
+      data: is_vip,
+    })
     if (code == 200) {
-      console.log('跳转学生选择信息绑定')
-      wx.navigateTo({
-        url: '../student_bind_info/student_bind_info',
-      })
+      if (is_bind) {
+        wx.reLaunch({
+          url:'../home/index'
+        })
+      } else {
+        wx.navigateTo({
+          url: '../student_bind_info/index',
+        })
+      }
     }
   },
   async getteacher_login() {
@@ -95,7 +104,7 @@ Page({
     if (code == 200) {
       console.log('跳转选择信息绑定')
       wx.navigateTo({
-        url: '../bindInfo/bindInfo',
+        url: '../bindInfo/index',
       })
     }
   },

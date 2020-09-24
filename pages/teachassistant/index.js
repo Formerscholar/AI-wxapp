@@ -1,4 +1,4 @@
-// pages/search/index.js
+// pages/teachassistant/index.js
 Page({
 
   /**

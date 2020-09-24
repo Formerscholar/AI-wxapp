@@ -2,7 +2,7 @@ import request from './index'
 
 export function getuserinfo(data) {
   return request({
-    url: '/v1/user/get_user_info/',
+    url: '/user/get_user_info/',
     header: {
       'content-type': 'application/x-www-form-urlencoded',
     },
@@ -14,7 +14,7 @@ export function getuserinfo(data) {
 
 export function getVip(data) {
   return request({
-    url: '/v1/user/vip/',
+    url: '/user/vip/',
     header: {
       'content-type': 'application/x-www-form-urlencoded',
     },

@@ -88,7 +88,7 @@
         border="{{ false }}"
       />
     </view>
-    <view class="item_box name_box">
+    <!-- <view class="item_box name_box">
       <view class="left_icon">
         <image class="left_icon_img" src="/assets/image/id.png" mode="widthFix" />
       </view>
@@ -99,7 +99,7 @@
         placeholder="请输入班级ID(选填)"
         border="{{ false }}"
       />
-    </view>
+    </view> -->
     <button class="bindInfo" bindtap="onbindInfo">绑定信息</button>
   </view>
 </view>

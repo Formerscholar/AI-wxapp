@@ -2,7 +2,7 @@ import request from './index'
 
 export function getbanner(data) {
   return request({
-    url: '/v1/main/banner/',
+    url: '/main/banner/',
     header: {
       'content-type': 'application/x-www-form-urlencoded',
     },
@@ -13,7 +13,7 @@ export function getbanner(data) {
 
 export function getUserIndex(data) {
   return request({
-    url: '/v1/user/index/',
+    url: '/user/index/',
     header: {
       'content-type': 'application/x-www-form-urlencoded',
     },

@@ -68,7 +68,6 @@ Page({
           area_id: this.data.area_id,
           grade_ids: this.data.grade_id,
           school_id: this.data.Scholl_id,
-          team_ids: this.data.gradeId,
           true_name: this.data.name,
           parent_mobile: null,
           email: null,

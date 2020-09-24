@@ -1,0 +1,97 @@
+.shotSearch .tabnav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #666;
+  background: #fff;
+  padding: 24rpx 5rpx 12rpx 5rpx;
+  border-bottom: 2rpx solid #e7e7e7;
+}
+.shotSearch .tabnav .item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-right: 2rpx solid #e7e7e7;
+}
+.shotSearch .tabnav .item .title_img {
+  width: 50rpx;
+  margin-bottom: 19rpx;
+}
+.shotSearch .tabnav .item .title_text {
+  font-size: 26rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+}
+.shotSearch .tabnav .item:last-child {
+  border: 2rpx solid #fff;
+}
+.shotSearch .TeachAaids {
+  padding: 24rpx;
+}
+.shotSearch .TeachAaids .title {
+  font-size: 30rpx;
+  font-family: 'PingFang SC';
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 24rpx;
+}
+.shotSearch .TeachAaids .content_box {
+  background-color: #fff;
+  padding: 30rpx;
+  border-radius: 20rpx;
+}
+.shotSearch .TeachAaids .content_box .box_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 30rpx;
+  border-bottom: 1px solid #E5E5E5;
+  margin-bottom: 30rpx;
+}
+.shotSearch .TeachAaids .content_box .box_item:last-child {
+  border: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.shotSearch .TeachAaids .content_box .box_item .left_box {
+  margin-right: 30rpx;
+}
+.shotSearch .TeachAaids .content_box .box_item .left_box .left_box_img {
+  width: 99rpx;
+  height: 120rpx;
+}
+.shotSearch .TeachAaids .content_box .box_item .conter_box {
+  flex: 1;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+}
+.shotSearch .TeachAaids .content_box .box_item .conter_box .conter_box_name {
+  font-size: 30rpx;
+  color: #333333;
+}
+.shotSearch .TeachAaids .content_box .box_item .conter_box .conter_box_semester {
+  font-size: 20rpx;
+  padding: 13rpx 0;
+  color: #999999;
+}
+.shotSearch .TeachAaids .content_box .box_item .conter_box .conter_box_version {
+  width: 81rpx;
+  height: 32rpx;
+  font-size: 20rpx;
+  color: #E50304;
+  border: 1px solid #E50304;
+  text-align: center;
+  border-radius: 20rpx;
+}
+.shotSearch .Pagenum {
+  padding: 24rpx;
+}
+.shotSearch .Pagenum .title {
+  font-size: 30rpx;
+  font-family: 'PingFang SC';
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 24rpx;
+}
