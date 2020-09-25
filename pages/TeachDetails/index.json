@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "教辅内容",
+  "usingComponents": {
+    "van-popup": "@vant/weapp/popup/index"
+  }
+}

@@ -1,0 +1,71 @@
+<view class="title_warp">
+  <view class="left_category">【{{title_category}}】</view>
+  <view class="right_name">{{title_name}}</view>
+</view>
+
+<view class="TeachDetails">
+  <view class="content_box">
+    <block wx:for="{{contentList}}">
+      <view class="box_items">
+        <rich-text class="top_html" nodes="{{item.content}}"></rich-text>
+        <view class="bot_btns">
+          <view class="left_box" bind:tap="showPopup" data-item="{{item}}">
+            <image class="search_img" src="../../assets/image/search_icon.png" mode="widthFix" />
+            <view class="search_text">同类型题目</view>
+          </view>
+          <view
+            class="right-box"
+            bind:tap="joinExercises"
+            data-iid="{{item.id}}"
+            data-index="{{index}}"
+          >
+            <image
+              class="search_img"
+              src="{{!item.is_error? '../../assets/image/Collection_icon.png' : '../../assets/image/jiaRu.png'}}"
+              mode="widthFix"
+            />
+            <view class="search_text">{{!item.is_error? '加入错题' : '取消加入'}}</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
+
+<van-popup show="{{ popupshow }}" bind:close="onClose">
+  <view class="content_title">
+    <div class="left-title">
+      <image class="left_img" src="../../assets/image/title_logo.png" mode="widthFix" />
+      <view class="left_text">同类型题目</view>
+    </div>
+    <div class="right_box" bind:tap="refshList">
+      <image class="left_img" src="../../assets/image/Refresh.png" mode="widthFix" />
+      <view class="left_text">换一批</view>
+    </div>
+  </view>
+  <scroll-view scroll-y="true" class="conter_box">
+    <block wx:for="{{exercises_list}}">
+      <view class="cinter_warp">
+        <rich-text class="top_html" nodes="{{item.content}}"></rich-text>
+        <view class="bot_boxs">
+          <view class="left_btn">
+            <image class="left_btn_img" src="../../assets/image/see_icon.png" mode="widthFix" />
+            <view class="left_btn_text">查看解析</view>
+          </view>
+          <view class="right_btn">
+            <image
+              class="right_btn_img"
+              src="../../assets/image/Collection_icon.png"
+              mode="widthFix"
+            />
+            <view class="right_btn_text">加入错题</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+  <view class="bot_btn_boxs">
+    <view class="cancelbtn" bind:tap="onClose">取消</view>
+    <view class="confirmbtn" bind:tap="onClose">确认</view>
+  </view>
+</van-popup>

@@ -1,0 +1,193 @@
+.title_warp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70rpx;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  z-index: 10;
+}
+.title_warp .left_category {
+  color: #E50304;
+}
+.title_warp .right_name {
+  color: #303030;
+}
+.TeachDetails {
+  margin-top: 70rpx;
+}
+.TeachDetails .content_box {
+  padding: 24rpx;
+}
+.TeachDetails .content_box .box_items {
+  background-color: #fff;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+.TeachDetails .content_box .box_items:last-child {
+  margin-bottom: 0;
+}
+.TeachDetails .content_box .box_items .bot_btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24rpx;
+  border-top: 1px solid #E5E5E5;
+  margin-top: 20rpx;
+}
+.TeachDetails .content_box .box_items .bot_btns .left_box,
+.TeachDetails .content_box .box_items .bot_btns .right-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.TeachDetails .content_box .box_items .bot_btns .left_box .search_img,
+.TeachDetails .content_box .box_items .bot_btns .right-box .search_img {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 16rpx;
+}
+.TeachDetails .content_box .box_items .bot_btns .left_box .search_text,
+.TeachDetails .content_box .box_items .bot_btns .right-box .search_text {
+  font-size: 26rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  color: #333333;
+}
+.van-popup {
+  width: 688rpx;
+  height: 724rpx;
+  background: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-radius: 16rpx;
+}
+.van-popup .content_title {
+  display: flex;
+  background-color: #fff;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 50rpx;
+  height: 96rpx;
+  border-bottom: 1px solid #E5E5E5;
+}
+.van-popup .content_title .left-title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.van-popup .content_title .left-title .left_img {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 14rpx;
+}
+.van-popup .content_title .left-title .left_text {
+  font-size: 30rpx;
+  font-family: 'PingFang SC';
+  font-weight: bold;
+  color: #333333;
+}
+.van-popup .content_title .right_box {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.van-popup .content_title .right_box .left_img {
+  width: 31rpx;
+  height: 31rpx;
+  margin-right: 14rpx;
+}
+.van-popup .content_title .right_box .left_text {
+  font-size: 26rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  color: #E50304;
+}
+.van-popup .conter_box {
+  height: 516rpx;
+}
+.van-popup .conter_box .cinter_warp {
+  padding: 30rpx;
+  border-bottom: 1px solid #E5E5E5;
+}
+.van-popup .conter_box .cinter_warp:last-child {
+  border: none;
+}
+.van-popup .conter_box .cinter_warp .bot_boxs {
+  margin: 24rpx 0;
+  padding-bottom: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.van-popup .conter_box .cinter_warp .bot_boxs:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.van-popup .conter_box .cinter_warp .bot_boxs .left_btn {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.van-popup .conter_box .cinter_warp .bot_boxs .left_btn .left_btn_img {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 16rpx;
+}
+.van-popup .conter_box .cinter_warp .bot_boxs .left_btn .left_btn_text {
+  font-size: 26rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  color: #333333;
+}
+.van-popup .conter_box .cinter_warp .bot_boxs .right_btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.van-popup .conter_box .cinter_warp .bot_boxs .right_btn .right_btn_img {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 16rpx;
+}
+.van-popup .conter_box .cinter_warp .bot_boxs .right_btn .right_btn_text {
+  font-size: 26rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  color: #333333;
+}
+.van-popup .bot_btn_boxs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 110rpx;
+  border-top: 1px solid #E5E5E5;
+  background-color: #fff;
+}
+.van-popup .bot_btn_boxs .cancelbtn,
+.van-popup .bot_btn_boxs .confirmbtn {
+  width: 200rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  border-radius: 16rpx;
+  text-align: center;
+  font-size: 24rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+}
+.van-popup .bot_btn_boxs .cancelbtn {
+  margin-right: 30rpx;
+  border: 1px solid #B3B3B3;
+  color: #666666;
+}
+.van-popup .bot_btn_boxs .confirmbtn {
+  background: linear-gradient(86deg, #E50304, #F74300);
+  color: #FFFFFF;
+}

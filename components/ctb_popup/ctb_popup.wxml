@@ -1,0 +1,19 @@
+<van-popup show="{{ popupshow }}" bind:close="onClose">
+  <view class="content_title">
+    <div class="left-title">
+      <image class="left_img" src="{{left_img}}" mode="widthFix" />
+      <view class="left_text">{{left_text}}</view>
+    </div>
+    <div class="right_box" bind:tap="onRefsh">
+      <image class="left_img" src="{{right_img}}" mode="widthFix" />
+      <view class="left_text">{{right_text}}</view>
+    </div>
+  </view>
+  <scroll-view scroll-y="true" class="conter_box">
+    <slot></slot>
+  </scroll-view>
+  <view class="bot_btn_boxs">
+    <view class="cancelbtn" bind:tap="onCancel">取消</view>
+    <view class="confirmbtn" bind:tap="onConfirme">确认</view>
+  </view>
+</van-popup>

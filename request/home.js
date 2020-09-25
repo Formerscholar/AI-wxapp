@@ -21,3 +21,37 @@ export function getUserIndex(data) {
     data,
   })
 }
+
+export function getSearchExercises(data) {
+  return request({
+    url: '/user/search_exercises/',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    method: 'POST',
+    data,
+  })
+}
+
+
+export function joinErrorExercises(data) {
+  return request({
+    url: '/user/join_error_exercises/',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    method: 'POST',
+    data,
+  })
+}
+
+export function sameTypeExercises(data) {
+  return request({
+    url: '/user/same_type_exercises/',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    method: 'POST',
+    data,
+  })
+}

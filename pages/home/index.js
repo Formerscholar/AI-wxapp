@@ -90,13 +90,7 @@ Page({
     })
   },
   mycarClick() {
-    wx.navigateTo({
-      url: '/pages/goods_detail/index',
-      success: (res) => {
-        let data = { productId: 'sadf2323', productName: '金龙鱼花生油' }
-        res.eventChannel.emit('info', data)
-      },
-    })
+    
   },
   Myteachingassistant(e) {
     console.log(e);

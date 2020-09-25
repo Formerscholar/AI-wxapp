@@ -88,6 +88,14 @@
           "id": -1,
           "name": "pages/shotSearch/index",
           "pathName": "pages/shotSearch/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 3,
+          "name": "pages/search_pic/index",
+          "pathName": "pages/search_pic/index",
+          "query": "pic= //aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/search/198b86c94adbf33ad84c67f0d116ddfb410.png&textbook_id=220&choosePage=1&title=学霸&subject_name=数学",
           "scene": null
         }
       ]
