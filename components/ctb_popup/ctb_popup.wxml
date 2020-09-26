@@ -1,13 +1,13 @@
 <van-popup show="{{ popupshow }}" bind:close="onClose">
   <view class="content_title">
-    <div class="left-title">
-      <image class="left_img" src="{{left_img}}" mode="widthFix" />
-      <view class="left_text">{{left_text}}</view>
-    </div>
-    <div class="right_box" bind:tap="onRefsh">
-      <image class="left_img" src="{{right_img}}" mode="widthFix" />
-      <view class="left_text">{{right_text}}</view>
-    </div>
+    <view class="left-title">
+      <image class="left_img" src="{{leftImg}}" mode="widthFix" />
+      <view class="left_text">{{leftText}}</view>
+    </view>
+    <view class="right_box" bind:tap="onRefsh">
+      <image class="left_img" src="{{rightImg}}" mode="widthFix" />
+      <view class="left_text">{{rightText}}</view>
+    </view>
   </view>
   <scroll-view scroll-y="true" class="conter_box">
     <slot></slot>

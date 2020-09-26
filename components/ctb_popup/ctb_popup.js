@@ -4,19 +4,19 @@ Component({
       type: Boolean,
       value: false,
     },
-    left_img: {
+    leftImg: {
       type: String,
       value: '',
     },
-    left_text: {
+    leftText: {
       type: String,
       value: '',
     },
-    right_img: {
+    rightImg: {
       type: String,
       value: '',
     },
-    right_text: {
+    rightText: {
       type: String,
       value: '',
     },

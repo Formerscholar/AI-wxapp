@@ -8,9 +8,36 @@ export default function (options) {
       data: options.data || {},
       header: options.header || { 'content-type': 'application/json' },
       success: (res) => {
-        resolve(res.data)
+        const { statusCode, data } = res
+        if (statusCode != 200) {
+          wx.showToast({
+            title: '服务器错误!',
+            icon: 'none',
+          })
+        }
+        if (data.code != 200) {
+          wx.showToast({
+            title: data.msg,
+            icon: 'loading',
+          })
+        }
+        // else {
+        //   wx.showToast({
+        //     title: '加载中',
+        //     icon: 'loading',
+        //   })
+        // }
+        resolve(data)
       },
-      fail: reject,
+      fail: (errer) => {
+        wx.showToast({
+          title: errer.errMsg,
+          icon: 'none',
+          success: () => {
+            reject(errer)
+          },
+        })
+      },
     })
   })
 }

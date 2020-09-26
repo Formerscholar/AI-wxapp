@@ -32,40 +32,30 @@
   </view>
 </view>
 
-<van-popup show="{{ popupshow }}" bind:close="onClose">
-  <view class="content_title">
-    <div class="left-title">
-      <image class="left_img" src="../../assets/image/title_logo.png" mode="widthFix" />
-      <view class="left_text">同类型题目</view>
-    </div>
-    <div class="right_box" bind:tap="refshList">
-      <image class="left_img" src="../../assets/image/Refresh.png" mode="widthFix" />
-      <view class="left_text">换一批</view>
-    </div>
-  </view>
-  <scroll-view scroll-y="true" class="conter_box">
-    <block wx:for="{{exercises_list}}">
-      <view class="cinter_warp">
-        <rich-text class="top_html" nodes="{{item.content}}"></rich-text>
-        <view class="bot_boxs">
-          <view class="left_btn">
-            <image class="left_btn_img" src="../../assets/image/see_icon.png" mode="widthFix" />
-            <view class="left_btn_text">查看解析</view>
-          </view>
-          <view class="right_btn">
-            <image
-              class="right_btn_img"
-              src="../../assets/image/Collection_icon.png"
-              mode="widthFix"
-            />
-            <view class="right_btn_text">加入错题</view>
-          </view>
+<ctb-popup
+  popupshow="{{ popupshow }}"
+  leftImg="../../assets/image/title_logo.png"
+  leftText="同类型题目"
+  rightImg="../../assets/image/Refresh.png"
+  rightText="换一批"
+  bind:onClose="onClose"
+  bind:onRefsh="refshList"
+  bind:onCancel="onClose"
+  bind:onConfirme="onClose"
+>
+  <block wx:for="{{exercises_list}}">
+    <view class="cinter_warp">
+      <rich-text class="top_html" nodes="{{item.content}}"></rich-text>
+      <view class="bot_boxs">
+        <view class="left_btn">
+          <image class="left_btn_img" src="../../assets/image/see_icon.png" mode="widthFix" />
+          <view class="left_btn_text">查看解析</view>
+        </view>
+        <view class="right_btn">
+          <image class="right_btn_img" src="../../assets/image/Collection_icon.png" mode="widthFix" />
+          <view class="right_btn_text">加入错题</view>
         </view>
       </view>
-    </block>
-  </scroll-view>
-  <view class="bot_btn_boxs">
-    <view class="cancelbtn" bind:tap="onClose">取消</view>
-    <view class="confirmbtn" bind:tap="onClose">确认</view>
-  </view>
-</van-popup>
+    </view>
+  </block>
+</ctb-popup>

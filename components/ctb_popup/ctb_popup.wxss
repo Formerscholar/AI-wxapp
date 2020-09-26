@@ -1,11 +1,12 @@
-.van-popup {
+ctb-popup > van-popup > view {
   width: 688rpx;
   height: 724rpx;
   background: #FFFFFF;
   border: 1px solid #E5E5E5;
   border-radius: 16rpx;
+  overflow: hidden;
 }
-.van-popup .content_title {
+ctb-popup > van-popup > view .content_title {
   display: flex;
   background-color: #fff;
   justify-content: space-between;
@@ -14,42 +15,42 @@
   height: 96rpx;
   border-bottom: 1px solid #E5E5E5;
 }
-.van-popup .content_title .left-title {
+ctb-popup > van-popup > view .content_title .left-title {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
-.van-popup .content_title .left-title .left_img {
+ctb-popup > van-popup > view .content_title .left-title .left_img {
   width: 36rpx;
   height: 36rpx;
   margin-right: 14rpx;
 }
-.van-popup .content_title .left-title .left_text {
+ctb-popup > van-popup > view .content_title .left-title .left_text {
   font-size: 30rpx;
   font-family: 'PingFang SC';
   font-weight: bold;
   color: #333333;
 }
-.van-popup .content_title .right_box {
+ctb-popup > van-popup > view .content_title .right_box {
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
-.van-popup .content_title .right_box .left_img {
+ctb-popup > van-popup > view .content_title .right_box .left_img {
   width: 31rpx;
   height: 31rpx;
   margin-right: 14rpx;
 }
-.van-popup .content_title .right_box .left_text {
+ctb-popup > van-popup > view .content_title .right_box .left_text {
   font-size: 26rpx;
   font-family: 'PingFang SC';
   font-weight: 500;
   color: #E50304;
 }
-.van-popup .conter_box {
+ctb-popup > van-popup > view .conter_box {
   height: 516rpx;
 }
-.van-popup .bot_btn_boxs {
+ctb-popup > van-popup > view .bot_btn_boxs {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,8 +58,8 @@
   border-top: 1px solid #E5E5E5;
   background-color: #fff;
 }
-.van-popup .bot_btn_boxs .cancelbtn,
-.van-popup .bot_btn_boxs .confirmbtn {
+ctb-popup > van-popup > view .bot_btn_boxs .cancelbtn,
+ctb-popup > van-popup > view .bot_btn_boxs .confirmbtn {
   width: 200rpx;
   height: 50rpx;
   line-height: 50rpx;
@@ -68,12 +69,12 @@
   font-family: 'PingFang SC';
   font-weight: 500;
 }
-.van-popup .bot_btn_boxs .cancelbtn {
+ctb-popup > van-popup > view .bot_btn_boxs .cancelbtn {
   margin-right: 30rpx;
   border: 1px solid #B3B3B3;
   color: #666666;
 }
-.van-popup .bot_btn_boxs .confirmbtn {
+ctb-popup > van-popup > view .bot_btn_boxs .confirmbtn {
   background: linear-gradient(86deg, #E50304, #F74300);
   color: #FFFFFF;
 }
