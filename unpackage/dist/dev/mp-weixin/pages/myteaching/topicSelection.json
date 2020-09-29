@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "题目选择",
+  "usingComponents": {
+    "uni-popup": "/components/uni-popup/uni-popup"
+  }
+}

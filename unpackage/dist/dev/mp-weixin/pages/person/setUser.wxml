@@ -1,0 +1,1 @@
+<view class="container"><input type="text" placeholder="{{'请输入'+title}}" data-event-opts="{{[['input',[['__set_model',['','value','$event',[]]]]]]}}" value="{{value}}" bindinput="__e"/><button data-event-opts="{{[['tap',[['baocun',['$event']]]]]}}" class="btn" bindtap="__e">保存</button></view>
