@@ -11,7 +11,11 @@ const store = new Vuex.Store({
 	},
 	mutations: {
 		set_type(state, provider){
-			state.type=provider
+			state.type = provider
+			uni.setStorage({
+				key: 'type',   
+				data: provider
+			}) 
 		},
 		login(state, provider) {
 			state.hasLogin = true;
@@ -46,21 +50,17 @@ const store = new Vuex.Store({
 			    key: 'userInfo',  
 			    data: ''  
 			})
-			 uni.setStorage({
+			uni.setStorage({
 				 key: 'is_vip',  
 				 data: ''  
-			 })
+			})
 			uni.setStorage({//缓存用户登陆状态
 			    key: 'token',  
 			    data: ''  
 			}) 
 			uni.setStorage({//缓存用户登陆状态
-			  key: 'hasLogin',   
+				key: 'hasLogin',   
 				data: false  
-			}) 
-			uni.setStorage({//
-			  key: 'type',   
-				data: '' 
 			}) 
 			uni.redirectTo({
 				url:'/pages/login/login'
