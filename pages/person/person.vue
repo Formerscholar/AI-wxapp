@@ -95,7 +95,7 @@
 			</view>
 		</view>
 		
-		<button class="logout" @click="logout()" v-show="token">退出登录</button>
+		<button class="logout" @click="logout()" v-show="token">切换身份</button>
 	</view>
 </template>
 
@@ -259,9 +259,9 @@
 	.top{
 		width: 100%;
 		background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/personInfo_bg.png) no-repeat center center;
-		// background: #e50304;
-		background-size:cover;
+		background-size: cover;
 		position: relative;
+		margin-top: -2rpx;
 		.vip{
 			width: 700rpx;
 			height: 125rpx;

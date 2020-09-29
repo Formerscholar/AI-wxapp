@@ -85,13 +85,12 @@ export default {
 				.then(res => {
 					console.log(res);
 					this.mobile = res.data.mobile;
-					this.subject_id = res.data.subject_id;
 					if (res.code == 200) {
 						console.log(res.data);
-						this.login(res.data)
+						this.login(res.data);
 						this.joinTeam();
-					}else{
-						this.get_teacher_bind_info()
+					} else {
+						this.get_teacher_bind_info();
 					}
 				});
 		},
@@ -113,7 +112,7 @@ export default {
 				.then(res => {
 					console.log(res);
 					if (res.code == 200) {
-						this.login(res.data)
+						this.login(res.data);
 						this.joinTeam();
 					} else {
 						uni.showToast({
@@ -183,14 +182,9 @@ export default {
 								this.mobile = res.data.mobile;
 								this.true_name = res.data.true_name;
 								this.subject_id = res.data.subject_id;
-								this.subject_list.map(item => {
-									if (item.id == this.subject_id) {
-										this.num = item.sort - 1;
-									}
-								});
 								this.subject_title = res.data.subject_title;
 								this.disable = true;
-							} else{
+							} else {
 								this.disable = false;
 							}
 						});
@@ -242,10 +236,11 @@ export default {
 			});
 		},
 		bindChange(e) {
-			console.log(e);
+			console.log('bindChange', e);
 			this.num = e.detail.value;
 			this.subject_id = this.subject_list[this.num].id;
-			console.log(this.subject_id);
+			this.subject_title = this.subject_list[this.num].title;
+			console.log('bindChange', this.subject_id);
 		}
 	}
 };

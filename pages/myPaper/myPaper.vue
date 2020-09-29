@@ -80,11 +80,7 @@
 				this.get_my_test_paper()
 			}
 		},
-		onShow(){
-			
-		},
 		onLoad() {
-			this.subject_fenlei()
 			if (uni.getStorageSync('token')) {
 				this.token = uni.getStorageSync('token');
 			}
@@ -95,7 +91,8 @@
 				})
 				this.school_test_paper()
 			}else{
-				this.get_my_test_paper()
+				this.subject_fenlei()
+				// this.get_my_test_paper()
 			}
 		},
 		methods:{

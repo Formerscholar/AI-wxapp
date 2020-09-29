@@ -220,9 +220,15 @@ var _vuex = __webpack_require__(/*! vuex */ 6);function ownKeys(object, enumerab
 
       then(function (reslove) {
         console.log('bind_info', reslove);
-        uni.switchTab({
-          url: '/pages/index/index' });
+        uni.showToast({
+          title: reslove.msg,
+          icon: 'none' });
 
+        if (reslove.code == 200) {
+          uni.reLaunch({
+            url: '/pages/index/index' });
+
+        }
       });
     },
     get_student_login: function get_student_login() {var _this3 = this;

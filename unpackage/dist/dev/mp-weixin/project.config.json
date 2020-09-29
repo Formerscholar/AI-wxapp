@@ -50,18 +50,27 @@
       "current": -1,
       "list": []
     },
+    "plugin": {
+      "current": -1,
+      "list": []
+    },
     "game": {
       "current": -1,
       "list": []
     },
+    "gamePlugin": {
+      "current": -1,
+      "list": []
+    },
     "miniprogram": {
-      "current": 0,
+      "current": 1,
       "list": [
         {
-          "name": "登录",
-          "path": "",
-          "query": "",
-          "id": 0
+          "id": 0,
+          "name": "pages/login/share_ter",
+          "pathName": "pages/login/share_ter",
+          "query": "id=344&school=扬州测试学校&name=7班&teacher_name=李老师&class_id=C0103741&team_id=126",
+          "scene": null
         }
       ]
     }

@@ -88,9 +88,15 @@ export default {
 				})
 				.then(reslove => {
 					console.log('bind_info', reslove);
-					uni.switchTab({
-						url: '/pages/index/index'
+					uni.showToast({
+						title: reslove.msg,
+						icon: 'none'
 					});
+					if(reslove.code == 200 ){
+						uni.reLaunch({
+							url: '/pages/index/index'
+						});
+					}
 				});
 		},
 		get_student_login() {

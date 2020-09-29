@@ -212,11 +212,7 @@ var _default =
       this.get_my_test_paper();
     }
   },
-  onShow: function onShow() {
-
-  },
   onLoad: function onLoad() {
-    this.subject_fenlei();
     if (uni.getStorageSync('token')) {
       this.token = uni.getStorageSync('token');
     }
@@ -227,7 +223,8 @@ var _default =
 
       this.school_test_paper();
     } else {
-      this.get_my_test_paper();
+      this.subject_fenlei();
+      // this.get_my_test_paper()
     }
   },
   methods: {

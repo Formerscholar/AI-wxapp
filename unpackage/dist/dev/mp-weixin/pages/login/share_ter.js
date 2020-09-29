@@ -221,7 +221,6 @@ var _vuex = __webpack_require__(/*! vuex */ 6);function ownKeys(object, enumerab
       then(function (res) {
         console.log(res);
         _this.mobile = res.data.mobile;
-        _this.subject_id = res.data.subject_id;
         if (res.code == 200) {
           console.log(res.data);
           _this.login(res.data);
@@ -378,10 +377,10 @@ var _vuex = __webpack_require__(/*! vuex */ 6);function ownKeys(object, enumerab
       });
     },
     bindChange: function bindChange(e) {
-      console.log(e);
+      console.log('bindChange', e);
       this.num = e.detail.value;
       this.subject_id = this.subject_list[this.num].id;
-      console.log(this.subject_id);
+      console.log('bindChange', this.subject_id);
     } }) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

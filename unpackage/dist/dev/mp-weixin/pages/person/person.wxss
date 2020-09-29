@@ -90,6 +90,7 @@ page {
   background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/personInfo_bg.png) no-repeat center center;
   background-size: cover;
   position: relative;
+  margin-top: -2rpx;
 }
 .top .vip {
   width: 700rpx;
