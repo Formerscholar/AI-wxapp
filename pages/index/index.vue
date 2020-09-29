@@ -280,9 +280,6 @@ page {
 .top {
 	width: 100%;
 	height: 350rpx;
-	width: 700rpx;
-	height: 350rpx;
-	margin: 0 25rpx;
 	border-radius: 20rpx;
 	.uni-swiper-dot {
 		background-color: #fff !important;
@@ -291,8 +288,9 @@ page {
 		background-color: #e50304 !important;
 	}
 	image {
-		width: 100%;
+		width: 700rpx;
 		height: 100%;
+		margin: 0 25rpx;
 		border-radius: 20rpx;
 	}
 }
@@ -408,12 +406,12 @@ page {
 .student {
 	.item.itemSpec0 {
 		flex: 1;
-		height: 160rpx;
+		height: 180rpx;
 		margin: 0 25rpx 25rpx 25rpx;
 	}
 	.item.itemSpec {
 		flex: 1;
-		height: 160rpx;
+		height: 180rpx;
 		margin: 0 25rpx 25rpx 0;
 	}
 	.item.itemPhoto {
