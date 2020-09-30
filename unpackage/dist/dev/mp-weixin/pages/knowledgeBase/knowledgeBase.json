@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "知识库",
-  "usingComponents": {
-    "uni-popup": "/components/uni-popup/uni-popup",
-    "u-parse": "/components/u-parse/u-parse"
-  }
-}
