@@ -30,9 +30,9 @@ page {
 }
 .joinClassBg {
   width: 100%;
-  height: 650rpx;
-  background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/mineBg.png) no-repeat center center;
-  background-size: 100% 101%;
+  height: 450rpx;
+  background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png) no-repeat center center;
+  background-size: 100% 100%;
 }
 .joinClassBg image {
   display: block;

@@ -212,6 +212,10 @@ var _vuex = __webpack_require__(/*! vuex */ 6);function ownKeys(object, enumerab
               key: 'userInfo',
               data: res.data });
 
+            uni.setStorage({
+              key: "type",
+              data: 3 });
+
             uni.reLaunch({
               url: '/pages/index/index' });
 
@@ -246,6 +250,10 @@ var _vuex = __webpack_require__(/*! vuex */ 6);function ownKeys(object, enumerab
             uni.setStorage({
               key: 'is_vip',
               data: res.data.is_vip });
+
+            uni.setStorage({
+              key: "type",
+              data: 4 });
 
             if (!res.data.is_bind) {
               uni.navigateTo({
