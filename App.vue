@@ -14,6 +14,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/static/css/rich_text.scss'; 
+@import '@/static/css/rich_text.scss';
 @import '@/static/css/style.scss';
 </style>

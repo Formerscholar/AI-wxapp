@@ -13,7 +13,7 @@
 		</view>
 		<uni-popup ref="popup" type="center">
 			<view class="bindphone">
-				<view class="">
+				<view >
 					需要授权获取手机号
 				</view>
 				<button open-type="getPhoneNumber" @getphonenumber="getphone">授权</button>

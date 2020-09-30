@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="joinClassBg"><image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png" /></view>
+		<view class="joinClassBg"></view>
 		<view class="login">
 			<view class="teacherName">
 				<text>{{ teacher_name }}老师</text>
@@ -168,8 +168,8 @@ page {
 .joinClassBg {
 	width: 100%;
 	height: 510rpx;
-	background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/mineBg.png) no-repeat center center;
-	background-size: 100% 101%;
+	background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png) no-repeat center center;
+	background-size: 100% 100%;
 	display: flex;
 	image {
 		display: block;

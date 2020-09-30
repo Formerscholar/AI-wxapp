@@ -30,9 +30,9 @@ page {
 }
 .y-bg {
   position: absolute;
-  background-image: -webkit-gradient(linear, left top, right top, from(#F6A136), to(#F8B25A));
-  background-image: -webkit-linear-gradient(left, #F6A136 0%, #F8B25A 100%);
-  background-image: linear-gradient(left, #F6A136 0%, #F8B25A 100%);
+  background-image: -webkit-gradient(linear, left top, right top, from(#f6a136), to(#f8b25a));
+  background-image: -webkit-linear-gradient(left, #f6a136 0%, #f8b25a 100%);
+  background-image: linear-gradient(left, #f6a136 0%, #f8b25a 100%);
   top: 0;
   left: 0;
   width: 100%;
@@ -99,7 +99,7 @@ page {
   position: relative;
 }
 .top .vip .endTimeInfo {
-  color: #FFEEB9;
+  color: #ffeeb9;
   font-size: 28rpx;
   position: absolute;
   top: 50%;
@@ -107,9 +107,9 @@ page {
           transform: translateY(-50%);
   left: 100rpx;
   /* >view{
-				height: 62rpx;
-				line-height: 62rpx;
-			} */
+					height: 62rpx;
+					line-height: 62rpx;
+				} */
 }
 .top .vip .endTimeInfo > view:last-child {
   color: #947057;

@@ -61,7 +61,7 @@ page {
   margin-top: 10rpx;
 }
 .qiun-bg-white {
-  background: #FFFFFF;
+  background: #ffffff;
 }
 .qiun-title-bar {
   width: 96%;
@@ -84,7 +84,7 @@ page {
 }
 .qiun-charts {
   height: auto;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   margin: 0 30rpx;
   padding-bottom: 20rpx;
   -webkit-border-radius: 0 0 30rpx 30rpx;
@@ -106,7 +106,7 @@ page {
 }
 .qiun-charts .charts {
   height: 477rpx;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   margin: 0 auto;
 }
 button::after {
@@ -114,7 +114,7 @@ button::after {
 }
 .t-title {
   text-align: center;
-  color: #F8601C;
+  color: #f8601c;
   height: 80rpx;
   line-height: 80rpx;
 }
@@ -123,12 +123,12 @@ button::after {
   padding: 0 60rpx;
   font-size: 32rpx;
   line-height: 100rpx;
-  color: #F8601C;
+  color: #f8601c;
   background: #fff;
   border-bottom: 1rpx solid #eee;
 }
 .top text {
-  color: #F8601C;
+  color: #f8601c;
 }
 .tabar {
   height: 100rpx;
@@ -153,7 +153,7 @@ button::after {
 .c-title text:last-child {
   display: inline-block;
   height: 100%;
-  color: #F8601C;
+  color: #f8601c;
 }
 .fenbu {
   padding: 30rpx 60rpx;
@@ -174,7 +174,7 @@ button::after {
   color: #999;
 }
 .btn button {
-  background: #F8601C;
+  background: #f8601c;
   font-size: 24rpx;
   width: 150rpx;
   height: 50rpx;

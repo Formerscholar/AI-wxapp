@@ -5,9 +5,9 @@
   },
   "setting": {
     "urlCheck": true,
-    "es6": false,
-    "enhance": true,
-    "postcss": false,
+    "es6": true,
+    "enhance": false,
+    "postcss": true,
     "preloadBackgroundData": false,
     "minified": true,
     "newFeature": false,
@@ -28,7 +28,6 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "bundle": true,
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
@@ -38,7 +37,7 @@
   "compileType": "miniprogram",
   "libVersion": "",
   "appid": "wx64468960ba0a610e",
-  "projectname": "错题宝",
+  "projectname": "%E9%94%99%E9%A2%98%E5%AE%9D",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {
