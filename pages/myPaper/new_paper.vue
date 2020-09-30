@@ -34,7 +34,7 @@
 						<view class="time">{{ item.add_time }}</view>
 					</view>
 				</view>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="right download" @click.stop="generated(item.based_id)"></image>
+				<view class="right" @click.stop="generated(item.based_id)"><image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image></view>
 				<!-- <image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png' class='right'></image> -->
 			</view>
 			<view v-if="is_more == 0" class="is_more">没有更多试卷了</view>
@@ -351,8 +351,8 @@ page {
 			}
 		}
 		.right {
-			width: 14rpx;
-			height: 26rpx;
+			padding:40rpx 0;
+			width:60rpx;
 			display: flex;
 			margin: auto 0;
 		}

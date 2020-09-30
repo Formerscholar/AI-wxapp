@@ -613,7 +613,7 @@ button::after {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
-	margin: 30rpx;
+	margin: 0 30rpx 25rpx;
 	color: #f8601c;
 	view {
 		border: 1rpx solid #b3b3b3;
