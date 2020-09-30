@@ -283,6 +283,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _uCharts = _interopRequireDefault(__webpack_require__(/*! @/components/u-charts/u-charts.js/ */ 132));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}var uniPopup = function uniPopup() {__webpack_require__.e(/*! require.ensure | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then((function () {return resolve(__webpack_require__(/*! @/components/uni-popup/uni-popup.vue */ 311));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 var _self;
@@ -340,38 +342,54 @@ var canvaPie = null;var _default =
       item = item.replace(new RegExp('<img', 'gi'), '<img style="max-width:95%;vertical-align: middle;width:auto;"');
       return item;
     },
-
-    selectDate: function selectDate(i) {var _this2 = this;
-      var _this = this;
-      var date = new Date();
-      var year = date.getFullYear(); // 获取完整的年份(4位,1970)
-      var month = date.getMonth();
-      var month2 = date.getMonth() + 1;
-      var day = date.getDate();
+    getDateRange: function getDateRange(dateNow, intervalDays, bolPastTime) {
+      var oneDayTime = 24 * 60 * 60 * 1000;
+      var list = [];
+      var lastDay;
+      if (bolPastTime == true) {
+        lastDay = new Date(dateNow.getTime() - intervalDays * oneDayTime);
+        list.push(this.formateDate(lastDay));
+        list.push(this.formateDate(dateNow));
+      } else {
+        lastDay = new Date(dateNow.getTime() + intervalDays * oneDayTime);
+        list.push(this.formateDate(dateNow));
+        list.push(this.formateDate(lastDay));
+      }
+      return list;
+    },
+    formateDate: function formateDate(time) {
+      var year = time.getFullYear();
+      var month = time.getMonth() + 1;
+      var day = time.getDate();
       if (month < 10) {
         month = '0' + month;
-      }
-      if (month2 < 10) {
-        month2 = '0' + month2;
       }
       if (day < 10) {
         day = '0' + day;
       }
+      return year + '-' + month + '-' + day;
+    },
+    selectDate: function selectDate(i) {var _this2 = this;
+      var date = new Date();
+
       this.dateList.forEach(function (e, j, arr) {
         if (i == j) {
           e.dateStaus = true;
           if (i == 0) {
-            _this.it = 'day';
-            _this2.time = "".concat(year, "-").concat(month2, "-").concat(day - 7);
-            _this2.time2 = "".concat(year, "-").concat(month2, "-").concat(day);
+            _this2.it = 'day';
+            var list1 = _this2.getDateRange(date, 6, true);
+            _this2.time = list1[0];
+            _this2.time2 = list1[1];
           } else if (i == 1) {
-            _this.it = 'day';
-            _this2.time = "".concat(year, "-").concat(month2 - 1, "-").concat(day);
-            _this2.time2 = "".concat(year, "-").concat(month2, "-").concat(day);
+            _this2.it = 'day';
+            var list2 = _this2.getDateRange(date, 30, true);
+            _this2.time = list2[0];
+            _this2.time2 = list2[1];
           } else {
-            _this.it = 'day';
-            _this2.time = "".concat(year - 1, "-").concat(month2, "-").concat(day);
-            _this2.time2 = "".concat(year, "-").concat(month2, "-").concat(day);
+            _this2.it = 'day';
+            var list3 = _this2.getDateRange(date, 365, true);
+            _this2.time = list3[0];
+            _this2.time2 = list3[1];
           }
         } else {
           e.dateStaus = false;
@@ -398,14 +416,13 @@ var canvaPie = null;var _default =
       this.get_hot_title();
     },
     get_class: function get_class() {var _this4 = this;
-      this.$api.my_team_ids({ token: this.token }).
-      then(function (res) {
+      this.$api.my_team_ids({ token: this.token }).then(function (res) {
         console.log(res);
         if (res.code != 200) {
           /* uni.showToast({
-                              	title:res.msg,
-                              	icon:'none'
-                              }) */
+                              		title:res.msg,
+                              		icon:'none'
+                              	}) */
         }
         _this4.class_list = res.data;
         _this4.team_id = _this4.class_list[0].team_id;
@@ -417,7 +434,8 @@ var canvaPie = null;var _default =
     },
     get_baogao: function get_baogao() {
       var _this = this;
-      _this.$api.teacher_study_analysis({
+      _this.$api.
+      teacher_study_analysis({
         token: _this.token,
         team_id: _this.team_id,
         start_time: _this.time,
@@ -433,12 +451,12 @@ var canvaPie = null;var _default =
           } else {
             _this.Pie.series = [];
           }
-          _self.showPie("canvasPie", _this.Pie);
+          _self.showPie('canvasPie', _this.Pie);
         } else {
           // _this.error_count=0
           _this.pieData = [];
           _this.Pie.series = [];
-          _self.showPie("canvasPie", _this.Pie);
+          _self.showPie('canvasPie', _this.Pie);
           /* uni.showToast({
                                                  	title:res.msg,
                                                  	icon:"none"
@@ -509,7 +527,8 @@ var canvaPie = null;var _default =
     //获取热门易错题型
     get_hot_title: function get_hot_title() {
       var _this = this;
-      _this.$api.hot_error_exercises({
+      _this.$api.
+      hot_error_exercises({
         token: _this.token,
         team_id: _this.team_id,
         start_time: _this.time,
@@ -527,7 +546,6 @@ var canvaPie = null;var _default =
             _this.exercises_list = [].concat(_toConsumableArray(_this.exercises_list), _toConsumableArray(res.data));
           }
         } else {
-
         }
       });
     },
@@ -570,9 +588,9 @@ var canvaPie = null;var _default =
           }
         } else {
           /* uni.showToast({
-                	title:res.msg,
-                	icon:'none'
-                }) */
+                		title:res.msg,
+                		icon:'none'
+                	}) */
         }
 
         _this6.update = false;
@@ -594,9 +612,9 @@ var canvaPie = null;var _default =
           }
         } else {
           /* uni.showToast({
-                	title:res.msg,
-                	icon:'none'
-                }) */
+                		title:res.msg,
+                		icon:'none'
+                	}) */
         }
         _this7.update = false;
         _this7.update = true;

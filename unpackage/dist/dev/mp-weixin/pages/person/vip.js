@@ -184,12 +184,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
@@ -210,23 +204,21 @@ var _default =
   },
   methods: {
     get_info: function get_info() {var _this = this;
-      this.$api.vip_info({ token: this.token }).
-      then(function (res) {
+      this.$api.vip_info({ token: this.token }).then(function (res) {
         console.log(res);
         _this.info = res.data;
         /* this.is_vip=res.is_vip
-                               uni.setStorage({
-                                   key: 'is_vip',
-                                   data: this.is_vip
-                               }) */
+                               	uni.setStorage({
+                               	    key: 'is_vip',
+                               	    data: this.is_vip
+                               	}) */
       });
     },
     pay: function pay() {var _this2 = this;
       uni.login({
         success: function success(res) {
           console.log(res);
-          _this2.$api.app_pay({ code: res.code, token: _this2.token }).
-          then(function (res) {
+          _this2.$api.app_pay({ code: res.code, token: _this2.token }).then(function (res) {
             console.log(res);
             var wx_pay = res.data.wx_pay;
             uni.requestPayment({
@@ -249,7 +241,6 @@ var _default =
 
           });
         } });
-
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

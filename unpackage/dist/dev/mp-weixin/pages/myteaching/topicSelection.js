@@ -250,11 +250,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
 {
   components: { uniPopup: uniPopup },
   data: function data() {
@@ -306,8 +301,7 @@ __webpack_require__.r(__webpack_exports__);
         subject_id: item.subject_id,
         exercises_id: item.exercises_id };
 
-      this.$api.same_type(data).
-      then(function (res) {
+      this.$api.same_type(data).then(function (res) {
         console.log(res);
         if (res.code == 200) {
           _this.same_type = res.data.exercises_list;
@@ -318,12 +312,10 @@ __webpack_require__.r(__webpack_exports__);
             icon: 'none' });
 
         }
-
       });
     },
     get_list: function get_list() {var _this2 = this;
-      this.$api.catalogue_exercises({ token: this.token, class_hour_id: this.class_hour_id, page: this.page }).
-      then(function (res) {
+      this.$api.catalogue_exercises({ token: this.token, class_hour_id: this.class_hour_id, page: this.page }).then(function (res) {
         console.log(res);
         _this2.is_more = res.is_more;
         if (res.code == 200) {
@@ -348,8 +340,7 @@ __webpack_require__.r(__webpack_exports__);
       }
       this.update = false;
       this.update = true;
-      this.$api.join_error({ token: this.token, exercises_id: id }).
-      then(function (res) {
+      this.$api.join_error({ token: this.token, exercises_id: id }).then(function (res) {
         _this3.open(item);
         console.log(res);
         // if(res.msg=='取消成功！'){
@@ -379,8 +370,7 @@ __webpack_require__.r(__webpack_exports__);
       }
       this.update = false;
       this.update = true;
-      this.$api.join_error({ token: this.token, exercises_id: id, is_type: 1 }).
-      then(function (res) {
+      this.$api.join_error({ token: this.token, exercises_id: id, is_type: 1 }).then(function (res) {
         console.log(res);
         if (res.code == 200) {
           if (_this4.same_type[i].is_error) {

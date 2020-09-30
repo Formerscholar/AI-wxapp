@@ -168,6 +168,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   data: function data() {
@@ -184,18 +185,17 @@ var _default =
   },
   methods: {
     search_team: function search_team() {var _this = this;
-      this.$api.search_team({ token: this.token, key: this.num }).
-      then(function (res) {
+      this.$api.search_team({ token: this.token, key: this.num }).then(function (res) {
         console.log(res);
         if (res.code == 200) {
           /* uni.showToast({
-                              	title:'加入成功！',
-                              })
-                              setTimeout(()=>{
-                              	uni.reLaunch({
-                              		url:'/pages/index/index'
+                              		title:'加入成功！',
                               	})
-                              },1000) */
+                              	setTimeout(()=>{
+                              		uni.reLaunch({
+                              			url:'/pages/index/index'
+                              		})
+                              	},1000) */
           _this.classList = res.data;
         } else {
           uni.showToast({
@@ -206,8 +206,7 @@ var _default =
       });
     },
     join: function join(classid) {
-      this.$api.join_team({ token: this.token, classid: classid }).
-      then(function (res) {
+      this.$api.join_team({ token: this.token, classid: classid }).then(function (res) {
         console.log(res);
         if (res.code == 200) {
           uni.showToast({

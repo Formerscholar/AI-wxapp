@@ -139,7 +139,7 @@ button::after {
   margin-left: 15rpx;
 }
 .student .b-btn button {
-  color: #FFFFFF;
+  color: #ffffff;
   width: 140rpx;
   height: 40rpx;
   font-size: 24rpx;
@@ -163,7 +163,7 @@ button::after {
 }
 .student .mask view:first-child {
   font-size: 32rpx;
-  color: #F8601C;
+  color: #f8601c;
   width: 100%;
   text-align: center;
   margin-top: 80rpx;
@@ -182,7 +182,7 @@ button::after {
 .student .mask button {
   margin-top: 40rpx;
   border: 1rpx solid #fff;
-  color: #FFFFFF;
+  color: #ffffff;
   width: 220rpx;
   height: 80rpx;
   font-size: 32rpx;
@@ -364,7 +364,7 @@ button::after {
   margin-left: 15rpx;
 }
 .teach .b-btn button {
-  color: #FFFFFF;
+  color: #ffffff;
   width: 140rpx;
   height: 40rpx;
   font-size: 24rpx;
@@ -393,7 +393,7 @@ button::after {
 }
 .teach .mask view:first-child {
   font-size: 32rpx;
-  color: #F8601C;
+  color: #f8601c;
   width: 100%;
   text-align: center;
   margin-top: 80rpx;
@@ -412,7 +412,7 @@ button::after {
 .teach .mask button {
   margin-top: 40rpx;
   border: 1rpx solid #fff;
-  color: #FFFFFF;
+  color: #ffffff;
   width: 220rpx;
   height: 80rpx;
   font-size: 32rpx;
@@ -575,7 +575,7 @@ button::after {
   color: #c0c0c0;
 }
 .maskJoin button {
-  color: #FFFFFF;
+  color: #ffffff;
   display: inline-block;
   width: 200rpx;
   height: 60rpx;
@@ -647,7 +647,7 @@ button::after {
   color: #c0c0c0;
 }
 .mask2 button {
-  color: #FFFFFF;
+  color: #ffffff;
   display: inline-block;
   width: 200rpx;
   height: 60rpx;
@@ -672,10 +672,10 @@ button::after {
 }
 .b-default {
   /* border: none !important;
-	background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/default.png);
-	background-size: cover;
-	width: 25rpx !important;
-	height: 25rpx !important; */
+		background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/default.png);
+		background-size: cover;
+		width: 25rpx !important;
+		height: 25rpx !important; */
   width: 25rpx;
   height: 25rpx;
   border: 0.5rpx solid #c5c5c5;

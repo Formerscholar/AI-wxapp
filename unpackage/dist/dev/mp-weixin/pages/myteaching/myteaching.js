@@ -186,11 +186,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
 {
   components: { uniPopup: uniPopup },
   data: function data() {
@@ -207,12 +202,12 @@ __webpack_require__.r(__webpack_exports__);
       token: '',
       semester_list: [],
       semester: '',
-      num_l: 0 //难度选择 
+      num_l: 0 //难度选择
     };
   },
   onReachBottom: function onReachBottom() {
     // this.page++
-    // this.version()			
+    // this.version()
   },
   onShow: function onShow() {
     this.get_semester();
@@ -226,8 +221,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     //习题难度
     get_semester: function get_semester() {var _this = this;
-      this.$api.get_semester().
-      then(function (res) {
+      this.$api.get_semester().then(function (res) {
         _this.semester_list = res.data;
         _this.semester = res.data[0]['name'];
         _this.open();
@@ -242,8 +236,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //教辅版本列表
     version: function version() {var _this2 = this;
-      this.$api.version({ subject_id: this.subject_id, page: this.page }).
-      then(function (res) {
+      this.$api.version({ subject_id: this.subject_id, page: this.page }).then(function (res) {
         console.log(res);
         _this2.is_more = res.is_more;
         if (_this2.page == 1) {
@@ -251,7 +244,6 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           _this2.version_list = [].concat(_toConsumableArray(_this2.version_list), _toConsumableArray(res.data.version_list));
         }
-
       });
     },
     //选择教辅名称
@@ -309,8 +301,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
       if (arr.length > 0) {
-        this.$api.add_my_textbook({ token: this.token, textbook_ids: arr.toString(), subject_id: this.subject_id }).
-        then(function (res) {
+        this.$api.add_my_textbook({ token: this.token, textbook_ids: arr.toString(), subject_id: this.subject_id }).then(function (res) {
           console.log(res);
           if (res.code == 200) {
             uni.navigateBack();
@@ -320,11 +311,10 @@ __webpack_require__.r(__webpack_exports__);
               icon: 'none' });
 
           }
-
         });
         // uni.navigateTo({
         // 	url:`/pages/myteaching/contentReference?textbook_list=${JSON.stringify(arr)}&subject_id=${this.subject_id}`
-        // })	
+        // })
         this.$refs.popup.close();
       } else {
         uni.showToast({
@@ -332,7 +322,6 @@ __webpack_require__.r(__webpack_exports__);
           icon: 'none' });
 
       }
-
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

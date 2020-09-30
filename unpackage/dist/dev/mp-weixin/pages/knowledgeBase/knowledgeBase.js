@@ -304,6 +304,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
 {
   components: { uParse: uParse, uniPopup: uniPopup },
   data: function data() {
@@ -383,8 +388,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //获取班级
     get_grade: function get_grade() {var _this = this;
-      this.$api.get_grade({ token: this.token }).
-      then(function (res) {
+      this.$api.get_grade({ token: this.token }).then(function (res) {
         console.log(res);
         _this.grade = res.data.grade_list;
         _this.exercise_selection();
@@ -415,13 +419,12 @@ __webpack_require__.r(__webpack_exports__);
     //教辅版本列表
     version: function version() {var _this3 = this;
       // this.get_konw()
-      this.$api.version().
-      then(function (res) {
+      this.$api.version().then(function (res) {
         console.log(res);
         if (res.code != 200) {
           uni.showToast({
             title: res.msg,
-            icon: "none",
+            icon: 'none',
             duration: 3000 });
 
         }
@@ -431,8 +434,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //知识点
     get_konw: function get_konw() {var _this4 = this;
-      if (this.subject_id == 1)
-      return false;
+      if (this.subject_id == 1) return false;
       if (uni.getStorageSync('type') == 3) {
         var req = this.$api.teacher_know_point({ token: this.token });
       } else {
@@ -445,30 +447,26 @@ __webpack_require__.r(__webpack_exports__);
           _this4.exercises_list = [];
           uni.showToast({
             title: res.msg,
-            icon: "none",
+            icon: 'none',
             duration: 3000 });
 
         } else {
           _this4.know_point_list = [{ title: '知识点', id: 0 }].concat(_toConsumableArray(res.data.know_point_list));
           console.log('this.know_point_list3433', _this4.know_point_list);
-
         }
         _this4.exercise_selection();
       });
-
     },
     //习题难度
     get_level: function get_level() {var _this5 = this;
-      this.$api.level().
-      then(function (res) {
+      this.$api.level().then(function (res) {
         console.log(res);
         _this5.level_list = [{ title: '难度', id: 0 }].concat(_toConsumableArray(res.data));
       });
     },
     //题型
     exercise_type: function exercise_type() {var _this6 = this;
-      this.$api.exercise_type({ subject_id: this.subject_id }).
-      then(function (res) {
+      this.$api.exercise_type({ subject_id: this.subject_id }).then(function (res) {
         console.log('题型列表1', res);
         _this6.question_type = [{ title: '题型', id: 0 }].concat(_toConsumableArray(res.data));
       });
@@ -488,7 +486,6 @@ __webpack_require__.r(__webpack_exports__);
           page: this.page };
 
         var req = this.$api.teacher_textbook_exercises(data);
-
       } else {
         var _data = {
           token: this.token,
@@ -508,7 +505,7 @@ __webpack_require__.r(__webpack_exports__);
           _this7.exercises_list = [];
           uni.showToast({
             title: res.msg,
-            icon: "none",
+            icon: 'none',
             duration: 3000 });
 
         } else {
@@ -520,7 +517,6 @@ __webpack_require__.r(__webpack_exports__);
             console.log('789', _this7.exercises_list);
           }
         }
-
       });
     },
     //加入错题
@@ -548,9 +544,9 @@ __webpack_require__.r(__webpack_exports__);
           }
         } else {
           /* uni.showToast({
-                	title:res.msg,
-                	icon:'none'
-                }) */
+                		title:res.msg,
+                		icon:'none'
+                	}) */
         }
 
         _this8.update = false;

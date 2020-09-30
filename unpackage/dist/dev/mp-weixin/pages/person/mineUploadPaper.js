@@ -179,13 +179,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   data: function data() {
     return {
-      subtitleArr: [{ 'title': '上传试卷', 'active': true }, { 'title': '试卷记录', 'active': false }],
+      subtitleArr: [{ title: '上传试卷', active: true }, { title: '试卷记录', active: false }],
       token: '',
       imgSrc: [],
       value1: '',
@@ -269,8 +267,8 @@ var _default =
                 filePath: res.tempFilePaths[i],
                 name: 'file',
                 formData: {
-                  'token': _this2.token,
-                  'path': 'paper' },
+                  token: _this2.token,
+                  path: 'paper' },
 
                 success: function success(res) {
                   _this.picData = res.data;

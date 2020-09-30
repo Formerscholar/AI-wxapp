@@ -152,6 +152,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -165,9 +178,13 @@ var _default =
     console.log(e.target.dataset.it);
     var path = '';
     if (e.target.dataset.it == 'stu') {
-      path = "/pages/login/share?id=".concat(uni.getStorageSync('userInfo').user_id, "&school=").concat(uni.getStorageSync('userInfo').school.name, "&name=").concat(e.target.dataset.name, "&teacher_name=").concat(uni.getStorageSync('userInfo').true_name, "&class_id=").concat(e.target.dataset.class_id);
+      path = "/pages/login/share?id=".concat(uni.getStorageSync('userInfo').user_id, "&school=").concat(uni.getStorageSync('userInfo').school.name, "&name=").concat(e.target.dataset.name, "&teacher_name=").concat(
+      uni.getStorageSync('userInfo').true_name, "&class_id=").concat(
+      e.target.dataset.class_id);
     } else {
-      path = "/pages/login/share_ter?id=".concat(uni.getStorageSync('userInfo').user_id, "&school=").concat(uni.getStorageSync('userInfo').school.name, "&name=").concat(e.target.dataset.name, "&teacher_name=").concat(uni.getStorageSync('userInfo').true_name, "&class_id=").concat(e.target.dataset.class_id, "&team_id=").concat(e.target.dataset.team_id);
+      path = "/pages/login/share_ter?id=".concat(uni.getStorageSync('userInfo').user_id, "&school=").concat(uni.getStorageSync('userInfo').school.name, "&name=").concat(e.target.dataset.name, "&teacher_name=").concat(
+      uni.getStorageSync('userInfo').true_name, "&class_id=").concat(
+      e.target.dataset.class_id, "&team_id=").concat(e.target.dataset.team_id);
     }
     return {
       title: '错题宝',
@@ -189,8 +206,7 @@ var _default =
     },
     //班级列表
     get_class_list: function get_class_list() {var _this = this;
-      this.$api.my_team_ids_list({ token: this.token }).
-      then(function (res) {
+      this.$api.my_team_ids_list({ token: this.token }).then(function (res) {
         console.log(res);
         _this.list = res.data;
       });

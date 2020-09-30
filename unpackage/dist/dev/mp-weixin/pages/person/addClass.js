@@ -152,8 +152,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   data: function data() {
@@ -196,8 +194,7 @@ var _default =
         class_name: this.class_name[this.s_num],
         token: this.token };
 
-      this.$api.teacher_add_class(data).
-      then(function (res) {
+      this.$api.teacher_add_class(data).then(function (res) {
         console.log(res);
         if (res.code == 200) {
           uni.showToast({
@@ -209,7 +206,6 @@ var _default =
               url: '/pages/index/index' });
 
           }, 1000);
-
         } else {
           uni.showToast({
             title: res.msg,
@@ -221,8 +217,7 @@ var _default =
 
     //获取年级
     get_grade: function get_grade() {var _this = this;
-      this.$api.get_grade({ token: this.token }).
-      then(function (res) {
+      this.$api.get_grade({ token: this.token }).then(function (res) {
         console.log(res);
         _this.grade = [{ name: '请选择年级' }].concat(_toConsumableArray(res.data.grade_list));
       });

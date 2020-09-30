@@ -42,7 +42,7 @@ page {
   width: 700rpx;
   background: #fff;
   margin: 0 auto;
-  border: 1rpx solid #E5E5E5;
+  border: 1rpx solid #e5e5e5;
   -webkit-border-radius: 16rpx;
           border-radius: 16rpx;
 }

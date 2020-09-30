@@ -152,8 +152,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
 {
   components: { uniPopup: uniPopup },
   data: function data() {
@@ -173,12 +171,8 @@ __webpack_require__.r(__webpack_exports__);
       flag: true };
 
   },
-  onReachBottom: function onReachBottom() {
-
-  },
-  onShow: function onShow() {
-
-  },
+  onReachBottom: function onReachBottom() {},
+  onShow: function onShow() {},
   onLoad: function onLoad(option) {
     console.log(option.pic);
     this.flag = true;
@@ -199,8 +193,7 @@ __webpack_require__.r(__webpack_exports__);
     //获取题目数据
     search_exercises: function search_exercises() {var _this = this;
       // console.log(this.textbook_id)
-      this.$api.search_exercises({ textbook_id: this.textbook_id, page: this.choosePage, pic: this.pic, token: this.token }).
-      then(function (res) {
+      this.$api.search_exercises({ textbook_id: this.textbook_id, page: this.choosePage, pic: this.pic, token: this.token }).then(function (res) {
         console.log('res', res);
         if (res.code == 200) {
           _this.flag = false;

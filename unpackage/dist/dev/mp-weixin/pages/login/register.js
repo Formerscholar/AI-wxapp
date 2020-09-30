@@ -178,7 +178,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 var _default =
 {
   data: function data() {
@@ -213,14 +212,13 @@ var _default =
           console.log(res);
           if (res.code == 200) {
             uni.showToast({
-              title: "注册成功" });
+              title: '注册成功' });
 
             setTimeout(function () {
               uni.redirectTo({
-                url: "/pages/login/login" });
+                url: '/pages/login/login' });
 
             }, 1000);
-
           } else {
             uni.showToast({
               title: res.msg,
@@ -250,11 +248,11 @@ var _default =
     },
     del: function del(i) {
       if (i == 1) {
-        this.name = "";
+        this.name = '';
       } else if (i == 2) {
-        this.phone = "";
+        this.phone = '';
       } else if (i == 3) {
-        this.password = "";
+        this.password = '';
       }
     },
     getcode: function getcode() {var _this = this;
@@ -269,7 +267,7 @@ var _default =
         this.codeStatus = false;
         this.$api.get_verify_code({ token: this.token, mobile: this.phone, type: 'register' });
         uni.showToast({
-          title: "发送成功,请查看短信！",
+          title: '发送成功,请查看短信！',
           icon: 'none' });
 
         var time = 60;

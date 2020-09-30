@@ -347,8 +347,8 @@ page {
 	flex-flow: row nowrap;
 	justify-content: flex-start;
 	align-items: center;
-	border-bottom: 1px solid #E5E5E5;
-	&:last-child{
+	border-bottom: 1px solid #e5e5e5;
+	&:last-child {
 		border-bottom: none;
 	}
 	image.subject {

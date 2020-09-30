@@ -230,6 +230,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
 {
   components: { uniPopup: uniPopup },
   data: function data() {
@@ -285,13 +294,15 @@ __webpack_require__.r(__webpack_exports__);
     if (uni.getStorageSync('token')) {
       this.token = uni.getStorageSync('token');
     }
-    if (options.st == 1) {//错题本tab,我的试卷tab
+    if (options.st == 1) {
+      //错题本tab,我的试卷tab
       this.get_errorbook_exercises();
-      if (this.is == "is_student") {
-        this.changeTitle("错题本内容");
+      if (this.is == 'is_student') {
+        this.changeTitle('错题本内容');
       }
-    } else if (this.status == 'photo') {//拍照识题
-      this.changeTitle("教辅内容");
+    } else if (this.status == 'photo') {
+      //拍照识题
+      this.changeTitle('教辅内容');
       this.list = JSON.parse(decodeURIComponent(options.listData));
       if (Array.isArray(this.list)) {
         this.list = this.list;
@@ -299,20 +310,21 @@ __webpack_require__.r(__webpack_exports__);
         this.list = [];
       }
       console.log('this.list', this.list);
-    } else {//首页面（校本试卷[老师]，校本试卷[学生]，校外试卷[老师]，名校试卷[学生]）
+    } else {
+      //首页面（校本试卷[老师]，校本试卷[学生]，校外试卷[老师]，名校试卷[学生]）
       this.get_list();
     }
   },
   /* onBackPress(e) {
-     	
-     }, */
+     		
+     	}, */
   methods: {
     //拍照返回
     /* backToMyteaching(){
-    	uni.navigateBack({
-    		delta: 2  
-    	});
-    }, */
+    		uni.navigateBack({
+    			delta: 2  
+    		});
+    	}, */
     changeStyle: function changeStyle(item) {
       item = item.replace(new RegExp('<p', 'gi'), '<p style="color: #000;position:relative"');
       item = item.replace(new RegExp('<img', 'gi'), '<img style="max-width:95%;vertical-align: middle;width:auto;"');
@@ -369,9 +381,9 @@ __webpack_require__.r(__webpack_exports__);
         _this2.is_more = res.is_more;
         if (res.code != 200) {
           /* uni.showToast({
-                              	title:res.msg,
-                              	icon:'none'
-                              }) */
+                              		title:res.msg,
+                              		icon:'none'
+                              	}) */
         }
         if (_this2.page == 1) {
           _this2.list = res.data.exercises_list;
@@ -426,7 +438,6 @@ __webpack_require__.r(__webpack_exports__);
             icon: 'none' });
 
         }
-
       });
     },
     //试卷列表加入错题
@@ -461,9 +472,9 @@ __webpack_require__.r(__webpack_exports__);
           }
         } else {
           /* uni.showToast({
-                	title:res.msg,
-                	icon:'none'
-                }) */
+                		title:res.msg,
+                		icon:'none'
+                	}) */
         }
       });
     },

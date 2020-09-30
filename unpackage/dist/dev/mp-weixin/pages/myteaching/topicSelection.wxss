@@ -95,7 +95,7 @@ page {
   vertical-align: middle;
 }
 .item .bottom .btn {
-  border: 1rpx solid #F8601C;
+  border: 1rpx solid #f8601c;
   -webkit-border-radius: 8rpx;
           border-radius: 8rpx;
   padding: 10rpx 30rpx;
@@ -108,7 +108,7 @@ page {
 }
 .leixing .title {
   text-align: center;
-  color: #F8601C;
+  color: #f8601c;
   font-size: 30rpx;
   padding: 30rpx 0;
 }
@@ -124,8 +124,8 @@ page {
 .leixing scroll-view .list button {
   float: right;
   margin: 20rpx;
-  color: #F8601C;
-  border: 1rpx solid #F8601C;
+  color: #f8601c;
+  border: 1rpx solid #f8601c;
   -webkit-border-radius: 8rpx;
           border-radius: 8rpx;
   padding: 0;
@@ -149,9 +149,9 @@ page {
   height: 60rpx;
   line-height: 60rpx;
   color: #fff;
-  background-image: -webkit-gradient(linear, left top, right top, from(#E35F21), to(#f09632));
-  background-image: -webkit-linear-gradient(left, #E35F21 0%, #f09632 100%);
-  background-image: linear-gradient(left, #E35F21 0%, #f09632 100%);
+  background-image: -webkit-gradient(linear, left top, right top, from(#e35f21), to(#f09632));
+  background-image: -webkit-linear-gradient(left, #e35f21 0%, #f09632 100%);
+  background-image: linear-gradient(left, #e35f21 0%, #f09632 100%);
 }
 .zt {
   position: fixed;

@@ -194,14 +194,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
 var _PieChart = _interopRequireDefault(__webpack_require__(/*! @/components/stan-ucharts/PieChart.vue */ 126));
 var _uCharts = _interopRequireDefault(__webpack_require__(/*! @/components/u-charts/u-charts.js/ */ 132));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
-//
-//
 //
 //
 //
@@ -267,10 +261,11 @@ var _uCharts = _interopRequireDefault(__webpack_require__(/*! @/components/u-cha
 var _self;var canvaPie = null;var _default = { data: function data() {return { update: true, pieData: [], cWidth: uni.upx2px(750), cHeight: uni.upx2px(500), pixelRatio: 1, serverData: '', token: '', exercises_list: [], //习题列表
       subject_list: [], subject_id: 1, error_count: 0, key: 1, class_name: '', time: '', time2: '', dateList: [{ time: '近一周', dateStaus: true }, { time: '近一个月', dateStaus: false }, { time: '近一年', dateStaus: false }], it: 'day', msg: '该科目暂无错题!', Pie: { series: [] } };}, onLoad: function onLoad() {_self = this;this.class_name = uni.getStorageSync('userInfo').school.grade_name + uni.getStorageSync('userInfo').true_name;this.selectDate(0);}, onShow: function onShow() {if (uni.getStorageSync('token')) {this.token = uni.getStorageSync('token');}this.subject_fenlei();}, methods: { changeStyle: function changeStyle(item) {item = item.replace(new RegExp('<p', 'gi'), '<p style="color: #000;position:relative"');item = item.replace(new RegExp('<img', 'gi'), '<img style="max-width:95%;vertical-align: middle;width:auto;"');return item;}, //学科分类
     subject_fenlei: function subject_fenlei() {var _this2 = this;this.$api.subject().then(function (res) {console.log(res);var list = res.data;list.forEach(function (elem, i, arr) {elem.status = false;});_this2.subject_list = list;_this2.selection(0);console.log(_this2.subject_list);});}, //获取学情报告
-    get_baogao: function get_baogao() {var _this = this;var data = { token: _this.token, subject_id: _this.subject_id, start_time: _this.time, end_time: _this.time2 };_this.$api.my_study_analysis(data).
-      then(function (res) {
+    get_baogao: function get_baogao() {var _this = this;var data = { token: _this.token, subject_id: _this.subject_id, start_time: _this.time, end_time: _this.time2 };
+
+      _this.$api.my_study_analysis(data).then(function (res) {
         console.log(res);
-        // _this.error_count=res.data.error_exercises_count	
+        // _this.error_count=res.data.error_exercises_count
         _this.pieData = res.data;
         if (res.code == 200) {
           if (res.data != null) {
@@ -278,56 +273,72 @@ var _self;var canvaPie = null;var _default = { data: function data() {return { u
           } else {
             _this.Pie.series = [];
           }
-          _self.showPie("canvasPie", _this.Pie);
+          _self.showPie('canvasPie', _this.Pie);
         } else {
           // _this.error_count=0
           _this.pieData = [];
           _this.Pie.series = [];
-          _self.showPie("canvasPie", _this.Pie);
+          _self.showPie('canvasPie', _this.Pie);
           /* uni.showToast({
-                                                 	title:res.msg,
-                                                 	icon:"none"
-                                                 }) */
+                                                 		title:res.msg,
+                                                 		icon:"none"
+                                                 	}) */
         }
       });
     },
-    selectDate: function selectDate(i) {var _this3 = this;
-      var _this = this;
-      var date = new Date();
-      var year = date.getFullYear(); // 获取完整的年份(4位,1970)
-      var month = date.getMonth();
-      var month2 = date.getMonth() + 1;
-      var day = date.getDate();
+    getDateRange: function getDateRange(dateNow, intervalDays, bolPastTime) {
+      var oneDayTime = 24 * 60 * 60 * 1000;
+      var list = [];
+      var lastDay;
+      if (bolPastTime == true) {
+        lastDay = new Date(dateNow.getTime() - intervalDays * oneDayTime);
+        list.push(this.formateDate(lastDay));
+        list.push(this.formateDate(dateNow));
+      } else {
+        lastDay = new Date(dateNow.getTime() + intervalDays * oneDayTime);
+        list.push(this.formateDate(dateNow));
+        list.push(this.formateDate(lastDay));
+      }
+      return list;
+    },
+    formateDate: function formateDate(time) {
+      var year = time.getFullYear();
+      var month = time.getMonth() + 1;
+      var day = time.getDate();
       if (month < 10) {
         month = '0' + month;
-      }
-      if (month2 < 10) {
-        month2 = '0' + month2;
       }
       if (day < 10) {
         day = '0' + day;
       }
-      _this.dateList.forEach(function (e, j, arr) {
+      return year + '-' + month + '-' + day;
+    },
+    selectDate: function selectDate(i) {var _this3 = this;
+      var date = new Date();
+      this.dateList.forEach(function (e, j, arr) {
         if (i == j) {
           e.dateStaus = true;
           if (i == 0) {
-            _this.it = 'day';
-            _this3.time = "".concat(year, "-").concat(month2, "-").concat(day - 7);
-            _this3.time2 = "".concat(year, "-").concat(month2, "-").concat(day);
+            _this3.it = 'day';
+            var list1 = _this3.getDateRange(date, 6, true);
+            _this3.time = list1[0];
+            _this3.time2 = list1[1];
           } else if (i == 1) {
-            _this.it = 'day';
-            _this3.time = "".concat(year, "-").concat(month2 - 1, "-").concat(day);
-            _this3.time2 = "".concat(year, "-").concat(month2, "-").concat(day);
+            _this3.it = 'day';
+            var list2 = _this3.getDateRange(date, 30, true);
+            _this3.time = list2[0];
+            _this3.time2 = list2[1];
           } else {
-            _this.it = 'day';
-            _this3.time = "".concat(year - 1, "-").concat(month2, "-").concat(day);
-            _this3.time2 = "".concat(year, "-").concat(month2, "-").concat(day);
+            _this3.it = 'day';
+            var list3 = _this3.getDateRange(date, 365, true);
+            _this3.time = list3[0];
+            _this3.time2 = list3[1];
           }
         } else {
           e.dateStaus = false;
         }
       });
-      _this.get_baogao();
+      this.get_baogao();
     },
     selection: function selection(i) {
       var _this = this;

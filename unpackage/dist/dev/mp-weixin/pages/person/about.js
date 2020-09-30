@@ -194,8 +194,7 @@ var app = getApp();var _default =
   },
   methods: {
     get_list: function get_list() {var _this = this;
-      this.$api.get_agreement({ type: this.type }).
-      then(function (res) {
+      this.$api.get_agreement({ type: this.type }).then(function (res) {
         console.log(res.data.info);
         _this.list = res.data.info;
       });

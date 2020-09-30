@@ -198,8 +198,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _vuex = __webpack_require__(/*! vuex */ 6);function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
-
-
 {
   data: function data() {
     return {
@@ -268,8 +266,7 @@ var _vuex = __webpack_require__(/*! vuex */ 6);function _toConsumableArray(arr) 
           gender: uni.getStorageSync('info').gender,
           token: this.token };
 
-        this.$api.teacher_bind_info(data).
-        then(function (res) {
+        this.$api.teacher_bind_info(data).then(function (res) {
           console.log(res);
           if (res.code == 200) {
             _this.login(res.data);
@@ -311,12 +308,12 @@ var _vuex = __webpack_require__(/*! vuex */ 6);function _toConsumableArray(arr) 
           user_id: uni.getStorageSync('userInfo').user_id };
 
         console.log(_data);
-        this.$api.bind_info(_data).
-        then(function (res) {
+        this.$api.bind_info(_data).then(function (res) {
           console.log(res);
           _this.login(res.data);
           if (res.code == 200) {
-            uni.setStorage({ //缓存用户登陆状态
+            uni.setStorage({
+              //缓存用户登陆状态
               key: 'userInfo',
               data: res.data });
 
@@ -359,36 +356,29 @@ var _vuex = __webpack_require__(/*! vuex */ 6);function _toConsumableArray(arr) 
         } else {
           _this2.school = [{ name: '请选择学校' }].concat(_toConsumableArray(res.data));
         }
-
-
       });
     },
     //获取班级
     get_grade: function get_grade() {var _this3 = this;
       if (uni.getStorageSync('type') == 4) {
-        this.$api.get_grade({ token: this.token }).
-        then(function (res) {
+        this.$api.get_grade({ token: this.token }).then(function (res) {
           console.log(res);
           _this3.grade = [{ name: '请选择年级' }].concat(_toConsumableArray(res.data.grade_list));
         });
       }
-
     },
     //获取学科
     get_subject: function get_subject() {var _this4 = this;
       if (uni.getStorageSync('type') == 3) {
-        this.$api.subject({ token: this.token }).
-        then(function (res) {
+        this.$api.subject({ token: this.token }).then(function (res) {
           console.log('科目', res.data);
           _this4.subject = [{ title: '请选择科目' }].concat(_toConsumableArray(res.data));
         });
       }
-
     },
     //获取省市区
     get_location_list: function get_location_list() {var _this5 = this;
-      this.$api.get_location_list({ token: this.token }).
-      then(function (res) {
+      this.$api.get_location_list({ token: this.token }).then(function (res) {
         console.log(res);
         _this5.location = res.data;
         _this5.Province = [{ name: '请选择省' }].concat(_toConsumableArray(res.data[0]));
@@ -424,7 +414,6 @@ var _vuex = __webpack_require__(/*! vuex */ 6);function _toConsumableArray(arr) 
           this.area.push(location2[key]);
         }
       }
-
     },
     bindPickerChange2: function bindPickerChange2(e) {
       console.log('picker发送选择改变，携带值为', e.target.value);

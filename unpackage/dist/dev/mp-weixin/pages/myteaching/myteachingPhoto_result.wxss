@@ -31,55 +31,55 @@ page {
   background: #eee;
 }
 /*
-.con{
-	image{
-		display: flex;
-		margin:50% auto 0;
-		transform: translateY(-50%);
-	}
-	.mask{
-		width:100%;
-		height: 100%;
-		background: rgba(0,0,0,0.3);
-		position: fixed;
-		top:0;
-		left:0;
-		z-index:10;
-		.light{
-			position: ;
+	.con{
+		image{
+			display: flex;
+			margin:50% auto 0;
+			transform: translateY(-50%);
+		}
+		.mask{
+			width:100%;
+			height: 100%;
+			background: rgba(0,0,0,0.3);
+			position: fixed;
+			top:0;
+			left:0;
+			z-index:10;
+			.light{
+				position: ;
+				width: 100%;
+				height:500rpx;
+				background-image: linear-gradient(to top,rgba(208,131,126,.5), rgba(208,131,126,0));
+				animation: move 2s infinite linear;
+			}
+		}
+		@keyframes move{
+			to{
+				background-position: 0 100%,0 0, 0 0, 0 0;
+			}
+		}
+		.bottom{
+			position: fixed;
 			width: 100%;
-			height:500rpx;
-			background-image: linear-gradient(to top,rgba(208,131,126,.5), rgba(208,131,126,0));
-			animation: move 2s infinite linear;
+			height: 100rpx;
+			background: #fff;
+			position: fixed;
+			bottom:0;
+			left:0;
+			z-index: 100;
+			.btn{
+				margin:10rpx auto;
+				width: 400rpx;
+				height: 80rpx;
+				line-height: 80rpx;
+				font-size:30rpx;
+				color:#fff;
+				background-image:linear-gradient(left,#e50304 0%,#f74300 80%);
+				text-align: center;
+				border-radius: 20rpx;
+			}
 		}
-	}
-	@keyframes move{
-		to{
-			background-position: 0 100%,0 0, 0 0, 0 0;
-		}
-	}
-	.bottom{
-		position: fixed;
-		width: 100%;
-		height: 100rpx;
-		background: #fff;
-		position: fixed;
-		bottom:0;
-		left:0;
-		z-index: 100;
-		.btn{
-			margin:10rpx auto;
-			width: 400rpx;
-			height: 80rpx;
-			line-height: 80rpx;
-			font-size:30rpx;
-			color:#fff;
-			background-image:linear-gradient(left,#e50304 0%,#f74300 80%);
-			text-align: center;
-			border-radius: 20rpx;
-		}
-	}
-} */
+	} */
 ._div.img-box {
   position: relative;
   width: 100%;
@@ -91,8 +91,8 @@ image {
   top: 0;
   left: 0;
   /* top:50%;
-	left: 50%;
-	transform: translateX(-50%) translateY(-50%); */
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%); */
   width: 100%;
   height: 100%;
 }
@@ -101,7 +101,7 @@ image {
   height: 100vh;
   background: -webkit-linear-gradient(transparent, transparent), -webkit-linear-gradient(left, #ffffff33 1rpx, transparent 0, transparent 19rpx), -webkit-linear-gradient(#ffffff33 1rpx, transparent 0, transparent 19rpx), -webkit-linear-gradient(transparent, #d0837e);
   background: linear-gradient(transparent, transparent), linear-gradient(90deg, #ffffff33 1rpx, transparent 0, transparent 19rpx), linear-gradient(#ffffff33 1rpx, transparent 0, transparent 19rpx), linear-gradient(transparent, #d0837e);
-  background-size: 100% 1.5%, 10% 100%,100% 8%, 100% 100%;
+  background-size: 100% 1.5%, 10% 100%, 100% 8%, 100% 100%;
   background-repeat: no-repeat, repeat, repeat, no-repeat;
   background-position: 0% 0%, 0 0, 0 0, 0 0;
   /* 初始位置 */
@@ -113,7 +113,7 @@ image {
 }
 @-webkit-keyframes move {
 to {
-    background-position: 0 100%,0 0, 0 0, 0 0;
+    background-position: 0 100%, 0 0, 0 0, 0 0;
     /* 终止位置 */
     -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
             clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
@@ -121,7 +121,7 @@ to {
 }
 @keyframes move {
 to {
-    background-position: 0 100%,0 0, 0 0, 0 0;
+    background-position: 0 100%, 0 0, 0 0, 0 0;
     /* 终止位置 */
     -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
             clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);

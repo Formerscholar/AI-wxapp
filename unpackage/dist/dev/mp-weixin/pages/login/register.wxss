@@ -33,9 +33,9 @@ button::after {
 }
 .y-bg {
   position: absolute;
-  background-image: -webkit-gradient(linear, left top, right top, from(#F6A136), to(#F8B25A));
-  background-image: -webkit-linear-gradient(left, #F6A136 0%, #F8B25A 100%);
-  background-image: linear-gradient(left, #F6A136 0%, #F8B25A 100%);
+  background-image: -webkit-gradient(linear, left top, right top, from(#f6a136), to(#f8b25a));
+  background-image: -webkit-linear-gradient(left, #f6a136 0%, #f8b25a 100%);
+  background-image: linear-gradient(left, #f6a136 0%, #f8b25a 100%);
   top: 0;
   left: 0;
   width: 100%;
@@ -122,7 +122,7 @@ button::after {
   height: 80rpx;
   line-height: 80rpx;
   font-size: 24rpx;
-  color: #B4B7C2;
+  color: #b4b7c2;
 }
 .container .zhuce {
   border: 1rpx solid #fff;
@@ -130,14 +130,14 @@ button::after {
   height: 100rpx;
   line-height: 100rpx;
   color: #fff;
-  background-image: -webkit-gradient(linear, left top, right top, from(#E35F21), to(#f09632));
-  background-image: -webkit-linear-gradient(left, #E35F21 0%, #f09632 100%);
-  background-image: linear-gradient(left, #E35F21 0%, #f09632 100%);
+  background-image: -webkit-gradient(linear, left top, right top, from(#e35f21), to(#f09632));
+  background-image: -webkit-linear-gradient(left, #e35f21 0%, #f09632 100%);
+  background-image: linear-gradient(left, #e35f21 0%, #f09632 100%);
 }
 .radio {
   margin-top: 50rpx;
   font-size: 24rpx;
-  color: #B4B7C2;
+  color: #b4b7c2;
   text-align: center;
   width: 100%;
 }

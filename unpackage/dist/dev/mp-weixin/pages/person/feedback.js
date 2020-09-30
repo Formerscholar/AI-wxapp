@@ -182,8 +182,8 @@ var _default =
                 filePath: res.tempFilePaths[i],
                 name: 'file',
                 formData: {
-                  'token': _this2.token,
-                  'path': 'feedback' },
+                  token: _this2.token,
+                  path: 'feedback' },
 
                 success: function success(res) {
                   _this.picData = res.data;

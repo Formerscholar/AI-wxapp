@@ -155,9 +155,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 var _default =
 {
   data: function data() {
@@ -186,7 +183,7 @@ var _default =
       var reg = /^1[2|3|4|5|8]\d{9,}/;
       if (!reg.test(this.new_mobile)) {
         uni.showToast({
-          title: "请输入正确的手机号",
+          title: '请输入正确的手机号',
           icon: 'none' });
 
         return;
@@ -194,7 +191,7 @@ var _default =
 
       if (!this.code2) {
         uni.showToast({
-          title: "请输入验证码",
+          title: '请输入验证码',
           icon: 'none' });
 
         return;
@@ -205,60 +202,59 @@ var _default =
         new_mobile: this.new_mobile,
         verify_code: this.code2 };
 
-      this.$api.change_mobile(data).
-      then(function (res) {
+      this.$api.change_mobile(data).then(function (res) {
         console.log(res);
         if (res.code == 200) {
           uni.showToast({
-            title: "修改成功！" });
+            title: '修改成功！' });
 
           setTimeout(function () {
             uni.navigateBack();
           }, 1000);
         } else {
           /* uni.showToast({
-                	title:res.msg,
-                	icon:'none'
-                }) */
+                		title:res.msg,
+                		icon:'none'
+                	}) */
         }
       });
     },
     del: function del(i) {
       if (i == 1) {
-        this.name = "";
+        this.name = '';
       } else if (i == 2) {
-        this.password = "";
+        this.password = '';
       } else if (i == 3) {
-        this.password2 = "";
+        this.password2 = '';
       }
     },
     /* getcode(){
-       	if(this.codeStatus){
-       		this.codeStatus=false
-       		this.$api.get_verify_code({token:this.token,type:'update',mobile:this.old_mobile})
-       		uni.showToast({
-       			title:"发送成功,请查看手机！",
-       			icon:'none'
-       		})
-       		
-       		var time=60
-       		var t=setInterval(()=>{
-       			time--					
-       			this.codeStr=time+'S'
-       			if(time<=0){
-       				this.codeStatus=true
-       				this.codeStr='获取验证码'
-       				clearInterval(t)
-       			}
-       		},1000)
-       	}		
-       }, */
+       		if(this.codeStatus){
+       			this.codeStatus=false
+       			this.$api.get_verify_code({token:this.token,type:'update',mobile:this.old_mobile})
+       			uni.showToast({
+       				title:"发送成功,请查看手机！",
+       				icon:'none'
+       			})
+       			
+       			var time=60
+       			var t=setInterval(()=>{
+       				time--					
+       				this.codeStr=time+'S'
+       				if(time<=0){
+       					this.codeStatus=true
+       					this.codeStr='获取验证码'
+       					clearInterval(t)
+       				}
+       			},1000)
+       		}		
+       	}, */
     getcode2: function getcode2() {var _this = this;
       if (this.codeStatus2) {
         this.codeStatus2 = false;
         this.$api.get_verify_code({ token: this.token, type: 'update', mobile: this.new_mobile });
         uni.showToast({
-          title: "发送成功,请查看手机！",
+          title: '发送成功,请查看手机！',
           icon: 'none' });
 
 

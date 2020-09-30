@@ -160,8 +160,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   data: function data() {
@@ -172,7 +170,7 @@ var _default =
       password: '',
       password2: '',
       code: '',
-      email: "",
+      email: '',
       oldEmail: '' };
 
   },
@@ -188,11 +186,11 @@ var _default =
   methods: {
     del: function del(i) {
       if (i == 1) {
-        this.phone = "";
+        this.phone = '';
       } else if (i == 2) {
-        this.password = "";
+        this.password = '';
       } else if (i == 3) {
-        this.password2 = "";
+        this.password2 = '';
       }
     },
     //获取用户信息
@@ -239,9 +237,9 @@ var _default =
           }, 1000);
         } else {
           /* uni.showToast({
-                	title:res.msg,
-                	icon:'none'
-                }) */
+                		title:res.msg,
+                		icon:'none'
+                	}) */
         }
       });
     },
@@ -305,7 +303,7 @@ var _default =
         this.codeStatus = false;
         this.$api.get_verify_code({ token: this.token, mobile: this.phone, type: 'change_password' });
         uni.showToast({
-          title: "发送成功,请查看短信！",
+          title: '发送成功,请查看短信！',
           icon: 'none' });
 
         var time = 60;

@@ -228,14 +228,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
 var _vuex = __webpack_require__(/*! vuex */ 6);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
-
-
-
 {
   data: function data() {
     return {
@@ -275,8 +268,7 @@ var _vuex = __webpack_require__(/*! vuex */ 6);function ownKeys(object, enumerab
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['login', 'logout'])), {}, {
     get_vip_info: function get_vip_info() {var _this = this;
-      this.$api.vip_info({ token: this.token }).
-      then(function (res) {
+      this.$api.vip_info({ token: this.token }).then(function (res) {
         console.log(res);
         _this.info = res.data;
         _this.is_vip = res.data.is_vip;
@@ -289,21 +281,18 @@ var _vuex = __webpack_require__(/*! vuex */ 6);function ownKeys(object, enumerab
     //获取用户信息
     getuserinfo: function getuserinfo() {var _this2 = this;
       if (uni.getStorageSync('type') == 4) {
-        this.$api.get_user_info({ token: this.token }).
-        then(function (res) {
+        this.$api.get_user_info({ token: this.token }).then(function (res) {
           console.log(res);
           _this2.user_info = res.data;
           _this2.grade_names = res.data.school_list.grade_names;
           _this2.team_name = res.data.school_list.team_name;
         });
       } else {
-        this.$api.get_teacher_info({ token: this.token }).
-        then(function (res) {
+        this.$api.get_teacher_info({ token: this.token }).then(function (res) {
           console.log('jiaoshi', res);
           _this2.user_info = res.data;
         });
       }
-
     },
     touser: function touser(url) {
       console.log(url);

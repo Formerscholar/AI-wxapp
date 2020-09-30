@@ -157,7 +157,7 @@ page {
 .leixing scroll-view .list button {
   float: right;
   margin: 20rpx;
-  color: #F8601C;
+  color: #f8601c;
   -webkit-border-radius: 8rpx;
           border-radius: 8rpx;
   padding: 0;

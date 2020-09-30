@@ -206,15 +206,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
@@ -243,14 +234,13 @@ var _default =
       return item;
     },
     get_exercise_analysis: function get_exercise_analysis() {var _this = this;
-      this.$api.get_exercise_analysis({ id: this.id }).
-      then(function (res) {
+      this.$api.get_exercise_analysis({ id: this.id }).then(function (res) {
         if (res.code != 200) {
           /* uni.showToast({
-                              	title:res.msg,
-                              	icon:"none",
-                              	//duration:3000
-                              }) */
+                              		title:res.msg,
+                              		icon:"none",
+                              		//duration:3000
+                              	}) */
         } else {
           _this.jiexiList = res.data;
           console.log('watchExplane', res.data);

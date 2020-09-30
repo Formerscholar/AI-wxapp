@@ -201,19 +201,15 @@ var _default =
     this.get_student_list();
   },
   computed: {},
-
-
   methods: {
     get_student_list: function get_student_list() {var _this = this;
-      this.$api.team_student_list({ token: this.token, team_id: this.team_id }).
-      then(function (res) {
+      this.$api.team_student_list({ token: this.token, team_id: this.team_id }).then(function (res) {
         console.log(res);
         if (res.code == 200) {
           console.log(res.data);
           _this.student = res.data.student;
           _this.teacher = res.data.teacher;
         } else {
-
         }
       });
     },
@@ -227,8 +223,7 @@ var _default =
               user_id: id };
 
             console.log(data);
-            _this2.$api.remove_student(data).
-            then(function (res) {
+            _this2.$api.remove_student(data).then(function (res) {
               if (res.code == 200) {
                 uni.showToast({
                   title: '删除成功' });
@@ -250,8 +245,7 @@ var _default =
         title: '确定删除吗？',
         success: function success(res) {
           if (res.confirm) {
-            _this3.$api.remove_team({ token: _this3.token, team_id: _this3.team_id }).
-            then(function (res) {
+            _this3.$api.remove_team({ token: _this3.token, team_id: _this3.team_id }).then(function (res) {
               console.log(res);
               if (res.code == 200) {
                 uni.showToast({

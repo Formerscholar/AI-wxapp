@@ -185,18 +185,18 @@ export default {
 			this.dateList.forEach((e, j, arr) => {
 				if (i == j) {
 					e.dateStaus = true;
-					if(i==0){
-						_this.it='day'
-						this.time=`${year}-${month2}-${day-7}`
-						this.time2=`${year}-${month2}-${day}`
-					}else if(i==1){
-						_this.it='day'
-						this.time=`${year}-${month2-1}-${day}`
-						this.time2=`${year}-${month2}-${day}`
-					}else{
-						_this.it='day'
-						this.time=`${year-1}-${month2}-${day}`
-						this.time2=`${year}-${month2}-${day}`
+					if (i == 0) {
+						_this.it = 'day';
+						this.time = `${year}-${month2}-${day - 7}`;
+						this.time2 = `${year}-${month2}-${day}`;
+					} else if (i == 1) {
+						_this.it = 'day';
+						this.time = `${year}-${month2 - 1}-${day}`;
+						this.time2 = `${year}-${month2}-${day}`;
+					} else {
+						_this.it = 'day';
+						this.time = `${year - 1}-${month2}-${day}`;
+						this.time2 = `${year}-${month2}-${day}`;
 					}
 				} else {
 					e.dateStaus = false;

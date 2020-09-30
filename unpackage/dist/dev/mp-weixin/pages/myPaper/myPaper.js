@@ -184,10 +184,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
@@ -230,8 +226,7 @@ var _default =
   methods: {
     //学科分类
     subject_fenlei: function subject_fenlei() {var _this = this;
-      this.$api.subject().
-      then(function (res) {
+      this.$api.subject().then(function (res) {
         console.log('list', res.data);
         var list = res.data;
         list.forEach(function (elem, i, arr) {
@@ -258,8 +253,7 @@ var _default =
     },
     //校本试卷（学生）
     get_my_test_paper: function get_my_test_paper() {var _this3 = this;
-      this.$api.my_test_paper({ token: this.token, page: this.page, subject_id: this.subject_id }).
-      then(function (res) {
+      this.$api.my_test_paper({ token: this.token, page: this.page, subject_id: this.subject_id }).then(function (res) {
         console.log(res);
         if (res.code != 200) {
           // uni.showToast({
@@ -273,32 +267,29 @@ var _default =
         } else {
           _this3.student_list = [].concat(_toConsumableArray(_this3.student_list), _toConsumableArray(res.data.paper_list));
         }
-
       });
     },
     //校本试卷（老师）
     school_test_paper: function school_test_paper() {var _this4 = this;
-      this.$api.school_test_paper({ token: this.token, page: this.page }).
-      then(function (res) {
+      this.$api.school_test_paper({ token: this.token, page: this.page }).then(function (res) {
         console.log(res);
         _this4.is_more = res.is_more;
         if (res.code != 200) {
           /* uni.showToast({
-                              	title:res.msg,
-                              	icon:'none'
-                              }) */
+                              		title:res.msg,
+                              		icon:'none'
+                              	}) */
         }
         if (_this4.page == 1) {
           _this4.xb_list = res.data.school_based_list;
         } else {
           _this4.xb_list = [].concat(_toConsumableArray(_this4.xb_list), _toConsumableArray(res.data.school_based_list));
         }
-
       });
     },
     chakan: function chakan(id, title, subject, subject_name) {
       uni.navigateTo({
-        url: "/pages/myPaper/seePapers?based_id=" + id + '&title=' + title + '&subject=' + subject + '&subject_name=' + subject_name });
+        url: '/pages/myPaper/seePapers?based_id=' + id + '&title=' + title + '&subject=' + subject + '&subject_name=' + subject_name });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

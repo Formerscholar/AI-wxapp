@@ -55,22 +55,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
     return {
       textbook_list: [],
-      subject_id: "",
+      subject_id: '',
       subject_list: [],
       semester_list: [], //难度列表
-      num_l: 0, //难度选择 
+      num_l: 0, //难度选择
       semester: '',
       page: 1,
       is_more: 1,
@@ -86,7 +79,7 @@ var _default =
   },
   onShow: function onShow() {
     this.subject_fenlei();
-    // this.get_semester() 
+    // this.get_semester()
   },
   onLoad: function onLoad(options) {
     if (uni.getStorageSync('userInfo').token) {
@@ -99,18 +92,17 @@ var _default =
   methods: {
     //习题难度
     /* get_semester(){
-    	this.$api.get_semester()
-    	.then(res=>{
-    		console.log(res)
-    		this.semester_list=res.data
-    		this.semester=res.data[0]['name']
-    	})
-    	
-    }, */
+    		this.$api.get_semester()
+    		.then(res=>{
+    			console.log(res)
+    			this.semester_list=res.data
+    			this.semester=res.data[0]['name']
+    		})
+    		
+    	}, */
     //学科分类
     subject_fenlei: function subject_fenlei() {var _this = this;
-      this.$api.subject().
-      then(function (res) {
+      this.$api.subject().then(function (res) {
         console.log('list', res.data);
         var list = res.data;
         list.forEach(function (elem, i, arr) {
@@ -121,8 +113,7 @@ var _default =
       });
     },
     my_textbook_list: function my_textbook_list() {var _this2 = this;
-      this.$api.my_textbook_list({ token: this.token, type: this.type, subject_id: this.subject_id, page: this.page, page_size: 10 }).
-      then(function (res) {
+      this.$api.my_textbook_list({ token: this.token, type: this.type, subject_id: this.subject_id, page: this.page, page_size: 10 }).then(function (res) {
         if (res.code == 200) {
           _this2.is_more = res.is_more;
           if (_this2.page == 1) {
@@ -135,19 +126,19 @@ var _default =
             _this2.textbook_list = [];
           }
           /* uni.showToast({
-            	title:res.msg,
-            	icon:'none'
-            }) */
+            		title:res.msg,
+            		icon:'none'
+            	}) */
         }
       });
     },
     /* select_l(e){ 
-       	this.is_more=1
-       	this.page=1
-       	this.num_l=e.detail.value   
-       	this.semester=this.semester_list[e.detail.value]['name']    
-       	this.my_textbook_list()
-       }, */
+       		this.is_more=1
+       		this.page=1
+       		this.num_l=e.detail.value   
+       		this.semester=this.semester_list[e.detail.value]['name']    
+       		this.my_textbook_list()
+       	}, */
     toselect: function toselect() {
       uni.navigateTo({
         url: '/pages/myteaching/myteaching?id=' + this.subject_id });

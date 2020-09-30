@@ -207,10 +207,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 var app = getApp();var uniPopup = function uniPopup() {__webpack_require__.e(/*! require.ensure | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then((function () {return resolve(__webpack_require__(/*! @/components/uni-popup/uni-popup.vue */ 311));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
@@ -242,9 +238,7 @@ var app = getApp();var uniPopup = function uniPopup() {__webpack_require__.e(/*!
       this.get_my_test_paper();
     }
   },
-  onShow: function onShow() {
-
-  },
+  onShow: function onShow() {},
   onLoad: function onLoad() {
     this.tpmid = app.globalData.settings.tpmid;
     console.log('this.tpmid', this.tpmid);
@@ -298,12 +292,8 @@ var app = getApp();var uniPopup = function uniPopup() {__webpack_require__.e(/*!
 
           // _this.fasong()
         },
-        success: function success(res) {
-
-        },
-        fail: function fail(res) {
-
-        } });
+        success: function success(res) {},
+        fail: function fail(res) {} });
 
     },
     //发送邮箱
@@ -315,8 +305,7 @@ var app = getApp();var uniPopup = function uniPopup() {__webpack_require__.e(/*!
         // email:this.email
       };
       if (uni.getStorageSync('type') == 3) {
-        this.$api.get_download_based(data).
-        then(function (res) {
+        this.$api.get_download_based(data).then(function (res) {
           console.log(res);
           if (res.code == 200) {
             _this2.email = '';
@@ -327,9 +316,9 @@ var app = getApp();var uniPopup = function uniPopup() {__webpack_require__.e(/*!
 
           } else {
             /* uni.showToast({
-                  	title:res.msg,
-                  	icon:'none'
-                  }) */
+                  		title:res.msg,
+                  		icon:'none'
+                  	}) */
             _this2.$refs.popup2.open();
           }
         });
@@ -360,16 +349,15 @@ var app = getApp();var uniPopup = function uniPopup() {__webpack_require__.e(/*!
 
         } else {
           /* uni.showToast({
-                	title:res.msg,
-                	icon:'none'
-                }) */
+                		title:res.msg,
+                		icon:'none'
+                	}) */
         }
       });
     },
     //学科分类
     subject_fenlei: function subject_fenlei() {var _this4 = this;
-      this.$api.subject().
-      then(function (res) {
+      this.$api.subject().then(function (res) {
         console.log('list', res.data);
         var list = res.data;
         list.forEach(function (elem, i, arr) {
@@ -397,14 +385,13 @@ var app = getApp();var uniPopup = function uniPopup() {__webpack_require__.e(/*!
     },
     //名校资源（学生）
     get_my_test_paper: function get_my_test_paper() {var _this6 = this;
-      this.$api.newest_paper({ token: this.token, page: this.page, page_size: 10, subject_id: this.subject_id }).
-      then(function (res) {
+      this.$api.newest_paper({ token: this.token, page: this.page, page_size: 10, subject_id: this.subject_id }).then(function (res) {
         console.log(res);
         if (res.code != 200) {
           /* uni.showToast({
-                              	title:res.msg,
-                              	icon:'none'
-                              }) */
+                              		title:res.msg,
+                              		icon:'none'
+                              	}) */
         }
         _this6.is_more2 = res.is_more;
         if (_this6.page == 1) {
@@ -416,27 +403,25 @@ var app = getApp();var uniPopup = function uniPopup() {__webpack_require__.e(/*!
     },
     //名校资源（老师）
     school_test_paper: function school_test_paper() {var _this7 = this;
-      this.$api.teacher_newest_paper({ token: this.token, page: this.page, page_size: 10 }).
-      then(function (res) {
+      this.$api.teacher_newest_paper({ token: this.token, page: this.page, page_size: 10 }).then(function (res) {
         console.log(res);
         _this7.is_more = res.is_more;
         if (res.code != 200) {
           /* uni.showToast({
-                              	title:res.msg,
-                              	icon:'none'
-                              }) */
+                              		title:res.msg,
+                              		icon:'none'
+                              	}) */
         }
         if (_this7.page == 1) {
           _this7.xb_list = res.data.school_based_list;
         } else {
           _this7.xb_list = [].concat(_toConsumableArray(_this7.xb_list), _toConsumableArray(res.data.school_based_list));
         }
-
       });
     },
     chakan: function chakan(id, title, subject, subject_name) {
       uni.navigateTo({
-        url: "/pages/myPaper/seePapers?based_id=" + id + '&title=' + title + '&subject=' + subject + '&subject_name=' + subject_name });
+        url: '/pages/myPaper/seePapers?based_id=' + id + '&title=' + title + '&subject=' + subject + '&subject_name=' + subject_name });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

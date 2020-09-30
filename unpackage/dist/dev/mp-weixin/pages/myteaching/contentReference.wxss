@@ -43,7 +43,7 @@ page {
   color: #4c4c4c;
 }
 .top text {
-  color: #F8601C;
+  color: #f8601c;
 }
 .tabar {
   height: 150rpx;
@@ -181,14 +181,14 @@ page {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
-  color: #F8601C;
+  color: #f8601c;
   text-align: center;
 }
 .mc text:first-child {
   display: block;
   width: 25%;
   height: 30rpx;
-  border-bottom: 1rpx solid #F8601C;
+  border-bottom: 1rpx solid #f8601c;
 }
 .mc text:nth-child(2) {
   margin-top: 10rpx;
@@ -196,7 +196,7 @@ page {
 .mc text:last-child {
   display: block;
   width: 25%;
-  border-bottom: 1rpx solid #F8601C;
+  border-bottom: 1rpx solid #f8601c;
   height: 30rpx;
 }
 .scroll-view {
@@ -233,7 +233,7 @@ page {
           transform: translateY(-50%);
   width: 35rpx;
   height: 35rpx;
-  border: 1rpx solid #F8601C;
+  border: 1rpx solid #f8601c;
   -webkit-border-radius: 50%;
           border-radius: 50%;
 }

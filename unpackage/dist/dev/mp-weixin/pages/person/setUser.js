@@ -175,8 +175,7 @@ var _default =
           token: this.token };
 
       }
-      this.$api.change_user_info(data).
-      then(function (res) {
+      this.$api.change_user_info(data).then(function (res) {
         console.log(res);
         if (res.code == 200) {
           var pages = getCurrentPages();
@@ -196,7 +195,6 @@ var _default =
 
         }
       });
-
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

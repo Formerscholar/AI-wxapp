@@ -199,8 +199,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   data: function data() {
@@ -255,7 +253,7 @@ var _default =
             filePath: _this.img,
             name: 'file',
             formData: {
-              'token': _this.token },
+              token: _this.token },
 
             success: function success(res) {
               console.log('返回', res.data);
@@ -274,8 +272,7 @@ var _default =
     },
     //获取省市区
     get_location_list: function get_location_list() {var _this3 = this;
-      this.$api.get_location_list({ token: this.token }).
-      then(function (res) {
+      this.$api.get_location_list({ token: this.token }).then(function (res) {
         console.log(res);
         _this3.location = res.data;
       });
@@ -288,47 +285,39 @@ var _default =
         area_id: this.user_info.school_list.area_id,
         token: this.token };
 
-      this.$api.get_school(data).
-      then(function (res) {
+      this.$api.get_school(data).then(function (res) {
         console.log(res);
         if (res.data.length == 0) {
           _this4.school = [{ name: '该省市区没有学校' }];
         } else {
           _this4.school = res.data;
         }
-
-
       });
     },
     //获取年级
     get_grade: function get_grade() {var _this5 = this;
-      this.$api.get_grade({ token: this.token }).
-      then(function (res) {
+      this.$api.get_grade({ token: this.token }).then(function (res) {
         console.log(res);
         _this5.grade = res.data.grade_list;
-
       });
     },
     //获取用户信息
     getuserinfo: function getuserinfo() {var _this6 = this;
       if (uni.getStorageSync('type') == 4) {
-        this.$api.get_user_info({ token: this.token }).
-        then(function (res) {
+        this.$api.get_user_info({ token: this.token }).then(function (res) {
           console.log(res);
           _this6.user_info = res.data;
           _this6.img = res.data.avatar;
           _this6.getschool();
         });
       } else {
-        this.$api.get_teacher_info({ token: this.token }).
-        then(function (res) {
+        this.$api.get_teacher_info({ token: this.token }).then(function (res) {
           console.log(res);
           _this6.user_info = res.data;
           _this6.img = res.data.avatar;
           _this6.getschool();
         });
       }
-
     },
     //修改年级
     changeGrade: function changeGrade(e) {var _this7 = this;

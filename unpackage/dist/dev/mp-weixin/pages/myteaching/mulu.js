@@ -150,8 +150,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   data: function data() {
@@ -173,7 +171,6 @@ var _default =
         icon: 'none' });
 
     }
-
   },
   onLoad: function onLoad(options) {
     this.textbook_id = options.textbook_id;
@@ -190,8 +187,7 @@ var _default =
 
     },
     get_list: function get_list() {var _this = this;
-      this.$api.catalogue({ textbook_id: this.textbook_id }).
-      then(function (res) {
+      this.$api.catalogue({ textbook_id: this.textbook_id }).then(function (res) {
         console.log(res);
 
         if (res.code != 200) {
