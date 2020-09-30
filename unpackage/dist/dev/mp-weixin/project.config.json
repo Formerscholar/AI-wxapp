@@ -5,41 +5,14 @@
   },
   "setting": {
     "urlCheck": true,
-    "es6": false,
-    "enhance": false,
-    "postcss": true,
-    "preloadBackgroundData": false,
     "minified": true,
-    "newFeature": false,
-    "coverView": true,
-    "nodeModules": false,
-    "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "uglifyFileName": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
-    "useApiHook": false,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    },
-    "useIsolateContext": true,
-    "useCompilerModule": true,
-    "userConfirmedUseCompilerModuleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": []
+    "es6": false,
+    "postcss": true
   },
   "compileType": "miniprogram",
   "libVersion": "",
   "appid": "wx64468960ba0a610e",
   "projectname": "错题宝",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
   "condition": {
     "search": {
       "current": -1,
