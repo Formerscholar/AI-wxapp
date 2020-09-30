@@ -1,1 +1,0 @@
-<view><view class="img-box _div"><image src="{{pic}}"></image><block wx:if="{{flag}}"><view class="wrapper _div"></view></block><view class="bottom"><view data-event-opts="{{[['tap',[['toBack']]]]}}" class="btn" bindtap="__e">重新拍摄</view></view></view></view>

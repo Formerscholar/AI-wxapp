@@ -1,0 +1,114 @@
+.title_warp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70rpx;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  z-index: 10;
+}
+.title_warp .left_category {
+  color: #E50304;
+}
+.title_warp .right_name {
+  color: #303030;
+}
+.TeachDetails {
+  margin-top: 70rpx;
+}
+.TeachDetails .content_box {
+  padding: 24rpx;
+}
+.TeachDetails .content_box .box_items {
+  background-color: #fff;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+.TeachDetails .content_box .box_items:last-child {
+  margin-bottom: 0;
+}
+.TeachDetails .content_box .box_items .bot_btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24rpx;
+  border-top: 1px solid #E5E5E5;
+  margin-top: 20rpx;
+}
+.TeachDetails .content_box .box_items .bot_btns .left_box,
+.TeachDetails .content_box .box_items .bot_btns .right-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.TeachDetails .content_box .box_items .bot_btns .left_box .search_img,
+.TeachDetails .content_box .box_items .bot_btns .right-box .search_img {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 16rpx;
+}
+.TeachDetails .content_box .box_items .bot_btns .left_box .search_text,
+.TeachDetails .content_box .box_items .bot_btns .right-box .search_text {
+  font-size: 26rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  color: #333333;
+}
+.cinter_warp {
+  padding: 30rpx;
+  border-bottom: 1px solid #E5E5E5;
+}
+.cinter_warp:last-child {
+  border: none;
+}
+.cinter_warp .bot_boxs {
+  margin: 24rpx 0;
+  padding-bottom: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cinter_warp .bot_boxs:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.cinter_warp .bot_boxs .left_btn {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.cinter_warp .bot_boxs .left_btn .left_btn_img {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 16rpx;
+}
+.cinter_warp .bot_boxs .left_btn .left_btn_text {
+  font-size: 26rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  color: #333333;
+}
+.cinter_warp .bot_boxs .right_btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.cinter_warp .bot_boxs .right_btn .right_btn_img {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 16rpx;
+}
+.cinter_warp .bot_boxs .right_btn .right_btn_text {
+  font-size: 26rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  color: #333333;
+}

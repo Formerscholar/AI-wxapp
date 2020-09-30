@@ -1,0 +1,24 @@
+<view class="bindInfo">
+  <image class="topBg" src="/assets/image/topBg.png" mode="widthFix" />
+  <view class="content_box">
+    <block wx:for="{{itemList}}">
+      <view class="item_box" data-iid="{{item.id}}">
+        <view class="left_icon">
+          <image class="left_icon_img" src="/assets/image/{{item.left_icon}}" mode="widthFix" />
+        </view>
+        <view class="content_search">{{item.text}}</view>
+        <view class="right_icon">
+          <image class="right_icon_img" src="/assets/image/dump.png" mode="widthFix" />
+        </view>
+      </view>
+    </block>
+    <view class="item_box name_box">
+      <view class="left_icon">
+        <image class="left_icon_img" src="/assets/image/name.png" mode="widthFix" />
+      </view>
+      <view class="content_search">
+        <input type="text" value="{{ name }}" placeholder="请输入姓名" />
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,78 @@
+<view class="home">
+  <!-- 获取全局状态中的数据 -->
+  <!-- <view>{{$state.user.name}}:{{$state.msg}}</view>
+	<button bindtap="mycarClick">商品详情对象</button>
+  <button bindtap="myClick">商品列表ID</button>-->
+  <!-- <button class="bg-gradual-blue padding radius text-center shadow-blur">test</button> -->
+  <view class="bg"></view>
+  <swiper
+    class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}"
+    circular="true"
+    autoplay="true"
+    interval="5000"
+    duration="500"
+    bindchange="cardSwiper"
+    indicator-dots="true"
+    indicator-color="#fff"
+    easing-function="linear"
+  >
+    <swiper-item class="item_swiper" wx:for="{{swiperList}}" wx:key="{{item.banner_id}}">
+      <view class="item_img_warp">
+        <image class="item_img" src="{{item.img}}" mode="widthFix" />
+      </view>
+    </swiper-item>
+  </swiper>
+  <view class="title_info_text">
+    <image class="title_info_img" src="../../assets/image/horn.png" mode="widthFix" />
+    <text class="title_info_word">我们AI错题宝竭诚为各位学生打造一个完美的错题收集环境</text>
+  </view>
+  <view class="photograph" bind:tap="shotSearchClick">
+    <view class="left_img">
+      <image class="img_info" src="../../assets/image/phone.png" mode="widthFix" />
+    </view>
+    <view class="right_text">
+      <text class="top_text">拍照搜题</text>
+      <text class="bot_text">目前只支持教辅材料拍照识题</text>
+    </view>
+  </view>
+  <view class="items_box">
+    <view class="Teaching items" bind:tap="Myteachingassistant">
+      <image class="teach_img img_info" src="../../assets/image/Teaching.png" mode="widthFix" />
+      <view class="right_box">
+        <text class="title_text">我的教辅</text>
+        <text class="title_centent">
+          <text class="title_nums">{{textbook_count}}</text>本
+        </text>
+      </view>
+    </view>
+    <view class="testpaper items">
+      <image class="teach_img img_info" src="../../assets/image/testpaper.png" mode="widthFix" />
+      <view class="right_box">
+        <text class="title_text">校本试卷</text>
+        <text class="title_centent">
+          <text class="title_nums">{{paper_total}}</text>份
+        </text>
+      </view>
+    </view>
+  </view>
+  <view class="items_box">
+    <view class="school items">
+      <image class="teach_img img_info" src="../../assets/image/newschool.png" mode="widthFix" />
+      <view class="right_box">
+        <text class="title_text">名校资源</text>
+        <text class="title_centent">
+          <text class="title_nums">{{recent_paper}}</text>份
+        </text>
+      </view>
+    </view>
+    <view class="situation items">
+      <image class="teach_img img_info" src="../../assets/image/situation.png" mode="widthFix" />
+      <view class="right_box">
+        <text class="title_text">学情报告</text>
+        <text class="title_centent">
+          <text class="title_nums">{{error_exercises_total}}</text>道错题
+        </text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,82 @@
+<view class="user">
+  <!-- <van-button type="primary" bind:click="handClick">登录</van-button> -->
+  <view class="top_box">
+    <view class="top_info">
+      <view class="left_portrait">
+        <image class="title_logo" src="{{userInfo.avatar}}" mode="widthFix" />
+        <view class="conter_info">
+          <text class="topname">{{userInfo.true_name}}</text>
+          <view class="botscholl">
+            <image class="icon" src="../../assets/image/school_icon.png" mode="widthFix" />
+            <view class="text">{{userInfo.school_list.school_name}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="right_icon">
+        <image class="leftbtn" src="../../assets/image/leftbtn.png" mode="widthFix" />
+      </view>
+    </view>
+    <view class="botmember">
+      <view class="content_box">
+        <image class="left_img" src="../../assets/image/memberIcon.png" mode="widthFix" />
+
+        <view class="content_text" wx:if="{{!is_vip}}">
+          申请VIP会员
+          <text class="dian_text">·</text>了解更多特权
+        </view>
+        <view class="content_text" wx:else>
+          <view class="vip_text" >
+            我的VIP会员
+          </view>
+          <view class="end_time" >
+            VIP到期时间：{{end_time}}
+          </view>
+        </view>
+        <image class="right_img" src="{{is_vip?'../../assets/image/renew.png':'../../assets/image/memberbtn.png'}}" mode="widthFix" />
+      </view>
+    </view>
+  </view>
+  <view class="OperationList">
+    <view class="Operationitems">
+      <view class="left_warp">
+        <image class="left_img" src="../../assets/image/bindclass.png" mode="widthFix" />
+        <text class="left_text">绑定班级</text>
+      </view>
+      <view class="right_box">
+        <text class="right_text">{{userInfo.school_list.grade_names}}</text>
+        <image class="leftbtn" src="../../assets/image/leftbtn.png" mode="widthFix" />
+      </view>
+    </view>
+    <view class="Operationitems">
+      <view class="left_warp">
+        <image class="left_img" src="../../assets/image/about.png" mode="widthFix" />
+        <text class="left_text">关于我们</text>
+      </view>
+      <view class="right_box">
+        <text class="right_text"></text>
+        <image class="leftbtn" src="../../assets/image/leftbtn.png" mode="widthFix" />
+      </view>
+    </view>
+    <view class="Operationitems">
+      <view class="left_warp">
+        <image class="left_img" src="../../assets/image/info.png" mode="widthFix" />
+        <text class="left_text">意见反馈</text>
+      </view>
+      <view class="right_box">
+        <text class="right_text"></text>
+        <image class="leftbtn" src="../../assets/image/leftbtn.png" mode="widthFix" />
+      </view>
+    </view>
+    <view class="Operationitems">
+      <view class="left_warp">
+        <image class="left_img" src="../../assets/image/my-share.png" mode="widthFix" />
+        <text class="left_text">分享</text>
+      </view>
+      <view class="right_box">
+        <text class="right_text"></text>
+        <image class="leftbtn" src="../../assets/image/leftbtn.png" mode="widthFix" />
+      </view>
+    </view>
+  </view>
+  <view class="signout" bind:tap="Switchidentity">切换身份</view>
+</view>

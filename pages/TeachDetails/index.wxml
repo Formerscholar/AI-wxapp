@@ -1,0 +1,70 @@
+<view class="title_warp">
+  <view class="left_category">【{{title_category}}】</view>
+  <view class="right_name">{{title_name}}</view>
+</view>
+
+<view class="TeachDetails">
+  <view class="content_box">
+    <block wx:for="{{contentList}}">
+      <view class="box_items">
+        <rich-text class="top_html" nodes="{{item.content}}"></rich-text>
+        <view class="bot_btns">
+          <view class="left_box" bind:tap="showPopup" data-item="{{item}}">
+            <image class="search_img" src="../../assets/image/search_icon.png" mode="widthFix" />
+            <view class="search_text">同类型题目</view>
+          </view>
+          <view
+            class="right-box"
+            bind:tap="joinExercises"
+            data-iid="{{item.id}}"
+            data-index="{{index}}"
+          >
+            <image
+              class="search_img"
+              src="{{!item.is_error? '../../assets/image/Collection_icon.png' : '../../assets/image/jiaRu.png'}}"
+              mode="widthFix"
+            />
+            <view class="search_text">{{!item.is_error? '加入错题' : '取消加入'}}</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
+
+<ctb-popup
+  popupshow="{{ popupshow }}"
+  leftImg="../../assets/image/title_logo.png"
+  leftText="同类型题目"
+  rightImg="../../assets/image/Refresh.png"
+  rightText="换一批"
+  bind:onClose="onClose"
+  bind:onRefsh="refshList"
+  bind:onCancel="onClose"
+  bind:onConfirme="onClose"
+>
+  <block wx:for="{{exercises_list}}">
+    <view class="cinter_warp">
+      <rich-text class="top_html" nodes="{{item.content}}"></rich-text>
+      <view class="bot_boxs">
+        <view class="left_btn" data-iid="{{item.exercises_id}}" bind:tap="onAnalysis">
+          <image class="left_btn_img" src="../../assets/image/see_icon.png" mode="widthFix" />
+          <view class="left_btn_text">查看解析</view>
+        </view>
+        <view
+          class="right_btn"
+          bind:tap="joinExercise"
+          data-iid="{{item.exercises_id}}"
+          data-index="{{index}}"
+        >
+          <image
+            class="right_btn_img"
+            src="{{!item.is_error? '../../assets/image/Collection_icon.png' : '../../assets/image/jiaRu.png'}}"
+            mode="widthFix"
+          />
+          <view class="right_btn_text">{{!item.is_error? '加入错题' : '取消加入'}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</ctb-popup>

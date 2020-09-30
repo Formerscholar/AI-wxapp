@@ -1,0 +1,131 @@
+.home .bg {
+  width: 100%;
+  height: 150rpx;
+  background-color: #e50304;
+  margin-bottom: 150rpx;
+}
+.home .screen-swiper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 300rpx !important;
+}
+.home .screen-swiper .item_swiper .item_img_warp {
+  border-radius: 15rpx;
+  padding: 0 24rpx;
+  overflow: hidden;
+  height: 300rpx !important;
+}
+.home .screen-swiper .item_swiper .item_img {
+  border-radius: 15rpx;
+  overflow: hidden;
+  height: 300rpx !important;
+}
+.home .title_info_text {
+  display: flex;
+  padding: 24rpx;
+}
+.home .title_info_text .title_info_img {
+  width: 37rpx;
+  height: 36rpx;
+  margin-right: 18rpx;
+}
+.home .title_info_text .title_info_word {
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 24rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  color: #333333;
+}
+.home .photograph {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  background-color: #fff;
+  height: 219rpx;
+  margin: 0 24rpx;
+  border: 1px solid #e5e5e5;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+}
+.home .photograph .left_img {
+  margin-left: 145rpx;
+  margin-right: 31rpx;
+}
+.home .photograph .left_img .img_info {
+  width: 121rpx;
+  height: 99rpx;
+}
+.home .photograph .right_text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.home .photograph .right_text .top_text {
+  font-size: 38rpx;
+  font-family: 'PingFang SC';
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 30rpx;
+  line-height: 36rpx;
+}
+.home .photograph .right_text .bot_text {
+  font-size: 26rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  color: #989898;
+}
+.home .items_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home .items_box .items {
+  width: 339rpx;
+  height: 160rpx;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24rpx;
+  margin-right: 24rpx;
+  border: 1px solid #e5e5e5;
+  border-radius: 16rpx;
+}
+.home .items_box .items:nth-child(2) {
+  margin-right: 0;
+}
+.home .items_box .items .img_info {
+  width: 78rpx;
+  height: 90rpx;
+  margin-right: 24rpx;
+}
+.home .items_box .items .right_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 73rpx;
+}
+.home .items_box .items .right_box .title_text {
+  font-size: 30rpx;
+  font-family: ' PingFang SC';
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 10rpx;
+}
+.home .items_box .items .right_box .title_centent {
+  font-size: 20rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  color: #666;
+}
+.home .items_box .items .right_box .title_centent .title_nums {
+  font-size: 30rpx;
+  color: #ff0000;
+  margin-right: 5rpx;
+}

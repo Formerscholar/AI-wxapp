@@ -1,0 +1,46 @@
+.logo_box {
+  height: 100vh;
+}
+.logo_box .title_logo {
+  display: block;
+  width: 100%;
+  height: 518rpx;
+}
+.logo_box .title_flex_logo_warp {
+  margin-top: 72rpx;
+  margin-bottom: 39rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo_box .title_flex_logo_warp .title_flex_logo {
+  margin: 0 auto;
+  width: 367rpx;
+  height: 80rpx;
+}
+.logo_box .content {
+  padding-left: 76rpx;
+}
+.logo_box .content .text_box {
+  width: 194rpx;
+  height: 27rpx;
+  font-size: 28rpx;
+  font-family: 'PingFang SC';
+  font-weight: 400;
+  color: #cccccc;
+  line-height: 34rpx;
+}
+.logo_box .content .all_btn {
+  width: 590rpx;
+  height: 112rpx;
+  background: linear-gradient(86deg, #E50304, #F82727);
+  border-radius: 12rpx;
+  font-size: 42rpx;
+  font-family: 'PingFang SC';
+  font-weight: 500;
+  color: #FFFFFF;
+  margin-top: 25rpx;
+}
+.logo_box .content .teacherBtn {
+  margin-top: 33rpx;
+}
