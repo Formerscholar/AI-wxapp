@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="joinClassBg"><image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png" /></view>
+		<view class="joinClassBg"></view>
 		<view class="input"><input type="text" v-model="num" placeholder="请输入班级ID或老师手机号码" /></view>
 
 		<button class="btn" @click="search_team()">查找班级</button>
@@ -104,8 +104,8 @@ page {
 }
 .joinClassBg {
 	width: 100%;
-	height: 650rpx;
-	background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/mineBg.png) no-repeat center center;
+	height: 450rpx;
+	background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png) no-repeat center center;
 	background-size: 100% 101%;
 	image {
 		display: block;
@@ -232,7 +232,5 @@ page {
 		box-sizing: border-box;
 	}
 }
-.cardCon {
-	margin: 50rpx auto 100rpx;
-}
+
 </style>

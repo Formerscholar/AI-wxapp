@@ -193,31 +193,26 @@ export default {
 		},
 		//绑定邮箱发送
 		fasong2() {
-			let data = {
-				token: this.token,
-				based_id: this.based_id,
-				email: this.email,
-				flag: 2
-			};
 			if (uni.getStorageSync('type') == 3) {
-				let req = this.$api.get_download_based(data);
-			}
-			req.then(res => {
-				console.log(res);
-				if (res.code == 200) {
-					this.email = '';
-					this.$refs.popup2.close();
-					uni.showToast({
-						title: '下载成功，已发送邮箱！',
-						icon: 'none'
+				this.$api
+					.get_download_based({
+						token: this.token,
+						based_id: this.based_id,
+						email: this.email,
+						flag: 2
+					})
+					.then(res => {
+						console.log(res);
+						if (res.code == 200) {
+							this.email = '';
+							uni.showToast({
+								title: '下载成功，已发送邮箱！',
+								icon: 'none'
+							});
+						}
+						this.$refs.popup2.close();
 					});
-				} else {
-					/* uni.showToast({
-							title:res.msg,
-							icon:'none'
-						}) */
-				}
-			});
+			}
 		},
 		//学科分类
 		subject_fenlei() {

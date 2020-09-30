@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="container">
-			<view class="joinClassBg"><image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png" /></view>
+			<view class="joinClassBg"></view>
 			<view class="schoolName">{{ userInfo.school.name }}</view>
 			<view class="item">
 				<picker :range="grade" range-key="name" @change="change1">
@@ -118,9 +118,9 @@ page {
 }
 .joinClassBg {
 	width: 100%;
-	height: 650rpx;
-	background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/mineBg.png) no-repeat center center;
-	background-size: 100% 101%;
+	height: 450rpx;
+	background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png) no-repeat center center;
+	background-size: 100% 100%;
 	image {
 		display: block;
 		width: 325rpx;

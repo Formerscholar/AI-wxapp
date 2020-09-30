@@ -5,7 +5,7 @@
   },
   "setting": {
     "urlCheck": true,
-    "es6": true,
+    "es6": false,
     "enhance": false,
     "postcss": true,
     "preloadBackgroundData": false,
@@ -37,7 +37,7 @@
   "compileType": "miniprogram",
   "libVersion": "",
   "appid": "wx64468960ba0a610e",
-  "projectname": "%E9%94%99%E9%A2%98%E5%AE%9D",
+  "projectname": "错题宝",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {

@@ -12,8 +12,8 @@ export default {
 					uni.showModal({
 						title: '更新提示',
 						content: '发现新版本，是否重启应用?',
-						cancelColor:'#eeeeee',
-						confirmColor:'#FF0000',
+						cancelColor: '#eeeeee',
+						confirmColor: '#FF0000',
 						success(res2) {
 							if (res2.confirm) {
 								// 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
@@ -24,7 +24,6 @@ export default {
 				});
 			}
 		});
-
 		updateManager.onUpdateFailed(function(res) {
 			// 新的版本下载失败
 			uni.showModal({
@@ -38,13 +37,11 @@ export default {
 				}
 			});
 		});
-		
+
 		this.$api.get_settings('get').then(res => {
 			this.globalData.settings = res.data;
 		});
 	},
-	onShow: function() {},
-	onHide: function() {}
 };
 </script>
 

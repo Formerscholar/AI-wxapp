@@ -96,18 +96,51 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
 {
   globalData: {
     settings: {} },
 
   onLaunch: function onLaunch() {var _this = this;
+    var updateManager = uni.getUpdateManager();
+    updateManager.onCheckForUpdate(function (res) {
+      // 请求完新版本信息的回调
+      if (res.hasUpdate) {
+        updateManager.onUpdateReady(function (res2) {
+          uni.showModal({
+            title: '更新提示',
+            content: '发现新版本，是否重启应用?',
+            cancelColor: '#eeeeee',
+            confirmColor: '#FF0000',
+            success: function success(res2) {
+              if (res2.confirm) {
+                // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                updateManager.applyUpdate();
+              }
+            } });
+
+        });
+      }
+    });
+    updateManager.onUpdateFailed(function (res) {
+      // 新的版本下载失败
+      uni.showModal({
+        title: '提示',
+        content: '检查到有新版本，但下载失败，请检查网络设置',
+        success: function success(res) {
+          if (res.confirm) {
+            // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+            updateManager.applyUpdate();
+          }
+        } });
+
+    });
+
     this.$api.get_settings('get').then(function (res) {
       _this.globalData.settings = res.data;
     });
-  },
-  onShow: function onShow() {},
-  onHide: function onHide() {} };exports.default = _default;
+  } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 10 */

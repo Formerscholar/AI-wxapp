@@ -329,31 +329,26 @@ var app = getApp();var uniPopup = function uniPopup() {__webpack_require__.e(/*!
     },
     //绑定邮箱发送
     fasong2: function fasong2() {var _this3 = this;
-      var data = {
-        token: this.token,
-        based_id: this.based_id,
-        email: this.email,
-        flag: 2 };
-
       if (uni.getStorageSync('type') == 3) {
-        var _req = this.$api.get_download_based(data);
-      }
-      req.then(function (res) {
-        console.log(res);
-        if (res.code == 200) {
-          _this3.email = '';
-          _this3.$refs.popup2.close();
-          uni.showToast({
-            title: '下载成功，已发送邮箱！',
-            icon: 'none' });
+        this.$api.
+        get_download_based({
+          token: this.token,
+          based_id: this.based_id,
+          email: this.email,
+          flag: 2 }).
 
-        } else {
-          /* uni.showToast({
-                		title:res.msg,
-                		icon:'none'
-                	}) */
-        }
-      });
+        then(function (res) {
+          console.log(res);
+          if (res.code == 200) {
+            _this3.email = '';
+            uni.showToast({
+              title: '下载成功，已发送邮箱！',
+              icon: 'none' });
+
+          }
+          _this3.$refs.popup2.close();
+        });
+      }
     },
     //学科分类
     subject_fenlei: function subject_fenlei() {var _this4 = this;
