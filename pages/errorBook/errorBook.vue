@@ -142,6 +142,7 @@
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/creatPaper.png" />
 					选择加入{{ type == 4 ? '错题本' : '试卷' }}
 				</view>
+				<scroll-view scroll-y="true">
 				<view class="listJoin" v-if="errorbook_list.length != 0">
 					<view v-for="(item, i) of errorbook_list" :key="i" @click="seletJoin(i)">
 						<view v-if="update" :class="{ 'b-n': item.status }" class="kuang"></view>
@@ -150,7 +151,8 @@
 						</view>
 					</view>
 				</view>
-				<view v-else class="listJoin none">您还没有生成试卷!</view>
+				<view v-else class="listJoin none">您还没有生成{{ type == 4 ? '错题本' : '试卷' }}!</view>
+				</scroll-view>
 				<view class="btnCon">
 					<button @click="cancelPopupJoin()">取消</button>
 					<button @click="add_exercises_to_errorbook()">保存</button>
@@ -1093,7 +1095,7 @@ button::after {
 .maskJoin {
 	z-index: 999;
 	width: 500rpx;
-	height: 530rpx;
+	height: 520rpx;
 	background: #fff;
 	border-radius: 20rpx;
 	> view:first-child {
@@ -1120,27 +1122,28 @@ button::after {
 		justify-content: center;
 		align-items: center;
 	}
-	.listJoin {
-		padding: 10rpx 0;
-		height: 300rpx;
-		overflow-y: auto;
+	scroll-view {
 		width: 100%;
-		> view {
-			display: flex;
-			flex-flow: row nowrap;
-			justify-content: flex-start;
-			align-items: center;
-			padding: 15rpx 30rpx;
-			box-sizing: border-box;
-			.kuang {
-				width: 25rpx;
-				height: 25rpx;
-				border-radius: 50%;
-				border: 0.5rpx solid #c5c5c5;
-				margin-right: 30rpx;
-			}
-			> view{
-				width:412rpx;
+		height: 300rpx;
+		.listJoin {
+			padding: 10rpx 0;
+			> view {
+				display: flex;
+				flex-flow: row nowrap;
+				justify-content: flex-start;
+				align-items: center;
+				padding: 15rpx 30rpx;
+				box-sizing: border-box;
+				.kuang {
+					width: 25rpx;
+					height: 25rpx;
+					border-radius: 50%;
+					border: 0.5rpx solid #c5c5c5;
+					margin-right: 30rpx;
+				}
+				> view{
+					width:412rpx;
+				}
 			}
 		}
 	}
