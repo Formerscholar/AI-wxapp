@@ -1,8 +1,7 @@
 <template>
 	<view>
 		<view class="subtitle">
-			<text>【{{ team_name }}】</text>
-			{{ student_name }}
+			{{ student_name }} <text>{{ team_name }}</text>
 		</view>
 		<view class="flex">
 			<view class="timeTabCon">
@@ -33,8 +32,7 @@
 		<view class="hotTitle" v-if="exercises_list.length != 0">
 			<view class="beforeLine"></view>
 			<view class="hotTitleCon">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/hot.png"></image>
-				<text>热门易错题型</text>
+				<text>该学生收集的错题</text>
 			</view>
 			<view class="afterLine"></view>
 		</view>
@@ -52,11 +50,11 @@
 					<view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click.stop="join_error(i, item.exercises_id)">
 						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
 						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
-						{{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
+						{{ item.is_error ? '取消加入' : '加入试卷' }}
 					</view>
 				</view>
 			</view>
-			<view v-if="is_more == 0 && exercises_list.length != 0" class="is_more">没有更多{{ type == 3 ? '试卷' : '错题' }}了</view>
+			<view v-if="is_more == 0 && exercises_list.length != 0" class="is_more">没有更多错题了</view>
 		</view>
 		<!-- 同类型题目弹框 -->
 		<uni-popup ref="popup" type="center">
@@ -85,7 +83,7 @@
 							<view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.exercises_id)">
 								<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
 								<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
-								{{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
+								{{ item.is_error ? '取消加入' : '加入试卷' }}
 							</view>
 						</view>
 					</view>
@@ -130,6 +128,7 @@ export default {
 			user_id: '',
 			exercises_id: '',
 			exercises_list: [],
+			exercises_count: 0,
 			page_change: 1,
 			size_change: 5,
 			update: true,
@@ -165,44 +164,59 @@ export default {
 			item = item.replace(new RegExp('<img', 'gi'), '<img style="max-width:95%;vertical-align: middle;width:auto;"');
 			return item;
 		},
-
-		selectDate(i) {
-			let _this = this;
-			const date = new Date();
-			var year = date.getFullYear(); // 获取完整的年份(4位,1970)
-			var month = date.getMonth();
-			var month2 = date.getMonth() + 1;
-			var day = date.getDate();
+		getDateRange(dateNow, intervalDays, bolPastTime) {
+			let oneDayTime = 24 * 60 * 60 * 1000;
+			let list = [];
+			let lastDay;
+			if (bolPastTime == true) {
+				lastDay = new Date(dateNow.getTime() - intervalDays * oneDayTime);
+				list.push(this.formateDate(lastDay));
+				list.push(this.formateDate(dateNow));
+			} else {
+				lastDay = new Date(dateNow.getTime() + intervalDays * oneDayTime);
+				list.push(this.formateDate(dateNow));
+				list.push(this.formateDate(lastDay));
+			}
+			return list;
+		},
+		formateDate(time) {
+			let year = time.getFullYear();
+			let month = time.getMonth() + 1;
+			let day = time.getDate();
 			if (month < 10) {
 				month = '0' + month;
-			}
-			if (month2 < 10) {
-				month2 = '0' + month2;
 			}
 			if (day < 10) {
 				day = '0' + day;
 			}
+			return year + '-' + month + '-' + day;
+		},
+		selectDate(i) {
+			const date = new Date();
+
 			this.dateList.forEach((e, j, arr) => {
 				if (i == j) {
 					e.dateStaus = true;
 					if (i == 0) {
-						_this.it = 'day';
-						this.time = `${year}-${month2}-${day - 7}`;
-						this.time2 = `${year}-${month2}-${day}`;
+						this.it = 'day';
+						let list1 = this.getDateRange(date, 6, true);
+						this.time = list1[0];
+						this.time2 = list1[1];
 					} else if (i == 1) {
-						_this.it = 'day';
-						this.time = `${year}-${month2 - 1}-${day}`;
-						this.time2 = `${year}-${month2}-${day}`;
+						this.it = 'day';
+						let list2 = this.getDateRange(date, 30, true);
+						this.time = list2[0];
+						this.time2 = list2[1];
 					} else {
-						_this.it = 'day';
-						this.time = `${year - 1}-${month2}-${day}`;
-						this.time2 = `${year}-${month2}-${day}`;
+						this.it = 'day';
+						let list3 = this.getDateRange(date, 365, true);
+						this.time = list3[0];
+						this.time2 = list3[1];
 					}
 				} else {
 					e.dateStaus = false;
 				}
 			});
-
 			this.get_baogao();
 			this.page = 1;
 			this.exercises_list = [];
@@ -449,7 +463,7 @@ page {
 .qiun-charts {
 	height: auto;
 	background-color: #ffffff;
-	margin: 0 30rpx;
+	margin: 0 25rpx;
 	padding-bottom: 20rpx;
 	border-radius: 0 0 20rpx 20rpx;
 	// display: flex;
@@ -478,20 +492,12 @@ page {
 }
 
 .subtitle {
-	height: 70rpx;
-	line-height: 70rpx;
-	width: 100%;
-	text-align: center;
-	background: #fff;
-	color: #2c2c2c;
+	margin: 25rpx;
 	font-size: 32rpx;
-	position: fixed;
-	z-index: 999;
-	top: 0;
-	left: 0;
-	border-bottom: 1rpx solid #cccccc;
 	text {
-		color: #e50304;
+		color: #999999;
+		font-size: 24rpx;
+		margin-left: 10rpx;
 	}
 }
 
@@ -540,7 +546,7 @@ button::after {
 .fenbu {
 	padding: 30rpx 60rpx;
 	background: #fff;
-	margin: 20rpx 30rpx 0;
+	margin: 0rpx 25rpx 0;
 	border-radius: 20rpx 20rpx 0 0;
 	.blank {
 		width: 8rpx;
@@ -598,7 +604,7 @@ button::after {
 	// justify-content: space-between;
 	// align-items: center;
 	background: #fff;
-	margin: 95rpx 30rpx 25rpx;
+	margin: 0rpx 25rpx 25rpx;
 	border-radius: 20rpx;
 	height: 215rpx;
 	.timeTabCon {
@@ -706,9 +712,9 @@ button::after {
 	}
 }
 .list {
-	margin-bottom: 50rpx;
 	.item {
 		padding: 30rpx;
+		padding-bottom: 20rpx;
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
@@ -723,7 +729,7 @@ button::after {
 			align-items: center;
 			font-size: 28rpx;
 			color: #666666;
-			border-top: 1rpx solid #f9f9f9;
+			border-top: 1rpx solid #e9e9e9;
 			padding-top: 15rpx;
 			margin-top: 30rpx;
 			.select {
@@ -742,97 +748,8 @@ button::after {
 					margin: 0 15rpx 0 0;
 				}
 				border-radius: 8rpx;
-				padding: 10rpx 30rpx;
+				padding: 10rpx 0rpx;
 			}
-		}
-	}
-}
-.leixing {
-	z-index: 999;
-	width: 650rpx;
-	background: #fff;
-	padding: 30rpx;
-	box-sizing: border-box;
-	border-radius: 20rpx;
-	.title {
-		text-align: center;
-		color: #e50304;
-		font-size: 34rpx;
-		padding: 0 0 30rpx 0;
-		border-bottom: 1rpx solid #e6e6e6;
-		display: flex;
-		flex-flow: row nowrap;
-		justify-content: space-between;
-		margin-bottom: 30rpx;
-		.sameType {
-			color: #4c4c4c;
-			font-weight: bold;
-		}
-		image {
-			width: 36rpx;
-			height: 36rpx;
-			vertical-align: middle;
-			margin-right: 20rpx;
-		}
-	}
-	scroll-view {
-		width: 100%;
-		height: 500rpx;
-		.list {
-			z-index: 999;
-			overflow: hidden;
-			button {
-				float: right;
-				margin: 20rpx;
-				color: #f8601c;
-				border-radius: 8rpx;
-				padding: 0;
-				background: #fff;
-				width: 159rpx;
-				font-size: 20rpx;
-			}
-		}
-		.btnCon {
-			text-align: center;
-			color: #666666;
-			font-size: 30rpx;
-			padding: 30rpx 0 30rpx 0;
-			border-bottom: 1rpx solid #e6e6e6;
-			display: flex;
-			flex-flow: row nowrap;
-			justify-content: space-between;
-			margin-bottom: 30rpx;
-			image {
-				width: 30rpx;
-				height: 30rpx;
-				vertical-align: middle;
-				margin-right: 20rpx;
-			}
-		}
-		.list:nth-last-of-type(1) {
-			.btnCon {
-				border-bottom: none;
-			}
-		}
-	}
-
-	.button {
-		display: flex;
-		justify-content: center;
-		border-top: 1rpx solid #e6e6e6;
-		button {
-			margin: 30rpx 30rpx 0 0;
-			font-size: 24rpx;
-			width: 200rpx;
-			height: 60rpx;
-			line-height: 60rpx;
-			color: #fff;
-			background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
-		}
-		button:nth-of-type(1) {
-			border: 1rpx solid #e7e7e7;
-			color: #b4b4b4;
-			background: none;
 		}
 	}
 }

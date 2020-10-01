@@ -1,8 +1,7 @@
 <template>
 	<view>
 		<view class="subtitle" v-if="jiexiList.subject_title && jiexiList.grade_name">
-			{{ jiexiList.subject_title }}
-			<text>【{{ jiexiList.grade_name }}】</text>
+			{{ jiexiList.subject_title }} · {{ jiexiList.grade_name }}
 		</view>
 		<view class="con">
 			<view class="content"><rich-text :nodes="changeStyle(jiexiList.content ? jiexiList.content : '')"></rich-text></view>
@@ -90,28 +89,14 @@ page {
 	background: #eee;
 }
 .subtitle {
-	height: 70rpx;
-	line-height: 70rpx;
-	width: 100%;
-	text-align: center;
-	background: #fff;
-	color: #2c2c2c;
+	margin: 25rpx;
 	font-size: 32rpx;
-	position: fixed;
-	z-index: 999;
-	top: 0;
-	left: 0;
-	border-bottom: 1rpx solid #cccccc;
-	text {
-		color: #e50304;
-	}
 }
 .con {
 	> view {
 		margin: 25rpx;
 		background: #fff;
 		border: 1rpx solid #e6e6e6;
-		width: 700rpx;
 		border-radius: 20rpx;
 		padding: 60rpx 30rpx 30rpx;
 		box-sizing: border-box;
@@ -167,7 +152,7 @@ page {
 		}
 	}
 	.content {
-		margin: 95rpx 25rpx 25rpx;
+		margin: 25rpx;
 		background: #fff;
 		border-radius: 20rpx;
 		width: 700rpx;

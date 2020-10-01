@@ -51,7 +51,7 @@
         ,{
             "path" : "pages/myteaching/myteaching",
             "style": {
-            	"navigationBarTitleText": "添加教辅"
+            	"navigationBarTitleText": "选择教辅"
             }
         }
         ,{

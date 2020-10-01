@@ -27,9 +27,9 @@
 					></image>
 				</view>
 			</view>
-			<view class="nomore" v-if="textbook_list.length == 0 || !textbook_list">当前学科没有教辅！</view>
+			<view class="nomore" v-if="textbook_list.length == 0 || !textbook_list">当前学科没有设置教辅！</view>
 		</view>
-		<view class="list listAttr" v-if="from == 2">
+		<view class="teachingCon" v-if="from == 2">
 			<view class="card">
 				<image :src="obj.icon" mode="" class="subject"></image>
 				<view class="title">
@@ -310,7 +310,6 @@ page {
 	background: #eee;
 }
 .name {
-	height: 28rpx;
 	font-size: 30rpx;
 	font-family: PingFang SC;
 	font-weight: bold;
@@ -337,23 +336,22 @@ page {
 	}
 }
 .card {
-	height: 180rpx;
+	height: 190rpx;
 	padding: 30rpx 0;
-	margin: 0 30rpx;
+	margin:0 30rpx;
 	box-sizing: border-box;
 	position: relative;
-	background: #fff;
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: flex-start;
 	align-items: center;
-	border-bottom: 1px solid #e5e5e5;
+	border-bottom: 1px solid #F5F5F5;
 	&:last-child {
 		border-bottom: none;
 	}
 	image.subject {
-		width: 99rpx;
-		height: 120rpx;
+		width: 110rpx;
+		height: 100%;
 		margin: 0 30rpx 0 0;
 		vertical-align: middle;
 	}
@@ -389,7 +387,7 @@ page {
 		height: 35rpx;
 		position: absolute;
 		top: 50%;
-		right: 35rpx;
+		right: 0;
 		transform: translateY(-50%);
 	}
 }
@@ -397,8 +395,8 @@ page {
 	margin: 25rpx 30rpx;
 	background: #fff;
 	border: 1rpx solid #e7e7e7;
-	height: 100rpx;
-	line-height: 100rpx;
+	height: 190rpx;
+	line-height: 190rpx;
 	border-radius: 20rpx;
 	text-align: center;
 	color: #999;

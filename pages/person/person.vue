@@ -31,7 +31,7 @@
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/minePaper.png" mode=""></image>
 				<view>
 					<text>我的试卷</text>
-					<view class="paperInfo">已生成试卷{{ user_info.created ? user_info.created : 0 }}份,未生成试卷{{ user_info.uncreate ? user_info.uncreate : 0 }}题</view>
+					<view class="paperInfo">已生成试卷 <text>{{ user_info.created ? user_info.created : 0 }}</text> 份,未生成试卷 <text>{{ user_info.uncreate ? user_info.uncreate : 0 }}</text> 题</view>
 				</view>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
@@ -235,6 +235,13 @@ page {
 		font-size: 24rpx;
 		color: #b3b3b3;
 		margin-top: 10rpx;
+		text{
+			display: inline;
+			margin: 0 10rpx;
+			color: #e30405;
+			font-weight: 700;
+			font-size: 28rpx;
+		}
 	}
 	image:last-child {
 		width: 14rpx;
@@ -253,7 +260,7 @@ page {
 	margin-top: -2rpx;
 	.vip {
 		width: 700rpx;
-		height: 125rpx;
+		height: 120rpx;
 		margin: 0 25rpx;
 		position: relative;
 		.endTimeInfo {
@@ -298,9 +305,8 @@ page {
 			width: 120rpx;
 			border: 5rpx solid #e9b4b4;
 			border-radius: 50%;
-			padding: 10rpx;
 			display: inline-block;
-			margin: 10rpx 20rpx 19rpx 50rpx;
+			margin: 20rpx 20rpx 40rpx 50rpx;
 			image {
 				width: 120rpx;
 				height: 120rpx;
@@ -319,8 +325,8 @@ page {
 				margin-top: 15rpx;
 				background: rgba(0, 0, 0, 0.2);
 				border-radius: 20rpx;
-				padding: 0 15rpx;
-				font-size: 28rpx;
+				padding: 10rpx 12rpx;
+				font-size: 22rpx;
 				color: #fff;
 				image {
 					width: 30rpx;
@@ -335,7 +341,7 @@ page {
 			height: 26rpx;
 			position: absolute;
 			top: 80rpx;
-			right: 30rpx;
+			right: 50rpx;
 		}
 	}
 }
@@ -343,7 +349,7 @@ page {
 	margin: 25rpx 25rpx 50rpx;
 }
 .card {
-	margin: 125rpx 25rpx 50rpx;
+	margin: 135rpx 25rpx 50rpx;
 	padding: 0 30rpx;
 	background: #fff;
 	border-radius: 16rpx;
@@ -353,7 +359,7 @@ page {
 		display: flex;
 		align-items: center;
 		height: 100rpx;
-		// border-bottom: 1rpx solid #f8f8f8;
+		border-bottom: 1rpx solid #f5f5f5;
 		image:first-child {
 			width: 50rpx;
 			height: 50rpx;
@@ -387,7 +393,7 @@ page {
 			top: 50%;
 			transform: translateY(-50%);
 			font-size: 24rpx;
-			color: #d3d3d3;
+			color: #999;
 		}
 		image:last-child {
 			width: 14rpx;

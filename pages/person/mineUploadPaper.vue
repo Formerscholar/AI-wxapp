@@ -166,26 +166,21 @@ export default {
 			}
 			if (_this.imgSrc.length == 0) {
 				uni.showToast({
-					title: '请选择要上传的试卷图片',
+					title: '请上传试卷图片',
 					icon: 'none'
 				});
 				return;
 			}
 			_this.$api.teacher_add_point({ token: _this.token, remark: _this.value2, title: _this.value1, pics: _this.imgSrc }).then(res => {
-				console.log(res);
-				if (res.code != 200) {
-					uni.showToast({
-						title: res.msg,
-						icon: 'none'
-					});
-				}
-				_this.value2 = '';
-				_this.value1 = '';
-				_this.imgSrc = [];
 				uni.showToast({
 					title: res.msg,
 					icon: 'none'
 				});
+				if(res.code == 200){
+					_this.value2 = '';
+					_this.value1 = '';
+					_this.imgSrc = [];
+				}
 			});
 		}
 	}
@@ -309,41 +304,33 @@ page {
 	border-radius: 20rpx;
 }
 .recordList {
-	background: #fff;
-	width: 700rpx;
-	margin: 25rpx;
-	padding: 30rpx;
-	box-sizing: border-box;
-	border-radius: 30rpx;
-	border: 1rpx solid #e7e7e7;
 	margin-top: 95rpx;
 	.item {
+		background: #fff;
+		width: 700rpx;
+		margin: 25rpx;
+		padding: 30rpx;
+		box-sizing: border-box;
+		border-radius: 30rpx;
+		border: 1rpx solid #e7e7e7;
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: space-between;
-		color: #828282;
-		font-size: 26rpx;
-		border-bottom: 1rpx solid #e7e7e7;
-		padding-bottom: 20rpx;
-		margin-bottom: 20rpx;
 		.recordTitle {
 			color: #4e4e4e;
-			// font-weight: bold;
+			width: 550rpx;
 			font-size: 30rpx;
 			margin-bottom: 10rpx;
 		}
 		.recordTime {
+			color: #999;
+			font-size: 24rpx;
 		}
 		.status {
 			font-size: 26rpx;
-			display: flex;
+			color: #999999;
 			margin: auto 0;
 		}
-	}
-	.item:nth-last-of-type(1) {
-		padding-bottom: 0;
-		margin-bottom: 0;
-		border-bottom: none;
 	}
 }
 .kong {

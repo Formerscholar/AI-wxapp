@@ -20,7 +20,7 @@
 						<view class="time">{{ item.add_time }}</view>
 					</view>
 				</view>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" class="right"></image>
+				<view class="right"><image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" class="arrow"></image></view>
 			</view>
 			<view v-if="is_more2 == 0" class="is_more">没有更多试卷了</view>
 		</view>
@@ -352,13 +352,16 @@ page {
 		}
 		.right {
 			padding:40rpx 0;
-			width:60rpx;
 			display: flex;
 			margin: auto 0;
-		}
-		.download {
-			width: 40rpx;
-			height: 50rpx;
+			.arrow{
+				width: 14rpx;
+				height: 26rpx;
+			}
+			.download {
+				width: 40rpx;
+				height: 50rpx;
+			}
 		}
 	}
 }

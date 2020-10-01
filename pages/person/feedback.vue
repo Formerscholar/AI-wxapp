@@ -1,10 +1,10 @@
 <template>
 	<view>
-		<textarea v-model="str" maxlength="300" @input="sub" placeholder="请留下您的宝贵建议(500字以内)" placeholder-style="color:#dedede" />
+		<textarea v-model="str" maxlength="300" @input="sub" placeholder="请留下您的宝贵建议" placeholder-style="color:#dedede" />
 		<!-- <text class="num">{{num}}</text> -->
 
 		<view class="picInfo">
-			<view class="advice">上传图片(最多三张,图片大小不超过2M)</view>
+			<view class="advice">上传图片</view>
 			<view v-for="(item, i) of imgSrc" class="picView" :key="i">
 				<image class="delete" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/deletePic.png" @click="deleteImg(i)"></image>
 				<image :src="item" class="pics"></image>

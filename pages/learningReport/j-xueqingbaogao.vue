@@ -74,7 +74,7 @@
 					</view>
 				</view>
 			</view>
-			<view v-if="is_more == 0 && exercises_list.length != 0" class="is_more">没有更多{{ type == 3 ? '试卷' : '错题' }}了</view>
+			<view v-if="is_more == 0 && exercises_list.length != 0" class="is_more">没有更多{{ type == 3 ? '试题' : '错题' }}了</view>
 		</view>
 
 		<!-- 同类型题目弹框 -->
@@ -142,12 +142,12 @@ export default {
 			time2: '2020-06-04',
 			dateList: [{ time: '近一周', dateStaus: true }, { time: '近一个月', dateStaus: false }, { time: '近一年', dateStaus: false }],
 			it: 'day',
-			msg: '该班级暂无错题!',
+			msg: '暂无错题知识点',
 			Pie: { series: [] },
 			exercises_id: '',
 			exercises_list: [],
 			page_change: 1,
-			size_change: 5,
+			size_change: 2,
 			update: true,
 			page: 1,
 			is_more: 1,
@@ -349,8 +349,23 @@ export default {
 
 		//换一批
 		changeData() {
-			this.page_change++;
-			this.open();
+			let data = {
+				token: this.token,
+				exercises_id: this.exercises_id,
+				page: this.page_change++,
+				size: this.size_change
+			};
+			let req = this.$api.teacher_same_type(data);
+			req.then(res => {
+				if (res.code == 200) {
+					this.same_type = res.data.exercises_list;
+				} else {
+					uni.showToast({
+						title: '没有更多同类型题目',
+						icon: 'none'
+					});
+				}
+			});
 		},
 		//查看解析
 		jiexi(id) {
@@ -750,9 +765,9 @@ button::after {
 	}
 }
 .list {
-	margin-bottom: 50rpx;
 	.item {
 		padding: 30rpx;
+		padding-bottom: 20rpx;
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
@@ -767,7 +782,7 @@ button::after {
 			align-items: center;
 			font-size: 28rpx;
 			color: #666666;
-			border-top: 1rpx solid #f9f9f9;
+			border-top: 1rpx solid #F5F5F5;
 			padding-top: 15rpx;
 			margin-top: 30rpx;
 			.select {
@@ -786,97 +801,8 @@ button::after {
 					margin: 0 15rpx 0 0;
 				}
 				border-radius: 8rpx;
-				padding: 10rpx 30rpx;
+				padding: 10rpx 0rpx;
 			}
-		}
-	}
-}
-.leixing {
-	z-index: 999;
-	width: 650rpx;
-	background: #fff;
-	padding: 30rpx;
-	box-sizing: border-box;
-	border-radius: 20rpx;
-	.title {
-		text-align: center;
-		color: #e50304;
-		font-size: 34rpx;
-		padding: 0 0 30rpx 0;
-		border-bottom: 1rpx solid #e6e6e6;
-		display: flex;
-		flex-flow: row nowrap;
-		justify-content: space-between;
-		margin-bottom: 30rpx;
-		.sameType {
-			color: #4c4c4c;
-			font-weight: bold;
-		}
-		image {
-			width: 36rpx;
-			height: 36rpx;
-			vertical-align: middle;
-			margin-right: 20rpx;
-		}
-	}
-	scroll-view {
-		width: 100%;
-		height: 500rpx;
-		.list {
-			z-index: 999;
-			overflow: hidden;
-			button {
-				float: right;
-				margin: 20rpx;
-				color: #f8601c;
-				border-radius: 8rpx;
-				padding: 0;
-				background: #fff;
-				width: 159rpx;
-				font-size: 20rpx;
-			}
-		}
-		.btnCon {
-			text-align: center;
-			color: #666666;
-			font-size: 30rpx;
-			padding: 30rpx 0 30rpx 0;
-			border-bottom: 1rpx solid #e6e6e6;
-			display: flex;
-			flex-flow: row nowrap;
-			justify-content: space-between;
-			margin-bottom: 30rpx;
-			image {
-				width: 30rpx;
-				height: 30rpx;
-				vertical-align: middle;
-				margin-right: 20rpx;
-			}
-		}
-		.list:nth-last-of-type(1) {
-			.btnCon {
-				border-bottom: none;
-			}
-		}
-	}
-
-	.button {
-		display: flex;
-		justify-content: center;
-		border-top: 1rpx solid #e6e6e6;
-		button {
-			margin: 30rpx 30rpx 0 0;
-			font-size: 24rpx;
-			width: 200rpx;
-			height: 60rpx;
-			line-height: 60rpx;
-			color: #fff;
-			background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
-		}
-		button:nth-of-type(1) {
-			border: 1rpx solid #e7e7e7;
-			color: #b4b4b4;
-			background: none;
 		}
 	}
 }
