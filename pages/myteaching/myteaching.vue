@@ -21,6 +21,11 @@
 					<view :class="{ 'b-g': item.status ? item.status : item.is_select }" class="default"></view>
 				</view>
 			</block>
+			<view class="kong" v-if="textbook_list.length == 0">
+				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+				<view>空空如也~</view>
+				<view>暂时还没有教辅材料</view>
+			</view>
 			<view class="btnCon btnConFix"><button class="btn" @click="tochaxun()">确定</button></view>
 		</view>
 
@@ -125,28 +130,17 @@ export default {
 		open() {
 			this.textbook_ids = [];
 			this.$api.textbook({ token: this.token, subject_id: this.subject_id, semester: this.semester }).then(res => {
-				console.log(res);
-				if (res.code != 200) {
-					uni.showToast({
-						title: res.msg,
-						icon: 'none'
-					});
+				if(res.code == 200){
+					this.textbook_list = res.data.textbook_list;
 				}
-				if (res.msg == '暂无相关教辅') {
-					this.textbook_list = [];
-					return;
-				}
-				this.textbook_list = res.data.textbook_list;
-				// this.textbook_list.forEach((elem,i,arr)=>{
-				// 	elem.status=false
-				// })
-				console.log(this.textbook_list);
-				// this.$refs.popup.open()
 			});
 		},
 		// 点击确定添加教辅
 		tochaxun() {
-			console.log(this.textbook_list);
+			if (this.textbook_list.length == 0) {
+				uni.navigateBack()
+				return;
+			}
 			var arr = this.textbook_list.map(function(elem, i, arr) {
 				return elem.is_select ? elem.textbook_id : '';
 			});
