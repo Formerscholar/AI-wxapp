@@ -3,7 +3,8 @@
 		<view class="bg2"></view>
 		<view class="card">
 			<view class="price">
-				<view class="">￥{{ info.vip_money ? info.vip_money : '' }}</view>
+				<view class="original" v-if="is_discount">￥{{ price }}</view>
+				<view class="discount">￥{{ info.vip_money ? info.vip_money : '' }}</view>
 			</view>
 			<!-- <view class="nick">
 					<image :src="userInfo.avatar" mode=""></image>
@@ -43,7 +44,7 @@
 			<text>总结学习过程，方便提优补差</text>
 		</view>
 		<view class="xufei" @click="pay()">
-			<text>开通会员</text>
+			<text>{{ userInfo.is_vip ? '立即续费' : '开通会员'}}</text>
 			<!-- <text>(自购买当日开始计算至次年当日凌晨截至)</text> -->
 		</view>
 		<!-- <view class="b-t">
@@ -53,19 +54,21 @@
 </template>
 
 <script>
+const app = getApp()
 export default {
 	data() {
 		return {
 			userInfo: {},
 			info: {},
+			price: 0,
+			is_discount: 1,
 			is_vip: 0
 		};
 	},
 	onLoad() {
-		if (uni.getStorageSync('userInfo').token) {
-			this.token = uni.getStorageSync('userInfo').token;
-			this.userInfo = uni.getStorageSync('userInfo');
-		}
+		this.token = uni.getStorageSync('userInfo').token;
+		this.userInfo = uni.getStorageSync('userInfo');
+		this.price = app.globalData.settings.vip_money;
 	},
 	onShow() {
 		this.get_info();
@@ -75,6 +78,9 @@ export default {
 			this.$api.vip_info({ token: this.token }).then(res => {
 				console.log(res);
 				this.info = res.data;
+				if(res.data.vip_money == this.price){
+					this.is_discount = 0
+				}
 				/* this.is_vip=res.is_vip
 					uni.setStorage({
 					    key: 'is_vip',
@@ -140,23 +146,20 @@ page {
 	margin: 25rpx auto 50rpx;
 	position: relative;
 	.price {
-		view:first-child {
-			font-size: 40rpx;
-			font-weight: bold;
+		font-size: 40rpx;
+		position: absolute;
+		bottom: 25%;
+		right: 80rpx;
+		.discount {
 			color: rgba(225, 1, 1, 1);
-			position: absolute;
-			top: 50%;
 			transform: translateY(-50%);
-			right: 80rpx;
 			color: #fff;
 		}
-		// view:last-child{
-		// 	font-size:20rpx;
-		// 	font-weight:400;
-		// 	text-decoration:line-through;
-		// 	color:rgba(89,87,87,1);
-		// 	padding-left: 12rpx;
-		// }
+		.original {
+			text-decoration:line-through;
+			color:rgba(89,87,87,1);
+			margin-bottom: 20rpx;
+		}
 	}
 	.nick {
 		display: flex;
@@ -177,7 +180,7 @@ page {
 	.time {
 		position: absolute;
 		left: 60rpx;
-		bottom: 15rpx;
+		bottom: 30rpx;
 		font-size: 22rpx;
 		font-family: PingFang SC;
 		font-weight: 400;
@@ -188,7 +191,7 @@ page {
 	width: 400rpx;
 	height: 80rpx;
 	line-height: 80rpx;
-	margin: 50rpx auto 20rpx;
+	margin: 50rpx auto;
 	background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
 	border-radius: 16rpx;
 	display: flex;
