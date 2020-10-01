@@ -22,7 +22,10 @@
 			</view>
 			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode="" class="detail"></image>
 		</view>
-		<view class="nomore" v-if="textbook_list.length == 0 || !textbook_list">你还没有添加自己的教辅！</view>
+		<view class="kong" v-if="textbook_list.length == 0">
+			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+			<view>还没有选择教辅材料</view>
+		</view>
 		<view class="btn" @click="toselect()">选择教辅</view>
 		<!-- 遮罩层 -->
 		<view class="zt" v-show="false"></view>
