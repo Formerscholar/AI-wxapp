@@ -16,7 +16,7 @@
 
 				<view class="tb" @click="toclassinfo()">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/class.png" mode=""></image>
-					<text>班级数</text>
+					<text>班级</text>
 					<text>{{ teacher_info.team_count }}</text>
 				</view>
 
@@ -315,7 +315,7 @@ page {
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: center;
-		height: 380rpx;
+		height: 383rpx;
 		padding: 0 30rpx;
 		box-sizing: border-box;
 		border: 1rpx solid #e7e7e7;
@@ -336,6 +336,9 @@ page {
 			white-space: nowrap;
 			text-align: center;
 			margin-bottom: 10rpx !important;
+			.remark_red{
+				margin-left: 10rpx;
+			}
 		}
 		.title {
 			margin-top: 0 !important;
@@ -366,7 +369,7 @@ page {
 		width: 340rpx;
 		height: 180rpx;
 		background-color: #fff;
-		margin: 0 0 20rpx 0;
+		margin: 0 0 25rpx 0;
 		border-radius: 20rpx;
 		display: flex;
 		flex-flow: row nowrap;
@@ -473,13 +476,13 @@ page {
 	justify-content: center;
 	// justify-content: space-evenly;
 	.tb {
-		width: 217rpx;
+		width: 100%;
 		height: 213rpx;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		align-items: center;
-		margin: 0 auto;
+		margin-right: 25rpx;
 		background: #fff;
 		padding: 30rpx;
 		box-sizing: border-box;
@@ -497,6 +500,9 @@ page {
 			color: #cccccc;
 			font-size: 26rpx;
 		}
+	}
+	.tb:last-child{
+		margin-right: 0;
 	}
 }
 </style>

@@ -179,6 +179,7 @@ page {
 	justify-content: space-between;
 	.subject {
 		font-size: 32rpx;
+		font-weight: 700;
 	}
 	.value {
 		border: 1rpx solid #e50304;
@@ -202,9 +203,9 @@ page {
 	}
 }
 .card {
-	height: 160rpx;
+	height: 190rpx;
 	border: 1rpx solid #eee;
-	padding: 15rpx 30rpx;
+	padding: 30rpx;
 	margin: 0 30rpx;
 	border-radius: 20rpx;
 	margin: 25rpx 0;
@@ -215,7 +216,7 @@ page {
 	flex-flow: row nowrap;
 	justify-content: flex-start;
 	image.subject {
-		width: 120rpx;
+		width: 110rpx;
 		height: 100%;
 		margin: 0 30rpx 0 0;
 		vertical-align: middle;

@@ -3,7 +3,7 @@ function request(url, data = {}, method = "post") {
 	let _timestamp = timestamp();
 	return new Promise(function(resolve, reject) {
 		uni.showLoading({
-			title: '玩命加载中',
+			title: '数据加载中',
 		})
 		const userInfoData = uni.getStorageSync('userInfo')
 		if (data.token == '') {

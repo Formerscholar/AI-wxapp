@@ -128,6 +128,8 @@ page {
 		.jifen {
 			display: flex;
 			margin: auto 0;
+			font-size: 30rpx;
+			color: #e50304;
 		}
 	}
 }
