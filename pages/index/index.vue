@@ -149,16 +149,13 @@ export default {
 				url: '/pages/login/login'
 			});
 		}
-		if (uni.getStorageSync('token') && uni.getStorageSync('type') == 3) {
-			this.get_teacher();
-		}
-		if (uni.getStorageSync('token') && uni.getStorageSync('type') == 4) {
-			this.get_student();
-		}
 	},
 	onShow() {
 		this.type = uni.getStorageSync('type');
-		if (uni.getStorageSync('type') == 3) {
+		if (uni.getStorageSync('is_vip')) {
+			this.is_vip = uni.getStorageSync('is_vip');
+		}
+		if (this.type == 3) {
 			uni.setTabBarItem({
 				index: 1,
 				text: '我的试卷',
@@ -174,9 +171,11 @@ export default {
 			});
 		}
 		this.get_banner();
-		console.log(this.type);
-		if (uni.getStorageSync('is_vip')) {
-			this.is_vip = uni.getStorageSync('is_vip');
+		if (this.token && this.type == 3) {
+			this.get_teacher();
+		}
+		if (this.token && this.type == 4) {
+			this.get_student();
 		}
 	},
 	computed: {
