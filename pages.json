@@ -207,6 +207,12 @@
 		    }
 		},
 		{
+		    "path" : "pages/myteaching/customPhoto",
+		    "style" : {
+		    	"navigationBarTitleText": "拍照识题"
+		    }
+		},
+		{
 		    "path" : "pages/myteaching/myteachingPhoto_result",
 		    "style" : {
 		    	"navigationBarTitleText": "拍搜结果"

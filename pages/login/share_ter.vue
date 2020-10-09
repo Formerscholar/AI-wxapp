@@ -156,12 +156,12 @@ export default {
 						.teacher_login({
 							code: this.code,
 							openId: this.user_info.openId,
-							nickName: this.user_info.nickName,
+							user_name: this.user_info.nickName,
 							gender: this.user_info.gender,
 							city: this.user_info.city,
 							province: this.user_info.province,
 							country: this.user_info.country,
-							avatarUrl: this.user_info.avatarUrl,
+							avatar: this.user_info.avatarUrl,
 							unionId: this.user_info.unionId,
 							watermark: this.user_info.watermark
 						})

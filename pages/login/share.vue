@@ -103,12 +103,12 @@ export default {
 			let data = {
 				code: this.code,
 				openId: this.userInfo.openId,
-				nickName: this.userInfo.nickName,
+				user_name: this.userInfo.nickName,
 				gender: this.userInfo.gender,
 				city: this.userInfo.city,
 				province: this.userInfo.province,
 				country: this.userInfo.country,
-				avatarUrl: this.userInfo.avatarUrl,
+				avatar: this.userInfo.avatarUrl,
 				unionId: this.userInfo.unionId,
 				watermark: this.userInfo.watermark
 			};

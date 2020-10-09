@@ -41,7 +41,7 @@ export default {
 		this.$api.get_settings('get').then(res => {
 			this.globalData.settings = res.data;
 		});
-	},
+	}
 };
 </script>
 

@@ -215,71 +215,77 @@ export default {
 		//上传图片
 		checkimg() {
 			if (this.textbook_id) {
-				// this.update=false
-				let _this = this;
-				uni.chooseImage({
-					count: 1, //默认9
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					sourceType: ['camera'], //从相册选择
-					success: res => {
-						console.log(res.tempFilePaths);
-						_this.img = res.tempFilePaths[0];
-						let url = _this.$api.url + 'main/upload_pic';
-						uni.uploadFile({
-							url: url,
-							filePath: _this.img,
-							name: 'file',
-							formData: {
-								token: _this.token,
-								path: 'search'
-							},
-							success: res => {
-								_this.pic = res.data;
-								console.log('返回', res.data);
-								if (this.from == 2) {
-									this.title = this.obj.textbook_name;
-								}
-								// _this.search_exercises()
-								uni.navigateTo({
-									url:
-										'/pages/myteaching/myteachingPhoto_result?pic=' +
-										_this.pic +
-										'&textbook_id=' +
-										_this.textbook_id +
-										'&choosePage=' +
-										_this.choosePage +
-										'&title=' +
-										_this.title +
-										'&subject_name=' +
-										_this.subject_name
-								});
-								/* if(_this.from==1){
-										_this.textbook_id=''
-										_this.tpage=1
-										_this.numArr=['第1页']
-									}
-									_this.index=0 */
-							},
-							error: function(e) {
-								/* if(_this.from==1){
-										_this.textbook_id=''
-										_this.tpage=1
-										_this.numArr=['第1页']
-									}
-									_this.index=0 */
-							}
-						});
-					},
-					fail: e => {
-						console.log(e);
-						/* if(_this.from==1){
-								_this.textbook_id=''
-								_this.tpage=1
-								_this.numArr=['第1页']
-							}
-							_this.index=0 */
+				// this.update=false  ?id=1&name=uniapp
+				uni.navigateTo({
+					url: `/pages/myteaching/customPhoto?textbook_id=${this.textbook_id}&choosePage=${this.choosePage}&title=${this.title}&subject_name=${this.subject_name}`,
+					success: () => {
+						console.log('跳转自定义拍照页面');
 					}
 				});
+				// let _this = this;
+				// uni.chooseImage({
+				// 	count: 1, //默认9
+				// 	sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				// 	sourceType: ['camera'], //从相册选择
+				// 	success: res => {
+				// 		console.log(res.tempFilePaths);
+				// 		_this.img = res.tempFilePaths[0];
+				// 		let url = _this.$api.url + 'main/upload_pic';
+				// 		uni.uploadFile({
+				// 			url: url,
+				// 			filePath: _this.img,
+				// 			name: 'file',
+				// 			formData: {
+				// 				token: _this.token,
+				// 				path: 'search'
+				// 			},
+				// 			success: res => {
+				// 				_this.pic = res.data;
+				// 				console.log('返回', res.data);
+				// 				if (this.from == 2) {
+				// 					this.title = this.obj.textbook_name;
+				// 				}
+				// 				// _this.search_exercises()
+				// 				uni.navigateTo({
+				// 					url:
+				// 						'/pages/myteaching/myteachingPhoto_result?pic=' +
+				// 						_this.pic +
+				// 						'&textbook_id=' +
+				// 						_this.textbook_id +
+				// 						'&choosePage=' +
+				// 						_this.choosePage +
+				// 						'&title=' +
+				// 						_this.title +
+				// 						'&subject_name=' +
+				// 						_this.subject_name
+				// 				});
+				// 				/* if(_this.from==1){
+				// 						_this.textbook_id=''
+				// 						_this.tpage=1
+				// 						_this.numArr=['第1页']
+				// 					}
+				// 					_this.index=0 */
+				// 			},
+				// 			error: function(e) {
+				// 				/* if(_this.from==1){
+				// 						_this.textbook_id=''
+				// 						_this.tpage=1
+				// 						_this.numArr=['第1页']
+				// 					}
+				// 					_this.index=0 */
+				// 			}
+				// 		});
+				// 	},
+				// 	fail: e => {
+				// 		console.log(e);
+				// 		/* if(_this.from==1){
+				// 				_this.textbook_id=''
+				// 				_this.tpage=1
+				// 				_this.numArr=['第1页']
+				// 			}
+				// 			_this.index=0 */
+				// 	}
+				// });
 			} else {
 				uni.showToast({
 					title: '请先选择相应的教辅',
@@ -338,14 +344,14 @@ page {
 .card {
 	height: 190rpx;
 	padding: 30rpx 0;
-	margin:0 30rpx;
+	margin: 0 30rpx;
 	box-sizing: border-box;
 	position: relative;
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: flex-start;
 	align-items: center;
-	border-bottom: 1px solid #F5F5F5;
+	border-bottom: 1px solid #f5f5f5;
 	&:last-child {
 		border-bottom: none;
 	}

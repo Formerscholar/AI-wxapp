@@ -97,12 +97,12 @@
 					this.$api.student_login({
 						code:this.code,
 						openId: this.userInfo.openId,
-						nickName: this.userInfo.nickName,
+						user_name: this.userInfo.nickName,
 						gender: this.userInfo.gender,
 						city: this.userInfo.city,
 						province: this.userInfo.province,
 						country: this.userInfo.country,
-						avatarUrl: this.userInfo.avatarUrl,
+						avatar: this.userInfo.avatarUrl,
 						unionId: this.userInfo.unionId,
 						watermark: this.userInfo.watermark
 					})
@@ -139,6 +139,7 @@
 				console.log(e)
 			},
 			getphone(e){
+				
 				console.log(e)			
 				let data={
 					code:this.code,

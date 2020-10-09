@@ -6,58 +6,73 @@ function request(url, data = {}, method = "post") {
 			title: '数据加载中',
 		})
 		const userInfoData = uni.getStorageSync('userInfo')
-		if (data.token == '') {
-			data.token = userInfoData.token
-		}
-		if (!data.hasOwnProperty('token')) {
-			data = {
-				token: userInfoData.token,
-				...data
-			}
-		}
-		console.log('request2', data)
-		uni.request({
-			url: url,
-			data: data,
-			method: method,
-			header: {
-				"Content-Type": "application/x-www-form-urlencoded"
-			},
+		uni.getSystemInfo({
 			success: (res) => {
-				uni.hideLoading();
-				// console.log(res)
-				if (res.statusCode == 200) {
-					// 令牌失效 跳转登录页 认证过期或者未登录
-					if (res.data.code == 100) {
-						uni.showToast({
-							title: '您未登录或登录过期',
-							icon: 'none',
-							duration: 1500
-						})
-						setTimeout(() => {
-							uni.hideToast();
-							uni.removeStorageSync('userInfo')
-							uni.removeStorageSync('hasLogin')
-							uni.reLaunch({
-								url: '/pages/login/login'
-							})
-						}, 1500)
-					}
-					resolve(res.data);
-				} else {
-					reject(res.errMsg);
+				const {
+					miniProgram
+				} = uni.getAccountInfoSync()
+				if (data.token == '') {
+					data.token = userInfoData.token
 				}
-			},
-			complete: function() {
-				// uni.hideNavigationBarLoading()
-				uni.stopPullDownRefresh()
-			},
-			fail: function(err) {
-				uni.hideLoading();
-				reject(err);
+				if (!data.hasOwnProperty('token')) {
+					data = {
+						token: userInfoData.token,
+						...data
+					}
+				}
+				console.log('request2', data)
+				uni.request({
+					url: url,
+					data: data,
+					method: method,
+					header: {
+						"Content-Type": "application/x-www-form-urlencoded",
+						"carrier_model": res.model,
+						"carrier_windowWidth": res.windowWidth,
+						"carrier_windowHeight": res.windowHeight,
+						"carrier_system": res.system,
+						"carrier_version": miniProgram.version,
+					},
+					success: (res) => {
+						uni.hideLoading();
+						// console.log(res)
+						if (res.statusCode == 200) {
+							// 令牌失效 跳转登录页 认证过期或者未登录
+							if (res.data.code == 100) {
+								uni.showToast({
+									title: '您未登录或登录过期',
+									icon: 'none',
+									duration: 1500
+								})
+								setTimeout(() => {
+									uni.hideToast();
+									uni.removeStorageSync('userInfo')
+									uni.removeStorageSync('hasLogin')
+									uni.reLaunch({
+										url: '/pages/login/login'
+									})
+								}, 1500)
+							}
+							resolve(res.data);
+						} else {
+							reject(res.errMsg);
+						}
+					},
+					complete: function() {
+						// uni.hideNavigationBarLoading()
+						uni.stopPullDownRefresh()
+					},
+					fail: function(err) {
+						uni.hideLoading();
+						reject(err);
+
+					}
+				})
+
 
 			}
-		})
+		});
+
 	});
 }
 
