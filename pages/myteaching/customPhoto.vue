@@ -1,7 +1,23 @@
 <template>
 	<view class="customPhoto">
-		<camera @error="handleCameraError" :device-position="devicePosition" flash="off" style="width: 100%; height: 81vh;">
-			<cover-view><!-- <cover-image class="line" src="/images/outline.png"></cover-image> --></cover-view>
+		<camera @error="handleCameraError" :device-position="devicePosition" :flash="isflash" style="width: 100%; height: 81vh;">
+			<view class="coverWrapper">
+				<view class="list"><view class="ltbor"></view></view>
+				<view class="list">
+				</view>
+				<view class="list">
+					<view class="rtbor"></view>
+					<view class="Flashlightbox" :style="!isflashBool? 'background-color: rgba(0, 0, 0, 0.5);':'background-color: rgba(229,3,4, 0.8);'" @click="FlashlightClick">
+						<image class="Flashimg" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/Flashlight.png" mode="widthFix"></image>
+					</view>
+				</view>
+				<view class="list"></view>
+				<view class="list">完整拍摄整页</view>
+				<view class="list"></view>
+				<view class="list"><view class="lbbor"></view></view>
+				<view class="list"></view>
+				<view class="list"><view class="rbbor"></view></view>
+			</view>
 		</camera>
 		<view class="content_box">
 			<view class="left_box" @click="albumhandleClick">
@@ -25,7 +41,9 @@ export default {
 			choosePage: '',
 			title: '',
 			subject_name: '',
-			isCamera: false
+			isCamera: false,
+			isflash: 'auto',
+			isflashBool: false
 		};
 	},
 	onLoad(option) {
@@ -39,6 +57,17 @@ export default {
 		}
 	},
 	methods: {
+		FlashlightClick: function() {
+			if (!this.isflashBool) {
+				this.isflashBool = true
+				this.isflash = "on"
+				console.log('打开了闪光灯')
+			} else{
+				this.isflashBool = false
+				this.isflash = "off"
+				console.log('关闭了闪光灯')
+			}
+		},
 		albumhandleClick: function() {
 			uni.chooseImage({
 				count: 1,
@@ -152,6 +181,113 @@ export default {
 
 <style lang="scss">
 .customPhoto {
+	.coverWrapper {
+		display: grid;
+		height: 100%;
+		width: 100%;
+		grid-template-columns: 32% 32% 32%;
+		grid-template-rows: 32% 32% 32%;
+		justify-content: center;
+		align-content: center;
+		.list {
+			position: relative;
+			border: 1px solid #e5e5e5;
+			&:nth-child(2) {
+				.Examples {
+					width: 133rpx;
+					height: 56rpx;
+					border-radius: 30rpx;
+					background-color: rgba(0, 0, 0, 0.5);
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					padding: 0 10rpx;
+					margin: 0 auto;
+					margin-top: 24rpx;
+					.Examplesimage {
+						width: 22rpx;
+						height: 25rpx;
+						margin-right: 12rpx;
+					}
+					.Examplestext {
+						font-size: 26rpx;
+						font-family: PingFang SC;
+						font-weight: 500;
+						color: #ffffff;
+					}
+				}
+			}
+
+			&:nth-child(3) {
+				position: relative;
+				.Flashlightbox {
+					width: 56rpx;
+					height: 56rpx;
+					border-radius: 50%;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					position: absolute;
+					right: 30rpx;
+					top: 24rpx;
+					.Flashimg {
+						width: 22rpx;
+						height: 30rpx;
+					}
+				}
+			}
+
+			&:nth-child(2),
+			&:nth-child(8) {
+				border-left: none;
+				border-right: none;
+			}
+			&:nth-child(4),
+			&:nth-child(6) {
+				border-top: none;
+				border-bottom: none;
+			}
+			&:nth-child(5) {
+				border: none;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: #e5e5e5;
+			}
+			.ltbor,
+			.rtbor,
+			.lbbor,
+			.rbbor {
+				width: 45rpx;
+				height: 45rpx;
+				position: absolute;
+				z-index: 2;
+			}
+
+			.ltbor,
+			.rtbor {
+				border-top: 10rpx solid #e50304;
+				top: -1px;
+			}
+
+			.ltbor,
+			.lbbor {
+				border-left: 10rpx solid #e50304;
+				left: -1px;
+			}
+			.rtbor,
+			.rbbor {
+				border-right: 10rpx solid #e50304;
+				right: -1px;
+			}
+
+			.lbbor,
+			.rbbor {
+				border-bottom: 10rpx solid #e50304;
+				bottom: -1px;
+			}
+		}
+	}
 	.content_box {
 		box-sizing: border-box;
 		height: 230rpx;

@@ -8,13 +8,13 @@
 				<view class="timeTab" @click="selectDate(i)" :class="{ tabActive: item.dateStaus }" v-for="(item, i) of dateList" :key="i">{{ item.time }}</view>
 			</view>
 			<view class="time">
-				<picker mode="date" @change="bindMultiPickerChange" :fields="it">
+				<picker mode="date" :value="time" @change="bindMultiPickerChange" :fields="it">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
 					<view class="picker">{{ time }}</view>
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
 				</picker>
 				-
-				<picker mode="date" @change="bindMultiPickerChange2" :fields="it">
+				<picker mode="date" :value="time2" @change="bindMultiPickerChange2" :fields="it">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
 					<view class="picker">{{ time2 }}</view>
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
@@ -232,26 +232,14 @@ export default {
 					end_time: _this.time2
 				})
 				.then(res => {
-					console.log(res);
-					// _this.error_count=res.data.error_exercises_count
-					_this.pieData = res.data;
-					if (res.code == 200) {
-						if (res.data != null) {
-							_this.Pie.series = res.data.analysis;
-						} else {
-							_this.Pie.series = [];
-						}
-						_self.showPie('canvasPie', _this.Pie);
+					this.pieData = res.data.count_list;
+					if (res.data.length !== undefined) {
+						this.Pie.series = res.data;
 					} else {
-						// _this.error_count=0
-						_this.pieData = [];
-						_this.Pie.series = [];
-						_self.showPie('canvasPie', _this.Pie);
-						/* uni.showToast({
-							title:res.msg,
-							icon:"none"
-						}) */
+						this.Pie.series = [];
+						this.pieData = [];
 					}
+					this.showPie('canvasPie', this.Pie);
 				});
 		},
 		showPie(canvasId, chartData) {

@@ -44,7 +44,7 @@
 			<text>总结学习过程，方便提优补差</text>
 		</view>
 		<view class="xufei" @click="pay()">
-			<text>{{ userInfo.is_vip ? '立即续费' : '开通会员'}}</text>
+			<text>{{ userInfo.is_vip ? '立即续费' : '开通会员' }}</text>
 			<!-- <text>(自购买当日开始计算至次年当日凌晨截至)</text> -->
 		</view>
 		<!-- <view class="b-t">
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-const app = getApp()
+const app = getApp();
 export default {
 	data() {
 		return {
@@ -78,8 +78,8 @@ export default {
 			this.$api.vip_info({ token: this.token }).then(res => {
 				console.log(res);
 				this.info = res.data;
-				if(res.data.vip_money == this.price){
-					this.is_discount = 0
+				if (res.data.vip_money == this.price) {
+					this.is_discount = 0;
 				}
 				/* this.is_vip=res.is_vip
 					uni.setStorage({
@@ -156,8 +156,8 @@ page {
 			color: #fff;
 		}
 		.original {
-			text-decoration:line-through;
-			color:rgba(89,87,87,1);
+			text-decoration: line-through;
+			color: rgba(89, 87, 87, 1);
 			margin-bottom: 20rpx;
 		}
 	}

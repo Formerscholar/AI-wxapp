@@ -92,7 +92,6 @@ export default {
 	},
 	onShow() {},
 	onLoad(option) {
-		this.subject_fenlei();
 		if (uni.getStorageSync('userInfo').token) {
 			this.token = uni.getStorageSync('userInfo').token;
 		}
@@ -100,6 +99,7 @@ export default {
 		this.from = option.from;
 		if (this.from == 1) {
 			//首页拍照识题
+			this.subject_fenlei();
 			this.subtitle = '教辅';
 			let _this = this;
 			setTimeout(function() {
@@ -110,10 +110,12 @@ export default {
 			this.subtitle = '当前教辅';
 			this.obj = JSON.parse(option.obj);
 			this.textbook_id = this.obj.textbook_id;
+			this.title = this.obj.textbook_name;
 			this.tpage = this.obj.tpage;
 			this.subject_name = option.subject_name;
 			console.log('this.obj', this.obj);
 			console.log('this.obj.tpage', this.obj.tpage);
+			console.log('onLoad(option)',this.textbook_id,this.subject_name)
 			//this.sumPage(5)
 			if (!this.obj.tpage) {
 				this.tpage = 1;
@@ -215,11 +217,11 @@ export default {
 		//上传图片
 		checkimg() {
 			if (this.textbook_id) {
-				// this.update=false  ?id=1&name=uniapp
+				// this.update=false  
 				uni.navigateTo({
-					url: `/pages/myteaching/customPhoto?textbook_id=${this.textbook_id}&choosePage=${this.choosePage}&title=${this.title}&subject_name=${this.subject_name}`,
+					url: '/pages/myteaching/customPhoto?textbook_id=' + this.textbook_id + '&choosePage=' + this.choosePage + '&title=' + this.title + '&subject_name=' + this.subject_name,
 					success: () => {
-						console.log('跳转自定义拍照页面');
+						console.log('跳转自定义拍照页面', this.textbook_id, this.choosePage, this.title, this.subject_name);
 					}
 				});
 				// let _this = this;

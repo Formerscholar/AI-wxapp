@@ -137,6 +137,7 @@ export default {
 			});
 		},
 		toTeachingPhoto(obj, subject_name) {
+			console.log('toTeachingPhoto',JSON.stringify(obj), subject_name)
 			uni.navigateTo({
 				url: '/pages/myteaching/myteachingPhoto?from=2&obj=' + JSON.stringify(obj) + '&subject_name=' + subject_name
 			});

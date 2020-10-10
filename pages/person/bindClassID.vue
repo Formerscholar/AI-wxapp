@@ -1,7 +1,11 @@
 <template>
 	<view>
 		<view class="joinClassBg"></view>
-		<view class="input"><input type="text" v-model="num" placeholder="请输入班级ID或老师手机号码" /></view>
+		<view class="input">
+			<image class="input_searchIcon" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/searchIcon.png" mode="widthFix"></image>
+			<input type="text" v-model="num" placeholder="请输入班级ID或老师手机号码" />
+			<image class="input_X" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/X.png" mode="widthFix"></image>
+		</view>
 
 		<button class="btn" @click="search_team()">查找班级</button>
 		<view class="cardCon" v-if="classList">
@@ -25,13 +29,12 @@
 		<view v-if="!classList || classList.length == 0">
 			<view class="text">
 				<text>什么是班级ID</text>
-				<text>班级ID是有字母C加7未数字组成，请向自己的老师询问自己的班级ID</text>
+				<text style="margin-left: 0;">班级ID是有字母C加7未数字组成，请向自己的老师询问自己的班级ID</text>
 			</view>
 			<view class="text">
 				<text>温馨提示</text>
-				<text>1、加入班级后采集而已收到老师的作业</text>
-				<text>2、结合作业的智能评分，老师能够针对性的提高你的学习成绩</text>
-				<text>3、向你的老师询问加入班级ID</text>
+				<text>1、加入班级后可以查看到校本试卷</text>
+				<text>2、向你的老师询问加入班级ID</text>
 			</view>
 		</view>
 	</view>
@@ -117,15 +120,32 @@ page {
 }
 .input {
 	border: 1px solid #eee;
-	margin: 50rpx auto 0;
+	margin: 60rpx auto 0;
 	width: 570rpx;
 	border-radius: 20rpx;
+	position: relative;
 	input {
 		height: 100rpx;
 		line-height: 100rpx;
 		width: 100%;
 		text-align: center;
 		color: #747474;
+	}
+	.input_searchIcon{
+		position: absolute;
+		top: 50%;
+		left: 30rpx;
+		transform: translate(0,-50%);
+		width: 30rpx;
+		height: 30rpx;
+	}
+	.input_X{
+		position: absolute;
+		top: 50%;
+		right: 30rpx;
+		transform: translate(0,-50%);
+		width: 27rpx;
+		height: 27rpx;
 	}
 }
 
@@ -147,6 +167,7 @@ page {
 	display: flex;
 	flex-direction: column;
 	margin-top: 50rpx;
+
 	text:nth-of-type(1) {
 		font-size: 28rpx;
 		font-weight: bold;
@@ -154,8 +175,7 @@ page {
 		margin-bottom: 20rpx;
 	}
 	text:nth-of-type(2),
-	text:nth-of-type(3),
-	text:nth-of-type(4) {
+	text:nth-of-type(3) {
 		margin-left: 30rpx;
 	}
 	text {
@@ -232,5 +252,4 @@ page {
 		box-sizing: border-box;
 	}
 }
-
 </style>

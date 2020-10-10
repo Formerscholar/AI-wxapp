@@ -12,13 +12,13 @@
 				<view class="timeTab" @click="selectDate(i)" :class="{ tabActive: item.dateStaus }" v-for="(item, i) of dateList" :key="i">{{ item.time }}</view>
 			</view>
 			<view class="time">
-				<picker mode="date" @change="bindMultiPickerChange" :fields="it">
+				<picker mode="date" :value="time" @change="bindMultiPickerChange" :fields="it">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
 					<view class="picker">{{ time }}</view>
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
 				</picker>
 				-
-				<picker mode="date" @change="bindMultiPickerChange2" :fields="it">
+				<picker mode="date" :value="time2" @change="bindMultiPickerChange2" :fields="it">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
 					<view class="picker">{{ time2 }}</view>
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
@@ -268,35 +268,22 @@ export default {
 			});
 		},
 		get_baogao() {
-			let _this = this;
-			_this.$api
+			this.$api
 				.teacher_study_analysis({
-					token: _this.token,
-					team_id: _this.team_id,
-					start_time: _this.time,
-					end_time: _this.time2
+					token: this.token,
+					team_id: this.team_id,
+					start_time: this.time,
+					end_time: this.time2
 				})
 				.then(res => {
-					console.log(res);
-					// _this.error_count=res.data.error_exercises_count
-					_this.pieData = res.data.count_list;
-					if (res.code == 200) {
-						if (res.data != null) {
-							_this.Pie.series = res.data;
-						} else {
-							_this.Pie.series = [];
-						}
-						_self.showPie('canvasPie', _this.Pie);
+					this.pieData = res.data.count_list;
+					if(res.data.length !== undefined) {
+						this.Pie.series = res.data;
 					} else {
-						// _this.error_count=0
-						_this.pieData = [];
-						_this.Pie.series = [];
-						_self.showPie('canvasPie', _this.Pie);
-						/* uni.showToast({
-							title:res.msg,
-							icon:"none"
-						}) */
+						this.Pie.series = [];
+						this.pieData = [];
 					}
+					this.showPie('canvasPie', this.Pie);
 				});
 		},
 		showPie(canvasId, chartData) {
@@ -782,7 +769,7 @@ button::after {
 			align-items: center;
 			font-size: 28rpx;
 			color: #666666;
-			border-top: 1rpx solid #F5F5F5;
+			border-top: 1rpx solid #f5f5f5;
 			padding-top: 15rpx;
 			margin-top: 30rpx;
 			.select {

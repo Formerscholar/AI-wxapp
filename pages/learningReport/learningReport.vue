@@ -22,13 +22,13 @@
 				<view class="timeTab" @click="selectDate(i)" :class="{ tabActive: item.dateStaus }" v-for="(item, i) of dateList" :key="i">{{ item.time }}</view>
 			</view>
 			<view class="time">
-				<picker mode="date" @change="bindMultiPickerChange" :fields="it">
+				<picker mode="date" :value="time" @change="bindMultiPickerChange" :fields="it">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
 					<view class="picker">{{ time }}</view>
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
 				</picker>
 				-
-				<picker mode="date" @change="bindMultiPickerChange2" :fields="it">
+				<picker mode="date" :value="time2" @change="bindMultiPickerChange2" :fields="it">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
 					<view class="picker">{{ time2 }}</view>
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
@@ -94,7 +94,6 @@ export default {
 	onLoad() {
 		_self = this;
 		this.class_name = uni.getStorageSync('userInfo').school.grade_name + uni.getStorageSync('userInfo').true_name;
-
 		this.selectDate(0);
 	},
 	onShow() {
@@ -124,35 +123,23 @@ export default {
 		},
 		//获取学情报告
 		get_baogao() {
-			let _this = this;
-			let data = {
-				token: _this.token,
-				subject_id: _this.subject_id,
-				start_time: _this.time,
-				end_time: _this.time2
-			};
-			_this.$api.my_study_analysis(data).then(res => {
-				console.log(res);
-				// _this.error_count=res.data.error_exercises_count
-				_this.pieData = res.data;
-				if (res.code == 200) {
-					if (res.data != null) {
-						_this.Pie.series = res.data;
+			this.$api
+				.my_study_analysis({
+					token: this.token,
+					subject_id: this.subject_id,
+					start_time: this.time,
+					end_time: this.time2
+				})
+				.then(res => {
+					if (res.data.length !== undefined) {
+						this.Pie.series = res.data;
+						this.pieData = res.data.count_list;
 					} else {
-						_this.Pie.series = [];
+						this.Pie.series = [];
+						this.pieData = [];
 					}
-					_self.showPie('canvasPie', _this.Pie);
-				} else {
-					// _this.error_count=0
-					_this.pieData = [];
-					_this.Pie.series = [];
-					_self.showPie('canvasPie', _this.Pie);
-					/* uni.showToast({
-							title:res.msg,
-							icon:"none"
-						}) */
-				}
-			});
+					this.showPie('canvasPie', this.Pie);
+				});
 		},
 		getDateRange(dateNow, intervalDays, bolPastTime) {
 			let oneDayTime = 24 * 60 * 60 * 1000;
@@ -248,16 +235,11 @@ export default {
 				}
 			});
 		},
-		//获取时间日期
 		bindMultiPickerChange: function(e) {
-			// console.log('picker发送选择改变，携带值为', e.detail.value)
-			console.log('show', e);
 			this.time = e.detail.value;
 			this.get_baogao();
 		},
 		bindMultiPickerChange2: function(e) {
-			// console.log('picker发送选择改变，携带值为', e.detail.value)
-			console.log('show2', e);
 			this.time2 = e.detail.value;
 			this.get_baogao();
 		}

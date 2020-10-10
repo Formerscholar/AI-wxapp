@@ -6,11 +6,11 @@
 				{{ title }}
 			</view>
 
-			<view class="" @click="jiexi(item.exercises_id)">
+			<view class="" @click.stop="jiexi(item.exercises_id)">
 				<rich-text :nodes="changeStyle(item.content)"></rich-text>
 				<!-- <uParse :content="item.content"/> -->
 			</view>
-			<view class="bottom" @click="open(item, 0)">
+			<view class="bottom" @click.stop="open(item, 0)">
 				<view class="select">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
 					同类型题目

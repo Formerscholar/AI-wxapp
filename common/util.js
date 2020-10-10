@@ -27,11 +27,11 @@ function request(url, data = {}, method = "post") {
 					method: method,
 					header: {
 						"Content-Type": "application/x-www-form-urlencoded",
-						"carrier_model": res.model,
-						"carrier_windowWidth": res.windowWidth,
-						"carrier_windowHeight": res.windowHeight,
-						"carrier_system": res.system,
-						"carrier_version": miniProgram.version,
+						"carriermodel": res.model,
+						"carrierwindowWidth": res.windowWidth,
+						"carrierwindowHeight": res.windowHeight,
+						"carriersystem": res.system,
+						"carrierversion": miniProgram.version,
 					},
 					success: (res) => {
 						uni.hideLoading();
