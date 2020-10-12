@@ -258,9 +258,6 @@ export default {
 		if (uni.getStorageSync('is_vip')) {
 			this.is_vip = uni.getStorageSync('is_vip');
 		}
-	},
-	onShow() {
-
 		if (uni.getStorageSync('type') == 3) {
 			this.subject_id = -1;
 			this.wei_error_book();
@@ -279,6 +276,9 @@ export default {
 			this.subject_fenlei();
 		}
 		this.all = true; //取消全选
+	},
+	onShow() {
+		
 	},
 	computed: {
 		// ...mapState(['type'])

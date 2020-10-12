@@ -44,7 +44,8 @@ export default {
 			semester: '',
 			page: 1,
 			is_more: 1,
-			subject_name: ''
+			subject_name: '',
+			selectNUM: 0
 		};
 	},
 	onReachBottom() {
@@ -55,8 +56,9 @@ export default {
 		}
 	},
 	onShow() {
-		this.subject_fenlei();
+		// this.subject_fenlei();
 		// this.get_semester()
+		this.selection(this.selectNUM);
 	},
 	onLoad(options) {
 		if (uni.getStorageSync('userInfo').token) {
@@ -65,6 +67,7 @@ export default {
 		if (uni.getStorageSync('type')) {
 			this.type = uni.getStorageSync('type');
 		}
+		this.subject_fenlei();
 	},
 	methods: {
 		//习题难度
@@ -122,6 +125,7 @@ export default {
 			});
 		},
 		selection(i) {
+			this.selectNUM = i;
 			this.page = 1;
 			this.subject_list.forEach((e, j, arr) => {
 				console.log(i);
@@ -137,7 +141,7 @@ export default {
 			});
 		},
 		toTeachingPhoto(obj, subject_name) {
-			console.log('toTeachingPhoto',JSON.stringify(obj), subject_name)
+			console.log('toTeachingPhoto', JSON.stringify(obj), subject_name);
 			uni.navigateTo({
 				url: '/pages/myteaching/myteachingPhoto?from=2&obj=' + JSON.stringify(obj) + '&subject_name=' + subject_name
 			});

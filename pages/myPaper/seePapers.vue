@@ -6,8 +6,8 @@
 				{{ title }}
 			</view>
 
-			<view class="" @click.stop="jiexi(item.exercises_id)">
-				<rich-text :nodes="changeStyle(item.content)"></rich-text>
+			<view class="rich-text-box" @click.stop="jiexi(item.exercises_id)">
+				<rich-text class="rich-text-content" :nodes="changeStyle(item.content)"></rich-text>
 				<!-- <uParse :content="item.content"/> -->
 			</view>
 			<view class="bottom" @click.stop="open(item, 0)">
@@ -407,13 +407,18 @@ page {
 	color: #999;
 	border-radius: 20rpx;
 	border: 1rpx solid #e7e7e7;
+	.rich-text-box {
+		.rich-text-content {
+			color: #000;
+		}
+	}
 	.bottom {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		font-size: 28rpx;
 		color: #666666;
-		border-top: 1rpx solid #F5F5F5;
+		border-top: 1rpx solid #f5f5f5;
 		padding: 15rpx 0 15rpx;
 		margin-top: 30rpx;
 		.select {

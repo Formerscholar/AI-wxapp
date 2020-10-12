@@ -20,7 +20,8 @@ function request(url, data = {}, method = "post") {
 						...data
 					}
 				}
-				console.log('request2', data)
+				const pages = getCurrentPages() 
+				const currentPage = pages[pages.length-1] 
 				uni.request({
 					url: url,
 					data: data,
@@ -32,6 +33,7 @@ function request(url, data = {}, method = "post") {
 						"carrierwindowHeight": res.windowHeight,
 						"carriersystem": res.system,
 						"carrierversion": miniProgram.version,
+						"page": currentPage.is
 					},
 					success: (res) => {
 						uni.hideLoading();

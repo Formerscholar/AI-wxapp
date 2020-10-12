@@ -213,12 +213,6 @@
 		    }
 		},
 		{
-		    "path" : "pages/myteaching/myteachingPhoto_result",
-		    "style" : {
-		    	"navigationBarTitleText": "拍搜结果"
-		    }
-		},
-		{
 		    "path" : "pages/learningReport/learningReport_detail",
 		    "style" : {
 		    	"navigationBarTitleText": "学情报告"

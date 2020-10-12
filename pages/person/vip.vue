@@ -62,13 +62,16 @@ export default {
 			info: {},
 			price: 0,
 			is_discount: 1,
-			is_vip: 0
+			is_vip: 0,
+			tpmid: ''
 		};
 	},
 	onLoad() {
 		this.token = uni.getStorageSync('userInfo').token;
 		this.userInfo = uni.getStorageSync('userInfo');
 		this.price = app.globalData.settings.vip_money;
+		this.tpmid = app.globalData.settings.tpmid;
+		console.log('this.tpmid', this.tpmid);
 	},
 	onShow() {
 		this.get_info();
@@ -107,6 +110,17 @@ export default {
 								uni.setStorage({
 									key: 'is_vip',
 									data: 1
+								});
+								uni.requestSubscribeMessage({
+									tmplIds: this.tpmid.vip_end_notice,
+									complete: function(res) {
+										console.log('status', res);
+										// _this.fasong();
+									},
+									success: function(res) {
+										// _this.fasong()
+									},
+									fail: function(res) {}
 								});
 							},
 							fail: err => {
