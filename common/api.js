@@ -4,6 +4,7 @@ import {
 
 // const ApiUrl = 'http://909.ecuca.net:10325/'//开发环境
 const ApiUrl = 'https://api.aictb.com/v1/' //生产环境
+const ApiUrl2 = 'https://api.aictb.com/v2/' //生产环境
 
 
 
@@ -13,9 +14,9 @@ module.exports = {
 	//----------------------------- 学生
 	//登录注册
 	bind_info: data => request(ApiUrl + 'user/bind_info/', data), //绑定信息
-	get_settings: md => request(ApiUrl + 'main/get_settings/', '', md), //获取配置信息
+	get_settings: md => request(ApiUrl + 'main/get_settings/',md), //获取配置信息
 	//首页
-	student_login: data => request(ApiUrl + 'user/wx_student_login/', data), //登录
+	student_login: data => request(ApiUrl2 + 'user/wx_student_login/', data), //登录
 	share_login: data => request(ApiUrl + 'user/wx_share_login/', data), //登录
 	student_index: data => request(ApiUrl + 'user/index/', data), //学生端首页信息	
 	newest_paper: data => request(ApiUrl + 'user/newest_paper/', data), //名校资源

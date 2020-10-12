@@ -25,7 +25,6 @@ export default {
 			class_id: '',
 			school_id: '',
 			teacher_name: '',
-			disable: false,
 			token: '',
 			userInfo: {},
 			code: ''
@@ -81,10 +80,10 @@ export default {
 					grade_ids: this.grade_ids,
 					team_ids: this.team_ids,
 					true_name: this.true_name,
-					user_id: this.user_id,
 					user_name: this.userInfo.nickName,
 					avatar: this.userInfo.avatarUrl,
-					gender: this.userInfo.gender
+					gender: this.userInfo.gender,
+					openId: this.userInfo.openId
 				})
 				.then(reslove => {
 					console.log('bind_info', reslove);
@@ -92,7 +91,7 @@ export default {
 						title: reslove.msg,
 						icon: 'none'
 					});
-					if(reslove.code == 200 ){
+					if (reslove.code == 200) {
 						uni.reLaunch({
 							url: '/pages/index/index'
 						});
@@ -100,41 +99,30 @@ export default {
 				});
 		},
 		get_student_login() {
-			let data = {
-				code: this.code,
-				openId: this.userInfo.openId,
-				user_name: this.userInfo.nickName,
-				gender: this.userInfo.gender,
-				city: this.userInfo.city,
-				province: this.userInfo.province,
-				country: this.userInfo.country,
-				avatar: this.userInfo.avatarUrl,
-				unionId: this.userInfo.unionId,
-				watermark: this.userInfo.watermark
-			};
-			this.$api.student_login(data).then(res => {
-				this.openid_tmp = res.data.openid;
-				console.log(this.openid_tmp);
-				if (res.code == 200) {
-					this.user_id = res.data.user_id;
-					uni.setStorage({
-						key: 'userinfo_tmp',
-						data: res.data
-					});
-					uni.setStorage({
-						key: 'token',
-						data: res.data.token
-					});
-					uni.setStorage({
-						key: 'userInfo',
-						data: res.data
-					});
-					this.true_name = res.data.true_name;
-					this.disable = true;
-				} else {
-					this.disable = false;
-				}
-			});
+			this.$api
+				.student_login({
+					code: this.code
+				})
+				.then(res => {
+					this.openid_tmp = res.data.openid;
+					console.log(this.openid_tmp);
+					if (res.code == 200) {
+						this.user_id = res.data.user_id;
+						uni.setStorage({
+							key: 'userinfo_tmp',
+							data: res.data
+						});
+						uni.setStorage({
+							key: 'token',
+							data: res.data.token
+						});
+						uni.setStorage({
+							key: 'userInfo',
+							data: res.data
+						});
+						this.true_name = res.data.true_name;
+					}
+				});
 		},
 		bindgetuserinfo(e, i) {
 			uni.setStorage({

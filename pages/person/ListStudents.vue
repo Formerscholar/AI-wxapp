@@ -23,7 +23,7 @@
 							<image :src="item.avatar" v-if="item.avatar"></image>
 							<view v-if="item.student_name">
 								{{ item.student_name }}
-								<!-- <image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon.png' v-if='item.is_vip==1'></image> -->
+								<image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon.png' v-if='item.is_vip==1'></image>
 							</view>
 						</view>
 						<view>

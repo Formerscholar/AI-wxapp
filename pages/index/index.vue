@@ -335,7 +335,7 @@ page {
 			white-space: nowrap;
 			text-align: center;
 			margin-bottom: 10rpx !important;
-			.remark_red{
+			.remark_red {
 				margin-left: 10rpx;
 			}
 		}
@@ -500,7 +500,7 @@ page {
 			font-size: 26rpx;
 		}
 	}
-	.tb:last-child{
+	.tb:last-child {
 		margin-right: 0;
 	}
 }
