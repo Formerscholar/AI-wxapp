@@ -59,7 +59,7 @@
 			<!-- <view class="item">
 				<input type="text" placeholder="请输入邮箱" v-model="email" placeholder-style="color:#dedede"/>
 			</view> -->
-			<button class="btn" @click="tijiao()">绑定信息</button>
+			<button class="btn" open-type="getUserInfo"   @getuserinfo="tijiao($event)">绑定信息</button>
 		</view>
 	</view>
 </template>
@@ -87,7 +87,9 @@ export default {
 			phone: '',
 			email: '',
 			type: 4,
-			token: ''
+			token: '',
+			userInfo:{},
+			openid: ''
 		};
 	},
 	onLoad() {
@@ -97,13 +99,15 @@ export default {
 		if (uni.getStorageSync('type') == 3) {
 			this.type = uni.getStorageSync('type');
 		}
+		this.openid = uni.getStorageSync('openid');
 		this.get_location_list();
 		this.get_grade();
 		this.get_subject();
 	},
 	methods: {
 		...mapMutations(['login', 'set_type']),
-		tijiao() {
+		tijiao(e) {
+			this.userInfo = e.detail.userInfo
 			if (this.s_num == 0) {
 				uni.showToast({
 					title: '请选择学校！',
@@ -129,9 +133,9 @@ export default {
 					true_name: this.name,
 					mobile: uni.getStorageSync('mobile'),
 					openid: uni.getStorageSync('openid'),
-					nickName: uni.getStorageSync('info').nickName,
-					avatar: uni.getStorageSync('info').avatarUrl,
-					gender: uni.getStorageSync('info').gender,
+					nickName: this.userInfo.nickName,
+					avatar: this.userInfo.avatarUrl,
+					gender: this.userInfo.gender,
 					token: this.token
 				};
 				this.$api.teacher_bind_info(data).then(res => {
@@ -162,18 +166,24 @@ export default {
 					});
 					return;
 				}
+				/**
+				 * team_ids: this.class_id,
+					parent_mobile: this.phone,
+					email: this.email,
+					token: uni.getStorageSync('userInfo').token,
+					user_id: uni.getStorageSync('userInfo').user_id,
+				 * */
 				let data = {
 					province_id: this.Province[this.index].value,
 					city_id: this.city[this.index1].value,
 					area_id: this.area[this.index2].value,
 					grade_ids: this.grade[this.g_num].grade_id,
 					school_id: this.school[this.s_num].id,
-					team_ids: this.class_id,
 					true_name: this.name,
-					parent_mobile: this.phone,
-					email: this.email,
-					token: uni.getStorageSync('userInfo').token,
-					user_id: uni.getStorageSync('userInfo').user_id
+					openid: uni.getStorageSync('openid'),
+					user_name: this.userInfo.nickName,
+					avatar: this.userInfo.avatarUrl,
+					gender: this.userInfo.gender,
 				};
 				console.log(data);
 				this.$api.bind_info(data).then(res => {
@@ -194,7 +204,7 @@ export default {
 							icon: 'none'
 						});
 						setTimeout(() => {
-							if (this.token) {
+							if (res.data.token) {
 								uni.switchTab({
 									url: '/pages/index/index'
 								});

@@ -10,7 +10,7 @@
 				<rich-text class="rich-text-content" :nodes="changeStyle(item.content)"></rich-text>
 				<!-- <uParse :content="item.content"/> -->
 			</view>
-			<view class="bottom" @click.stop="open(item, 0)">
+			<view class="bottom" @click.stop="open(item)">
 				<view class="select">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
 					同类型题目
@@ -112,9 +112,7 @@ export default {
 		this.page_change = 1;
 	},
 	onLoad(options) {
-		if (uni.getStorageSync('is_vip')) {
-			this.is_vip = uni.getStorageSync('is_vip');
-		}
+		this.is_vip = uni.getStorageSync('is_vip');
 		console.log('options', options);
 		this.type = uni.getStorageSync('type');
 		this.st = options.st;
@@ -174,7 +172,7 @@ export default {
 		//换一批
 		changeData() {
 			this.page_change++;
-			this.open(item, 0);
+			this.open(item);
 		},
 		//查看解析
 		jiexi(id) {
@@ -234,6 +232,11 @@ export default {
 				this.subject_id = item.subject_id;
 				this.exercises_id = item.exercises_id;
 			}
+			if(status != undefined){
+				this.know_point = this.list[status].know_point;
+				this.subject_id = this.list[status].subject_id;
+				this.exercises_id = this.list[status].exercises_id;
+			}
 			let data = {
 				token: this.token,
 				know_point: this.know_point,
@@ -243,8 +246,8 @@ export default {
 				page: this.page_change,
 				size: this.size_change
 			};
-			console.log(data);
 			if (uni.getStorageSync('type') == 4) {
+				console.log('this.is_vip',data,this.is_vip);
 				if (this.is_vip == 1) {
 					var req = this.$api.same_type(data);
 				} else {
@@ -277,6 +280,7 @@ export default {
 		},
 		//试卷列表加入错题
 		join_error(i, id) {
+			console.log('join_error_new', i, id, uni.getStorageSync('type'));
 			if (this.list[i].status) {
 				this.list[i].status = false;
 			} else {
@@ -298,11 +302,10 @@ export default {
 					} else {
 						this.list[i].is_error = 1;
 					}
-					if (this.type == 4) {
-						if (res.msg == '取消成功！') {
-							return true;
-						} else if (res.msg == '加入成功') {
-							this.open(id, 1);
+					if (uni.getStorageSync('type') == 4) {
+						if (res.msg == '加入成功') {
+							// this.list
+							this.open(id, i);
 						}
 					}
 				} else {

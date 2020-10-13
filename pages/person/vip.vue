@@ -6,10 +6,6 @@
 				<view class="original" v-if="is_discount">￥{{ price }}</view>
 				<view class="discount">￥{{ info.vip_money ? info.vip_money : '' }}</view>
 			</view>
-			<!-- <view class="nick">
-					<image :src="userInfo.avatar" mode=""></image>
-					<text>{{userInfo.true_name}}</text>
-				</view> -->
 			<view class="time" v-if="info.user_vip_end_time">到期时间：{{ info.user_vip_end_time }}</view>
 			<view class="time" v-if="!info.user_vip_end_time">到期时间：未开通</view>
 		</view>
@@ -45,11 +41,7 @@
 		</view>
 		<view class="xufei" @click="pay()">
 			<text>{{ userInfo.is_vip ? '立即续费' : '开通会员' }}</text>
-			<!-- <text>(自购买当日开始计算至次年当日凌晨截至)</text> -->
 		</view>
-		<!-- <view class="b-t">
-			— 详情解释权最终归扬州骐骥信息科技有限公司 —
-		</view> -->
 	</view>
 </template>
 
@@ -84,20 +76,40 @@ export default {
 				if (res.data.vip_money == this.price) {
 					this.is_discount = 0;
 				}
-				/* this.is_vip=res.is_vip
-					uni.setStorage({
-					    key: 'is_vip',
-					    data: this.is_vip
-					}) */
 			});
 		},
 		pay() {
+			if (this.userInfo.is_vip) {
+				uni.requestSubscribeMessage({
+					tmplIds: this.tpmid.vip_end_notice,
+					complete: function(res) {
+						console.log('status end', res);
+					},
+					success: res => {
+						this.login_pay(false);
+					},
+					fail: function(res) {}
+				});
+			} else {
+				uni.requestSubscribeMessage({
+					tmplIds: this.tpmid.vip_start_notice,
+					complete: function(res) {
+						console.log('status start', res);
+					},
+					success: res => {
+						this.login_pay(true);
+					},
+					fail: function(res) {}
+				});
+			}
+		},
+		login_pay(bool) {
 			uni.login({
 				success: res => {
 					console.log(res);
-					this.$api.app_pay({ code: res.code, token: this.token }).then(res => {
-						console.log(res);
-						var wx_pay = res.data.wx_pay;
+					this.$api.app_pay({ code: res.code, token: this.token }).then(reslove => {
+						console.log('reslove', reslove);
+						let wx_pay = reslove.data.wx_pay;
 						uni.requestPayment({
 							provider: 'wxpay',
 							timeStamp: wx_pay.timeStamp,
@@ -111,17 +123,11 @@ export default {
 									key: 'is_vip',
 									data: 1
 								});
-								uni.requestSubscribeMessage({
-									tmplIds: this.tpmid.vip_end_notice,
-									complete: function(res) {
-										console.log('status', res);
-										// _this.fasong();
-									},
-									success: function(res) {
-										// _this.fasong()
-									},
-									fail: function(res) {}
-								});
+								if (bool) {
+									this.$api.send_msg({ token: this.token }).then(function(res) {
+										console.log('send_msg', res);
+									});
+								}
 							},
 							fail: err => {
 								console.log(err);

@@ -226,7 +226,7 @@ export default {
 			this.$api.get_grade({ token: this.token }).then(res => {
 				console.log(res);
 				this.grade = res.data.grade_list;
-				this.exercise_selection();
+				// this.exercise_selection();
 			});
 		},
 		rn(str) {

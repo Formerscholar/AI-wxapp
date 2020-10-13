@@ -27,7 +27,8 @@ export default {
 			teacher_name: '',
 			token: '',
 			userInfo: {},
-			code: ''
+			code: '',
+			openid:''
 		};
 	},
 	onLoad(options) {
@@ -83,8 +84,9 @@ export default {
 					user_name: this.userInfo.nickName,
 					avatar: this.userInfo.avatarUrl,
 					gender: this.userInfo.gender,
-					openId: this.userInfo.openId
+					openid: this.openid_tmp
 				})
+				// this.openid_tmp
 				.then(reslove => {
 					console.log('bind_info', reslove);
 					uni.showToast({
@@ -92,6 +94,19 @@ export default {
 						icon: 'none'
 					});
 					if (reslove.code == 200) {
+						this.login(reslove.data)
+						uni.setStorage({
+							key: 'userinfo_tmp',
+							data: reslove.data
+						});
+						uni.setStorage({
+							key: 'token',
+							data: reslove.data.token
+						});
+						uni.setStorage({
+							key: 'userInfo',
+							data: reslove.data
+						});
 						uni.reLaunch({
 							url: '/pages/index/index'
 						});
@@ -108,6 +123,7 @@ export default {
 					console.log(this.openid_tmp);
 					if (res.code == 200) {
 						this.user_id = res.data.user_id;
+						this.true_name = res.data.true_name;
 						uni.setStorage({
 							key: 'userinfo_tmp',
 							data: res.data
@@ -120,7 +136,15 @@ export default {
 							key: 'userInfo',
 							data: res.data
 						});
-						this.true_name = res.data.true_name;
+						uni.setStorage({
+							key: 'is_vip',  
+							data: res.data.is_vip
+						})
+						uni.setStorage({
+							key:"type",
+							data:4
+						})
+						this.login(res.data)
 					}
 				});
 		},

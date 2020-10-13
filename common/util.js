@@ -5,23 +5,22 @@ function request(url, data = {}, method = "post") {
 		uni.showLoading({
 			title: '数据加载中',
 		})
-		const userInfoData = uni.getStorageSync('userInfo')
+
 		uni.getSystemInfo({
 			success: (res) => {
-				const {
-					miniProgram
-				} = uni.getAccountInfoSync()
-				if (data.token == '') {
-					data.token = userInfoData.token
-				}
-				if (!data.hasOwnProperty('token')) {
+				if (uni.getStorageSync('userInfo')) {
 					data = {
-						token: userInfoData.token,
+						token: uni.getStorageSync('userInfo').token,
 						...data
 					}
 				}
-				const pages = getCurrentPages() 
-				const currentPage = pages[pages.length-1] || {is:''}
+				const pages = getCurrentPages()
+				const currentPage = pages[pages.length - 1] || {
+					is: ''
+				}
+				const miniProgram = uni.getStorageSync('miniProgram') || {
+					version: ""
+				}
 				uni.request({
 					url: url,
 					data: data,
@@ -32,8 +31,8 @@ function request(url, data = {}, method = "post") {
 						"carrierwindowWidth": res.windowWidth,
 						"carrierwindowHeight": res.windowHeight,
 						"carriersystem": res.system,
-						"carrierversion": miniProgram.version,
-						"page": currentPage.is 
+						"carrierversion": miniProgram.version || '',
+						"page": currentPage.is
 					},
 					success: (res) => {
 						uni.hideLoading();

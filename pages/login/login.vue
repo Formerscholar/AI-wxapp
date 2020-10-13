@@ -69,6 +69,10 @@
 					.then(res=>{
 						this.sessionkey=res.data.session_key
 						this.openid=res.data.openid
+						uni.setStorage({
+							key:"openid",
+							data:this.openid
+						})
 						console.log('res.data.data ',res.data)
 						if(res.code==200){
 							this.login(res.data)
@@ -95,20 +99,15 @@
 				}else{
 					console.log('学生登录',this.userInfo);
 					this.$api.student_login({
-						code:this.code,
-						openId: this.userInfo.openId,
-						user_name: this.userInfo.nickName,
-						gender: this.userInfo.gender,
-						city: this.userInfo.city,
-						province: this.userInfo.province,
-						country: this.userInfo.country,
-						avatar: this.userInfo.avatarUrl,
-						unionId: this.userInfo.unionId,
-						watermark: this.userInfo.watermark
+						code:this.code
 					})
 					.then(res=>{
 						this.session_key=res.data.session_key
 						this.openid=res.data.openid
+						uni.setStorage({
+							key:"openid",
+							data:this.openid
+						})
 						console.log('res',res) 
 						if(res.code==200){
 							this.login(res.data)
@@ -120,20 +119,13 @@
 								key:"type",
 								data:4
 							})
-							if(!res.data.is_bind){
-								uni.navigateTo({
-									url:'/pages/login/bindinfo'
-								})
-							}else{
-								uni.reLaunch({
-									url:'/pages/index/index'
-								})
-							}
+							uni.reLaunch({
+								url:'/pages/index/index'
+							})
 						}else{
-							uni.showToast({
-								title: res.msg,
-								icon:'none'
-							});
+							uni.navigateTo({
+								url:'/pages/login/bindinfo'
+							})
 						}
 					})
 				}		
