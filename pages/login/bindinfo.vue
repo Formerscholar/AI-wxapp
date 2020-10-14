@@ -142,14 +142,18 @@ export default {
 					console.log(res);
 					if (res.code == 200) {
 						this.login(res.data);
-						uni.showToast({
-							title: res.msg,
-							icon: 'none'
-						});
+						uni.setStorage({//缓存用户登陆状态
+							key: 'userInfo',  
+							data: res.data
+						})
+						uni.setStorage({
+							key:"type",
+							data:3
+						})
 						setTimeout(() => {
-							uni.switchTab({
-								url: '/pages/index/index'
-							});
+							uni.reLaunch({
+								url:'/pages/index/index'
+							})
 						}, 1000);
 					} else {
 						uni.showToast({
@@ -190,24 +194,24 @@ export default {
 					console.log(res);
 					this.login(res.data);
 					if (res.code == 200) {
+						this.login(res.data)
 						uni.setStorage({
-							//缓存用户登陆状态
-							key: 'userInfo',
-							data: res.data
-						});
-						uni.setStorage({
-							key: 'is_vip',
+							key: 'is_vip',  
 							data: res.data.is_vip
-						});
-						uni.showToast({
-							title: res.msg,
-							icon: 'none'
-						});
+						})
+						uni.setStorage({//缓存用户登陆状态
+							key: 'userInfo',  
+							data: res.data
+						})
+						uni.setStorage({
+							key:"type",
+							data:4
+						})
 						setTimeout(() => {
 							if (res.data.token) {
-								uni.switchTab({
-									url: '/pages/index/index'
-								});
+								uni.reLaunch({
+									url:'/pages/index/index'
+								})
 							}
 						}, 1000);
 					} else {

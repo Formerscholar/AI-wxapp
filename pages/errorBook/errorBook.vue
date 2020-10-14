@@ -143,15 +143,15 @@
 					选择加入{{ type == 4 ? '错题本' : '试卷' }}
 				</view>
 				<scroll-view scroll-y="true">
-				<view class="listJoin" v-if="errorbook_list.length != 0">
-					<view v-for="(item, i) of errorbook_list" :key="i" @click="seletJoin(i)">
-						<view v-if="update" :class="{ 'b-n': item.status }" class="kuang"></view>
-						<view>
-							<text>{{ item.title }}</text>
+					<view class="listJoin" v-if="errorbook_list.length != 0">
+						<view v-for="(item, i) of errorbook_list" :key="i" @click="seletJoin(i)">
+							<view v-if="update" :class="{ 'b-n': item.status }" class="kuang"></view>
+							<view>
+								<text>{{ item.title }}</text>
+							</view>
 						</view>
 					</view>
-				</view>
-				<view v-else class="listJoin none">您还没有生成{{ type == 4 ? '错题本' : '试卷' }}!</view>
+					<view v-else class="listJoin none">您还没有生成{{ type == 4 ? '错题本' : '试卷' }}!</view>
 				</scroll-view>
 				<view class="btnCon">
 					<button @click="cancelPopupJoin()">取消</button>
@@ -191,7 +191,14 @@
 				</view>
 				<view class="put">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/inputIcon.png" />
-					<input type="text" v-model="email" placeholder="输入邮箱" />
+					<input type="text" @input="inputHandle" v-model="email" placeholder="输入邮箱" />
+					<view class="text_tip" v-if="is_tip">
+						<text data-suffix="@" @click="texthandleClick">{{ email }}@</text>
+						<text data-suffix="@qq.com" @click="texthandleClick">{{ email }}@qq.com</text>
+						<text data-suffix="@163.com" @click="texthandleClick">{{ email }}@163.com</text>
+						<text data-suffix="@sina.com" @click="texthandleClick">{{ email }}@sina.com</text>
+						<text data-suffix="@yahoo.cn" @click="texthandleClick">{{ email }}@yahoo.cn</text>
+					</view>
 				</view>
 				<view class="tip">文件会发送至您的邮箱</view>
 				<view class="btnCon">
@@ -231,7 +238,8 @@ export default {
 			subject_name: '',
 			formId: '',
 			is_vip: false,
-			tpmid: ''
+			tpmid: '',
+			is_tip: false
 		};
 	},
 	onReachBottom() {
@@ -245,20 +253,13 @@ export default {
 		}
 	},
 	onLoad() {
-		if (uni.getStorageSync('userInfo').token) {
-			this.token = uni.getStorageSync('userInfo').token;
-		}
-
+		this.token = uni.getStorageSync('token');
 		this.tpmid = app.globalData.settings.tpmid;
 		console.log('this.tpmid', this.tpmid);
+		this.type = uni.getStorageSync('type');
+		this.is_vip = uni.getStorageSync('is_vip');
 
-		if (uni.getStorageSync('type')) {
-			this.type = uni.getStorageSync('type');
-		}
-		if (uni.getStorageSync('is_vip')) {
-			this.is_vip = uni.getStorageSync('is_vip');
-		}
-		if (uni.getStorageSync('type') == 3) {
+		if (this.type == 3) {
 			this.subject_id = -1;
 			this.wei_error_book();
 			this.generated_error_book();
@@ -277,13 +278,26 @@ export default {
 		}
 		this.all = true; //取消全选
 	},
-	onShow() {
-		
-	},
+	onShow() {},
 	computed: {
 		// ...mapState(['type'])
 	},
 	methods: {
+		texthandleClick(e) {
+			this.email = this.email + e.currentTarget.dataset.suffix;
+			this.is_tip = false;
+		},
+		inputHandle() {
+			if (this.email.indexOf('@') != -1) {
+				this.is_tip = false;
+			} else {
+				if (this.email == '') {
+					this.is_tip = false;
+				} else {
+					this.is_tip = true;
+				}
+			}
+		},
 		changeStyle(item) {
 			item = item.replace(new RegExp('<p', 'gi'), '<p style="color: #000;position:relative"');
 			item = item.replace(new RegExp('<img', 'gi'), '<img style="max-width:95%;vertical-align: middle;width:auto;"');
@@ -306,11 +320,11 @@ export default {
 			let arrTpmid = [];
 			if (_this.type == 4) {
 				arrTpmid = _this.tpmid.user_errorbook;
-				if(!this.is_vip){
+				if (!this.is_vip) {
 					uni.showToast({
 						title: '非会员无法下载',
 						icon: 'none'
-					})
+					});
 					return false;
 				}
 			} else {
@@ -411,7 +425,7 @@ export default {
 				errorbook_id: this.errorbook_id,
 				email: this.email
 			};
-			if (uni.getStorageSync('type') == 3) {
+			if (this.type == 3) {
 				var req = this.$api.get_teacher_text(data);
 			} else {
 				var req = this.$api.get_text(data);
@@ -440,7 +454,7 @@ export default {
 				errorbook_id: this.errorbook_id
 				// email:this.email
 			};
-			if (uni.getStorageSync('type') == 3) {
+			if (this.type == 3) {
 				this.$api.get_teacher_text(data).then(res => {
 					console.log(res);
 					if (res.code == 200) {
@@ -497,7 +511,7 @@ export default {
 				subject_id: this.subject_id,
 				page: this.page
 			};
-			if (uni.getStorageSync('type') == 3) {
+			if (this.type == 3) {
 				var req = this.$api.wei_teacher_error_book_list(data);
 			} else {
 				var req = this.$api.wei_error_book_list(data);
@@ -566,7 +580,7 @@ export default {
 				exercises_ids: n_arr.toString(),
 				title: this.title
 			};
-			if (uni.getStorageSync('type') == 3) {
+			if (this.type == 3) {
 				var req = this.$api.create_teacher_error_book(data);
 			} else {
 				var req = this.$api.create_error_book(data);
@@ -587,7 +601,7 @@ export default {
 		},
 		// 已生成错题本列表
 		generated_error_book() {
-			if (uni.getStorageSync('type') == 4) {
+			if (this.type == 4) {
 				this.$api.generated_error_book({ subject_id: this.subject_id, token: this.token, page: this.page }).then(res => {
 					console.log(res);
 					// if(res.code!=200){
@@ -641,7 +655,7 @@ export default {
 							token: this.token,
 							errorbook_id: this.errorbook_list[i].errorbook_id
 						};
-						if (uni.getStorageSync('type') == 3) {
+						if (this.type == 3) {
 							var req = this.$api.teacher_delete_errorbook(data);
 						} else {
 							var req = this.$api.delete_errorbook(data);
@@ -682,7 +696,7 @@ export default {
 				token: this.token,
 				exercises_ids: n_arr.toString()
 			};
-			if (uni.getStorageSync('type') == 3) {
+			if (this.type == 3) {
 				var req = this.$api.teacher_delete_error_exercises(data);
 			} else {
 				var req = this.$api.delete_error_exercises(data);
@@ -944,13 +958,13 @@ button::after {
 				display: inline-block;
 				width: 40rpx;
 				height: 50rpx;
-				padding:15rpx 30rpx;
+				padding: 15rpx 30rpx;
 			}
 			.line {
-				width:1px;
+				width: 1px;
 				height: 30px;
-				background:#F5F5F5;
-				margin-top:15rpx;
+				background: #f5f5f5;
+				margin-top: 15rpx;
 			}
 		}
 	}
@@ -1141,8 +1155,8 @@ button::after {
 					border: 0.5rpx solid #c5c5c5;
 					margin-right: 30rpx;
 				}
-				> view{
-					width:412rpx;
+				> view {
+					width: 412rpx;
 				}
 			}
 		}
@@ -1216,8 +1230,29 @@ button::after {
 			top: 15rpx;
 			left: 30rpx;
 		}
+		.text_tip {
+			width: 80%;
+			position: absolute;
+			left: 75rpx;
+			top: 70rpx;
+			font-size: 24rpx;
+			background-color: #ffffff;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09);
+			z-index: 11;
+			overflow: hidden;
+			text {
+				width: 100%;
+				text-align: left;
+				padding: 10rpx;
+				margin-bottom: 5rpx;
+			}
+		}
 	}
-	.tip{
+	.tip {
 		font-size: 24rpx;
 		color: #999999;
 		margin: 0 40rpx 40rpx 40rpx;

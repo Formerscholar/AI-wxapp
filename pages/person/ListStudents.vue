@@ -23,12 +23,12 @@
 							<image :src="item.avatar" v-if="item.avatar"></image>
 							<view v-if="item.student_name">
 								{{ item.student_name }}
-								<image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon.png' v-if='item.is_vip==1'></image>
+								<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon.png" v-if="item.is_vip == 1"></image>
 							</view>
 						</view>
 						<view>
 							<view class="cuo_tag">已收集{{ item.err_cnt }}道错题</view>
-							<!-- <image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png' class='delete' @click.stop="deItem(item.user_id)"></image> -->
+							<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="delete" @click.stop="deItem(item.user_id)"></image>
 						</view>
 					</view>
 				</view>
@@ -39,10 +39,10 @@
 			<view>空空如也~</view>
 			<view>没有班级成员哦!</view>
 		</view>
-		<!-- 	<view class='btn' @click="delClass">
-			<image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del.png'></image>
+		<view class="btn" @click="delClass">
+			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del.png"></image>
 			删除班级
-		</view> -->
+		</view>
 	</view>
 </template>
 

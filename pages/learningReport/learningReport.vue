@@ -92,14 +92,15 @@ export default {
 		};
 	},
 	onLoad() {
+		if (uni.getStorageSync('token')) {
+			this.token = uni.getStorageSync('token');
+		}
 		_self = this;
 		this.class_name = uni.getStorageSync('userInfo').school.grade_name + uni.getStorageSync('userInfo').true_name;
 		this.selectDate(0);
 	},
 	onShow() {
-		if (uni.getStorageSync('token')) {
-			this.token = uni.getStorageSync('token');
-		}
+		
 		this.subject_fenlei();
 	},
 	methods: {

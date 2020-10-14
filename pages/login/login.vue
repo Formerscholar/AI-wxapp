@@ -115,6 +115,10 @@
 								key: 'is_vip',  
 								data: res.data.is_vip
 							})
+							uni.setStorage({//缓存用户登陆状态
+								key: 'userInfo',  
+								data: res.data
+							})
 							uni.setStorage({
 								key:"type",
 								data:4

@@ -31,7 +31,13 @@
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/minePaper.png" mode=""></image>
 				<view>
 					<text>我的试卷</text>
-					<view class="paperInfo">已生成试卷 <text>{{ user_info.created ? user_info.created : 0 }}</text> 份,未生成试卷 <text>{{ user_info.uncreate ? user_info.uncreate : 0 }}</text> 题</view>
+					<view class="paperInfo">
+						已生成试卷
+						<text>{{ user_info.created ? user_info.created : 0 }}</text>
+						份,未生成试卷
+						<text>{{ user_info.uncreate ? user_info.uncreate : 0 }}</text>
+						题
+					</view>
 				</view>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
@@ -112,15 +118,14 @@ export default {
 		};
 	},
 	onLoad() {
-		if (uni.getStorageSync('userInfo').token) {
-			this.token = uni.getStorageSync('userInfo').token;
-		}
-		this.school = uni.getStorageSync('userInfo').school.school_name;
 	},
 	onShow() {
-		this.getuserinfo();
+		this.token = uni.getStorageSync('token');
+		this.user_info = uni.getStorageSync('userInfo');
 		this.type = uni.getStorageSync('type');
-		if (uni.getStorageSync('type') == 4) {
+		this.getuserinfo();
+		if (this.type == 4) {
+			this.school = this.user_info.school.school_name;
 			this.get_vip_info();
 		}
 	},
@@ -148,7 +153,8 @@ export default {
 		},
 		//获取用户信息
 		getuserinfo() {
-			if (uni.getStorageSync('type') == 4) {
+			console.log(this.token,this.type, 'getuserinfo');
+			if (this.type == 4) {
 				this.$api.get_user_info({ token: this.token }).then(res => {
 					console.log(res);
 					this.user_info = res.data;
@@ -235,7 +241,7 @@ page {
 		font-size: 24rpx;
 		color: #b3b3b3;
 		margin-top: 10rpx;
-		text{
+		text {
 			display: inline;
 			margin: 0 10rpx;
 			color: #e30405;

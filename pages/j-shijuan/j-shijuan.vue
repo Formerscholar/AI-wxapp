@@ -39,7 +39,16 @@
 
 		<view class="mask" v-show="false">
 			<view class="">绑定邮箱</view>
-			<view class="put"><input type="text" value="" placeholder="输入邮箱" /></view>
+			<view class="put">
+				<input type="text" value="" placeholder="输入邮箱" />
+				<view class="text_tip" v-if="is_tip">
+					<text data-suffix="@" @click="texthandleClick">{{ email }}@</text>
+					<text data-suffix="@qq.com" @click="texthandleClick">{{ email }}@qq.com</text>
+					<text data-suffix="@163.com" @click="texthandleClick">{{ email }}@163.com</text>
+					<text data-suffix="@sina.com" @click="texthandleClick">{{ email }}@sina.com</text>
+					<text data-suffix="@yahoo.cn" @click="texthandleClick">{{ email }}@yahoo.cn</text>
+				</view>
+			</view>
 			<button type="primary">绑定</button>
 		</view>
 		<!-- 遮罩 -->
@@ -54,7 +63,23 @@ export default {
 			select: true
 		};
 	},
-	methods: {}
+	methods: {
+		texthandleClick(e) {
+			this.email = this.email + e.currentTarget.dataset.suffix;
+			this.is_tip = false;
+		},
+		inputHandle() {
+			if (this.email.indexOf('@') != -1) {
+				this.is_tip = false;
+			} else {
+				if (this.email == '') {
+					this.is_tip = false;
+				} else {
+					this.is_tip = true;
+				}
+			}
+		}
+	}
 };
 </script>
 
@@ -86,5 +111,31 @@ button::after {
 	background: #666;
 	opacity: 0.5;
 	z-index: 99;
+}
+.mask {
+	.put {
+		position: relative;
+		.text_tip {
+			width: 80%;
+			position: absolute;
+			left: 75rpx;
+			top: 70rpx;
+			font-size: 24rpx;
+			background-color: #ffffff;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09);
+			z-index: 11;
+			overflow: hidden;
+			text {
+				width: 100%;
+				text-align: left;
+				padding: 10rpx;
+				margin-bottom: 5rpx;
+			}
+		}
+	}
 }
 </style>

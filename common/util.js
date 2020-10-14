@@ -5,14 +5,12 @@ function request(url, data = {}, method = "post") {
 		uni.showLoading({
 			title: '数据加载中',
 		})
-
 		uni.getSystemInfo({
 			success: (res) => {
-				if (uni.getStorageSync('userInfo')) {
-					data = {
-						token: uni.getStorageSync('userInfo').token,
-						...data
-					}
+				const token = uni.getStorageSync('token')
+				data = {
+					token: token,
+					...data
 				}
 				const pages = getCurrentPages()
 				const currentPage = pages[pages.length - 1] || {
@@ -31,7 +29,7 @@ function request(url, data = {}, method = "post") {
 						"carrierwindowWidth": res.windowWidth,
 						"carrierwindowHeight": res.windowHeight,
 						"carriersystem": res.system,
-						"carrierversion": miniProgram.version || '',
+						"carrierversion": miniProgram.version,
 						"page": currentPage.is
 					},
 					success: (res) => {

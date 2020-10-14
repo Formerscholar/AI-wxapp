@@ -79,31 +79,18 @@ export default {
 			});
 		},
 		pay() {
-			if (this.userInfo.is_vip) {
-				uni.requestSubscribeMessage({
-					tmplIds: this.tpmid.vip_end_notice,
-					complete: function(res) {
-						console.log('status end', res);
-					},
-					success: res => {
-						this.login_pay(false);
-					},
-					fail: function(res) {}
-				});
-			} else {
-				uni.requestSubscribeMessage({
-					tmplIds: this.tpmid.vip_start_notice,
-					complete: function(res) {
-						console.log('status start', res);
-					},
-					success: res => {
-						this.login_pay(true);
-					},
-					fail: function(res) {}
-				});
-			}
+			uni.requestSubscribeMessage({
+				tmplIds: this.tpmid.vip_notice,
+				complete: function(res) {
+					console.log('status end', res);
+					this.login_pay();
+				},
+				success: res => {
+				},
+				fail: function(res) {}
+			});
 		},
-		login_pay(bool) {
+		login_pay() {
 			uni.login({
 				success: res => {
 					console.log(res);
@@ -123,11 +110,6 @@ export default {
 									key: 'is_vip',
 									data: 1
 								});
-								if (bool) {
-									this.$api.send_msg({ token: this.token }).then(function(res) {
-										console.log('send_msg', res);
-									});
-								}
 							},
 							fail: err => {
 								console.log(err);
