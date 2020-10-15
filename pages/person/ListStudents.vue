@@ -28,7 +28,7 @@
 						</view>
 						<view>
 							<view class="cuo_tag">已收集{{ item.err_cnt }}道错题</view>
-							<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="delete" @click.stop="deItem(item.user_id)"></image>
+							<image v-if="userid == teacher_id" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="delete" @click.stop="deItem(item.user_id)"></image>
 						</view>
 					</view>
 				</view>
@@ -39,8 +39,8 @@
 			<view>空空如也~</view>
 			<view>没有班级成员哦!</view>
 		</view>
-		<view class="btn" @click="delClass">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del.png"></image>
+		<view v-if="userid == teacher_id && is_active == 0" class="btn" @click="delClass">
+			<!-- <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del.png"></image> -->
 			删除班级
 		</view>
 	</view>
@@ -54,18 +54,22 @@ export default {
 			teacher: [],
 			team_id: '',
 			team_name: '',
-			update: true
+			update: true,
+			userInfo: {},
+			userid: '',
+			is_active: '',
+			teacher_id: ''
 		};
 	},
 	onLoad(options) {
 		console.log(options);
 		this.team_id = options.team_id;
 		this.team_name = options.team_name;
-
+		this.userInfo = uni.getStorageSync('userInfo');
+		this.userid = this.userInfo.user_id;
 		if (uni.getStorageSync('token')) {
 			this.token = uni.getStorageSync('token');
 		}
-
 		this.get_student_list();
 	},
 	computed: {},
@@ -77,7 +81,8 @@ export default {
 					console.log(res.data);
 					this.student = res.data.student;
 					this.teacher = res.data.teacher;
-				} else {
+					this.is_active = res.data.team.is_active;
+					this.teacher_id = res.data.team.teacher_id;
 				}
 			});
 		},

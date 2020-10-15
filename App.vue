@@ -1,7 +1,17 @@
 <script>
 export default {
 	globalData: {
-		settings: {}
+		settings: {},
+		email:[
+			'@qq.com',
+			'@163.com',
+			'@126.com',
+			'@sina.com',
+			'@sohu.com',
+			'@yeah.net',
+			'@139.com',
+			'@189.cn'
+		]
 	},
 	onLaunch: function() {
 		this.$api.get_settings('Get').then(res => {

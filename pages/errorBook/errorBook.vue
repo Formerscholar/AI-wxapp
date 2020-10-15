@@ -193,11 +193,7 @@
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/inputIcon.png" />
 					<input type="text" @input="inputHandle" v-model="email" placeholder="输入邮箱" />
 					<view class="text_tip" v-if="is_tip">
-						<text data-suffix="@" @click="texthandleClick">{{ email }}@</text>
-						<text data-suffix="@qq.com" @click="texthandleClick">{{ email }}@qq.com</text>
-						<text data-suffix="@163.com" @click="texthandleClick">{{ email }}@163.com</text>
-						<text data-suffix="@sina.com" @click="texthandleClick">{{ email }}@sina.com</text>
-						<text data-suffix="@yahoo.cn" @click="texthandleClick">{{ email }}@yahoo.cn</text>
+						<text v-for="(item, index) in email_arr" :key="index" :data-suffix="item" @click="texthandleClick">{{ email + item }}</text>
 					</view>
 				</view>
 				<view class="tip">文件会发送至您的邮箱</view>
@@ -239,7 +235,8 @@ export default {
 			formId: '',
 			is_vip: false,
 			tpmid: '',
-			is_tip: false
+			is_tip: false,
+			email_arr: []
 		};
 	},
 	onReachBottom() {
@@ -253,8 +250,9 @@ export default {
 		}
 	},
 	onLoad() {
+		this.email_arr = app.globalData.email;
 		this.token = uni.getStorageSync('token');
-		this.tpmid = app.globalData.settings.tpmid;
+		this.tpmid = app.globalData.settings.tmpid;
 		console.log('this.tpmid', this.tpmid);
 		this.type = uni.getStorageSync('type');
 		this.is_vip = uni.getStorageSync('is_vip');
@@ -314,12 +312,11 @@ export default {
 		},
 		//点击邮箱下载
 		generated(id) {
-			let _this = this;
-			_this.errorbook_id = id;
-			console.log('_this.tpmid', _this.tpmid);
+			this.errorbook_id = id;
+			console.log('this.tpmid', this.tpmid);
 			let arrTpmid = [];
-			if (_this.type == 4) {
-				arrTpmid = _this.tpmid.user_errorbook;
+			if (this.type == 4) {
+				arrTpmid = this.tpmid.user_errorbook;
 				if (!this.is_vip) {
 					uni.showToast({
 						title: '非会员无法下载',
@@ -328,17 +325,17 @@ export default {
 					return false;
 				}
 			} else {
-				arrTpmid = _this.tpmid.teacher_paper;
+				arrTpmid = this.tpmid.teacher_paper;
 			}
 			console.log(arrTpmid);
 			uni.requestSubscribeMessage({
 				tmplIds: arrTpmid,
-				complete: function(res) {
+				complete: res => {
 					console.log('status', res);
-					_this.fasong();
+					this.fasong();
 				},
 				success: function(res) {
-					// _this.fasong()
+					// this.fasong()
 				},
 				fail: function(res) {}
 			});
@@ -1249,6 +1246,7 @@ button::after {
 				text-align: left;
 				padding: 10rpx;
 				margin-bottom: 5rpx;
+				padding-left: 30rpx;
 			}
 		}
 	}

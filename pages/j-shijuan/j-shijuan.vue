@@ -42,11 +42,7 @@
 			<view class="put">
 				<input type="text" value="" placeholder="输入邮箱" />
 				<view class="text_tip" v-if="is_tip">
-					<text data-suffix="@" @click="texthandleClick">{{ email }}@</text>
-					<text data-suffix="@qq.com" @click="texthandleClick">{{ email }}@qq.com</text>
-					<text data-suffix="@163.com" @click="texthandleClick">{{ email }}@163.com</text>
-					<text data-suffix="@sina.com" @click="texthandleClick">{{ email }}@sina.com</text>
-					<text data-suffix="@yahoo.cn" @click="texthandleClick">{{ email }}@yahoo.cn</text>
+					<text v-for="(item, index) in email_arr" :key="index" :data-suffix="item" @click="texthandleClick">{{ email + item }}</text>
 				</view>
 			</view>
 			<button type="primary">绑定</button>
@@ -57,11 +53,16 @@
 </template>
 
 <script>
+let app = getApp();
 export default {
 	data() {
 		return {
-			select: true
+			select: true,
+			email_arr: []
 		};
+	},
+	onLoad() {
+		this.email_arr = app.globalData.email;
 	},
 	methods: {
 		texthandleClick(e) {
@@ -134,6 +135,7 @@ button::after {
 				text-align: left;
 				padding: 10rpx;
 				margin-bottom: 5rpx;
+				padding-left: 30rpx;
 			}
 		}
 	}

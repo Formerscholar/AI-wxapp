@@ -62,7 +62,7 @@ export default {
 		this.token = uni.getStorageSync('userInfo').token;
 		this.userInfo = uni.getStorageSync('userInfo');
 		this.price = app.globalData.settings.vip_money;
-		this.tpmid = app.globalData.settings.tpmid;
+		this.tpmid = app.globalData.settings.tmpid;
 		console.log('this.tpmid', this.tpmid);
 	},
 	onShow() {
@@ -81,12 +81,11 @@ export default {
 		pay() {
 			uni.requestSubscribeMessage({
 				tmplIds: this.tpmid.vip_notice,
-				complete: function(res) {
+				complete: res => {
 					console.log('status end', res);
 					this.login_pay();
 				},
-				success: res => {
-				},
+				success: res => {},
 				fail: function(res) {}
 			});
 		},

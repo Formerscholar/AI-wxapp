@@ -61,11 +61,7 @@
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/inputIcon.png" />
 					<input type="text" @input="inputHandle" v-model="email" placeholder="输入邮箱" />
 					<view class="text_tip" v-if="is_tip">
-						<text data-suffix="@" @click="texthandleClick">{{ email }}@</text>
-						<text data-suffix="@qq.com" @click="texthandleClick">{{ email }}@qq.com</text>
-						<text data-suffix="@163.com" @click="texthandleClick">{{ email }}@163.com</text>
-						<text data-suffix="@sina.com" @click="texthandleClick">{{ email }}@sina.com</text>
-						<text data-suffix="@yahoo.cn" @click="texthandleClick">{{ email }}@yahoo.cn</text>
+						<text v-for="(item, index) in email_arr" :key="index" :data-suffix="item" @click="texthandleClick">{{ email + item }}</text>
 					</view>
 				</view>
 				<view class="btnCon">
@@ -96,7 +92,8 @@ export default {
 			based_id: '',
 			email: '',
 			tpmid: '',
-			is_tip: false
+			is_tip: false,
+			email_arr: []
 		};
 	},
 	onReachBottom() {
@@ -111,7 +108,8 @@ export default {
 	},
 	onShow() {},
 	onLoad() {
-		this.tpmid = app.globalData.settings.tpmid;
+		this.email_arr = app.globalData.email;
+		this.tpmid = app.globalData.settings.tmpid;
 		console.log('this.tpmid', this.tpmid);
 
 		if (uni.getStorageSync('token')) {
@@ -373,10 +371,10 @@ page {
 			}
 		}
 		.right {
-			padding:40rpx 0;
+			padding: 40rpx 0;
 			display: flex;
 			margin: auto 0;
-			.arrow{
+			.arrow {
 				width: 14rpx;
 				height: 26rpx;
 			}
@@ -466,6 +464,7 @@ page {
 				text-align: left;
 				padding: 10rpx;
 				margin-bottom: 5rpx;
+				padding-left: 30rpx;
 			}
 		}
 	}
