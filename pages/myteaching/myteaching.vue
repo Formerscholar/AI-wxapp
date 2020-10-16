@@ -129,8 +129,10 @@ export default {
 		//获取教辅名称列表
 		open() {
 			this.textbook_ids = [];
+			this.textbook_list = []
 			this.$api.textbook({ token: this.token, subject_id: this.subject_id, semester: this.semester }).then(res => {
 				if(res.code == 200){
+					
 					this.textbook_list = res.data.textbook_list;
 				}
 			});
