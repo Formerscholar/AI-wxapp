@@ -45,15 +45,16 @@
 			};
 		},
 		onLoad() {
-			uni.login({
-				success: (res) => {
-					this.code = res.code
-				}
-			})
+			
 		},
 		methods:{ 
 			...mapMutations(['login','set_type']),
 			bindgetuserinfo(e,i){
+				uni.login({
+					success: (res) => {
+						this.code = res.code
+					}
+				})
 				uni.setStorage({
 					key:'type',
 					data:i,
@@ -126,6 +127,11 @@
 							uni.reLaunch({
 								url:'/pages/index/index'
 							})
+						}else if(res.code == 300){
+							uni.showToast({
+								title: res.msg,
+								icon: 'none'
+							});
 						}else{
 							uni.navigateTo({
 								url:'/pages/login/bindinfo'

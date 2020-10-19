@@ -59,7 +59,7 @@
 			<!-- <view class="item">
 				<input type="text" placeholder="请输入邮箱" v-model="email" placeholder-style="color:#dedede"/>
 			</view> -->
-			<button class="btn" open-type="getUserInfo"   @getuserinfo="tijiao($event)">绑定信息</button>
+			<button class="btn" open-type="getUserInfo" @getuserinfo="tijiao($event)">绑定信息</button>
 		</view>
 	</view>
 </template>
@@ -88,7 +88,7 @@ export default {
 			email: '',
 			type: 4,
 			token: '',
-			userInfo:{},
+			userInfo: {},
 			openid: ''
 		};
 	},
@@ -107,7 +107,7 @@ export default {
 	methods: {
 		...mapMutations(['login', 'set_type']),
 		tijiao(e) {
-			this.userInfo = e.detail.userInfo
+			this.userInfo = e.detail.userInfo;
 			if (this.s_num == 0) {
 				uni.showToast({
 					title: '请选择学校！',
@@ -142,18 +142,19 @@ export default {
 					console.log(res);
 					if (res.code == 200) {
 						this.login(res.data);
-						uni.setStorage({//缓存用户登陆状态
-							key: 'userInfo',  
-							data: res.data
-						})
 						uni.setStorage({
-							key:"type",
-							data:3
-						})
+							//缓存用户登陆状态
+							key: 'userInfo',
+							data: res.data
+						});
+						uni.setStorage({
+							key: 'type',
+							data: 3
+						});
 						setTimeout(() => {
 							uni.reLaunch({
-								url:'/pages/index/index'
-							})
+								url: '/pages/index/index'
+							});
 						}, 1000);
 					} else {
 						uni.showToast({
@@ -187,31 +188,32 @@ export default {
 					openid: uni.getStorageSync('openid'),
 					user_name: this.userInfo.nickName,
 					avatar: this.userInfo.avatarUrl,
-					gender: this.userInfo.gender,
+					gender: this.userInfo.gender
 				};
 				console.log(data);
 				this.$api.bind_info(data).then(res => {
 					console.log(res);
 					this.login(res.data);
 					if (res.code == 200) {
-						this.login(res.data)
+						this.login(res.data);
 						uni.setStorage({
-							key: 'is_vip',  
+							key: 'is_vip',
 							data: res.data.is_vip
-						})
-						uni.setStorage({//缓存用户登陆状态
-							key: 'userInfo',  
-							data: res.data
-						})
+						});
 						uni.setStorage({
-							key:"type",
-							data:4
-						})
+							//缓存用户登陆状态
+							key: 'userInfo',
+							data: res.data
+						});
+						uni.setStorage({
+							key: 'type',
+							data: 4
+						});
 						setTimeout(() => {
 							if (res.data.token) {
 								uni.reLaunch({
-									url:'/pages/index/index'
-								})
+									url: '/pages/index/index'
+								});
 							}
 						}, 1000);
 					} else {
