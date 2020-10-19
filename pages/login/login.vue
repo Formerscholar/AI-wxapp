@@ -53,93 +53,94 @@
 				uni.login({
 					success: (res) => {
 						this.code = res.code
+						console.log(this.code)
+						uni.setStorage({
+							key:'type',
+							data:i,
+						})
+						console.log('bindgetuserinfo',e)
+						this.userInfo = e.detail.userInfo
+						uni.setStorageSync('info',e.detail.userInfo)//头像  姓名
+						if(i==3){
+							console.log(this.userInfo)
+							this.$api.teacher_login({
+								code:this.code,
+							})
+							.then(res=>{
+								this.sessionkey=res.data.session_key
+								this.openid=res.data.openid
+								uni.setStorage({
+									key:"openid",
+									data:this.openid
+								})
+								console.log('res.data.data ',res.data)
+								if(res.code==200){
+									this.login(res.data)
+									uni.setStorage({//缓存用户登陆状态
+										key: 'userInfo',  
+										data: res.data
+									})
+									uni.setStorage({
+										key:"type",
+										data:3
+									})
+									uni.reLaunch({
+										url:'/pages/index/index'
+									})
+									// this.user_id=res.data.user_id 
+								}else{ 	
+									uni.setStorage({
+										key: 'openid',  
+										data: res.data.openid
+									})
+									this.$refs.popup.open()
+								}
+							})
+						}else{
+							console.log('学生登录',this.userInfo);
+							this.$api.student_login({
+								code:this.code
+							})
+							.then(res=>{
+								this.session_key=res.data.session_key
+								this.openid=res.data.openid
+								uni.setStorage({
+									key:"openid",
+									data:this.openid
+								})
+								console.log('res',res) 
+								if(res.code==200){
+									this.login(res.data)
+									uni.setStorage({
+										key: 'is_vip',  
+										data: res.data.is_vip
+									})
+									uni.setStorage({//缓存用户登陆状态
+										key: 'userInfo',  
+										data: res.data
+									})
+									uni.setStorage({
+										key:"type",
+										data:4
+									})
+									uni.reLaunch({
+										url:'/pages/index/index'
+									})
+								}else if(res.code == 300){
+									uni.showToast({
+										title: res.msg,
+										icon: 'none'
+									});
+								}else{
+									uni.navigateTo({
+										url:'/pages/login/bindinfo'
+									})
+								}
+								
+							})
+						}		
 					}
 				})
-				uni.setStorage({
-					key:'type',
-					data:i,
-				})
-				console.log('bindgetuserinfo',e)
-				this.userInfo = e.detail.userInfo
-				uni.setStorageSync('info',e.detail.userInfo)//头像  姓名
-				if(i==3){
-					console.log(this.userInfo)
-					this.$api.teacher_login({
-						code:this.code,
-					})
-					.then(res=>{
-						this.sessionkey=res.data.session_key
-						this.openid=res.data.openid
-						uni.setStorage({
-							key:"openid",
-							data:this.openid
-						})
-						console.log('res.data.data ',res.data)
-						if(res.code==200){
-							this.login(res.data)
-							uni.setStorage({//缓存用户登陆状态
-								key: 'userInfo',  
-								data: res.data
-							})
-							uni.setStorage({
-								key:"type",
-								data:3
-							})
-							uni.reLaunch({
-								url:'/pages/index/index'
-							})
-							// this.user_id=res.data.user_id 
-						}else{ 	
-							uni.setStorage({
-								key: 'openid',  
-								data: res.data.openid
-							})
-							this.$refs.popup.open()
-						}
-					})
-				}else{
-					console.log('学生登录',this.userInfo);
-					this.$api.student_login({
-						code:this.code
-					})
-					.then(res=>{
-						this.session_key=res.data.session_key
-						this.openid=res.data.openid
-						uni.setStorage({
-							key:"openid",
-							data:this.openid
-						})
-						console.log('res',res) 
-						if(res.code==200){
-							this.login(res.data)
-							uni.setStorage({
-								key: 'is_vip',  
-								data: res.data.is_vip
-							})
-							uni.setStorage({//缓存用户登陆状态
-								key: 'userInfo',  
-								data: res.data
-							})
-							uni.setStorage({
-								key:"type",
-								data:4
-							})
-							uni.reLaunch({
-								url:'/pages/index/index'
-							})
-						}else if(res.code == 300){
-							uni.showToast({
-								title: res.msg,
-								icon: 'none'
-							});
-						}else{
-							uni.navigateTo({
-								url:'/pages/login/bindinfo'
-							})
-						}
-					})
-				}		
-				console.log(e)
 			},
 			getphone(e){
 				

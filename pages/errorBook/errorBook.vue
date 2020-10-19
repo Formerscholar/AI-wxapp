@@ -42,8 +42,8 @@
 						<button @click="delete_error_exercises()">删除</button>
 					</view>
 					<view class="rightCon">
-						<button @click="addPaper()">加入错题本</button>
-						<button @click="addCreat()">生成错题本</button>
+						<button @click="addPaper()" :disabled="exercises_list.length == 0">加入错题本</button>
+						<button @click="addCreat()" :disabled="exercises_list.length == 0">生成错题本</button>
 					</view>
 				</view>
 			</view>
@@ -103,8 +103,8 @@
 						<button @click="delete_error_exercises()">删除</button>
 					</view>
 					<view class="rightCon">
-						<button @click="addPaper()">加入试卷</button>
-						<button @click="addCreat()">生成试卷</button>
+						<button @click="addPaper()" :disabled="exercises_list.length == 0">加入试卷</button>
+						<button @click="addCreat()" :disabled="exercises_list.length == 0">生成试卷</button>
 					</view>
 				</view>
 			</view>
@@ -185,7 +185,7 @@
 		<!-- 绑定邮箱弹框 -->
 		<uni-popup ref="popup2" type="center">
 			<view class="mask2" style="height: 335rpx;">
-				<view class="" v-if="">
+				<view>
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/creatPaper.png" style="left:130rpx" />
 					绑定邮箱
 				</view>
@@ -373,6 +373,7 @@ export default {
 							arrYi = [],
 							str = '',
 							str1 = '';
+
 						this.exercises_list.forEach((elem, i, arr1) => {
 							if (elem.select) {
 								arrWei.push(elem.exercises_id);
@@ -514,9 +515,7 @@ export default {
 				var req = this.$api.wei_error_book_list(data);
 			}
 			req.then(res => {
-				console.log(res);
 				this.is_more = res.is_more;
-				console.log(this.page);
 				if (res.code != 200) {
 					/* uni.showToast({
 							title:res.msg,
@@ -530,7 +529,6 @@ export default {
 				} else {
 					this.exercises_list = [...this.exercises_list, ...res.data.exercises_list];
 				}
-				console.log(this.exercises_list);
 			});
 		},
 		//学科分类
