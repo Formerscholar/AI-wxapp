@@ -16,9 +16,10 @@ function request(url, data = {}, method = "post") {
 				const currentPage = pages[pages.length - 1] || {
 					is: ''
 				}
-				const miniProgram = uni.getStorageSync('miniProgram') || {
-					version: ""
-				}
+				const {
+					miniProgram
+				} = uni.getAccountInfoSync()
+				console.log('miniProgram', miniProgram)
 				uni.request({
 					url: url,
 					data: data,

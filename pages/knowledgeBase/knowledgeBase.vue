@@ -187,13 +187,6 @@ export default {
 			}
 		}
 	},
-	onShow() {
-		this.type = uni.getStorageSync('type');
-		this.page_change = 1;
-		if (uni.getStorageSync('is_vip')) {
-			this.is_vip = uni.getStorageSync('is_vip');
-		}
-	},
 	onLoad() {
 		if (uni.getStorageSync('token')) {
 			this.token = uni.getStorageSync('token');
@@ -202,6 +195,14 @@ export default {
 		// this.exercise_type()
 		this.get_level();
 		this.get_grade();
+	},
+	onShow() {
+		this.type = uni.getStorageSync('type');
+		this.page_change = 1;
+		if (uni.getStorageSync('is_vip')) {
+			this.is_vip = uni.getStorageSync('is_vip');
+		}
+		this.get_konw();
 	},
 	methods: {
 		changeStyle(item) {

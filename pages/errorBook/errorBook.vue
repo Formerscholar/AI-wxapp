@@ -42,8 +42,8 @@
 						<button @click="delete_error_exercises()">删除</button>
 					</view>
 					<view class="rightCon">
-						<button @click="addPaper()" :disabled="exercises_list.length == 0">加入错题本</button>
-						<button @click="addCreat()" :disabled="exercises_list.length == 0">生成错题本</button>
+						<button @click="addPaper()" :disabled="btndisabled">加入错题本</button>
+						<button @click="addCreat()" :disabled="btndisabled">生成错题本</button>
 					</view>
 				</view>
 			</view>
@@ -103,8 +103,8 @@
 						<button @click="delete_error_exercises()">删除</button>
 					</view>
 					<view class="rightCon">
-						<button @click="addPaper()" :disabled="exercises_list.length == 0">加入试卷</button>
-						<button @click="addCreat()" :disabled="exercises_list.length == 0">生成试卷</button>
+						<button @click="addPaper()" :disabled="btndisabled">加入试卷</button>
+						<button @click="addCreat()" :disabled="btndisabled">生成试卷</button>
 					</view>
 				</view>
 			</view>
@@ -210,6 +210,7 @@
 let app = getApp();
 import uniPopup from '@/components/uni-popup/uni-popup.vue';
 import { mapState, mapMutations } from 'vuex';
+
 export default {
 	components: { uniPopup },
 	data() {
@@ -236,7 +237,8 @@ export default {
 			is_vip: false,
 			tpmid: '',
 			is_tip: false,
-			email_arr: []
+			email_arr: [],
+			btndisabled: true
 		};
 	},
 	onReachBottom() {
@@ -256,7 +258,6 @@ export default {
 		console.log('this.tpmid', this.tpmid);
 		this.type = uni.getStorageSync('type');
 		this.is_vip = uni.getStorageSync('is_vip');
-
 		if (this.type == 3) {
 			this.subject_id = -1;
 			this.wei_error_book();
@@ -276,7 +277,25 @@ export default {
 		}
 		this.all = true; //取消全选
 	},
-	onShow() {},
+	onShow() {
+		if (this.type == 3) {
+			this.subject_id = -1;
+			this.generated_error_book();
+			uni.setNavigationBarTitle({
+				title: '我的试卷'
+			});
+			uni.setTabBarItem({
+				index: 1,
+				text: '我的试卷',
+				iconPath: '/static/imgs/icon/myPaper1.png',
+				selectedIconPath: '/static/imgs/icon/myPaper.png'
+			});
+		} else {
+			this.page = 1;
+		}
+		this.wei_error_book();
+		this.all = true; //取消全选
+	},
 	computed: {
 		// ...mapState(['type'])
 	},
@@ -516,18 +535,21 @@ export default {
 			}
 			req.then(res => {
 				this.is_more = res.is_more;
-				if (res.code != 200) {
+				if (!res.data.hasOwnProperty('exercises_list')) {
 					/* uni.showToast({
 							title:res.msg,
 							icon:'none'
 						}) */
+					this.btndisabled = true;
 					this.exercises_list = [];
-				}
-				//console.log('res.data.exercises_list.length',res.data.exercises_list);
-				if (this.page == 1) {
-					this.exercises_list = res.data.exercises_list;
 				} else {
-					this.exercises_list = [...this.exercises_list, ...res.data.exercises_list];
+					this.btndisabled = false;
+					//console.log('res.data.exercises_list.length',res.data.exercises_list);
+					if (this.page == 1) {
+						this.exercises_list = res.data.exercises_list;
+					} else {
+						this.exercises_list = [...this.exercises_list, ...res.data.exercises_list];
+					}
 				}
 			});
 		},

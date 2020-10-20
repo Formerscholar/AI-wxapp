@@ -17,10 +17,6 @@ export default {
 		this.$api.get_settings('Get').then(res => {
 			this.globalData.settings = res.data;
 		});
-		uni.setStorage({
-			key: 'miniProgram',
-			data: uni.getAccountInfoSync()
-		});
 	},
 	onShow: () => {
 		const updateManager = uni.getUpdateManager();
