@@ -52,6 +52,7 @@ module.exports = {
 	change_user_info: data => request(ApiUrl + 'user/change_user_info/', data), //修改个人信息
 	join_team: data => request(ApiUrl + 'user/join_team/', data), //邀请学生加入班级
 	send_msg: data => request(ApiUrl + 'user/send_msg/', data), 
+	get_download: data => request(ApiUrl + 'user/download_based/', data),
 
 	// register : data => request(ApiUrl+'user/user_register/',data),//注册
 	//search_password : data => request(ApiUrl+'user/search_password/',data),//找回密码

@@ -30,7 +30,7 @@ function request(url, data = {}, method = "post") {
 						"carrierwindowWidth": res.windowWidth,
 						"carrierwindowHeight": res.windowHeight,
 						"carriersystem": res.system,
-						"carrierversion": miniProgram.version,
+						"carrierversion": miniProgram.version || '',
 						"page": currentPage.is
 					},
 					success: (res) => {

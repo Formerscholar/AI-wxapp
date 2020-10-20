@@ -20,7 +20,7 @@
 						<view class="time">{{ item.add_time }}</view>
 					</view>
 				</view>
-				<view class="right"><image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" class="arrow"></image></view>
+				<view class="right" @click.stop="generated(item.paper_id)"><image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image></view>
 			</view>
 			<view v-if="is_more2 == 0" class="is_more">没有更多试卷了</view>
 		</view>
@@ -140,44 +140,27 @@ export default {
 		},
 		//点击生成错题本/生成试卷
 		generated(id) {
+			console.log(id);
 			let _this = this;
 			_this.based_id = id;
-
 			console.log('_this.tpmid', _this.tpmid);
 			let arrTpmid = [];
 			if (_this.type == 4) {
-				arrTpmid = _this.tpmid.user_errorbook;
+				arrTpmid = _this.tpmid.teacher_paper;
 			} else {
 				arrTpmid = _this.tpmid.teacher_paper;
-				console.log('arrTpmid', arrTpmid);
 			}
+			console.log('arrTpmid', arrTpmid);
 			uni.requestSubscribeMessage({
 				tmplIds: arrTpmid,
 				complete: function(res) {
+					console.log('requestSubscribeMessage', res);
 					let data = {
 						id: id,
 						token: _this.token
 					};
 					_this.fasong();
-					// let req=''
-					// if(_this.type==3){
-					// 	req=_this.$api.get_paper(data)
-					// }
-					// req.then(res=>{
-					// 	if(res.code==200){
-
-					// 	}else{
-					// 		uni.showToast({
-					// 			title:res.msg,
-					// 			icon:'none'
-					// 		})
-					// 	}
-					// })
-
-					// _this.fasong()
-				},
-				success: function(res) {},
-				fail: function(res) {}
+				}
 			});
 		},
 		//发送邮箱
@@ -188,7 +171,25 @@ export default {
 				flag: 2
 				// email:this.email
 			};
-			if (uni.getStorageSync('type') == 3) {
+			if (this.type == 4) {
+				this.$api.get_download(data).then(res => {
+					console.log(res);
+					if (res.code == 200) {
+						this.email = '';
+						this.$refs.popup2.close();
+						uni.showToast({
+							title: res.msg,
+							icon: 'none'
+						});
+					} else {
+						/* uni.showToast({
+									title:res.msg,
+									icon:'none'
+								}) */
+						this.$refs.popup2.open();
+					}
+				});
+			} else {
 				this.$api.get_download_based(data).then(res => {
 					console.log(res);
 					if (res.code == 200) {
@@ -200,9 +201,9 @@ export default {
 						});
 					} else {
 						/* uni.showToast({
-								title:res.msg,
-								icon:'none'
-							}) */
+									title:res.msg,
+									icon:'none'
+								}) */
 						this.$refs.popup2.open();
 					}
 				});
@@ -216,6 +217,25 @@ export default {
 			if (uni.getStorageSync('type') == 3) {
 				this.$api
 					.get_download_based({
+						token: this.token,
+						based_id: this.based_id,
+						email: this.email,
+						flag: 2
+					})
+					.then(res => {
+						console.log(res);
+						if (res.code == 200) {
+							this.email = '';
+							uni.showToast({
+								title: '下载成功，已发送邮箱！',
+								icon: 'none'
+							});
+						}
+						this.$refs.popup2.close();
+					});
+			} else {
+				this.$api
+					.get_download({
 						token: this.token,
 						based_id: this.based_id,
 						email: this.email,
