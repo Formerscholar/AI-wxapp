@@ -317,7 +317,8 @@ export default {
 					// version_id:this.version_list[this.num_b].version_id,
 					type: this.question_id,
 					level: this.level_id,
-					grade_id: this.grade[this.num_g].grade_id,
+					//   this.grade is not an object
+					grade_id: this.grade[this.num_g]?.grade_id,
 					know_point: this.know_point_list[this.num_z].id,
 					page: this.page
 				};
@@ -329,7 +330,7 @@ export default {
 					// version_id:this.version_list[this.num_b].version_id,
 					type: this.question_id,
 					level: this.level_id,
-					grade_id: this.grade[this.num_g].grade_id,
+					grade_id: this.grade[this.num_g]?.grade_id,
 					know_point: this.know_point_list[this.num_z].id,
 					page: this.page
 				};
@@ -671,7 +672,7 @@ button::after {
 		align-items: center;
 		font-size: 28rpx;
 		color: #666666;
-		border-top: 1rpx solid #F5F5F5;
+		border-top: 1rpx solid #f5f5f5;
 		padding: 15rpx 0 20rpx;
 		margin-top: 30rpx;
 		.select {

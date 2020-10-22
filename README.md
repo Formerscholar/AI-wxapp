@@ -1,3 +1,12 @@
+# 10.22 日报
+
+```
+1.  修复  名校资源 点击范围过小
+2.  修复  grade_names undefined 错误
+3.  修复  this.grade is not an object 错误
+4.  修复  province_id of undefined 错误
+```
+
 # 10.15 日报
 
 ```

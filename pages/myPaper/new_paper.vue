@@ -391,9 +391,10 @@ page {
 			}
 		}
 		.right {
-			padding: 40rpx 0;
+			flex: 1;
 			display: flex;
-			margin: auto 0;
+			justify-content: center;
+			align-items: center;
 			.arrow {
 				width: 14rpx;
 				height: 26rpx;

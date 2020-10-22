@@ -77,7 +77,7 @@
 			<view class="item" @click="toClassID()">
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/classId.png" mode=""></image>
 				<text>绑定班级</text>
-				<view class="item_info">{{ grade_names ? grade_names : '' }}{{ team_name ? team_name : '' }}</view>
+				<view class="item_info">{{ grade_names ? grade_names : '' }}</view>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
 			<view class="item" @click="touser('/pages/person/about')">
@@ -158,7 +158,8 @@ export default {
 				this.$api.get_user_info({ token: this.token }).then(res => {
 					console.log(res);
 					this.user_info = res.data;
-					this.grade_names = res.data.school_list.grade_names;
+					// undefined 
+					this.grade_names = res.data?.school_list?.grade_name || '未绑定班级';
 					this.team_name = res.data.school_list.team_name;
 				});
 			} else {

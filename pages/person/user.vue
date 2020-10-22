@@ -148,7 +148,8 @@ export default {
 		//获取学校
 		getschool() {
 			let data = {
-				province_id: this.user_info.school_list.province_id,
+				// undefined
+				province_id: this.user_info?.school_list?.province_id,
 				city_id: this.user_info.school_list.city_id,
 				area_id: this.user_info.school_list.area_id,
 				token: this.token
@@ -176,14 +177,14 @@ export default {
 					console.log(res);
 					this.user_info = res.data;
 					this.img = res.data.avatar;
-					this.getschool();
+					// this.getschool();
 				});
 			} else {
 				this.$api.get_teacher_info({ token: this.token }).then(res => {
 					console.log(res);
 					this.user_info = res.data;
 					this.img = res.data.avatar;
-					this.getschool();
+					// this.getschool();
 				});
 			}
 		},
