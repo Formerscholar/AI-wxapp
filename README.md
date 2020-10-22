@@ -5,6 +5,7 @@
 2.  修复  grade_names undefined 错误
 3.  修复  this.grade is not an object 错误
 4.  修复  province_id of undefined 错误
+5.  修复  undefined is not an object (evaluating 'this.userInfo.nickName')
 ```
 
 # 10.15 日报

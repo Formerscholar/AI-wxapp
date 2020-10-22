@@ -54,7 +54,7 @@ export default {
 				.then(res => {
 					console.log('get_team_location', res);
 					this.school_id = res.data.school_id;
-					this.province_id = res.data.area.province_id;
+					this.province_id = res.data.area.province_id;sss
 					this.city_id = res.data.area.city_id;
 					this.area_id = res.data.area.area_id;
 					this.grade_ids = res.data.grade_id;
@@ -81,8 +81,8 @@ export default {
 					grade_ids: this.grade_ids,
 					team_ids: this.team_ids,
 					true_name: this.true_name,
-					user_name: this.userInfo.nickName,
-					avatar: this.userInfo.avatarUrl,
+					user_name: this.userInfo.user_name,
+					avatar: this.userInfo.avatar,
 					gender: this.userInfo.gender,
 					openid: this.openid_tmp
 				})
