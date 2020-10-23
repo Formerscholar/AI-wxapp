@@ -5,7 +5,7 @@
 				<view @click="add(item)" class="up">
 					<view class="className">
 						{{ item.team_name }}
-						<!-- <view class='guan'>管</view> -->
+						<image class='guan' v-if="user_id == item.teacher_id" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/admin.png" mode="widthFix"></image>
 					</view>
 					<view class="num">ID:{{ item.classid }}</view>
 				</view>
@@ -39,7 +39,8 @@ export default {
 		return {
 			token: '',
 			list: [],
-			team_name: ''
+			team_name: '',
+			user_id:''
 		};
 	},
 	onShareAppMessage(e) {
@@ -65,6 +66,9 @@ export default {
 	onLoad() {
 		if (uni.getStorageSync('token')) {
 			this.token = uni.getStorageSync('token');
+		}
+		if (uni.getStorageSync('userInfo')) {
+			this.user_id = uni.getStorageSync('userInfo').user_id;
 		}
 		this.get_class_list();
 	},

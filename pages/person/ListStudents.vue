@@ -8,8 +8,11 @@
 						<view class="content">
 							<image :src="item.avatar"></image>
 							<view>{{ item.true_name }}</view>
+							<view class="subjectName">{{ item.subject_title }}</view>
 						</view>
-						<view class="subjectName">{{ item.subject_title }}</view>
+						<view class="deleteteacherwarp">
+							<image v-if="userid == teacher_id &&  item.id != teacher_id && is_active == 0" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="deleteteacher" @click.stop="deItemTeacher(item.id)" />
+						</view>
 					</view>
 				</view>
 			</view>
@@ -28,7 +31,7 @@
 						</view>
 						<view>
 							<view class="cuo_tag">已收集{{ item.err_cnt }}道错题</view>
-							<image v-if="userid == teacher_id" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="delete" @click.stop="deItem(item.user_id)"></image>
+							<image v-if="userid == teacher_id && is_active == 0" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="delete" @click.stop="deItem(item.user_id)"></image>
 						</view>
 					</view>
 				</view>
@@ -83,6 +86,32 @@ export default {
 					this.teacher = res.data.teacher;
 					this.is_active = res.data.team.is_active;
 					this.teacher_id = res.data.team.teacher_id;
+				}
+			});
+		},
+		deItemTeacher(id){
+			uni.showModal({
+				title: '确定删除吗？',
+				success: res => {
+					if (res.confirm) {
+						this.$api.remove_teacher({
+							token: this.token,
+							teacher_id: id,
+							team_id: this.team_id,
+						}).then(res => {
+							if (res.code == 200) {
+								uni.showToast({
+									title: '删除成功'
+								});
+								this.get_student_list();
+							} else {
+								uni.showToast({
+									title: res.msg,
+									icon: 'none'
+								});
+							}
+						});
+					}
 				}
 			});
 		},
@@ -213,6 +242,14 @@ page {
 						margin-left: 22rpx;
 					}
 				}
+				.subjectName {
+					font-size: 24rpx;
+					color: #fff;
+					background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
+					padding: 5rpx 15rpx;
+					margin-left: 20rpx;
+					border-radius: 16rpx;
+				}
 			}
 			.cuo_tag {
 				font-size: 26rpx;
@@ -225,13 +262,18 @@ page {
 				vertical-align: middle;
 				margin-left: 20rpx;
 			}
-			.subjectName {
-				font-size: 24rpx;
-				color: #fff;
-				background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
-				padding: 5rpx 15rpx;
-				border-radius: 16rpx;
+			.deleteteacherwarp{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				.deleteteacher{
+					width: 40rpx;
+					height: 50rpx;
+					margin-left: 20rpx;
+				}
 			}
+			
+			
 		}
 		.left:nth-of-type(1) {
 			padding-top: 0;

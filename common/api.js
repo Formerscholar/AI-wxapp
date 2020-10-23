@@ -84,6 +84,7 @@ module.exports = {
 	my_team_ids_list: data => request(ApiUrl + 'teacher/my_team_ids_list/', data), //我的班级列表
 	team_student_list: data => request(ApiUrl + 'teacher/team_student_list/', data), //班级学员列表
 	remove_student: data => request(ApiUrl + 'teacher/remove_student/', data), //删除学生
+	remove_teacher: data => request(ApiUrl + 'teacher/remove_teacher/', data), //删除老师
 	save_teacher_email: data => request(ApiUrl + 'teacher/save_email/', data), //绑定邮箱
 	// update_avatar: data => request(ApiUrl+'teacher/update_avatar/',data),
 	generated_teacher_error_book: data => request(ApiUrl + 'teacher/my_created_error_book/', data), //已生成试卷

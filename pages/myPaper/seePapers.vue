@@ -42,7 +42,7 @@
 					</view>
 				</view>
 				<scroll-view scroll-y="true">
-					<view class="list" v-for="(item, i) of same_type" :key="i">
+					<view class="list" v-for="(item, i) of same_type" :key="i" v-if="same_type.length != 0">
 						<view class="">
 							<rich-text :nodes="changeStyle(item.content)"></rich-text>
 							<!-- <uParse :content="item.content"/> -->
@@ -232,7 +232,7 @@ export default {
 				this.subject_id = item.subject_id;
 				this.exercises_id = item.exercises_id;
 			}
-			if(status != undefined){
+			if (status != undefined) {
 				this.know_point = this.list[status].know_point;
 				this.subject_id = this.list[status].subject_id;
 				this.exercises_id = this.list[status].exercises_id;
@@ -247,7 +247,7 @@ export default {
 				size: this.size_change
 			};
 			if (uni.getStorageSync('type') == 4) {
-				console.log('this.is_vip',data,this.is_vip);
+				console.log('this.is_vip', data, this.is_vip);
 				if (this.is_vip == 1) {
 					var req = this.$api.same_type(data);
 				} else {

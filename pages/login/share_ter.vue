@@ -89,6 +89,10 @@ export default {
 						console.log(res.data);
 						this.login(res.data);
 						this.joinTeam();
+						uni.setStorage({
+							key: 'token',
+							data: res.data.token
+						});
 					} else {
 						this.get_teacher_bind_info();
 					}
@@ -170,15 +174,7 @@ export default {
 							this.sessionkey = res.data.session_key;
 							this.openid = res.data.openid;
 							if (res.code == 200) {
-								uni.setStorage({
-									key: 'userinfo_tmp',
-									data: res.data
-								});
-								uni.setStorage({
-									key: 'userInfo',
-									data: res.data
-								});
-								this.user_info = res.data;
+								this.login(res.data);
 								this.mobile = res.data.mobile;
 								this.true_name = res.data.true_name;
 								this.subject_id = res.data.subject_id;

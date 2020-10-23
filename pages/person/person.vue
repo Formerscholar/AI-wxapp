@@ -113,7 +113,6 @@ export default {
 			school: '',
 			flag: false,
 			grade_names: '',
-			team_name: '',
 			is_vip: 0
 		};
 	},
@@ -121,13 +120,8 @@ export default {
 	},
 	onShow() {
 		this.token = uni.getStorageSync('token');
-		this.user_info = uni.getStorageSync('userInfo');
 		this.type = uni.getStorageSync('type');
 		this.getuserinfo();
-		if (this.type == 4) {
-			this.school = this.user_info.school.school_name;
-			this.get_vip_info();
-		}
 	},
 	computed: {
 		...mapState(['hasLogin', 'userInfo'])
@@ -158,9 +152,9 @@ export default {
 				this.$api.get_user_info({ token: this.token }).then(res => {
 					console.log(res);
 					this.user_info = res.data;
-					// undefined 
 					this.grade_names = res.data?.school_list?.grade_name || '未绑定班级';
-					this.team_name = res.data.school_list.team_name;
+					this.school = res.data.school_list.school_name;
+					this.get_vip_info();
 				});
 			} else {
 				this.$api.get_teacher_info({ token: this.token }).then(res => {
