@@ -172,7 +172,7 @@ export default {
 		//换一批
 		changeData() {
 			this.page_change++;
-			this.open(item);
+			this.open();
 		},
 		//查看解析
 		jiexi(id) {

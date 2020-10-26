@@ -153,7 +153,7 @@ export default {
 					console.log(res);
 					this.user_info = res.data;
 					this.grade_names = res.data?.school_list?.grade_name || '未绑定班级';
-					this.school = res.data.school_list.school_name;
+					this.school = res.data?.school_list?.school_name || '';
 					this.get_vip_info();
 				});
 			} else {

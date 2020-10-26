@@ -335,7 +335,7 @@ export default {
 			console.log('this.tpmid', this.tpmid);
 			let arrTpmid = [];
 			if (this.type == 4) {
-				arrTpmid = this.tpmid.user_errorbook;
+				arrTpmid = this.tpmid?.user_errorbook || [];
 				if (!this.is_vip) {
 					uni.showToast({
 						title: '非会员无法下载',

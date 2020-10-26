@@ -82,9 +82,9 @@ export default {
 					team_ids: this.team_ids,
 					true_name: this.true_name,
 					user_name: this.userInfo?.nickName || '',
-					avatar: this.userInfo.avatarUrl,
-					gender: this.userInfo.gender,
-					openid: this.openid_tmp
+					avatar: this.userInfo?.avatarUrl || '',
+					gender: this.userInfo?.gender || '',
+					openid: this.openid_tmpss
 				})
 				// this.openid_tmp
 				.then(reslove => {
@@ -149,12 +149,6 @@ export default {
 				});
 		},
 		bindgetuserinfo(e, i) {
-			uni.setStorage({
-				key: 'type',
-				data: i
-			});
-			console.log('bindgetuserinfo', e);
-			this.userInfo = e.detail.userInfo;
 			if (!this.true_name) {
 				uni.showToast({
 					title: '请输入真实姓名',
@@ -162,7 +156,15 @@ export default {
 				});
 				return;
 			}
-			this.get_bind_info();
+			if (e.detail.hasOwnProperty('userInfo')) {
+				uni.setStorage({
+					key: 'type',
+					data: i
+				});
+				console.log('bindgetuserinfo', e);
+				this.userInfo = e.detail.userInfo;
+				this.get_bind_info();
+			}
 		}
 	}
 };
