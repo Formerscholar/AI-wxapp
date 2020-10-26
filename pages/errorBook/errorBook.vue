@@ -830,8 +830,8 @@ button::after {
 		border-radius: 20rpx;
 		width: 700rpx;
 		box-sizing: border-box;
-		// align-items: center;
 		justify-content: space-between;
+		overflow: hidden;
 		view:first-child {
 		}
 		view:nth-child(2) {
@@ -1017,8 +1017,8 @@ button::after {
 		border-radius: 20rpx;
 		width: 700rpx;
 		box-sizing: border-box;
-		// align-items: center;
 		justify-content: space-between;
+		overflow: hidden;
 		view:first-child {
 		}
 		view:nth-child(2) {

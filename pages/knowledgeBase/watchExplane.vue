@@ -124,6 +124,7 @@ page {
 	.content {
 		padding: 30rpx;
 		margin-top: 95rpx;
+		overflow: hidden;
 	}
 	.daAn {
 		.context {

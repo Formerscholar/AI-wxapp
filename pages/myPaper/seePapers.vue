@@ -410,6 +410,7 @@ page {
 	color: #999;
 	border-radius: 20rpx;
 	border: 1rpx solid #e7e7e7;
+	overflow: hidden;
 	.rich-text-box {
 		.rich-text-content {
 			color: #000;
