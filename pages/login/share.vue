@@ -84,7 +84,7 @@ export default {
 					user_name: this.userInfo?.nickName || '',
 					avatar: this.userInfo?.avatarUrl || '',
 					gender: this.userInfo?.gender || '',
-					openid: this.openid_tmpss
+					openid: this.openid_tmp
 				})
 				// this.openid_tmp
 				.then(reslove => {

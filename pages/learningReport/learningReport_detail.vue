@@ -711,6 +711,7 @@ button::after {
 		margin: 25rpx;
 		border-radius: 20rpx;
 		border: 1rpx solid #f9f9f9;
+		overflow: hidden;
 		.bottom {
 			display: flex;
 			justify-content: space-between;

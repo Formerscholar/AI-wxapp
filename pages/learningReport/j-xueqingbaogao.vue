@@ -277,7 +277,7 @@ export default {
 				})
 				.then(res => {
 					this.pieData = res.data.count_list;
-					if(res.data.length !== undefined) {
+					if (res.data.length !== undefined) {
 						this.Pie.series = res.data;
 					} else {
 						this.Pie.series = [];
@@ -763,6 +763,7 @@ button::after {
 		margin: 25rpx;
 		border-radius: 20rpx;
 		border: 1rpx solid #f9f9f9;
+		overflow: hidden;
 		.bottom {
 			display: flex;
 			justify-content: space-between;
