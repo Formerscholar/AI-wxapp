@@ -213,6 +213,12 @@
 		    }
 		},
 		{
+		    "path" : "pages/myteaching/cropperPhoto",
+		    "style" : {
+		    	"navigationBarTitleText": "图片剪裁"
+		    }
+		},
+		{
 		    "path" : "pages/learningReport/learningReport_detail",
 		    "style" : {
 		    	"navigationBarTitleText": "学情报告"

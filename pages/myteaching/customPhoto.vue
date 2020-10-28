@@ -1,6 +1,7 @@
 <template>
 	<view>
-		<view class="customPhoto" v-if="isphbox">
+		<!-- v-if="isphbox" -->
+		<view class="customPhoto">
 			<camera @error="handleCameraError" :device-position="devicePosition" :flash="isflash" style="width: 100%; height: 81vh;">
 				<view class="coverWrapper">
 					<view class="list"><view class="ltbor"></view></view>
@@ -19,7 +20,8 @@
 					<view class="list"><view class="rbbor"></view></view>
 				</view>
 			</camera>
-			<view class="content_box" v-if="!iscmdProgress">
+			<!-- v-if="!iscmdProgress" -->
+			<view class="content_box">
 				<view class="left_box" @click="albumhandleClick">
 					<image class="left_img" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/album.png" mode="widthFix"></image>
 					<text class="left_text">相册</text>
@@ -27,16 +29,17 @@
 				<view class="conter_box" @click="takePhoto"><button class="btn_tap">拍照</button></view>
 				<view class="right_box"></view>
 			</view>
-			<view class="progress_box" v-else><cmd-progress class="progress" type="circle" :percent="percent" show-info stroke-width="5" status="active"></cmd-progress></view>
+			<!-- <view class="progress_box" v-else><cmd-progress class="progress" type="circle" :percent="percent" show-info stroke-width="5" status="active"></cmd-progress></view> -->
 			<view class="Cameralicens" v-if="isCamera"><button class="Camera_btn" open-type="openSetting" @opensetting="opensetting">相机授权</button></view>
 		</view>
-		<view class="analysisbox" v-else>
+
+		<!-- <view class="analysisbox" v-else>
 			<view class="img-box">
 				<image class="res_img" :src="pic"></image>
 				<view class="wrapper" v-if="flag"></view>
 				<view class="bottom"><view class="btn" @click="toBack()">重新拍摄</view></view>
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -61,7 +64,7 @@ export default {
 			flag: true,
 			uploadTask: null,
 			percent: 0,
-			iscmdProgress:false,
+			iscmdProgress: false
 		};
 	},
 	onLoad(option) {
@@ -109,7 +112,7 @@ export default {
 					});
 				}
 				this.flag = false;
-				this.percent = 0
+				this.percent = 0;
 				this.iscmdProgress = false;
 			});
 		},
@@ -119,33 +122,50 @@ export default {
 				sizeType: ['original', 'compressed'],
 				sourceType: ['album'],
 				success: res => {
-					this.iscmdProgress = true
-					let file = res.tempFilePaths[0];
-					let url = this.$api.url + 'main/upload_pic';
-					this.uploadTask = uni.uploadFile({
-						url: url,
-						filePath: file,
-						name: 'file',
-						formData: {
-							token: this.token,
-							path: 'search'
-						},
-						success: reslove => {
-							console.log('返回', reslove.data);
-							this.isphbox = false;
-							this.flag = true;
-							this.pic = reslove.data;
-							this.search_exercises();
-						},
-						fail: function(t) {
-							uni.showToast({
-								title: '上传图片失败',
-								icon: 'none'
-							});
-							uni.navigateBack();
+					console.log('res.tempImagePath', res.tempFilePaths[0]);
+					uni.navigateTo({
+						url:
+							'/pages/myteaching/cropperPhoto?ImagePath=' +
+							res.tempFilePaths[0] +
+							'&textbook_id=' +
+							this.textbook_id +
+							'&choosePage=' +
+							this.choosePage +
+							'&title=' +
+							this.title +
+							'&subject_name=' +
+							this.subject_name,
+						success: () => {
+							console.log('跳转图片裁剪页面', res.tempFilePaths[0]);
 						}
 					});
-					this.speedprogress();
+					// this.iscmdProgress = true;
+					// let file = res.tempFilePaths[0];
+					// let url = this.$api.url + 'main/upload_pic';
+					// this.uploadTask = uni.uploadFile({
+					// 	url: url,
+					// 	filePath: file,
+					// 	name: 'file',
+					// 	formData: {
+					// 		token: this.token,
+					// 		path: 'search'
+					// 	},
+					// 	success: reslove => {
+					// 		console.log('返回', reslove.data);
+					// 		this.isphbox = false;
+					// 		this.flag = true;
+					// 		this.pic = reslove.data;
+					// 		this.search_exercises();
+					// 	},
+					// 	fail: function(t) {
+					// 		uni.showToast({
+					// 			title: '上传图片失败',
+					// 			icon: 'none'
+					// 		});
+					// 		uni.navigateBack();
+					// 	}
+					// });
+					// this.speedprogress();
 				}
 			});
 		},
@@ -167,36 +187,53 @@ export default {
 		},
 		takePhoto: function() {
 			console.log('关拍照相册操作按钮', '开进度条');
-			this.iscmdProgress = true
+			// this.iscmdProgress = true;
 			uni.createCameraContext().takePhoto({
 				quality: 'high',
 				success: res => {
-					let file = res.tempImagePath;
-					let url = this.$api.url + 'main/upload_pic';
-					this.uploadTask = uni.uploadFile({
-						url: url,
-						filePath: file,
-						name: 'file',
-						formData: {
-							token: this.token,
-							path: 'search'
-						},
-						success: res => {
-							console.log('返回', res.data);
-							this.isphbox = false;
-							this.flag = true;
-							this.pic = res.data;
-							this.search_exercises();
-						},
-						fail: function(t) {
-							uni.showToast({
-								title: '上传图片失败',
-								icon: 'none'
-							});
-							uni.navigateBack();
+					console.log('res.tempImagePath', res.tempImagePath);
+					uni.navigateTo({
+						url:
+							'/pages/myteaching/cropperPhoto?ImagePath=' +
+							res.tempImagePath +
+							'&textbook_id=' +
+							this.textbook_id +
+							'&choosePage=' +
+							this.choosePage +
+							'&title=' +
+							this.title +
+							'&subject_name=' +
+							this.subject_name,
+						success: () => {
+							console.log('跳转图片裁剪页面', res.tempImagePath);
 						}
 					});
-					this.speedprogress();
+					// let file = res.tempImagePath;
+					// let url = this.$api.url + 'main/upload_pic';
+					// this.uploadTask = uni.uploadFile({
+					// 	url: url,
+					// 	filePath: file,
+					// 	name: 'file',
+					// 	formData: {
+					// 		token: this.token,
+					// 		path: 'search'
+					// 	},
+					// 	success: res => {
+					// 		console.log('返回', res.data);
+					// this.isphbox = false;
+					// 		this.flag = true;
+					// 		this.pic = res.data;
+					// 		this.search_exercises();
+					// 	},
+					// 	fail: function(t) {
+					// 		uni.showToast({
+					// 			title: '上传图片失败',
+					// 			icon: 'none'
+					// 		});
+					// 		uni.navigateBack();
+					// 	}
+					// });
+					// this.speedprogress();
 				},
 				fail: res => {
 					uni.showToast({
