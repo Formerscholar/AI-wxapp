@@ -19,7 +19,7 @@
 					<view class="list"><view class="rbbor"></view></view>
 				</view>
 			</camera>
-			<view class="content_box" v-if="!iscmdProgress">
+			<view class="content_box">
 				<view class="left_box" @click="albumhandleClick">
 					<image class="left_img" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/album.png" mode="widthFix"></image>
 					<text class="left_text">相册</text>
@@ -27,7 +27,7 @@
 				<view class="conter_box" @click="takePhoto"><button class="btn_tap">拍照</button></view>
 				<view class="right_box"></view>
 			</view>
-			<view class="progress_box" v-else><cmd-progress class="progress" type="circle" :percent="percent" show-info stroke-width="5" status="active"></cmd-progress></view>
+			<!-- 	<view class="progress_box" v-else><cmd-progress class="progress" type="circle" :percent="percent" show-info stroke-width="5" status="active"></cmd-progress></view> -->
 			<view class="Cameralicens" v-if="isCamera"><button class="Camera_btn" open-type="openSetting" @opensetting="opensetting">相机授权</button></view>
 		</view>
 		<view class="analysisbox" v-else>
@@ -61,12 +61,13 @@ export default {
 			flag: true,
 			uploadTask: null,
 			percent: 0,
-			iscmdProgress:false,
+			iscmdProgress: false,
+			pics: ''
 		};
 	},
 	onLoad(option) {
 		this.textbook_id = option.textbook_id;
-		this.choosePage = option.choosePage;
+		// this.choosePage = option.choosePage;
 		this.title = option.title;
 		this.subject_name = option.subject_name;
 		console.log('onLoadoption', option);
@@ -109,8 +110,8 @@ export default {
 					});
 				}
 				this.flag = false;
-				this.percent = 0
-				this.iscmdProgress = false;
+				this.percent = 0;
+				// this.iscmdProgress = false;
 			});
 		},
 		albumhandleClick: function() {
@@ -119,33 +120,51 @@ export default {
 				sizeType: ['original', 'compressed'],
 				sourceType: ['album'],
 				success: res => {
-					this.iscmdProgress = true
-					let file = res.tempFilePaths[0];
-					let url = this.$api.url + 'main/upload_pic';
-					this.uploadTask = uni.uploadFile({
-						url: url,
-						filePath: file,
-						name: 'file',
-						formData: {
-							token: this.token,
-							path: 'search'
-						},
-						success: reslove => {
-							console.log('返回', reslove.data);
+					// this.iscmdProgress = true
+					this.base64({
+						url: res.tempFilePaths[0],
+						type: 'jpg'
+					})
+						.then(res => {
+							console.log('canvasToTempFilePath', res);
 							this.isphbox = false;
 							this.flag = true;
-							this.pic = reslove.data;
+							this.pic = res;
 							this.search_exercises();
-						},
-						fail: function(t) {
+						})
+						.catch(err => {
 							uni.showToast({
 								title: '上传图片失败',
 								icon: 'none'
 							});
 							uni.navigateBack();
-						}
-					});
-					this.speedprogress();
+						});
+					// let file = res.tempFilePaths[0];
+					// let url = this.$api.url + 'main/upload_pic';
+					// this.uploadTask = uni.uploadFile({
+					// 	url: url,
+					// 	filePath: file,
+					// 	name: 'file',
+					// 	formData: {
+					// 		token: this.token,
+					// 		path: 'search'
+					// 	},
+					// 	success: reslove => {
+					// 		console.log('返回', reslove.data);
+					// 		this.isphbox = false;
+					// 		this.flag = true;
+					// 		this.pic = reslove.data;
+					// 		this.search_exercises();
+					// 	},
+					// 	fail: function(t) {
+					// 		uni.showToast({
+					// 			title: '上传图片失败',
+					// 			icon: 'none'
+					// 		});
+					// 		uni.navigateBack();
+					// 	}
+					// });
+					// this.speedprogress();
 				}
 			});
 		},
@@ -165,38 +184,69 @@ export default {
 			});
 			this.isCamera = true;
 		},
+		base64({ url, type }) {
+			return new Promise((resolve, reject) => {
+				wx.getFileSystemManager().readFile({
+					filePath: url, //选择图片返回的相对路径
+					encoding: 'base64', //编码格式
+					success: res => {
+						resolve('data:image/' + type.toLocaleLowerCase() + ';base64,' + res.data);
+					},
+					fail: res => reject(res.errMsg)
+				});
+			});
+		},
 		takePhoto: function() {
 			console.log('关拍照相册操作按钮', '开进度条');
-			this.iscmdProgress = true
+			// this.iscmdProgress = true
 			uni.createCameraContext().takePhoto({
 				quality: 'high',
 				success: res => {
-					let file = res.tempImagePath;
-					let url = this.$api.url + 'main/upload_pic';
-					this.uploadTask = uni.uploadFile({
-						url: url,
-						filePath: file,
-						name: 'file',
-						formData: {
-							token: this.token,
-							path: 'search'
-						},
-						success: res => {
-							console.log('返回', res.data);
+					this.base64({
+						url: res.tempImagePath,
+						type: 'jpg'
+					})
+						.then(res => {
+							console.log('canvasToTempFilePath', res);
 							this.isphbox = false;
 							this.flag = true;
-							this.pic = res.data;
+							this.pic = res;
 							this.search_exercises();
-						},
-						fail: function(t) {
+						})
+						.catch(err => {
 							uni.showToast({
 								title: '上传图片失败',
 								icon: 'none'
 							});
 							uni.navigateBack();
-						}
-					});
-					this.speedprogress();
+						});
+
+					// let file = res.tempImagePath;
+					// let url = this.$api.url + 'main/upload_pic';
+					// this.uploadTask = uni.uploadFile({
+					// 	url: url,
+					// 	filePath: file,
+					// 	name: 'file',
+					// 	formData: {
+					// 		token: this.token,
+					// 		path: 'search'
+					// 	},
+					// 	success: res => {
+					// 		console.log('返回', res.data);
+					// 		this.isphbox = false;
+					// 		this.flag = true;
+					// 		this.pic = res.data;
+					// 		this.search_exercises();
+					// 	},
+					// 	fail: function(t) {
+					// 		uni.showToast({
+					// 			title: '上传图片失败',
+					// 			icon: 'none'
+					// 		});
+					// 		uni.navigateBack();
+					// 	}
+					// });
+					// this.speedprogress();
 				},
 				fail: res => {
 					uni.showToast({

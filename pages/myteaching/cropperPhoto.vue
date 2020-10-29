@@ -2,9 +2,9 @@
 	<view class="container">
 		<view v-if="isphbox" class="page-body uni-content-info">
 			<view class="cropper-content">
-				<view v-if="isShowImg" class="uni-corpper" :style="'width:' + cropperInitW + 'px;height:calc(100vh - 164rpx);background:#000'">
-					<view class="uni-corpper-content" :style="'width:100vw;height:calc(100vh - 164rpx);'">
-						<image :src="imageSrc" :style="'width:100vw;height:calc(100vh - 164rpx);'"></image>
+				<view v-if="isShowImg" class="uni-corpper" :style="'width:' + cropperInitW + 'px;height:calc(100vh - 162rpx);background:#000'">
+					<view class="uni-corpper-content" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px;'">
+						<image :src="imageSrc" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px'"></image>
 						<view
 							class="uni-corpper-crop-box"
 							@touchstart.stop="contentStartMove"
@@ -105,7 +105,8 @@ export default {
 			qualityWidth: DRAW_IMAGE_W,
 			innerAspectRadio: DRAFG_MOVE_RATIO,
 			title: '',
-			subject_name: ''
+			subject_name: '',
+			pics: ''
 		};
 	},
 	/**
@@ -116,12 +117,13 @@ export default {
 		console.log('onLoad', ImagePath);
 		this.imageSrc = ImagePath;
 		this.textbook_id = textbook_id;
-		this.choosePage = choosePage;
+		// this.choosePage = choosePage;
 		this.title = title;
 		this.subject_name = subject_name;
 		if (uni.getStorageSync('userInfo').token) {
 			this.token = uni.getStorageSync('userInfo').token;
 		}
+		console.log('初始化 ', SCREEN_WIDTH, sysInfo.screenWidth);
 	},
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
@@ -165,12 +167,12 @@ export default {
 			uni.getImageInfo({
 				src: _this.imageSrc,
 				success: function(res) {
-					console.log('getImageInfo', res.path);
 					IMG_RATIO = res.width / res.height;
 					if (IMG_RATIO >= 1) {
 						IMG_REAL_W = SCREEN_WIDTH;
 						IMG_REAL_H = SCREEN_WIDTH / IMG_RATIO;
 					} else {
+						console.log('getImageInfo', res);
 						IMG_REAL_W = SCREEN_WIDTH * IMG_RATIO;
 						IMG_REAL_H = SCREEN_WIDTH;
 					}
@@ -261,7 +263,7 @@ export default {
 		},
 		contentTouchEnd() {},
 		search_exercises: function() {
-			this.$api.orc_one({ textbook_id: this.textbook_id, page: this.choosePage, pic: this.pic, token: this.token }).then(res => {
+			this.$api.orc_one({ textbook_id: this.textbook_id, pic: this.pic, token: this.token }).then(res => {
 				console.log('res', res);
 				if (res.code == 200) {
 					uni.redirectTo({
@@ -275,7 +277,18 @@ export default {
 				}
 				this.flag = false;
 				this.percent = 0;
-				this.iscmdProgress = false;
+			});
+		},
+		base64({ url, type }) {
+			return new Promise((resolve, reject) => {
+				wx.getFileSystemManager().readFile({
+					filePath: url, //选择图片返回的相对路径
+					encoding: 'base64', //编码格式
+					success: res => {
+						resolve('data:image/' + type.toLocaleLowerCase() + ';base64,' + res.data);
+					},
+					fail: res => reject(res.errMsg)
+				});
 			});
 		},
 		// 获取图片
@@ -300,37 +313,53 @@ export default {
 					height: canvasH,
 					destWidth: canvasW,
 					destHeight: canvasH,
-					quality: 0.5,
 					canvasId: 'myCanvas',
 					success: res => {
 						uni.hideLoading();
 						this.pic = res.tempFilePath;
-						console.log('canvasToTempFilePath', res.tempFilePath);
-						let url = this.$api.url + 'main/upload_pic';
-						this.uploadTask = uni.uploadFile({
-							url: url,
-							filePath: res.tempFilePath,
-							name: 'file',
-							formData: {
-								token: this.token,
-								path: 'search'
-							},
-							success: res => {
-								console.log('返回', res.data);
+						this.base64({
+							url: this.pic,
+							type: 'jpg'
+						})
+							.then(res => {
+								console.log('canvasToTempFilePath', res);
 								this.isphbox = false;
 								this.flag = true;
-								this.pic = res.data;
+								this.pic = res;
 								this.search_exercises();
-							},
-							fail: function(t) {
+							})
+							.catch(err => {
 								uni.showToast({
 									title: '上传图片失败',
 									icon: 'none'
 								});
 								uni.navigateBack();
-							}
-						});
-						this.speedprogress();
+							});
+						// this.speedprogress();
+						// let url = this.$api.url + 'main/upload_pic';
+						// this.uploadTask = uni.uploadFile({
+						// 	url: url,
+						// 	filePath: res.tempFilePath,
+						// 	name: 'file',
+						// 	formData: {
+						// 		token: this.token,
+						// 		path: 'search'
+						// 	},
+						// 	success: res => {
+						// 		console.log('返回', res.data);
+						// 		this.isphbox = false;
+						// 		this.flag = true;
+						// 		this.pic = res.data;
+						// 		this.search_exercises();
+						// 	},
+						// 	fail: function(t) {
+						// 		uni.showToast({
+						// 			title: '上传图片失败',
+						// 			icon: 'none'
+						// 		});
+						// 		uni.navigateBack();
+						// 	}
+						// });
 					}
 				});
 			});
@@ -406,13 +435,13 @@ export default {
 		position: relative;
 		width: 100%;
 		height: 100vh;
+		background-color: #000;
 		.res_img {
-			max-width: 100%;
 			position: absolute;
-			top: 0;
-			left: 0;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 			width: 100%;
-			height: 100%;
 		}
 		.wrapper {
 			width: 100%;

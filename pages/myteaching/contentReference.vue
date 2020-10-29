@@ -142,8 +142,14 @@ export default {
 		},
 		toTeachingPhoto(obj, subject_name) {
 			console.log('toTeachingPhoto', JSON.stringify(obj), subject_name);
+			// uni.navigateTo({
+			// 	url: '/pages/myteaching/myteachingPhoto?from=2&obj=' + JSON.stringify(obj) + '&subject_name=' + subject_name
+			// });
 			uni.navigateTo({
-				url: '/pages/myteaching/myteachingPhoto?from=2&obj=' + JSON.stringify(obj) + '&subject_name=' + subject_name
+				url: '/pages/myteaching/customPhoto?textbook_id=' + obj.textbook_id + '&title=' + obj.textbook_name + '&subject_name=' + subject_name,
+				success: () => {
+					console.log('toTeachingPhoto', obj.textbook_id, obj.textbook_name, subject_name);
+				}
 			});
 		}
 	}

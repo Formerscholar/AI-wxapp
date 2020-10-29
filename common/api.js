@@ -3,7 +3,8 @@ import {
 } from './util.js'
 
 // const ApiUrl = 'https://api.aictb.com/v1/' //生产环境
-const ApiUrl = 'https://api.aictb.com/v2/' //生产环境ss
+// const ApiUrl = 'https://api.aictb.com/v2/' //生产环境ss
+const ApiUrl = 'https://api.aictb.com/v3/' //生产环境sss
 // const ApiUrl = 'http://test.aictb.com:8083/v2/' //测试环境
 
 
@@ -15,7 +16,7 @@ module.exports = {
 	//----------------------------- 学生
 	//登录注册
 	bind_info: data => request(ApiUrl + 'user/bind_info/', data), //绑定信息
-	get_settings: md => request(ApiUrl + 'main/get_settings/',md), //获取配置信息
+	get_settings: md => request(ApiUrl + 'main/get_settings/', md), //获取配置信息
 	//首页
 	student_login: data => request(ApiUrl + 'user/wx_student_login/', data), //登录
 	share_login: data => request(ApiUrl + 'user/wx_share_login/', data), //登录
@@ -51,7 +52,7 @@ module.exports = {
 	vip_info: data => request(ApiUrl + 'user/vip/', data), //vip信息
 	change_user_info: data => request(ApiUrl + 'user/change_user_info/', data), //修改个人信息
 	join_team: data => request(ApiUrl + 'user/join_team/', data), //邀请学生加入班级
-	send_msg: data => request(ApiUrl + 'user/send_msg/', data), 
+	send_msg: data => request(ApiUrl + 'user/send_msg/', data),
 	get_download: data => request(ApiUrl + 'user/download_based/', data),
 	orc_one: data => request(ApiUrl + 'user/orc_one/', data),
 

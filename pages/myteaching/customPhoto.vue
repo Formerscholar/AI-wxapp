@@ -69,7 +69,7 @@ export default {
 	},
 	onLoad(option) {
 		this.textbook_id = option.textbook_id;
-		this.choosePage = option.choosePage;
+		// this.choosePage = option.choosePage;
 		this.title = option.title;
 		this.subject_name = option.subject_name;
 		console.log('onLoadoption', option);
@@ -129,8 +129,6 @@ export default {
 							res.tempFilePaths[0] +
 							'&textbook_id=' +
 							this.textbook_id +
-							'&choosePage=' +
-							this.choosePage +
 							'&title=' +
 							this.title +
 							'&subject_name=' +
@@ -191,15 +189,13 @@ export default {
 			uni.createCameraContext().takePhoto({
 				quality: 'high',
 				success: res => {
-					console.log('res.tempImagePath', res.tempImagePath);
+					console.log('res.tempImagePath', res);
 					uni.navigateTo({
 						url:
 							'/pages/myteaching/cropperPhoto?ImagePath=' +
 							res.tempImagePath +
 							'&textbook_id=' +
 							this.textbook_id +
-							'&choosePage=' +
-							this.choosePage +
 							'&title=' +
 							this.title +
 							'&subject_name=' +
