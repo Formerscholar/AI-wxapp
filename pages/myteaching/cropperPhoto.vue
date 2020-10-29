@@ -261,7 +261,7 @@ export default {
 		},
 		contentTouchEnd() {},
 		search_exercises: function() {
-			this.$api.search_exercises({ textbook_id: this.textbook_id, page: this.choosePage, pic: this.pic, token: this.token }).then(res => {
+			this.$api.orc_one({ textbook_id: this.textbook_id, page: this.choosePage, pic: this.pic, token: this.token }).then(res => {
 				console.log('res', res);
 				if (res.code == 200) {
 					uni.redirectTo({
