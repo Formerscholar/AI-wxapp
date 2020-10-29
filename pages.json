@@ -213,6 +213,12 @@
 		    }
 		},
 		{
+		    "path" : "pages/myteaching/customPhotos",
+		    "style" : {
+		    	"navigationBarTitleText": "拍照识题"
+		    }
+		},
+		{
 		    "path" : "pages/myteaching/cropperPhoto",
 		    "style" : {
 		    	"navigationBarTitleText": "图片剪裁"

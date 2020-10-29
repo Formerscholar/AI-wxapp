@@ -2,9 +2,9 @@
 	<view class="container">
 		<view v-if="isphbox" class="page-body uni-content-info">
 			<view class="cropper-content">
-				<view v-if="isShowImg" class="uni-corpper" :style="'width:' + cropperInitW + 'px;height:1072rpx;background:#000'">
-					<view class="uni-corpper-content" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px;'">
-						<image :src="imageSrc" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px'"></image>
+				<view v-if="isShowImg" class="uni-corpper" :style="'width:' + cropperInitW + 'px;height:calc(100vh - 164rpx);background:#000'">
+					<view class="uni-corpper-content" :style="'width:100vw;height:calc(100vh - 164rpx);'">
+						<image :src="imageSrc" :style="'width:100vw;height:calc(100vh - 164rpx);'"></image>
 						<view
 							class="uni-corpper-crop-box"
 							@touchstart.stop="contentStartMove"

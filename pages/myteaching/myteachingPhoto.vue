@@ -50,8 +50,12 @@
 				</view>
 			</picker>
 		</view>
-		<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo attr" @click="checkimg()" v-if="from == 1"></image>
-		<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg()" v-if="from == 2"></image>
+		<view class="photobox">
+			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(0)" v-if="from == 1">单</image>
+			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(1)" v-if="from == 1">整</image>
+			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(0)" v-if="from == 2">单</image>
+			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(1)" v-if="from == 2">整</image>
+		</view>
 	</view>
 </template>
 
@@ -115,7 +119,7 @@ export default {
 			this.subject_name = option.subject_name;
 			console.log('this.obj', this.obj);
 			console.log('this.obj.tpage', this.obj.tpage);
-			console.log('onLoad(option)',this.textbook_id,this.subject_name)
+			console.log('onLoad(option)', this.textbook_id, this.subject_name);
 			//this.sumPage(5)
 			if (!this.obj.tpage) {
 				this.tpage = 1;
@@ -215,15 +219,26 @@ export default {
 			this.choosePage = this.numArr[this.index];
 		},
 		//上传图片
-		checkimg() {
+		checkimg(num) {
 			if (this.textbook_id) {
-				// this.update=false  
-				uni.navigateTo({
-					url: '/pages/myteaching/customPhoto?textbook_id=' + this.textbook_id + '&choosePage=' + this.choosePage + '&title=' + this.title + '&subject_name=' + this.subject_name,
-					success: () => {
-						console.log('跳转自定义拍照页面', this.textbook_id, this.choosePage, this.title, this.subject_name);
-					}
-				});
+				// this.update=false
+				if (num) {
+					uni.navigateTo({
+						url:
+							'/pages/myteaching/customPhotos?textbook_id=' + this.textbook_id + '&choosePage=' + this.choosePage + '&title=' + this.title + '&subject_name=' + this.subject_name,
+						success: () => {
+							console.log('跳转自定义拍照页面', this.textbook_id, this.choosePage, this.title, this.subject_name);
+						}
+					});
+				} else {
+					uni.navigateTo({
+						url: '/pages/myteaching/customPhoto?textbook_id=' + this.textbook_id + '&choosePage=' + this.choosePage + '&title=' + this.title + '&subject_name=' + this.subject_name,
+						success: () => {
+							console.log('跳转自定义拍照页面', this.textbook_id, this.choosePage, this.title, this.subject_name);
+						}
+					});
+				}
+
 				// let _this = this;
 				// uni.chooseImage({
 				// 	count: 1, //默认9
@@ -441,11 +456,15 @@ page {
 		}
 	}
 }
-.photo {
-	width: 232rpx;
-	height: 232rpx;
+.photobox {
 	display: flex;
-	margin: 26rpx auto;
+	align-items: center;
+	justify-content: center;
+	.photo {
+		width: 232rpx;
+		height: 232rpx;
+		margin: 20rpx;
+	}
 }
 
 .tabar {
