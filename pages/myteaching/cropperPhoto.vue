@@ -2,9 +2,9 @@
 	<view class="container">
 		<view v-if="isphbox" class="page-body uni-content-info">
 			<view class="cropper-content">
-				<view v-if="isShowImg" class="uni-corpper" :style="'width:' + cropperInitW + 'px;height:calc(100vh - 162rpx);background:#000'">
+				<view v-if="isShowImg" class="uni-corpper" :style="'width:' + cropperInitW + 'px;height:100vh;background:#000'">
 					<view class="uni-corpper-content" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px;'">
-						<image :src="imageSrc" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px'"></image>
+						<image :src="imageSrc" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px;'"></image>
 						<view
 							class="uni-corpper-crop-box"
 							@touchstart.stop="contentStartMove"
@@ -55,6 +55,7 @@
 <script>
 let sysInfo = uni.getSystemInfoSync();
 let SCREEN_WIDTH = sysInfo.screenWidth;
+let SCREEN_Height = sysInfo.screenHeight;
 let PAGE_X, // 手按下的x位置
 	PAGE_Y, // 手按下y的位置
 	PR = sysInfo.pixelRatio, // dpi
@@ -186,7 +187,7 @@ export default {
 						let cutR = cutL;
 						_this.setData({
 							cropperW: SCREEN_WIDTH,
-							cropperH: SCREEN_WIDTH / IMG_RATIO,
+							cropperH: SCREEN_WIDTH,
 							// 初始化left right
 							cropperL: Math.ceil((SCREEN_WIDTH - SCREEN_WIDTH) / 2),
 							cropperT: Math.ceil((SCREEN_WIDTH - SCREEN_WIDTH / IMG_RATIO) / 2),
@@ -202,13 +203,14 @@ export default {
 							innerAspectRadio: IMG_RATIO
 						});
 					} else {
-						let cutL = Math.ceil((SCREEN_WIDTH * IMG_RATIO - SCREEN_WIDTH * IMG_RATIO) / 2);
+						let cutL = Math.ceil((SCREEN_WIDTH * IMG_RATIO - SCREEN_WIDTH * IMG_RATIO) / 2) + 20;
 						let cutR = cutL;
-						let cutT = Math.ceil((SCREEN_WIDTH - INIT_DRAG_POSITION) / 2);
+						let cutT = Math.ceil(SCREEN_WIDTH - INIT_DRAG_POSITION);
 						let cutB = cutT;
 						_this.setData({
-							cropperW: SCREEN_WIDTH * IMG_RATIO,
-							cropperH: SCREEN_WIDTH,
+							cropperW: SCREEN_WIDTH,
+							// cropperW: SCREEN_WIDTH * IMG_RATIO,
+							cropperH: SCREEN_Height,
 							// 初始化left right
 							cropperL: Math.ceil((SCREEN_WIDTH - SCREEN_WIDTH * IMG_RATIO) / 2),
 							cropperT: Math.ceil((SCREEN_WIDTH - SCREEN_WIDTH) / 2),
@@ -503,6 +505,7 @@ export default {
 	bottom: 0;
 	left: 0;
 	right: 0;
+	background-color: transparent;
 }
 .cropper-content {
 	flex: 1;
@@ -518,12 +521,15 @@ export default {
 	-webkit-tap-highlight-color: transparent;
 	-webkit-touch-callout: none;
 	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .uni-corpper-content {
 	position: relative;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
+	left: 0;
+	top: 0;
+	// transform: translate(-50%, -50%);
 }
 .uni-corpper-content image {
 	display: block;
