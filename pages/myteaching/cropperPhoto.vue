@@ -276,10 +276,18 @@ export default {
 				const { result } = res;
 				console.log('result', result);
 				if (res.code == 200) {
-					uni.redirectTo({
-						url:
-							'/pages/myPaper/seePapers?status=photo&listData=' + encodeURIComponent(JSON.stringify(res.data.data)) + '&title=' + this.title + '&subject_name=' + this.subject_name
-					});
+					if (res.data.data.length == 1) {
+						uni.redirectTo({
+							url:
+								'/pages/knowledgeBase/watchExplane?id=' + res.data.data[0].exercises_id
+						});
+					} else{
+						uni.redirectTo({
+							url:
+								'/pages/myPaper/seePapers?status=photo&listData=' + encodeURIComponent(JSON.stringify(res.data.data)) + '&title=' + this.title + '&subject_name=' + this.subject_name
+						});
+					}
+					
 				} else {
 					uni.showToast({
 						title: res.msg,
