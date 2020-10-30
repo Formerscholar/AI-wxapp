@@ -1,19 +1,18 @@
 <template>
 	<view class="container">
-		<view v-if="isphbox" class="page-body uni-content-info" style="background:#000">
+		<view v-if="isphbox" class="page-body uni-content-info">
 			<view class="cropper-content">
-				<!-- <view v-if="isShowImg" class="uni-corpper" :style="'width:' + cropperInitW + 'px;height:1072rpx;'"> -->
-				<view v-if="isShowImg" class="uni-corpper" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px;'">
-					<view class="uni-corpper-content" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px;'">
-						<image :src="imageSrc" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px'"></image>
+				<view v-if="isShowImg" class="uni-corpper" :style="'width:' + cropperInitW + 'rpx;height:' + cropperInitH + 'rpx;background:#000'">
+					<view class="uni-corpper-content" :style="'width:' + cropperW + 'rpx;height:' + cropperH + 'rpx;'">
+						<image :src="imageSrc" :style="'width:' + cropperW + 'rpx;height:' + cropperH + 'rpx'"></image>
 						<view
 							class="uni-corpper-crop-box"
 							@touchstart.stop="contentStartMove"
 							@touchmove.stop="contentMoveing"
 							@touchend.stop="contentTouchEnd"
-							:style="'left:' + cutL + 'px;top:' + cutT + 'px;right:' + cutR + 'px;bottom:' + cutB + 'px'"
+							:style="'left:' + cutL + 'rpx;top:' + cutT + 'rpx;right:' + cutR + 'rpx;bottom:' + cutB + 'rpx'"
 						>
-							<view class="uni-cropper-view-box">
+							<view class="uni-cropper-view-box" id="cropperbox">
 								<view class="uni-cropper-dashed-h"></view>
 								<view class="uni-cropper-dashed-v"></view>
 								<view class="uni-cropper-line-t" data-drag="top" @touchstart.stop="dragStart" @touchmove.stop="dragMove"></view>
@@ -44,7 +43,7 @@
 		<!-- 扫描+进度控件 -->
 		<view class="analysisbox" v-else>
 			<view class="img-box">
-				<image class="res_img" :src="pic" mode="widthFix"></image>
+				<image class="res_img" :src="pic" mode="widthFix" :style="'width:' + analysisW + 'px;height:' + analysisH + 'px'"></image>
 				<view class="wrapper" v-if="flag"></view>
 				<view class="bottom"><view class="btn" @click="getImage">重新拍摄</view></view>
 			</view>
@@ -56,7 +55,7 @@
 <script>
 let sysInfo = uni.getSystemInfoSync();
 let SCREEN_WIDTH = sysInfo.screenWidth;
-console.log('SCREEN_WIDTH', SCREEN_WIDTH);
+let SCREEN_Height = (wx.getSystemInfoSync().windowHeight / wx.getSystemInfoSync().windowWidth) * 750;
 let PAGE_X, // 手按下的x位置
 	PAGE_Y, // 手按下y的位置
 	PR = sysInfo.pixelRatio, // dpi
@@ -71,25 +70,27 @@ let PAGE_X, // 手按下的x位置
 	IMG_RATIO, // 图片比例
 	IMG_REAL_W, // 图片实际的宽度
 	IMG_REAL_H, // 图片实际的高度
-	DRAFG_MOVE_RATIO = 1, //移动时候的比例,
-	INIT_DRAG_POSITION = 100, // 初始化屏幕宽度和裁剪区域的宽度之差，用于设置初始化裁剪的宽度
-	DRAW_IMAGE_W = sysInfo.screenWidth; // 设置生成的图片宽度
+	DRAFG_MOVE_RATIO = 750 / wx.getSystemInfoSync().windowWidth, //移动时候的比例,
+	INIT_DRAG_POSITION = 200, // 初始化屏幕宽度和裁剪区域的宽度之差，用于设置初始化裁剪的宽度
+	DRAW_IMAGE_W = 0; // 设置生成的图片宽度
 export default {
 	data() {
 		return {
 			name: 'chad',
 			imageSrc: '',
+			analysisW: '',
+			analysisH: '',
 			token: '',
 			isphbox: true,
 			pic: '',
 			flag: true,
 			isShowImg: false,
 			// 初始化的宽高
-			cropperInitW: SCREEN_WIDTH,
-			cropperInitH: SCREEN_WIDTH,
+			cropperInitW: 750,
+			cropperInitH: SCREEN_Height,
 			// 动态的宽高
-			cropperW: SCREEN_WIDTH,
-			cropperH: SCREEN_WIDTH,
+			cropperW: 750,
+			cropperH: SCREEN_Height,
 			// 动态的left top值
 			cropperL: 0,
 			cropperT: 0,
@@ -102,32 +103,28 @@ export default {
 			// 裁剪框 宽高
 			cutL: 0,
 			cutT: 0,
-			cutB: SCREEN_WIDTH,
+			cutB: 750,
 			cutR: '100%',
 			qualityWidth: DRAW_IMAGE_W,
 			innerAspectRadio: DRAFG_MOVE_RATIO,
 			title: '',
-			subject_name: ''
+			subject_name: '',
+			pics: ''
 		};
 	},
-	/**
-	 * 生命周期函数--监听页面加载
-	 */
 	onLoad: function(options) {
 		const { ImagePath, textbook_id, choosePage, title, subject_name } = options;
 		console.log('onLoad', ImagePath);
 		this.imageSrc = ImagePath;
 		this.textbook_id = textbook_id;
-		this.choosePage = choosePage;
+		// this.choosePage = choosePage;
 		this.title = title;
 		this.subject_name = subject_name;
 		if (uni.getStorageSync('userInfo').token) {
 			this.token = uni.getStorageSync('userInfo').token;
 		}
+		console.log('初始化 ', SCREEN_WIDTH, sysInfo.screenWidth);
 	},
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
 	onReady: function() {
 		this.loadImage();
 	},
@@ -149,15 +146,6 @@ export default {
 			uni.navigateBack({
 				delta: 1
 			});
-			// var _this = this;
-			// uni.chooseImage({
-			// 	success: function(res) {
-			// 		_this.setData({
-			// 			imageSrc: res.tempFilePaths[0]
-			// 		});
-			// 		_this.loadImage();
-			// 	}
-			// });
 		},
 		loadImage: function() {
 			var _this = this;
@@ -167,12 +155,12 @@ export default {
 			uni.getImageInfo({
 				src: _this.imageSrc,
 				success: function(res) {
-					console.log('getImageInfo', res);
 					IMG_RATIO = res.width / res.height;
 					if (IMG_RATIO >= 1) {
 						IMG_REAL_W = SCREEN_WIDTH;
 						IMG_REAL_H = SCREEN_WIDTH / IMG_RATIO;
 					} else {
+						console.log('getImageInfo', res);
 						IMG_REAL_W = SCREEN_WIDTH * IMG_RATIO;
 						IMG_REAL_H = SCREEN_WIDTH;
 					}
@@ -185,8 +173,8 @@ export default {
 						let cutL = Math.ceil((SCREEN_WIDTH - SCREEN_WIDTH + INIT_DRAG_POSITION) / 2);
 						let cutR = cutL;
 						_this.setData({
-							cropperW: SCREEN_WIDTH,
-							cropperH: SCREEN_WIDTH / IMG_RATIO,
+							cropperW: 750,
+							cropperH: SCREEN_WIDTH,
 							// 初始化left right
 							cropperL: Math.ceil((SCREEN_WIDTH - SCREEN_WIDTH) / 2),
 							cropperT: Math.ceil((SCREEN_WIDTH - SCREEN_WIDTH / IMG_RATIO) / 2),
@@ -202,16 +190,14 @@ export default {
 							innerAspectRadio: IMG_RATIO
 						});
 					} else {
-						let cutL = Math.ceil((SCREEN_WIDTH * IMG_RATIO - SCREEN_WIDTH * IMG_RATIO) / 2);
+						let cutL = Math.ceil((SCREEN_WIDTH * IMG_RATIO - SCREEN_WIDTH * IMG_RATIO) / 2) + 20;
 						let cutR = cutL;
-						let cutT = Math.ceil((SCREEN_WIDTH - INIT_DRAG_POSITION) / 2);
+						let cutT = Math.ceil(SCREEN_WIDTH - INIT_DRAG_POSITION);
 						let cutB = cutT;
-						console.log('SCREEN_WIDTH', SCREEN_WIDTH / IMG_RATIO, SCREEN_WIDTH * IMG_RATIO, SCREEN_WIDTH, IMG_RATIO);
 						_this.setData({
+							cropperW: 750,
 							// cropperW: SCREEN_WIDTH * IMG_RATIO,
-							// cropperH: SCREEN_WIDTH,
-							cropperW: SCREEN_WIDTH,
-							cropperH: SCREEN_WIDTH / IMG_RATIO,
+							cropperH: SCREEN_Height,
 							// 初始化left right
 							cropperL: Math.ceil((SCREEN_WIDTH - SCREEN_WIDTH * IMG_RATIO) / 2),
 							cropperT: Math.ceil((SCREEN_WIDTH - SCREEN_WIDTH) / 2),
@@ -283,7 +269,6 @@ export default {
 				}
 				this.flag = false;
 				this.percent = 0;
-				this.iscmdProgress = false;
 			});
 		},
 		base64({ url, type }) {
@@ -307,7 +292,7 @@ export default {
 			// 将图片写入画布
 			const ctx = uni.createCanvasContext('myCanvas');
 			ctx.drawImage(_this.imageSrc, 0, 0, IMG_REAL_W, IMG_REAL_H);
-			ctx.draw(false, () => {
+			ctx.draw(true, () => {
 				// 获取画布要裁剪的位置和宽度   均为百分比 * 画布中图片的宽度    保证了在微信小程序中裁剪的图片模糊  位置不对的问题 canvasT = (_this.cutT / _this.cropperH) * (_this.imageH / pixelRatio)
 				var canvasW = ((_this.cropperW - _this.cutL - _this.cutR) / _this.cropperW) * IMG_REAL_W;
 				var canvasH = ((_this.cropperH - _this.cutT - _this.cutB) / _this.cropperH) * IMG_REAL_H;
@@ -318,14 +303,13 @@ export default {
 					y: canvasT,
 					width: canvasW,
 					height: canvasH,
-					destWidth: canvasW,
-					destHeight: canvasH,
-					quality: 1,
+					destWidth: canvasW * 2,
+					destHeight: canvasH * 2,
 					canvasId: 'myCanvas',
 					success: res => {
 						uni.hideLoading();
 						this.pic = res.tempFilePath;
-						console.log('canvasToTempFilePath', res.tempFilePath);
+						console.log('canvasToTempFilePath', this.pic);
 						this.base64({
 							url: this.pic,
 							type: 'png'
@@ -335,6 +319,7 @@ export default {
 								this.isphbox = false;
 								this.flag = true;
 								this.pic = res;
+								//放大2倍
 								this.search_exercises();
 							})
 							.catch(err => {
@@ -344,6 +329,15 @@ export default {
 								});
 								uni.navigateBack();
 							});
+
+						uni.getImageInfo({
+							src: this.pic,
+							success: async a => {
+								console.log('小程序getImageInfo', a.width, a.height);
+								this.analysisW = a.width;
+								this.analysisH = a.height;
+							}
+						});
 					}
 				});
 			});
@@ -413,337 +407,303 @@ export default {
 </script>
 
 <style lang="scss">
-/* pages/uni-cropper/index.wxss */
-.analysisbox {
-	background: #000;
-	.img-box {
-		position: relative;
-		width: 100%;
-		height: 100vh;
-		.res_img {
-			max-width: 100%;
-			position: absolute;
-			top: 0;
-			left: 0;
+.container {
+	.uni-content-info {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		padding-bottom: 135rpx;
+		.cropper-content {
+			flex: 1;
 			width: 100%;
-			height: 100%;
+			.uni-corpper {
+				position: relative;
+				overflow: hidden;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				-webkit-tap-highlight-color: transparent;
+				-webkit-touch-callout: none;
+				box-sizing: border-box;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				.uni-corpper-content {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					.uni-corpper-crop-box {
+						position: absolute;
+						background: rgba(255, 255, 255, 0.3);
+						z-index: 2;
+						.uni-cropper-view-box {
+							position: relative;
+							display: block;
+							width: 100%;
+							height: 100%;
+							overflow: visible;
+							outline: 1rpx solid #69f;
+							outline-color: rgba(102, 153, 255, 0.75);
+							.uni-cropper-dashed-h {
+								position: absolute;
+								top: 33.33333333%;
+								left: 0;
+								width: 100%;
+								height: 33.33333333%;
+								border-top: 1rpx dashed rgba(255, 255, 255, 0.5);
+								border-bottom: 1rpx dashed rgba(255, 255, 255, 0.5);
+							}
+							/* 纵向虚线 */
+							.uni-cropper-dashed-v {
+								position: absolute;
+								left: 33.33333333%;
+								top: 0;
+								width: 33.33333333%;
+								height: 100%;
+								border-left: 1rpx dashed rgba(255, 255, 255, 0.5);
+								border-right: 1rpx dashed rgba(255, 255, 255, 0.5);
+							}
+							/* 四个方向的线  为了之后的拖动事件*/
+							.uni-cropper-line-t {
+								position: absolute;
+								display: block;
+								width: 100%;
+								background-color: #69f;
+								top: 0;
+								left: 0;
+								height: 1rpx;
+								opacity: 0.1;
+								cursor: n-resize;
+								&::before {
+									content: '';
+									position: absolute;
+									top: 50%;
+									right: 0rpx;
+									width: 100%;
+									-webkit-transform: translate3d(0, -50%, 0);
+									transform: translate3d(0, -50%, 0);
+									bottom: 0;
+									height: 41rpx;
+									background: transparent;
+									z-index: 11;
+								}
+							}
+							.uni-cropper-line-r {
+								position: absolute;
+								display: block;
+								background-color: #69f;
+								top: 0;
+								right: 0rpx;
+								width: 1rpx;
+								opacity: 0.1;
+								height: 100%;
+								cursor: e-resize;
+								&::before {
+									content: '';
+									position: absolute;
+									top: 0;
+									left: 50%;
+									width: 41rpx;
+									-webkit-transform: translate3d(-50%, 0, 0);
+									transform: translate3d(-50%, 0, 0);
+									bottom: 0;
+									height: 100%;
+									background: transparent;
+									z-index: 11;
+								}
+							}
+							.uni-cropper-line-b {
+								position: absolute;
+								display: block;
+								width: 100%;
+								background-color: #69f;
+								bottom: 0;
+								left: 0;
+								height: 1rpx;
+								opacity: 0.1;
+								cursor: s-resize;
+								&::before {
+									content: '';
+									position: absolute;
+									top: 50%;
+									right: 0rpx;
+									width: 100%;
+									-webkit-transform: translate3d(0, -50%, 0);
+									transform: translate3d(0, -50%, 0);
+									bottom: 0;
+									height: 41rpx;
+									background: transparent;
+									z-index: 11;
+								}
+							}
+							.uni-cropper-line-l {
+								position: absolute;
+								display: block;
+								background-color: #69f;
+								top: 0;
+								left: 0;
+								width: 1rpx;
+								opacity: 0.1;
+								height: 100%;
+								cursor: w-resize;
+								&::before {
+									content: '';
+									position: absolute;
+									top: 0;
+									left: 50%;
+									width: 41rpx;
+									-webkit-transform: translate3d(-50%, 0, 0);
+									transform: translate3d(-50%, 0, 0);
+									bottom: 0;
+									height: 100%;
+									background: transparent;
+									z-index: 11;
+								}
+							}
+							.uni-cropper-point {
+								width: 5rpx;
+								height: 5rpx;
+								background-color: #69f;
+								opacity: 0.75;
+								position: absolute;
+								z-index: 3;
+							}
+							.point-t {
+								top: -3rpx;
+								left: 50%;
+								margin-left: -3rpx;
+								cursor: n-resize;
+							}
+							.point-tr {
+								top: -3rpx;
+								left: 100%;
+								margin-left: -3rpx;
+								cursor: n-resize;
+							}
+							.point-r {
+								top: 50%;
+								left: 100%;
+								margin-left: -3rpx;
+								margin-top: -3rpx;
+								cursor: n-resize;
+							}
+							.point-rb {
+								left: 100%;
+								top: 100%;
+								-webkit-transform: translate3d(-50%, -50%, 0);
+								transform: translate3d(-50%, -50%, 0);
+								cursor: n-resize;
+								width: 36rpx;
+								height: 36rpx;
+								background-color: #69f;
+								position: absolute;
+								z-index: 1112;
+								opacity: 1;
+							}
+							.point-b {
+								left: 50%;
+								top: 100%;
+								margin-left: -3rpx;
+								margin-top: -3rpx;
+								cursor: n-resize;
+							}
+							.point-bl {
+								left: 0%;
+								top: 100%;
+								margin-left: -3rpx;
+								margin-top: -3rpx;
+								cursor: n-resize;
+							}
+							.point-l {
+								left: 0%;
+								top: 50%;
+								margin-left: -3rpx;
+								margin-top: -3rpx;
+								cursor: n-resize;
+							}
+							.point-lt {
+								left: 0%;
+								top: 0%;
+								margin-left: -3rpx;
+								margin-top: -3rpx;
+								cursor: n-resize;
+							}
+						}
+					}
+				}
+			}
 		}
-		.wrapper {
-			width: 100%;
-			height: 100vh;
-			background: linear-gradient(transparent, transparent), linear-gradient(90deg, #ffffff33 1rpx, transparent 0, transparent 19rpx),
-				linear-gradient(#ffffff33 1rpx, transparent 0, transparent 19rpx), linear-gradient(transparent, rgb(208, 131, 126));
-			background-size: 100% 1.5%, 10% 100%, 100% 8%, 100% 100%;
-			background-repeat: no-repeat, repeat, repeat, no-repeat;
-			background-position: 0% 0%, 0 0, 0 0, 0 0;
-			clip-path: polygon(0% 0%, 100% 0%, 100% 1.5%, 0% 1.5%);
-			animation: move 2s infinite linear;
-		}
-		.bottom {
-			position: fixed;
-			width: 100%;
-			height: 100rpx;
-			background: #000;
+		.cropper-config {
+			padding: 20rpx 40rpx;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
 			position: fixed;
 			bottom: 0;
 			left: 0;
-			z-index: 100;
-			.btn {
-				margin: 10rpx auto;
-				width: 400rpx;
-				height: 80rpx;
-				line-height: 80rpx;
-				font-size: 30rpx;
-				color: #fff;
-				background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
-				text-align: center;
-				border-radius: 20rpx;
-			}
+			right: 0;
+			background-color: transparent;
+			z-index: 3;
 		}
-		@keyframes move {
-			to {
-				background-position: 0 100%, 0 0, 0 0, 0 0;
-				clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+	}
+	.analysisbox {
+		.img-box {
+			position: relative;
+			width: 100%;
+			height: 92vh;
+			background-color: #000;
+			.res_img {
+				// width: 100%;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+			.wrapper {
+				width: 100%;
+				height: 100vh;
+				background: linear-gradient(transparent, transparent), linear-gradient(90deg, #ffffff33 1rpx, transparent 0, transparent 19rpx),
+					linear-gradient(#ffffff33 1rpx, transparent 0, transparent 19rpx), linear-gradient(transparent, rgb(208, 131, 126));
+				background-size: 100% 1.5%, 10% 100%, 100% 8%, 100% 100%;
+				background-repeat: no-repeat, repeat, repeat, no-repeat;
+				background-position: 0% 0%, 0 0, 0 0, 0 0;
+				clip-path: polygon(0% 0%, 100% 0%, 100% 1.5%, 0% 1.5%);
+				animation: move 2s infinite linear;
+			}
+			.bottom {
+				position: fixed;
+				width: 100%;
+				height: 100rpx;
+				background: #fff;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				z-index: 100;
+				.btn {
+					margin: 10rpx auto;
+					width: 400rpx;
+					height: 80rpx;
+					line-height: 80rpx;
+					font-size: 30rpx;
+					color: #fff;
+					background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
+					text-align: center;
+					border-radius: 20rpx;
+				}
+			}
+			@keyframes move {
+				to {
+					background-position: 0 100%, 0 0, 0 0, 0 0;
+					clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+				}
 			}
 		}
 	}
-}
-.uni-content-info {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	padding-bottom: 135rpx;
-}
-.cropper-config {
-	padding: 20rpx 40rpx;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-}
-.cropper-content {
-	flex: 1;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.uni-corpper {
-	position: relative;
-	overflow: hidden;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	-webkit-tap-highlight-color: transparent;
-	-webkit-touch-callout: none;
-	box-sizing: border-box;
-}
-.uni-corpper-content {
-	position: relative;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-}
-.uni-corpper-content image {
-	display: block;
-	width: 100%;
-	min-width: 0 !important;
-	max-width: none !important;
-	height: 100%;
-	min-height: 0 !important;
-	max-height: none !important;
-	image-orientation: 0deg !important;
-	margin: 0 auto;
-}
-/* 移动图片效果 */
-.uni-cropper-drag-box {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	cursor: move;
-	background: rgba(0, 0, 0, 0.6);
-	z-index: 1;
-}
-/* 内部的信息 */
-.uni-corpper-crop-box {
-	position: absolute;
-	background: rgba(255, 255, 255, 0.3);
-	z-index: 2;
-}
-.uni-corpper-crop-box .uni-cropper-view-box {
-	position: relative;
-	display: block;
-	width: 100%;
-	height: 100%;
-	overflow: visible;
-	outline: 1rpx solid #69f;
-	outline-color: rgba(102, 153, 255, 0.75);
-}
-/* 横向虚线 */
-.uni-cropper-dashed-h {
-	position: absolute;
-	top: 33.33333333%;
-	left: 0;
-	width: 100%;
-	height: 33.33333333%;
-	border-top: 1rpx dashed rgba(255, 255, 255, 0.5);
-	border-bottom: 1rpx dashed rgba(255, 255, 255, 0.5);
-}
-/* 纵向虚线 */
-.uni-cropper-dashed-v {
-	position: absolute;
-	left: 33.33333333%;
-	top: 0;
-	width: 33.33333333%;
-	height: 100%;
-	border-left: 1rpx dashed rgba(255, 255, 255, 0.5);
-	border-right: 1rpx dashed rgba(255, 255, 255, 0.5);
-}
-/* 四个方向的线  为了之后的拖动事件*/
-.uni-cropper-line-t {
-	position: absolute;
-	display: block;
-	width: 100%;
-	background-color: #69f;
-	top: 0;
-	left: 0;
-	height: 1rpx;
-	opacity: 0.1;
-	cursor: n-resize;
-}
-.uni-cropper-line-t::before {
-	content: '';
-	position: absolute;
-	top: 50%;
-	right: 0rpx;
-	width: 100%;
-	-webkit-transform: translate3d(0, -50%, 0);
-	transform: translate3d(0, -50%, 0);
-	bottom: 0;
-	height: 41rpx;
-	background: transparent;
-	z-index: 11;
-}
-.uni-cropper-line-r {
-	position: absolute;
-	display: block;
-	background-color: #69f;
-	top: 0;
-	right: 0rpx;
-	width: 1rpx;
-	opacity: 0.1;
-	height: 100%;
-	cursor: e-resize;
-}
-.uni-cropper-line-r::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 50%;
-	width: 41rpx;
-	-webkit-transform: translate3d(-50%, 0, 0);
-	transform: translate3d(-50%, 0, 0);
-	bottom: 0;
-	height: 100%;
-	background: transparent;
-	z-index: 11;
-}
-.uni-cropper-line-b {
-	position: absolute;
-	display: block;
-	width: 100%;
-	background-color: #69f;
-	bottom: 0;
-	left: 0;
-	height: 1rpx;
-	opacity: 0.1;
-	cursor: s-resize;
-}
-.uni-cropper-line-b::before {
-	content: '';
-	position: absolute;
-	top: 50%;
-	right: 0rpx;
-	width: 100%;
-	-webkit-transform: translate3d(0, -50%, 0);
-	transform: translate3d(0, -50%, 0);
-	bottom: 0;
-	height: 41rpx;
-	background: transparent;
-	z-index: 11;
-}
-.uni-cropper-line-l {
-	position: absolute;
-	display: block;
-	background-color: #69f;
-	top: 0;
-	left: 0;
-	width: 1rpx;
-	opacity: 0.1;
-	height: 100%;
-	cursor: w-resize;
-}
-.uni-cropper-line-l::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 50%;
-	width: 41rpx;
-	-webkit-transform: translate3d(-50%, 0, 0);
-	transform: translate3d(-50%, 0, 0);
-	bottom: 0;
-	height: 100%;
-	background: transparent;
-	z-index: 11;
-}
-.uni-cropper-point {
-	width: 5rpx;
-	height: 5rpx;
-	background-color: #69f;
-	opacity: 0.75;
-	position: absolute;
-	z-index: 3;
-}
-.point-t {
-	top: -3rpx;
-	left: 50%;
-	margin-left: -3rpx;
-	cursor: n-resize;
-}
-.point-tr {
-	top: -3rpx;
-	left: 100%;
-	margin-left: -3rpx;
-	cursor: n-resize;
-}
-.point-r {
-	top: 50%;
-	left: 100%;
-	margin-left: -3rpx;
-	margin-top: -3rpx;
-	cursor: n-resize;
-}
-.point-rb {
-	left: 100%;
-	top: 100%;
-	-webkit-transform: translate3d(-50%, -50%, 0);
-	transform: translate3d(-50%, -50%, 0);
-	cursor: n-resize;
-	width: 36rpx;
-	height: 36rpx;
-	background-color: #69f;
-	position: absolute;
-	z-index: 1112;
-	opacity: 1;
-}
-.point-b {
-	left: 50%;
-	top: 100%;
-	margin-left: -3rpx;
-	margin-top: -3rpx;
-	cursor: n-resize;
-}
-.point-bl {
-	left: 0%;
-	top: 100%;
-	margin-left: -3rpx;
-	margin-top: -3rpx;
-	cursor: n-resize;
-}
-.point-l {
-	left: 0%;
-	top: 50%;
-	margin-left: -3rpx;
-	margin-top: -3rpx;
-	cursor: n-resize;
-}
-.point-lt {
-	left: 0%;
-	top: 0%;
-	margin-left: -3rpx;
-	margin-top: -3rpx;
-	cursor: n-resize;
-}
-/* 裁剪框预览内容 */
-.uni-cropper-viewer {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-}
-.uni-cropper-viewer image {
-	position: absolute;
-	z-index: 2;
 }
 </style>

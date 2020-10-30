@@ -2,7 +2,7 @@
 	<view>
 		<!-- v-if="isphbox" -->
 		<view class="customPhoto">
-			<camera @error="handleCameraError" :device-position="devicePosition" :flash="isflash" style="width: 100%; height: 81vh;">
+			<camera @error="handleCameraError" :device-position="devicePosition" :flash="isflash" style="width: 100%; height: 100vh;">
 				<view class="coverWrapper">
 					<view class="list"><view class="ltbor"></view></view>
 					<view class="list"></view>
@@ -192,14 +192,7 @@ export default {
 					console.log('res.tempImagePath', res);
 					uni.navigateTo({
 						url:
-							'/pages/myteaching/cropperPhoto?ImagePath=' +
-							res.tempImagePath +
-							'&textbook_id=' +
-							this.textbook_id +
-							'&title=' +
-							this.title +
-							'&subject_name=' +
-							this.subject_name,
+							'/pages/myteaching/cropperPhoto?ImagePath=' + res.tempImagePath + '&textbook_id=' + this.textbook_id + '&title=' + this.title + '&subject_name=' + this.subject_name,
 						success: () => {
 							console.log('跳转图片裁剪页面', res.tempImagePath);
 						}
@@ -248,7 +241,7 @@ export default {
 .customPhoto {
 	.coverWrapper {
 		display: grid;
-		height: 100%;
+		height: 84vh;
 		width: 100%;
 		grid-template-columns: 32% 32% 32%;
 		grid-template-rows: 32% 32% 32%;
@@ -365,6 +358,7 @@ export default {
 		justify-content: space-between;
 		align-items: center;
 		padding: 75rpx 50rpx;
+		background-color: #ffffff;
 		.left_box {
 			display: flex;
 			flex-direction: column;
