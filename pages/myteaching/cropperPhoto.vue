@@ -35,8 +35,10 @@
 			</view>
 
 			<view class="cropper-config">
-				<button type="primary reverse" @click="getImage" style="margin-top: 30rpx;">重新拍摄</button>
-				<button type="warn" @click="getImageInfo" style="margin-top: 30rpx;">裁剪并上传</button>
+				<!-- <button type="primary reverse" @click="getImage" style="margin-top: 30rpx;">重新拍摄</button> -->
+				<!-- <button type="warn">裁剪并上传</button> -->
+				<view class="text">一次只能提交一道题</view>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/btn-phone.png" @click="getImageInfo" mode="widthFix"></image>
 			</view>
 			<canvas canvas-id="myCanvas" :style="'position:absolute;border: 1px solid red; width:' + imageW + 'px;height:' + imageH + 'px;top:-9999px;left:-9999px;'"></canvas>
 		</view>
@@ -44,7 +46,8 @@
 		<!-- 扫描+进度控件 -->
 		<view class="analysisbox" v-else>
 			<view class="img-box">
-				<image class="res_img" :src="pic" mode="widthFix"></image>
+				<image v-if="isWorH" class="res_img" :src="pic" mode="widthFix"></image>
+				<image v-else class="res_img" :src="pic" mode="heightFix"></image>
 				<view class="wrapper" v-if="flag"></view>
 				<view class="bottom"><view class="btn" @click="getImage">重新拍摄</view></view>
 			</view>
@@ -84,6 +87,7 @@ export default {
 			pic: '',
 			flag: true,
 			isShowImg: false,
+			isWorH: true,
 			// 初始化的宽高
 			cropperInitW: SCREEN_WIDTH,
 			cropperInitH: SCREEN_WIDTH,
@@ -184,6 +188,7 @@ export default {
 						let cutB = cutT;
 						let cutL = Math.ceil((SCREEN_WIDTH - SCREEN_WIDTH + INIT_DRAG_POSITION) / 2);
 						let cutR = cutL;
+						console.log('IMG_RATIO >= 1 SCREEN_WIDTH', SCREEN_WIDTH / IMG_RATIO, SCREEN_WIDTH * IMG_RATIO, SCREEN_WIDTH, IMG_RATIO);
 						_this.setData({
 							cropperW: SCREEN_WIDTH,
 							cropperH: SCREEN_WIDTH / IMG_RATIO,
@@ -202,9 +207,9 @@ export default {
 							innerAspectRadio: IMG_RATIO
 						});
 					} else {
-						let cutL = Math.ceil((SCREEN_WIDTH * IMG_RATIO - SCREEN_WIDTH * IMG_RATIO) / 2);
+						let cutL = Math.ceil((SCREEN_WIDTH * IMG_RATIO - SCREEN_WIDTH * IMG_RATIO) / 2) + 30;
 						let cutR = cutL;
-						let cutT = Math.ceil((SCREEN_WIDTH - INIT_DRAG_POSITION) / 2);
+						let cutT = Math.ceil((SCREEN_WIDTH - INIT_DRAG_POSITION) / 2) + 30;
 						let cutB = cutT;
 						console.log('SCREEN_WIDTH', SCREEN_WIDTH / IMG_RATIO, SCREEN_WIDTH * IMG_RATIO, SCREEN_WIDTH, IMG_RATIO);
 						_this.setData({
@@ -313,13 +318,21 @@ export default {
 				var canvasH = ((_this.cropperH - _this.cutT - _this.cutB) / _this.cropperH) * IMG_REAL_H;
 				var canvasL = (_this.cutL / _this.cropperW) * IMG_REAL_W;
 				var canvasT = (_this.cutT / _this.cropperH) * IMG_REAL_H;
+				var numResul = canvasW / canvasH;
+				console.log('numResul',numResul)
+				if (numResul < 1) {
+					this.isWorH = false;
+				} else {
+					this.isWorH = true;
+				}
 				uni.canvasToTempFilePath({
 					x: canvasL,
 					y: canvasT,
 					width: canvasW,
 					height: canvasH,
-					destWidth: canvasW,
-					destHeight: canvasH,
+					destWidth: canvasW * 4,
+					destHeight: canvasH * 4,
+					fileType: 'png',
 					quality: 1,
 					canvasId: 'myCanvas',
 					success: res => {
@@ -420,13 +433,15 @@ export default {
 		position: relative;
 		width: 100%;
 		height: 100vh;
+
 		.res_img {
 			max-width: 100%;
 			position: absolute;
-			top: 0;
-			left: 0;
+			top: 50%;
+			left: 50%;
 			width: 100%;
 			height: 100%;
+			transform: translate(-50%, -50%);
 		}
 		.wrapper {
 			width: 100%;
@@ -480,14 +495,26 @@ export default {
 	padding-bottom: 135rpx;
 }
 .cropper-config {
-	padding: 20rpx 40rpx;
 	display: flex;
-	justify-content: space-between;
+	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 	position: fixed;
-	bottom: 0;
+	bottom: 24rpx;
 	left: 0;
 	right: 0;
+	.text {
+		font-size: 26rpx;
+		font-family: 'PingFang SC';
+		font-weight: 500;
+		color: #ffffff;
+		opacity: 0.45;
+	}
+	image {
+		margin-top: 24rpx;
+		width: 126rpx;
+		height: 126rpx;
+	}
 }
 .cropper-content {
 	flex: 1;
@@ -547,7 +574,7 @@ export default {
 	width: 100%;
 	height: 100%;
 	overflow: visible;
-	outline: 1rpx solid #69f;
+	outline: 10rpx solid #69f;
 	outline-color: rgba(102, 153, 255, 0.75);
 }
 /* 横向虚线 */
@@ -700,8 +727,8 @@ export default {
 	-webkit-transform: translate3d(-50%, -50%, 0);
 	transform: translate3d(-50%, -50%, 0);
 	cursor: n-resize;
-	width: 36rpx;
-	height: 36rpx;
+	// width: 36rpx;
+	// height: 36rpx;
 	background-color: #69f;
 	position: absolute;
 	z-index: 1112;

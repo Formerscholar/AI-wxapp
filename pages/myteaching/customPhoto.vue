@@ -13,7 +13,10 @@
 						</view>
 					</view>
 					<view class="list"></view>
-					<view class="list">完整拍摄整页</view>
+					<view class="list">
+							<view>支持横竖屏拍摄</view>
+							<view>题目与参考线对齐</view>
+					</view>
 					<view class="list"></view>
 					<view class="list"><view class="lbbor"></view></view>
 					<view class="list"></view>
@@ -23,11 +26,12 @@
 			<!-- v-if="!iscmdProgress" -->
 			<view class="content_box">
 				<view class="left_box" @click="albumhandleClick">
-					<image class="left_img" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/album.png" mode="widthFix"></image>
 					<text class="left_text">相册</text>
 				</view>
 				<view class="conter_box" @click="takePhoto"><button class="btn_tap">拍照</button></view>
-				<view class="right_box"></view>
+				<view class="right_box" @click="toBack">
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/phoneX.png" mode="widthFix"></image>
+				</view>
 			</view>
 			<!-- <view class="progress_box" v-else><cmd-progress class="progress" type="circle" :percent="percent" show-info stroke-width="5" status="active"></cmd-progress></view> -->
 			<view class="Cameralicens" v-if="isCamera"><button class="Camera_btn" open-type="openSetting" @opensetting="opensetting">相机授权</button></view>
@@ -85,7 +89,9 @@ export default {
 			});
 		},
 		toBack: function() {
-			this.isphbox = true;
+			uni.navigateBack({
+			    delta: 1
+			});
 		},
 		FlashlightClick: function() {
 			if (!this.isflashBool) {
@@ -241,10 +247,10 @@ export default {
 .customPhoto {
 	.coverWrapper {
 		display: grid;
-		height: 84vh;
+		height: 100vh;
 		width: 100%;
-		grid-template-columns: 32% 32% 32%;
-		grid-template-rows: 32% 32% 32%;
+		grid-template-columns: 34% 33.33% 34%;
+		grid-template-rows: 34% 33.33% 34%;
 		justify-content: center;
 		align-content: center;
 		.list {
@@ -308,9 +314,15 @@ export default {
 			&:nth-child(5) {
 				border: none;
 				display: flex;
+				flex-direction: column;
 				justify-content: center;
 				align-items: center;
-				color: #e5e5e5;
+				font-size: 26rpx;
+				font-family: 'PingFang SC';
+				font-weight: 500;
+				color: #FFFFFF;
+				opacity: 0.65;
+
 			}
 			.ltbor,
 			.rtbor,
@@ -322,28 +334,28 @@ export default {
 				z-index: 2;
 			}
 
-			.ltbor,
-			.rtbor {
-				border-top: 10rpx solid #e50304;
-				top: -1px;
-			}
+			// .ltbor,
+			// .rtbor {
+			// 	border-top: 10rpx solid #e50304;
+			// 	top: -1px;
+			// }
 
-			.ltbor,
-			.lbbor {
-				border-left: 10rpx solid #e50304;
-				left: -1px;
-			}
-			.rtbor,
-			.rbbor {
-				border-right: 10rpx solid #e50304;
-				right: -1px;
-			}
+			// .ltbor,
+			// .lbbor {
+			// 	border-left: 10rpx solid #e50304;
+			// 	left: -1px;
+			// }
+			// .rtbor,
+			// .rbbor {
+			// 	border-right: 10rpx solid #e50304;
+			// 	right: -1px;
+			// }
 
-			.lbbor,
-			.rbbor {
-				border-bottom: 10rpx solid #e50304;
-				bottom: -1px;
-			}
+			// .lbbor,
+			// .rbbor {
+			// 	border-bottom: 10rpx solid #e50304;
+			// 	bottom: -1px;
+			// }
 		}
 	}
 	.content_box {
@@ -358,22 +370,28 @@ export default {
 		justify-content: space-between;
 		align-items: center;
 		padding: 75rpx 50rpx;
-		background-color: #ffffff;
 		.left_box {
 			display: flex;
-			flex-direction: column;
 			justify-content: center;
 			align-items: center;
+			width: 80rpx;
+			height: 80rpx;
+			background: #000000;
+			opacity: 0.35;
+			border-radius: 50%;
+
 			.left_img {
 				width: 48rpx;
 				height: 43rpx;
 				margin-bottom: 13rpx;
 			}
 			.left_text {
+				
 				font-size: 26rpx;
-				font-family: PingFang SC;
+				font-family: 'PingFang SC';
 				font-weight: 500;
-				color: #999999;
+				color: #FFFFFF;
+
 			}
 		}
 		.conter_box {
@@ -390,8 +408,9 @@ export default {
 				text-align: center;
 			}
 		}
-		.right_box {
-			width: 48rpx;
+		.right_box image {
+			width: 80rpx;
+			height: 80rpx;
 		}
 	}
 	.progress_box {
