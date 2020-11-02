@@ -249,14 +249,8 @@ export default {
 			return item;
 		},
 		get_exercise_analysis() {
-			this.$api.get_exercise_analysis({ id: this.id }).then(res => {
-				if (res.code != 200) {
-					/* uni.showToast({
-							title:res.msg,
-							icon:"none",
-							//duration:3000
-						}) */
-				} else {
+			this.$api.get_exercise_analysis({ id: this.id, user_type: uni.getStorageSync('type') }).then(res => {
+				if (res.code == 200) {
 					this.jiexiList = res.data;
 					console.log('watchExplane', res.data);
 				}
