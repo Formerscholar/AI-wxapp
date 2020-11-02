@@ -249,8 +249,8 @@ export default {
 		display: grid;
 		height: 100vh;
 		width: 100%;
-		grid-template-columns: 34% 33.33% 34%;
-		grid-template-rows: 34% 33.33% 34%;
+		grid-template-columns: 34% 34% 34%;
+		grid-template-rows: 34% 34% 34%;
 		justify-content: center;
 		align-content: center;
 		.list {

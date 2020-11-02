@@ -2,7 +2,7 @@
 	<view class="container">
 		<view v-if="isphbox" class="page-body uni-content-info" style="background:#000">
 			<view class="cropper-content">
-				<!-- <view v-if="isShowImg" class="uni-corpper" :style="'width:' + cropperInitW + 'px;height:1072rpx;'"> -->
+				<!-- <view v-if="isShowImg" class="uni-corpper" :style="'width:' + cropperInitW  + 'px;height:1072rpx;'"> -->
 				<view v-if="isShowImg" class="uni-corpper" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px;'">
 					<view class="uni-corpper-content" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px;'">
 						<image :src="imageSrc" :style="'width:' + cropperW + 'px;height:' + cropperH + 'px'"></image>
@@ -111,7 +111,12 @@ export default {
 			qualityWidth: DRAW_IMAGE_W,
 			innerAspectRadio: DRAFG_MOVE_RATIO,
 			title: '',
-			subject_name: ''
+			subject_name: '',
+			RateXYZ: {
+				x: 0,
+				y: 0,
+				z: 0
+			}
 		};
 	},
 	/**
@@ -136,6 +141,39 @@ export default {
 		this.loadImage();
 	},
 	methods: {
+		Gyroscopestart: function() {
+			uni.startGyroscope({
+				interval: 'normal',
+				success() {
+					console.log('success');
+				},
+				fail() {
+					console.log('fail');
+				}
+			});
+			uni.onGyroscopeChange(res => {
+				const { x, y, z } = res;
+				this.setData({
+					RateXYZ: {
+						x,
+						y,
+						z
+					}
+				});
+				console.log('gyroData.RateXYZ = ', this.RateXYZ);
+				this.Gyroscopestop();
+			});
+		},
+		Gyroscopestop: function() {
+			uni.stopGyroscope({
+				success() {
+					console.log('stop success!');
+				},
+				fail() {
+					console.log('stop fail!');
+				}
+			});
+		},
 		speedprogress: function() {
 			this.uploadTask.onProgressUpdate(res => {
 				console.log('上传进度' + res.progress);
@@ -150,6 +188,7 @@ export default {
 		},
 		getImage: function() {
 			console.log('返回上个页面getImage');
+			this.Gyroscopestop();
 			uni.navigateBack({
 				delta: 1
 			});
@@ -171,7 +210,6 @@ export default {
 			uni.getImageInfo({
 				src: _this.imageSrc,
 				success: function(res) {
-					console.log('getImageInfo', res);
 					IMG_RATIO = res.width / res.height;
 					if (IMG_RATIO >= 1) {
 						IMG_REAL_W = SCREEN_WIDTH;
@@ -184,11 +222,10 @@ export default {
 					INIT_DRAG_POSITION = minRange > INIT_DRAG_POSITION ? INIT_DRAG_POSITION : minRange;
 					// 根据图片的宽高显示不同的效果   保证图片可以正常显示
 					if (IMG_RATIO >= 1) {
-						let cutT = Math.ceil((SCREEN_WIDTH / IMG_RATIO - (SCREEN_WIDTH / IMG_RATIO - INIT_DRAG_POSITION)) / 2);
-						let cutB = cutT;
-						let cutL = Math.ceil((SCREEN_WIDTH - SCREEN_WIDTH + INIT_DRAG_POSITION) / 2);
+						let cutL = Math.ceil((SCREEN_WIDTH * IMG_RATIO - SCREEN_WIDTH * IMG_RATIO) / 2) + 25;
 						let cutR = cutL;
-						console.log('IMG_RATIO >= 1 SCREEN_WIDTH', SCREEN_WIDTH / IMG_RATIO, SCREEN_WIDTH * IMG_RATIO, SCREEN_WIDTH, IMG_RATIO);
+						let cutT = 0;
+						let cutB = cutT;
 						_this.setData({
 							cropperW: SCREEN_WIDTH,
 							cropperH: SCREEN_WIDTH / IMG_RATIO,
@@ -211,7 +248,6 @@ export default {
 						let cutR = cutL;
 						let cutT = Math.ceil((SCREEN_WIDTH - INIT_DRAG_POSITION) / 2) + 30;
 						let cutB = cutT;
-						console.log('SCREEN_WIDTH', SCREEN_WIDTH / IMG_RATIO, SCREEN_WIDTH * IMG_RATIO, SCREEN_WIDTH, IMG_RATIO);
 						_this.setData({
 							// cropperW: SCREEN_WIDTH * IMG_RATIO,
 							// cropperH: SCREEN_WIDTH,
@@ -278,16 +314,19 @@ export default {
 				if (res.code == 200) {
 					if (res.data.data.length == 1) {
 						uni.redirectTo({
-							url:
-								'/pages/knowledgeBase/watchExplane?id=' + res.data.data[0].exercises_id
+							url: '/pages/knowledgeBase/watchExplane?id=' + res.data.data[0].exercises_id
 						});
-					} else{
+					} else {
 						uni.redirectTo({
 							url:
-								'/pages/myPaper/seePapers?status=photo&listData=' + encodeURIComponent(JSON.stringify(res.data.data)) + '&title=' + this.title + '&subject_name=' + this.subject_name
+								'/pages/myPaper/seePapers?status=photo&listData=' +
+								encodeURIComponent(JSON.stringify(res.data.data)) +
+								'&title=' +
+								this.title +
+								'&subject_name=' +
+								this.subject_name
 						});
 					}
-					
 				} else {
 					uni.showToast({
 						title: res.msg,
@@ -311,8 +350,9 @@ export default {
 				});
 			});
 		},
-		// 获取图片
 		getImageInfo() {
+			this.Gyroscopestart();
+			console.log('RateXYZ = ', this.RateXYZ);
 			var _this = this;
 			uni.showLoading({
 				title: '图片生成中...'
@@ -327,7 +367,7 @@ export default {
 				var canvasL = (_this.cutL / _this.cropperW) * IMG_REAL_W;
 				var canvasT = (_this.cutT / _this.cropperH) * IMG_REAL_H;
 				var numResul = canvasW / canvasH;
-				console.log('numResul',numResul)
+				console.log('numResul', numResul);
 				if (numResul < 1) {
 					this.isWorH = false;
 				} else {
@@ -346,7 +386,6 @@ export default {
 					success: res => {
 						uni.hideLoading();
 						this.pic = res.tempFilePath;
-						console.log('canvasToTempFilePath', res.tempFilePath);
 						this.base64({
 							url: this.pic,
 							type: 'png'
@@ -582,7 +621,7 @@ export default {
 	width: 100%;
 	height: 100%;
 	overflow: visible;
-	outline: 10rpx solid #69f;
+	outline: 8rpx solid #69f;
 	outline-color: rgba(102, 153, 255, 0.75);
 }
 /* 横向虚线 */
@@ -735,8 +774,8 @@ export default {
 	-webkit-transform: translate3d(-50%, -50%, 0);
 	transform: translate3d(-50%, -50%, 0);
 	cursor: n-resize;
-	// width: 36rpx;
-	// height: 36rpx;
+	width: 36rpx;
+	height: 36rpx;
 	background-color: #69f;
 	position: absolute;
 	z-index: 1112;

@@ -55,6 +55,7 @@ module.exports = {
 	send_msg: data => request(ApiUrl + 'user/send_msg/', data),
 	get_download: data => request(ApiUrl + 'user/download_based/', data),
 	orc_one: data => request(ApiUrl + 'user/orc_one/', data),
+	// orc_one: data => request(ApiUrl + 'user/orc_one_l/', data),
 
 	// register : data => request(ApiUrl+'user/user_register/',data),//注册
 	//search_password : data => request(ApiUrl+'user/search_password/',data),//找回密码
