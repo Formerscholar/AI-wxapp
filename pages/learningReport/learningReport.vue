@@ -43,19 +43,34 @@
 			<text>错题数量：</text><text>你有{{error_count}}道错题</text>
 		</view> -->
 		<view class="fenbu">
-			<view class="blank"></view>
-			<text>错题知识点分布图：</text>
+			<!-- <view class="blank"></view> -->
+			<text>错题知识点分布</text>
 		</view>
 		<!--<view class="pie_chart">
 			<piechart  v-if='update' :key='key'  ref="pieChart0" :dataAs="pieData" canvasId="index_pie_1" />
 		</view> -->
 
-		<view class="qiun-charts" v-if="Pie.series && Pie.series.length != 0">
-			<canvas canvas-id="canvasPie" id="canvasPie" class="charts" @touchstart="touchPie"></canvas>
-			<!-- <view class="fenlei" v-for="(item,i) of pieData" :key='i'>
+		<!-- <view class="qiun-charts" v-if="Pie.series && Pie.series.length != 0"> -->
+		<!-- <view class="" v-for="item in analysisList" :key="item.data">
+				{{item.name}}
+			</view> -->
+		<!-- <canvas canvas-id="canvasPie" id="canvasPie" class="charts" @touchstart="touchPie"></canvas> -->
+		<!-- <view class="fenlei" v-for="(item,i) of pieData" :key='i'>
 				<text></text>
 				<text>{{item.name}}</text>
 			</view> -->
+		<!-- </view> -->
+		<view class="qiun-charts" v-if="analysisList.length && analysisList.length != 0">
+			<view class="item_box" v-for="(item, index) in analysisList" :key="item.data">
+				<view class="top_box">
+					<view class="left_text">
+						{{ item.name }}
+						<text>{{ item.percentage }}</text>
+					</view>
+					<view class="right_text">{{ item.data }}道错题</view>
+				</view>
+				<view class="bot_box" :style="{ width: item.percentage, backgroundColor: colorList[index.toString()[index.toString().length - 1]] }"></view>
+			</view>
 		</view>
 		<view class="qiun-charts noData" v-else>{{ msg }}</view>
 	</view>
@@ -76,6 +91,7 @@ export default {
 			cHeight: uni.upx2px(500),
 			pixelRatio: 1,
 			serverData: '',
+			colorList: ['#EC6941', '#F19EC2', '#00A0E9', '#7E6B5A', '#80C269', '#0068B7', '#f1c40f', '#c0392b', '#8e44ad', '#EA2027'],
 			token: '',
 			exercises_list: [], //习题列表
 			subject_list: [],
@@ -88,7 +104,8 @@ export default {
 			dateList: [{ time: '近一周', dateStaus: true }, { time: '近一个月', dateStaus: false }, { time: '近一年', dateStaus: false }],
 			it: 'day',
 			msg: '该科目暂无错题!',
-			Pie: { series: [] }
+			Pie: { series: [] },
+			analysisList: []
 		};
 	},
 	onLoad() {
@@ -100,10 +117,12 @@ export default {
 		this.selectDate(0);
 	},
 	onShow() {
-		
 		this.subject_fenlei();
 	},
 	methods: {
+		Randomcolor() {
+			return '#' + Math.floor(Math.random() * (2 << 23)).toString(16);
+		},
 		changeStyle(item) {
 			item = item.replace(new RegExp('<p', 'gi'), '<p style="color: #000;position:relative"');
 			item = item.replace(new RegExp('<img', 'gi'), '<img style="max-width:95%;vertical-align: middle;width:auto;"');
@@ -133,11 +152,13 @@ export default {
 				})
 				.then(res => {
 					if (res.data.length !== undefined) {
+						this.analysisList = res.data;
 						this.Pie.series = res.data;
 						this.pieData = res.data.count_list;
 					} else {
 						this.Pie.series = [];
 						this.pieData = [];
+						this.analysisList = [];
 					}
 					this.showPie('canvasPie', this.Pie);
 				});
@@ -295,13 +316,39 @@ page {
 }
 .qiun-charts {
 	height: auto;
-	background-color: #ffffff;
-	margin: 0 30rpx;
-	padding-bottom: 20rpx;
-	border-radius: 0 0 30rpx 30rpx;
-	// display: flex;
-	// flex-flow: row nowrap;
-	// justify-content: space-between;
+	margin: 30rpx;
+	margin-top: 0;
+	background: #fff;
+	border: 1px solid #e5e5e5;
+	border-radius: 16px;
+
+	.item_box {
+		margin: 30rpx;
+
+		.top_box {
+			font-family: PingFang SC;
+			font-size: 26rpx;
+			font-weight: 500;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			.left_text {
+				color: #333333;
+				text {
+					margin-left: 20rpx;
+					color: #999999;
+				}
+			}
+			.right_text {
+				color: #333333;
+			}
+		}
+		.bot_box {
+			margin-top: 11rpx;
+			height: 10rpx;
+			//
+		}
+	}
 	.fenlei {
 		color: #999;
 		font-size: 28rpx;
@@ -371,10 +418,12 @@ button::after {
 	}
 }
 .fenbu {
-	padding: 30rpx 60rpx;
-	background: #fff;
-	margin: 20rpx 30rpx 0;
-	border-radius: 20rpx 20rpx 0 0;
+	margin: 20rpx 30rpx;
+	font-size: 28rpx;
+	font-family: PingFang SC;
+	font-weight: bold;
+	color: #333333;
+
 	.blank {
 		width: 8rpx;
 		height: 25rpx;
@@ -382,10 +431,10 @@ button::after {
 		display: inline-block;
 		margin: 0rpx 20rpx 0 -8rpx;
 	}
-	> text:first-child {
-		font-size: 26rpx;
-		color: #999;
-	}
+	// > text:first-child {
+	// 	font-size: 26rpx;
+	// 	color: #999;
+	// }
 }
 .btn {
 	button {

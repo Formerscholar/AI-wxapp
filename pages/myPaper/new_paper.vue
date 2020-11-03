@@ -70,6 +70,12 @@
 				</view>
 			</view>
 		</uni-popup>
+	
+		<uniPopup class="botpopup" ref="botpopup" type="bottom">
+			<view class="title">下载</view>
+			<view class="Noanswer" @click="noanswerClick">不含答案和解析</view>
+			<view class="answer" @click="answerClick">含答案和解析</view>
+		</uniPopup>
 	</view>
 </template>
 
@@ -123,6 +129,7 @@ export default {
 		}
 	},
 	methods: {
+		
 		texthandleClick(e) {
 			this.email = this.email + e.currentTarget.dataset.suffix;
 			this.is_tip = false;
@@ -138,38 +145,64 @@ export default {
 				}
 			}
 		},
-		//点击生成错题本/生成试卷
-		generated(id) {
-			console.log(id);
-			let _this = this;
-			_this.based_id = id;
-			console.log('_this.tpmid', _this.tpmid);
+		noanswerClick(){
+			this.$refs.botpopup.close();
+			console.log('_this.tpmid', this.tpmid);
 			let arrTpmid = [];
-			if (_this.type == 4) {
-				arrTpmid = _this.tpmid.teacher_paper;
+			if (this.type == 4) {
+				arrTpmid = this.tpmid.teacher_paper;
 			} else {
-				arrTpmid = _this.tpmid.teacher_paper;
+				arrTpmid = this.tpmid.teacher_paper;
 			}
 			console.log('arrTpmid', arrTpmid);
 			uni.requestSubscribeMessage({
 				tmplIds: arrTpmid,
-				complete: function(res) {
+				complete: (res)=>  {
 					console.log('requestSubscribeMessage', res);
 					let data = {
-						id: id,
-						token: _this.token
+						id: this.based_id,
+						token: this.token
 					};
-					_this.fasong();
+					console.log('不需要答案解析下载', res);
+					this.fasong(1);
 				}
 			});
 		},
+		answerClick(){
+			this.$refs.botpopup.close();
+			console.log('_this.tpmid', this.tpmid);
+			let arrTpmid = [];
+			if (this.type == 4) {
+				arrTpmid = this.tpmid.teacher_paper;
+			} else {
+				arrTpmid = this.tpmid.teacher_paper;
+			}
+			console.log('arrTpmid', arrTpmid);
+			uni.requestSubscribeMessage({
+				tmplIds: arrTpmid,
+				complete: (res)=> {
+					console.log('requestSubscribeMessage', res);
+					let data = {
+						id: this.based_id,
+						token: this.token
+					};
+					console.log('答案解析下载', res);
+					this.fasong(2);
+				}
+			});
+		},
+		//点击生成错题本/生成试卷
+		generated(id) {
+			this.based_id = id;
+			this.$refs.botpopup.open();
+		},
 		//发送邮箱
-		fasong() {
+		fasong(type) {
 			let data = {
 				token: this.token,
 				based_id: this.based_id,
-				flag: 2
-				// email:this.email
+				flag: 2,
+				down_type: type
 			};
 			if (this.type == 4) {
 				this.$api.get_download(data).then(res => {
@@ -220,7 +253,8 @@ export default {
 						token: this.token,
 						based_id: this.based_id,
 						email: this.email,
-						flag: 2
+						flag: 2,
+						down_type: 1
 					})
 					.then(res => {
 						console.log(res);
@@ -239,7 +273,8 @@ export default {
 						token: this.token,
 						based_id: this.based_id,
 						email: this.email,
-						flag: 2
+						flag: 2,
+						down_type: 1
 					})
 					.then(res => {
 						console.log(res);
@@ -336,6 +371,36 @@ page {
 	height: 100vh;
 	background: #eee;
 	font-family: PingFang SC;
+}
+.botpopup {
+	height: 300rpx;
+	font-family: PingFang SC;
+	font-weight: bold;
+	font-size: 30rpx;
+	color: #333333;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	text-align: center;
+	.title {
+		font-size: 24rpx;
+		color: #999999;
+		height: 97rpx;
+		line-height: 97rpx;
+		background: #ffffff;
+		border-radius: 16rpx 16rpx 0 0;
+	}
+	.Noanswer {
+		height: 100rpx;
+		line-height: 100rpx;
+		background: #ffffff;
+	}
+	.answer {
+		height: 100rpx;
+		line-height: 100rpx;
+		background: #ffffff;
+	}
 }
 .list.stu {
 	padding-top: 150rpx;

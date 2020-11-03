@@ -203,6 +203,11 @@
 				</view>
 			</view>
 		</uni-popup>
+		<uniPopup class="botpopup" ref="botpopup" type="bottom">
+			<view class="title">下载</view>
+			<view class="Noanswer" @click="noanswerClick">不含答案和解析</view>
+			<view class="answer" @click="answerClick">含答案和解析</view>
+		</uniPopup>
 	</view>
 </template>
 
@@ -329,9 +334,8 @@ export default {
 		addCreat() {
 			this.$refs.popup.open();
 		},
-		//点击邮箱下载
-		generated(id) {
-			this.errorbook_id = id;
+		noanswerClick() {
+			this.$refs.botpopup.close();
 			console.log('this.tpmid', this.tpmid);
 			let arrTpmid = [];
 			if (this.type == 4) {
@@ -350,14 +354,44 @@ export default {
 			uni.requestSubscribeMessage({
 				tmplIds: arrTpmid,
 				complete: res => {
-					console.log('status', res);
-					this.fasong();
+					console.log('不需要答案解析下载', res);
+					this.fasong(1);
 				},
-				success: function(res) {
-					// this.fasong()
-				},
+				success: function(res) {},
 				fail: function(res) {}
 			});
+		},
+		answerClick() {
+			this.$refs.botpopup.close();
+			console.log('this.tpmid', this.tpmid);
+			let arrTpmid = [];
+			if (this.type == 4) {
+				arrTpmid = this.tpmid?.user_errorbook || [];
+				if (!this.is_vip) {
+					uni.showToast({
+						title: '非会员无法下载',
+						icon: 'none'
+					});
+					return false;
+				}
+			} else {
+				arrTpmid = this.tpmid.teacher_paper;
+			}
+			console.log(arrTpmid);
+			uni.requestSubscribeMessage({
+				tmplIds: arrTpmid,
+				complete: res => {
+					console.log('答案解析下载', res);
+					this.fasong(2);
+				},
+				success: function(res) {},
+				fail: function(res) {}
+			});
+		},
+		//点击邮箱下载
+		generated(id) {
+			this.errorbook_id = id;
+			this.$refs.botpopup.open();
 		},
 		selected_topic(i) {
 			console.log(i);
@@ -440,7 +474,8 @@ export default {
 			let data = {
 				token: this.token,
 				errorbook_id: this.errorbook_id,
-				email: this.email
+				email: this.email,
+				down_type: 1
 			};
 			if (this.type == 3) {
 				var req = this.$api.get_teacher_text(data);
@@ -465,11 +500,11 @@ export default {
 			});
 		},
 		//发送邮箱
-		fasong() {
+		fasong(type) {
 			let data = {
 				token: this.token,
-				errorbook_id: this.errorbook_id
-				// email:this.email
+				errorbook_id: this.errorbook_id,
+				down_type: type
 			};
 			if (this.type == 3) {
 				this.$api.get_teacher_text(data).then(res => {
@@ -791,6 +826,36 @@ page {
 }
 button::after {
 	border: none;
+}
+.botpopup {
+	height: 300rpx;
+	font-family: PingFang SC;
+	font-weight: bold;
+	font-size: 30rpx;
+	color: #333333;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	text-align: center;
+	.title {
+		font-size: 24rpx;
+		color: #999999;
+		height: 97rpx;
+		line-height: 97rpx;
+		background: #ffffff;
+		border-radius: 16rpx 16rpx 0 0;
+	}
+	.Noanswer {
+		height: 100rpx;
+		line-height: 100rpx;
+		background: #ffffff;
+	}
+	.answer {
+		height: 100rpx;
+		line-height: 100rpx;
+		background: #ffffff;
+	}
 }
 .student {
 	margin-top: 216rpx;

@@ -14,7 +14,8 @@
 					</view>
 					<view class="list"></view>
 					<view class="list">
-							<view>支持横竖屏拍摄</view>
+							<!-- <view>支持横竖屏拍摄</view> -->
+							<view>仅支持竖屏拍摄</view>
 							<view>题目与参考线对齐</view>
 					</view>
 					<view class="list"></view>

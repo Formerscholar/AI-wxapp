@@ -8,7 +8,7 @@
 			<view class="sf">
 				请选择您的身份
 			</view>
-			<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,4)">我是学生/家长</button>
+			<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,4)">我是学生(家长)</button>
 			<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,3)">我是老师</button>
 		</view>
 		<uni-popup ref="popup" type="center">

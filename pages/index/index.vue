@@ -74,6 +74,12 @@
 				</view>
 			</view>
 
+			<view class="vipouttime" @click="pageToVip">
+				<image class="left_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/indexvipicon.png" mode="widthFix"></image>
+				<view class="content_text">{{ is_vip ? `您的会员将于${setTimeType(vip_time * 1000) || 0}到期` : '申请VIP会员 · 了解更多特权' }}</view>
+				<image class="right_btn" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/indexvipbtn.png" mode="widthFix"></image>
+			</view>
+
 			<view class="flex">
 				<view class="item itemSpec0" @click="todetail(1)">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaofu.png" mode=""></image>
@@ -139,7 +145,8 @@ export default {
 			token: '',
 			teacher_info: {},
 			student_info: {},
-			is_vip: ''
+			is_vip: '',
+			vip_time: ''
 		};
 	},
 	onLoad() {
@@ -182,6 +189,20 @@ export default {
 		// ...mapState(['type'])
 	},
 	methods: {
+		setTimeType(timer) {
+			let d = new Date(timer);
+			let ConvertedYear = d.getFullYear().toString();
+			let ConvertedMonth = (d.getMonth() + 1).toString();
+			let ConvertedDate = d.getDate().toString();
+			ConvertedMonth = ConvertedMonth.length < 2 ? '0' + ConvertedMonth : ConvertedMonth;
+			ConvertedDate = ConvertedDate.length < 2 ? '0' + ConvertedDate : ConvertedDate;
+			return `${ConvertedYear}-${ConvertedMonth}-${ConvertedDate}`;
+		},
+		pageToVip: function() {
+			uni.navigateTo({
+				url: '/pages/person/vip'
+			});
+		},
 		uploadPaper: function() {
 			uni.navigateTo({
 				url: '/pages/person/mineUploadPaper?id=1'
@@ -199,6 +220,7 @@ export default {
 				console.log(res);
 				_this.student_info = res.data;
 				_this.is_vip = res.data.is_vip;
+				_this.vip_time = res.data.vip_time;
 				uni.setStorage({
 					key: 'is_vip',
 					data: this.is_vip
@@ -406,6 +428,33 @@ page {
 	}
 }
 .student {
+	.vipouttime {
+		height: 120rpx;
+		margin: 25rpx;
+		background: url('https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/indexvipbg.png') no-repeat;
+		background-size: 100% 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 30rpx;
+		.left_icon {
+			width: 56rpx;
+			height: 56rpx;
+		}
+		.content_text {
+			flex: 1;
+			font-size: 28rpx;
+			font-family: 'PingFang SC';
+			font-weight: 500;
+			color: #f4deab;
+			text-align: center;
+		}
+		.right_btn {
+			width: 150rpx;
+			height: 50rpx;
+		}
+	}
+
 	.item.itemSpec0 {
 		flex: 1;
 		height: 180rpx;
