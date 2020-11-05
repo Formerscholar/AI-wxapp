@@ -8,6 +8,7 @@ export default {
 		this.$api.get_settings('Get').then(res => {
 			this.globalData.settings = res.data;
 		});
+		uni.setStorageSync('is_totul', true);
 	},
 	onShow: () => {
 		const updateManager = uni.getUpdateManager();

@@ -71,10 +71,21 @@
 			</view>
 		</uni-popup>
 	
-		<uniPopup class="botpopup" ref="botpopup" type="bottom">
-			<view class="title">下载</view>
-			<view class="Noanswer" @click="noanswerClick">不含答案和解析</view>
-			<view class="answer" @click="answerClick">含答案和解析</view>
+		<uniPopup ref="botpopup" type="center">
+			<view class="botpopup">
+				<image class="title" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_icon.png" mode="widthFix"></image>
+				<radio-group class="botpopup_radio" @change="radioChange">
+					<label :class="['radio',evtvalue == 1 ? 'trborcol' : '']" >不含答案和解析
+						<radio style="transform:scale(0.5)" color="#E50304"
+						 value="1" checked="true" /></label>
+					<label :class="['radio',evtvalue == 2 ? 'trborcol' : '']" >含答案和解析
+						<radio style="transform:scale(0.5)" color="#E50304" value="2" /></label>
+				</radio-group>
+				<view class="botpopup_btns">
+					<view class="item_btn" @click="sendEmail">发送到邮箱</view>
+					<view class="item_btn" @click="sendPhone">下载到手机</view>
+				</view>
+			</view>
 		</uniPopup>
 	</view>
 </template>
@@ -99,7 +110,9 @@ export default {
 			email: '',
 			tpmid: '',
 			is_tip: false,
-			email_arr: []
+			email_arr: [],
+			evtvalue: 1,
+			is_vip: false,
 		};
 	},
 	onReachBottom() {
@@ -112,12 +125,11 @@ export default {
 			this.get_my_test_paper();
 		}
 	},
-	onShow() {},
 	onLoad() {
 		this.email_arr = app.globalData.email;
 		this.tpmid = app.globalData.settings.tmpid;
 		console.log('this.tpmid', this.tpmid);
-
+		this.is_vip = uni.getStorageSync('is_vip');
 		if (uni.getStorageSync('token')) {
 			this.token = uni.getStorageSync('token');
 		}
@@ -129,7 +141,128 @@ export default {
 		}
 	},
 	methods: {
-		
+		radioChange(evt) {
+			const {
+				value
+			} = evt.detail
+			this.evtvalue = value
+			if (this.evtvalue == 1) {
+				console.log('不含答案和解析', this.evtvalue)
+			} else {
+				console.log('含答案和解析', this.evtvalue)
+			}
+		},
+		sendEmail(){
+			if (this.evtvalue == 1) {
+				this.noanswerClick()
+			} else{
+				this.answerClick()
+			}
+		},
+		sendPhone(){
+			// if (this.evtvalue == 1) {
+			// 	console.log('不含答案和解析')
+			// } else{
+			// 	console.log('含答案和解析')
+			// }
+			this.$refs.botpopup.close();
+			let data = {
+				token: this.token,
+				based_id: this.based_id,
+				down_type: this.evtvalue,
+				is_email: 0
+			};
+			if (this.type == 3) {
+				this.$api.get_download_based(data).then(res => {
+					console.log(res);
+					if (res.code == 200) {
+						Object.values(res.data).map((item, index) => {
+							uni.downloadFile({
+								url: item,
+								success: (res) => {
+									uni.showToast({
+										title: '下载成功,文件打开中',
+										icon: 'success'
+									});
+									if (!index){
+										uni.openDocument({
+											filePath: res.tempFilePath,
+											fileType: 'pdf',
+											showMenu: true,
+											fail: () => {
+												uni.showToast({
+													title: '下载文件打开失败',
+													icon: 'error'
+												});
+											}
+										})
+									}
+								},
+								fail: () => {
+									uni.showToast({
+										title:'下载失败',
+										icon:'error'
+									})
+								},
+							})
+						})
+					} else {
+						uni.showToast({
+							title:'下载失败',
+							icon:'error'
+						})
+					}
+				});
+			} else {
+				if (this.is_vip != 1) {
+					uni.showToast({
+						title: '非会员用户无法下载',
+						icon: 'none'
+					});
+					return;
+				} else {
+					this.$api.get_download(data).then(res => {
+						if (res.code == 200) {
+							Object.values(res.data).map((item, index) => {
+								uni.downloadFile({
+									url: item,
+									success: (res) => {
+										uni.showToast({
+											title: '下载成功,文件打开中',
+											icon: 'success'
+										});
+										if (!index){
+											uni.openDocument({
+												filePath: res.tempFilePath,
+												fileType: 'pdf',
+												showMenu: true,
+												fail: () => {
+													uni.showToast({
+														title: '下载文件打开失败',
+														icon: 'error'
+													});
+												},
+											})
+										}
+									},
+									fail: () => {
+										uni.showToast({
+											title:'下载失败',
+											icon:'error'
+										})
+									},
+								})
+							})
+						} else {
+							uni.showToast({
+								title:'下载失败',
+								icon:'error'
+							})
+						}
+					});
+				}
+			}
+		},
 		texthandleClick(e) {
 			this.email = this.email + e.currentTarget.dataset.suffix;
 			this.is_tip = false;
@@ -372,36 +505,97 @@ page {
 	background: #eee;
 	font-family: PingFang SC;
 }
+
+
 .botpopup {
-	height: 300rpx;
-	font-family: PingFang SC;
-	font-weight: bold;
-	font-size: 30rpx;
-	color: #333333;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	text-align: center;
-	.title {
-		font-size: 24rpx;
-		color: #999999;
-		height: 97rpx;
-		line-height: 97rpx;
-		background: #ffffff;
-		border-radius: 16rpx 16rpx 0 0;
+		width: 490rpx;
+		height: 357rpx;
+		background-color: #fff;
+		border: 1px solid #E5E5E5;
+		border-radius: 16rpx;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		padding: 30rpx;
+
+
+		.title {
+			width: 108rpx;
+			height: 31rpx;
+		}
+
+		.botpopup_radio {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: flex-start;
+
+			.radio {
+				width: 370rpx;
+				height: 63rpx;
+				border: 1px solid #fff;
+				border-radius: 16rpx;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 0 30rpx;
+				font-size: 24rpx;
+				font-family: PingFang SC;
+				font-weight: 500;
+				color: #222222;
+
+				&:first-child {
+					margin-bottom: 30rpx;
+				}
+				
+			}
+			
+			.trborcol{
+				border: 1px solid #E50304 !important;
+			}
+			
+		}
+
+		.botpopup_btns {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			.item_btn {
+				width: 200rpx;
+				height: 50rpx;
+				line-height: 50rpx;
+				text-align: center;
+				border: 1px solid #B3B3B3;
+				border-radius: 16rpx;
+				font-size: 24rpx;
+				font-family: PingFang SC;
+				font-weight: 500;
+				color: #666666;
+
+				&:last-child {
+					margin-left: 30rpx;
+					background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
+					color: #FFFFFF;
+					border: none;
+				}
+			}
+		}
+
+		// .Noanswer {
+		// 	height: 100rpx;
+		// 	line-height: 100rpx;
+		// 	background: #ffffff;
+		// }
+
+		// .answer {
+		// 	height: 100rpx;
+		// 	line-height: 100rpx;
+		// 	background: #ffffff;
+		// }
 	}
-	.Noanswer {
-		height: 100rpx;
-		line-height: 100rpx;
-		background: #ffffff;
-	}
-	.answer {
-		height: 100rpx;
-		line-height: 100rpx;
-		background: #ffffff;
-	}
-}
+
 .list.stu {
 	padding-top: 150rpx;
 	.tabar {

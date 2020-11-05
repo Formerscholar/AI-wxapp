@@ -40,7 +40,7 @@
 			</view>
 		</view>
 
-		<!-- <view class="name">页码</view>
+		<view class="name">页码</view>
 		<view class="pickes">
 			<view>当前页码</view>
 			<picker :range="numArr" :value="index" @change="select_l">
@@ -49,12 +49,12 @@
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 				</view>
 			</picker>
-		</view> -->
+		</view>
 		<view class="photobox">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(0)" v-if="from == 1"></image>
-			<!-- <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(1)" v-if="from == 1"></image> -->
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(0)" v-if="from == 2"></image>
-			<!-- <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(1)" v-if="from == 2"></image> -->
+			<!-- <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(0)" v-if="from == 1"></image> -->
+			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(1)" v-if="from == 1"></image>
+			<!-- <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(0)" v-if="from == 2"></image> -->
+			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(1)" v-if="from == 2"></image>
 		</view>
 	</view>
 </template>

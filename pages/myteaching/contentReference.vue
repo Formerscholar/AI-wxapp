@@ -20,7 +20,7 @@
 				<view class="term">{{ item.semester }}学期</view>
 				<view class="version">{{ item.version_title }}</view>
 			</view>
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode="" class="detail"></image>
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/phone_icons.png" mode="" class="detail"></image>
 		</view>
 		<view class="kong" v-if="textbook_list.length == 0">
 			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
@@ -264,8 +264,8 @@ page {
 		}
 	}
 	image.detail {
-		width: 14rpx;
-		height: 26rpx;
+		width: 62rpx;
+		height: 62rpx;
 		position: absolute;
 		top: 50%;
 		right: 35rpx;

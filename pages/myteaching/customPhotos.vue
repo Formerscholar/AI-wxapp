@@ -67,7 +67,7 @@ export default {
 	},
 	onLoad(option) {
 		this.textbook_id = option.textbook_id;
-		// this.choosePage = option.choosePage;
+		this.choosePage = option.choosePage;
 		this.title = option.title;
 		this.subject_name = option.subject_name;
 		console.log('onLoadoption', option);

@@ -143,8 +143,14 @@
             "style": {
             	"navigationBarTitleText": "意见反馈"
             }
-        }
-        ,{
+        },
+				{
+				    "path" : "pages/person/publicshop",
+				    "style": {
+				    	"navigationBarTitleText": "公众号商城"
+				    }
+				},
+        {
             "path" : "pages/person/about",
             "style": {
             	"navigationBarTitleText": "关于我们"

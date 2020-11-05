@@ -74,10 +74,11 @@
 				</view>
 			</view>
 
-			<view class="vipouttime" @click="pageToVip">
+			<view class="vipouttime" @click="pageToVip" v-if="invest">
 				<image class="left_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/indexvipicon.png" mode="widthFix"></image>
 				<view class="content_text">{{ is_vip ? `您的会员将于${setTimeType(vip_time * 1000) || 0}到期` : '申请VIP会员 · 了解更多特权' }}</view>
-				<image class="right_btn" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/indexvipbtn.png" mode="widthFix"></image>
+				<image  class="right_btn"  v-if="is_vip" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/Renew.png" mode="widthFix"></image>
+				<image class="right_btn" v-else  src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/indexvipbtn.png" mode="widthFix"></image>
 			</view>
 
 			<view class="flex">
@@ -129,7 +130,18 @@
 				</view>
 			</view>
 		</view>
+	
+	
+	
+		<view class="vip_totul" v-if="is_totul && renew" >
+			<image class="home_vip_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_icon.png" mode="widthFix" @click="closeTotul"></image>
+			<image class="home_vip_image" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_image.png" mode="widthFix"  @click="pageToVip"></image>
+			<image class="home_vip_btn" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_btn.png" mode="widthFix"  @click="pageToVip"></image>
+		</view>
+	
 	</view>
+
+
 </template>
 
 <script>
@@ -146,7 +158,10 @@ export default {
 			teacher_info: {},
 			student_info: {},
 			is_vip: '',
-			vip_time: ''
+			vip_time: '',
+			is_totul:false,
+			invest:0,
+			renew:0
 		};
 	},
 	onLoad() {
@@ -156,6 +171,7 @@ export default {
 				url: '/pages/login/login'
 			});
 		}
+		this.is_totul = uni.getStorageSync('is_totul')
 	},
 	onShow() {
 		this.type = uni.getStorageSync('type');
@@ -189,6 +205,10 @@ export default {
 		// ...mapState(['type'])
 	},
 	methods: {
+		closeTotul(){
+			uni.setStorageSync('is_totul', false);
+			this.is_totul = false
+		},
 		setTimeType(timer) {
 			let d = new Date(timer);
 			let ConvertedYear = d.getFullYear().toString();
@@ -221,6 +241,8 @@ export default {
 				_this.student_info = res.data;
 				_this.is_vip = res.data.is_vip;
 				_this.vip_time = res.data.vip_time;
+				_this.invest = res.data.invest;
+				_this.renew = res.data.renew;
 				uni.setStorage({
 					key: 'is_vip',
 					data: this.is_vip
@@ -286,6 +308,36 @@ page {
 	font-family: PingFang SC;
 	width: 100vw;
 	height: 100vh;
+}
+.vip_totul{
+	position: relative;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba($color: #000000, $alpha: .5);
+	.home_vip_icon{
+		position: absolute;
+		left: 604rpx;
+		top: 190rpx;
+		width: 67rpx;
+		height: 67rpx;
+	}
+	.home_vip_image{
+		position: absolute;
+		left: 69rpx;
+		top: 258rpx;
+		width: 593rpx;
+		height: 519rpx;
+	}
+	.home_vip_btn{
+		position: absolute;
+		left: 163rpx;
+		top: 830rpx;
+		width: 424rpx;
+		height: 101rpx;
+	}
 }
 .clear {
 	clear: both;
@@ -438,8 +490,8 @@ page {
 		align-items: center;
 		padding: 0 30rpx;
 		.left_icon {
-			width: 56rpx;
-			height: 56rpx;
+			width: 58rpx;
+			height: 58rpx;
 		}
 		.content_text {
 			flex: 1;
@@ -447,11 +499,12 @@ page {
 			font-family: 'PingFang SC';
 			font-weight: 500;
 			color: #f4deab;
-			text-align: center;
+			text-align: left;
+			margin-left: 26rpx;
 		}
 		.right_btn {
 			width: 150rpx;
-			height: 50rpx;
+			height: 52rpx;
 		}
 	}
 
