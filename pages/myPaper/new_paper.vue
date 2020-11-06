@@ -75,10 +75,10 @@
 			<view class="botpopup">
 				<image class="title" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_icon.png" mode="widthFix"></image>
 				<radio-group class="botpopup_radio" @change="radioChange">
-					<label :class="['radio',evtvalue == 1 ? 'trborcol' : '']" >不含答案和解析
+					<label :class="['radio',evtvalue == 1 ? 'trborcol' : 'flborcol']" >不含答案和解析
 						<radio style="transform:scale(0.5)" color="#E50304"
 						 value="1" checked="true" /></label>
-					<label :class="['radio',evtvalue == 2 ? 'trborcol' : '']" >含答案和解析
+					<label :class="['radio',evtvalue == 2 ? 'trborcol' : 'flborcol']" >含答案和解析
 						<radio style="transform:scale(0.5)" color="#E50304" value="2" /></label>
 				</radio-group>
 				<view class="botpopup_btns">
@@ -187,7 +187,7 @@ export default {
 									if (!index){
 										uni.openDocument({
 											filePath: res.tempFilePath,
-											fileType: 'pdf',
+											fileType: 'doc',
 											showMenu: true,
 											fail: () => {
 												uni.showToast({
@@ -199,17 +199,14 @@ export default {
 									}
 								},
 								fail: () => {
-									uni.showToast({
-										title:'下载失败',
-										icon:'error'
-									})
+									if (!index){
+										uni.showToast({
+											title:'下载失败',
+											icon:'error'
+										})
+									}
 								},
 							})
-						})
-					} else {
-						uni.showToast({
-							title:'下载失败',
-							icon:'error'
 						})
 					}
 				});
@@ -234,7 +231,7 @@ export default {
 										if (!index){
 											uni.openDocument({
 												filePath: res.tempFilePath,
-												fileType: 'pdf',
+												fileType: 'doc',
 												showMenu: true,
 												fail: () => {
 													uni.showToast({
@@ -246,19 +243,16 @@ export default {
 										}
 									},
 									fail: () => {
-										uni.showToast({
-											title:'下载失败',
-											icon:'error'
-										})
+										if (!index){
+											uni.showToast({
+												title:'下载失败',
+												icon:'error'
+											})
+										}
 									},
 								})
 							})
-						} else {
-							uni.showToast({
-								title:'下载失败',
-								icon:'error'
-							})
-						}
+						} 
 					});
 				}
 			}
@@ -553,6 +547,9 @@ page {
 			
 			.trborcol{
 				border: 1px solid #E50304 !important;
+			}
+			.flborcol{
+				border: 1px solid #e5e5e5 !important;
 			}
 			
 		}

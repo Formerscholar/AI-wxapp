@@ -129,6 +129,9 @@
 					</view>
 				</view>
 			</view>
+			<view class="tabbarshop_warp" @click="tabbarshopClick">
+				<image class="tabbarshop" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tabbarshop.png" mode="widthFix"></image>
+			</view>
 		</view>
 	
 	
@@ -205,6 +208,11 @@ export default {
 		// ...mapState(['type'])
 	},
 	methods: {
+		tabbarshopClick(){
+			uni.navigateTo({
+				url:'/pages/person/publicshop'
+			})
+		},
 		closeTotul(){
 			uni.setStorageSync('is_totul', false);
 			this.is_totul = false
@@ -309,6 +317,18 @@ page {
 	width: 100vw;
 	height: 100vh;
 }
+.tabbarshop_warp{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 24rpx;
+	.tabbarshop{
+		width: 702rpx;
+		height: 219rpx;
+		margin: 0 auto;
+	}
+}
+
 .vip_totul{
 	position: relative;
 	position: absolute;

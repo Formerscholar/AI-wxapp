@@ -211,9 +211,9 @@
 			<view class="botpopup">
 				<image class="title" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_icon.png" mode="widthFix"></image>
 				<radio-group class="botpopup_radio" @change="radioChange">
-					<label :class="['radio',evtvalue == 1 ? 'trborcol' : '']">不含答案和解析
+					<label :class="['radio',evtvalue == 1 ? 'trborcol' : 'flborcol']">不含答案和解析
 						<radio style="transform:scale(0.5)" color="#E50304" value="1" checked="true" /></label>
-					<label :class="['radio',evtvalue == 2 ? 'trborcol' : '']">含答案和解析
+					<label :class="['radio',evtvalue == 2 ? 'trborcol' : 'flborcol']">含答案和解析
 						<radio style="transform:scale(0.5)" color="#E50304" value="2" /></label>
 				</radio-group>
 				<view class="botpopup_btns">
@@ -361,39 +361,47 @@
 						console.log(res);
 						if (res.code == 200) {
 							Object.values(res.data).map((item, index) => {
-								uni.downloadFile({
-									url: item,
-									success: (res) => {
-										uni.showToast({
-											title: '下载成功,文件打开中',
-											icon: 'success'
-										});
-										if (!index){
-											uni.openDocument({
-												filePath: res.tempFilePath,
-												fileType: 'pdf',
-												showMenu: true,
-												fail: () => {
-													uni.showToast({
-														title: '下载文件打开失败',
-														icon: 'error'
-													});
-												}
-											})
-										}
-									},
-									fail: () => {
-										uni.showToast({
-											title:'下载失败',
-											icon:'error'
-										})
-									},
-								})
-							})
-						} else {
-							uni.showToast({
-								title:'下载失败',
-								icon:'error'
+								console.log('文件远程地址', item, index)
+								// if (!index){
+								// 	uni.navigateTo({
+								// 		url:'/pages/errorBook/pdf?pdfurl=' + item,
+								// 		success: () => {
+								// 			console.log('errorBook',item)
+								// 		}
+								// 	})
+								// }
+
+								// uni.downloadFile({
+								// 	url: item,
+								// 	success: (res) => {
+								// 		uni.showToast({
+								// 			title: '下载成功,文件打开中',
+								// 			icon: 'success'
+								// 		});
+								// 		if (!index){
+								// 			uni.openDocument({
+								// 				filePath: res.tempFilePath,
+								// 				fileType: 'doc',
+								// 				showMenu: true,
+								// 				fail: () => {
+								// 					uni.showToast({
+								// 						title: '下载文件打开失败',
+								// 						icon: 'error'
+								// 					});
+								// 				}
+								// 			})
+								// 		}
+								// 	},
+								// 	fail: () => {
+								// 		if (!index){
+								// 			uni.showToast({
+								// 				title:'下载失败',
+								// 				icon:'error'
+								// 			})
+								// 		}
+								// 	},
+								// })
+
 							})
 						}
 					});
@@ -408,39 +416,52 @@
 						this.$api.get_text(data).then(res => {
 							if (res.code == 200) {
 								Object.values(res.data).map((item, index) => {
-									uni.downloadFile({
-										url: item,
-										success: (res) => {
-											uni.showToast({
-												title: '下载成功,文件打开中',
-												icon: 'success'
-											});
-											if (!index){
-												uni.openDocument({
-													filePath: res.tempFilePath,
-													fileType: 'pdf',
-													showMenu: true,
-													fail: () => {
-														uni.showToast({
-															title: '下载文件打开失败',
-															icon: 'error'
-														});
-													},
-												})
+									console.log('文件远程地址', item, index)
+
+									
+									if (!index){
+										uni.navigateTo({
+											url:'/pages/errorBook/pdf?pdfurl=' + item,
+											success: () => {
+												console.log('errorBook',item)
 											}
-										},
-										fail: () => {
-											uni.showToast({
-												title:'下载失败',
-												icon:'error'
-											})
-										},
-									})
-								})
-							} else {
-								uni.showToast({
-									title:'下载失败',
-									icon:'error'
+										})
+									}
+
+									// uni.downloadFile({
+									// 	url: item,
+									// 	success: (res) => {
+									// 		uni.showToast({
+									// 			title: '下载成功,文件打开中',
+									// 			icon: 'success'
+									// 		});
+									// 		if (!index){
+									// 			uni.openDocument({
+									// 				filePath: res.tempFilePath,
+									// 				fileType: 'doc',
+									// 				showMenu: true,
+									// 				fail: () => {
+									// 					uni.showToast({
+									// 						title: '下载文件打开失败',
+									// 						icon: 'error'
+									// 					});
+									// 				},
+									// 			})
+									// 		}
+									// 	},
+									// 	fail: () => {
+									// 		if (!index){
+									// 			uni.showToast({
+									// 				title:'下载失败',
+									// 				icon:'error'
+									// 			})
+									// 		}
+									// 	},
+									// })
+
+
+
+
 								})
 							}
 						});
@@ -1036,6 +1057,10 @@
 
 			.trborcol {
 				border: 1px solid #E50304 !important;
+			}
+
+			.flborcol {
+				border: 1px solid #e5e5e5 !important;
 			}
 
 		}
