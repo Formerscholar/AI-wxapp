@@ -357,42 +357,58 @@
 						console.log(res);
 						if (res.code == 200) {
 							Object.values(res.data).map((item, index) => {
-								let filePath =''
-								if (!index) {
-									filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
-								} else {
-									filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}answer.pdf`;
-								}
-								uni.downloadFile({
-									url: item,
-									filePath: filePath,
+								uni.getSystemInfo({
 									success: (res) => {
-										uni.showToast({
-											title: '下载成功,文件打开中',
-											icon: 'success'
-										});
-										if (!index) {
-											uni.openDocument({
-												filePath: filePath,
-												showMenu: true,
-												fail: () => {
+										console.log(res)
+										if (res.platform == "ios") {
+											uni.navigateTo({
+												url:'/pages/errorBook/IosView?url='+item
+											})
+										}else{
+											let filePath = ''
+											if (!index) {
+												filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
+											} else {
+												filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}answer.pdf`;
+											}
+											// filePath: filePath,
+											uni.downloadFile({
+												url: item,
+												header: {
+													"Content-type": "application/pdf"
+												},
+												filePath:filePath,
+												success: (res) => {
 													uni.showToast({
-														title: '下载文件打开失败',
-														icon: 'error'
+														title: '下载成功,文件打开中',
+														icon: 'success'
 													});
+													if (!index) {
+														uni.openDocument({
+															filePath: filePath,
+															showMenu: true,
+															fail: () => {
+																uni.showToast({
+																	title: '下载文件打开失败',
+																	icon: 'error'
+																});
+															},
+														})
+													}
+												},
+												fail: () => {
+													if (!index) {
+														uni.showToast({
+															title: '下载失败',
+															icon: 'error'
+														})
+													}
 												},
 											})
 										}
-									},
-									fail: () => {
-										if (!index) {
-											uni.showToast({
-												title: '下载失败',
-												icon: 'error'
-											})
-										}
-									},
+									}
 								})
+								
 
 							})
 						}
@@ -408,42 +424,58 @@
 						this.$api.get_text(data).then(res => {
 							if (res.code == 200) {
 								Object.values(res.data).map((item, index) => {
-									let filePath =''
-									if (!index) {
-										 filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
-									} else {
-										 filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}answer.pdf`;
-									}
-									uni.downloadFile({
-										url: item,
-										filePath: filePath,
+									uni.getSystemInfo({
 										success: (res) => {
-											uni.showToast({
-												title: '下载成功,文件打开中',
-												icon: 'success'
-											});
-											if (!index) {
-												uni.openDocument({
-													filePath: filePath,
-													showMenu: true,
-													fail: () => {
+											console.log(res)
+											if (res.platform == "ios") {
+												uni.navigateTo({
+													url:'/pages/errorBook/IosView?url='+item
+												})
+											}else{
+												let filePath = ''
+												if (!index) {
+													filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
+												} else {
+													filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}answer.pdf`;
+												}
+												uni.downloadFile({
+													url: item,
+													header: {
+														"Content-type": "application/pdf"
+													},
+													filePath:filePath,
+													success: (res) => {
 														uni.showToast({
-															title: '下载文件打开失败',
-															icon: 'error'
+															title: '下载成功,文件打开中',
+															icon: 'success'
 														});
+														if (!index) {
+															uni.openDocument({
+																filePath: filePath,
+																showMenu: true,
+																fail: () => {
+																	uni.showToast({
+																		title: '下载文件打开失败',
+																		icon: 'error'
+																	});
+																},
+															})
+														}
+													},
+													fail: () => {
+														if (!index) {
+															uni.showToast({
+																title: '下载失败',
+																icon: 'error'
+															})
+														}
 													},
 												})
 											}
-										},
-										fail: () => {
-											if (!index) {
-												uni.showToast({
-													title: '下载失败',
-													icon: 'error'
-												})
-											}
-										},
+										}
 									})
+									
+								
 								})
 							}
 						});

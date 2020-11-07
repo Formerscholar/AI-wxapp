@@ -210,7 +210,7 @@ export default {
 	methods: {
 		tabbarshopClick(){
 			uni.navigateTo({
-				url:'/pages/person/publicshop'
+				url:'/pages/mall/index'
 			})
 		},
 		closeTotul(){

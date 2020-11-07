@@ -95,7 +95,7 @@
 				<button open-type="share">分享</button>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
-			<view class="item" @click="touser('/pages/person/publicshop')">
+			<view class="item" @click="touser('/pages/mall/index')">
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/shop_icon.png" mode=""></image>
 				<text>会员商城</text>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>

@@ -16,6 +16,11 @@
 			"style": {
 				"navigationBarTitleText": "错题本"
 			}
+		},{
+			"path": "pages/errorBook/IosView",
+			"style": {
+				"navigationBarTitleText": "错题本"
+			}
 		}, {
 			"path": "pages/knowledgeBase/knowledgeBase",
 			"style": {
@@ -78,6 +83,11 @@
 			"style": {
 				"navigationBarTitleText": "修改资料"
 			}
+		},{
+			"path": "pages/mall/pay",
+			"style": {
+				"navigationBarTitleText": "支付页面"
+			}
 		}, {
 			"path": "pages/person/addClass",
 			"style": {
@@ -125,7 +135,7 @@
 			}
 		},
 		{
-			"path": "pages/person/publicshop",
+			"path": "pages/mall/index",
 			"style": {
 				"navigationBarTitleText": "会员商城",
 				"navigationStyle": "custom"

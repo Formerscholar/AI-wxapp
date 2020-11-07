@@ -6,7 +6,7 @@
 	export default {
 		data() {
 			return {
-				url: 'https://mall.aictb.com/m'
+				url: ''
 			}
 		},
 		onLoad: function(options) {
@@ -16,6 +16,8 @@
 			} = options
 			if (url) {
 				this.url = decodeURIComponent(url)
+			} else {
+				this.url = 'https://mall.aictb.com/m?wxapp_openid=' + uni.getStorageSync('openid')
 			}
 		},
 	}
