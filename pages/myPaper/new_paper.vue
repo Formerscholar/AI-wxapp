@@ -20,7 +20,7 @@
 						<view class="time">{{ item.add_time }}</view>
 					</view>
 				</view>
-				<view class="right" @click.stop="generated(item.paper_id)"><image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image></view>
+				<view class="right" @click.stop="generated(item.paper_id,item.title)"><image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image></view>
 			</view>
 			<view v-if="is_more2 == 0" class="is_more">没有更多试卷了</view>
 		</view>
@@ -34,7 +34,7 @@
 						<view class="time">{{ item.add_time }}</view>
 					</view>
 				</view>
-				<view class="right" @click.stop="generated(item.based_id)"><image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image></view>
+				<view class="right" @click.stop="generated(item.based_id,item.title)"><image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image></view>
 				<!-- <image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png' class='right'></image> -->
 			</view>
 			<view v-if="is_more == 0" class="is_more">没有更多试卷了</view>
@@ -113,6 +113,7 @@ export default {
 			email_arr: [],
 			evtvalue: 1,
 			is_vip: false,
+			errorbook_title: ''
 		};
 	},
 	onReachBottom() {
@@ -160,11 +161,6 @@ export default {
 			}
 		},
 		sendPhone(){
-			// if (this.evtvalue == 1) {
-			// 	console.log('不含答案和解析')
-			// } else{
-			// 	console.log('含答案和解析')
-			// }
 			this.$refs.botpopup.close();
 			let data = {
 				token: this.token,
@@ -177,36 +173,43 @@ export default {
 					console.log(res);
 					if (res.code == 200) {
 						Object.values(res.data).map((item, index) => {
+							let filePath =''
+							if (!index) {
+								filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
+							} else {
+								filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}answer.pdf`;
+							}
 							uni.downloadFile({
 								url: item,
+								filePath: filePath,
 								success: (res) => {
 									uni.showToast({
 										title: '下载成功,文件打开中',
 										icon: 'success'
 									});
-									if (!index){
+									if (!index) {
 										uni.openDocument({
-											filePath: res.tempFilePath,
-											fileType: 'doc',
+											filePath: filePath,
 											showMenu: true,
 											fail: () => {
 												uni.showToast({
 													title: '下载文件打开失败',
 													icon: 'error'
 												});
-											}
+											},
 										})
 									}
 								},
 								fail: () => {
-									if (!index){
+									if (!index) {
 										uni.showToast({
-											title:'下载失败',
-											icon:'error'
+											title: '下载失败',
+											icon: 'error'
 										})
 									}
 								},
 							})
+							
 						})
 					}
 				});
@@ -221,17 +224,23 @@ export default {
 					this.$api.get_download(data).then(res => {
 						if (res.code == 200) {
 							Object.values(res.data).map((item, index) => {
+								let filePath =''
+								if (!index) {
+									filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
+								} else {
+									filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}answer.pdf`;
+								}
 								uni.downloadFile({
 									url: item,
+									filePath: filePath,
 									success: (res) => {
 										uni.showToast({
 											title: '下载成功,文件打开中',
 											icon: 'success'
 										});
-										if (!index){
+										if (!index) {
 											uni.openDocument({
-												filePath: res.tempFilePath,
-												fileType: 'doc',
+												filePath: filePath,
 												showMenu: true,
 												fail: () => {
 													uni.showToast({
@@ -243,14 +252,15 @@ export default {
 										}
 									},
 									fail: () => {
-										if (!index){
+										if (!index) {
 											uni.showToast({
-												title:'下载失败',
-												icon:'error'
+												title: '下载失败',
+												icon: 'error'
 											})
 										}
 									},
 								})
+								
 							})
 						} 
 					});
@@ -319,8 +329,9 @@ export default {
 			});
 		},
 		//点击生成错题本/生成试卷
-		generated(id) {
+		generated(id, title) {
 			this.based_id = id;
+			this.errorbook_title = title
 			this.$refs.botpopup.open();
 		},
 		//发送邮箱
@@ -533,7 +544,8 @@ page {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				padding: 0 30rpx;
+				padding: 0 20rpx;
+				padding-right: 10rpx;
 				font-size: 24rpx;
 				font-family: PingFang SC;
 				font-weight: 500;

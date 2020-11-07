@@ -63,7 +63,7 @@
 					<view class="btnCons">
 						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" @click.stop="delete_errorbook(i)" />
 						<view class="line"></view>
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download.png" @click.stop="generated(item.errorbook_id)" />
+						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download.png" @click.stop="generated(item.errorbook_id ,item.title)" />
 					</view>
 				</view>
 				<view v-if="is_more2 == 0 && errorbook_list.length != 0" class="is_more">没有更多错题本了</view>
@@ -126,7 +126,7 @@
 					<view class="btnCons">
 						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" @click.stop="delete_errorbook(i)" />
 						<view class="line"></view>
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download.png" @click.stop="generated(item.errorbook_id)" />
+						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download.png" @click.stop="generated(item.errorbook_id,item.title)" />
 					</view>
 				</view>
 				<view v-if="is_more2 == 0 && errorbook_list.length != 0" class="is_more">没有更多试卷了</view>
@@ -263,7 +263,8 @@
 				is_tip: false,
 				email_arr: [],
 				btndisabled: true,
-				evtvalue: 1
+				evtvalue: 1,
+				errorbook_title: ''
 			};
 		},
 		onReachBottom() {
@@ -344,11 +345,6 @@
 				}
 			},
 			sendPhone() {
-				// if (this.evtvalue == 1) {
-				// 	console.log('不含答案和解析')
-				// } else {
-				// 	console.log('含答案和解析')
-				// }
 				this.$refs.botpopup.close();
 				let data = {
 					token: this.token,
@@ -361,46 +357,42 @@
 						console.log(res);
 						if (res.code == 200) {
 							Object.values(res.data).map((item, index) => {
-								console.log('文件远程地址', item, index)
-								// if (!index){
-								// 	uni.navigateTo({
-								// 		url:'/pages/errorBook/pdf?pdfurl=' + item,
-								// 		success: () => {
-								// 			console.log('errorBook',item)
-								// 		}
-								// 	})
-								// }
-
-								// uni.downloadFile({
-								// 	url: item,
-								// 	success: (res) => {
-								// 		uni.showToast({
-								// 			title: '下载成功,文件打开中',
-								// 			icon: 'success'
-								// 		});
-								// 		if (!index){
-								// 			uni.openDocument({
-								// 				filePath: res.tempFilePath,
-								// 				fileType: 'doc',
-								// 				showMenu: true,
-								// 				fail: () => {
-								// 					uni.showToast({
-								// 						title: '下载文件打开失败',
-								// 						icon: 'error'
-								// 					});
-								// 				}
-								// 			})
-								// 		}
-								// 	},
-								// 	fail: () => {
-								// 		if (!index){
-								// 			uni.showToast({
-								// 				title:'下载失败',
-								// 				icon:'error'
-								// 			})
-								// 		}
-								// 	},
-								// })
+								let filePath =''
+								if (!index) {
+									filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
+								} else {
+									filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}answer.pdf`;
+								}
+								uni.downloadFile({
+									url: item,
+									filePath: filePath,
+									success: (res) => {
+										uni.showToast({
+											title: '下载成功,文件打开中',
+											icon: 'success'
+										});
+										if (!index) {
+											uni.openDocument({
+												filePath: filePath,
+												showMenu: true,
+												fail: () => {
+													uni.showToast({
+														title: '下载文件打开失败',
+														icon: 'error'
+													});
+												},
+											})
+										}
+									},
+									fail: () => {
+										if (!index) {
+											uni.showToast({
+												title: '下载失败',
+												icon: 'error'
+											})
+										}
+									},
+								})
 
 							})
 						}
@@ -416,52 +408,42 @@
 						this.$api.get_text(data).then(res => {
 							if (res.code == 200) {
 								Object.values(res.data).map((item, index) => {
-									console.log('文件远程地址', item, index)
-
-									
-									if (!index){
-										uni.navigateTo({
-											url:'/pages/errorBook/pdf?pdfurl=' + item,
-											success: () => {
-												console.log('errorBook',item)
-											}
-										})
+									let filePath =''
+									if (!index) {
+										 filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
+									} else {
+										 filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}answer.pdf`;
 									}
-
-									// uni.downloadFile({
-									// 	url: item,
-									// 	success: (res) => {
-									// 		uni.showToast({
-									// 			title: '下载成功,文件打开中',
-									// 			icon: 'success'
-									// 		});
-									// 		if (!index){
-									// 			uni.openDocument({
-									// 				filePath: res.tempFilePath,
-									// 				fileType: 'doc',
-									// 				showMenu: true,
-									// 				fail: () => {
-									// 					uni.showToast({
-									// 						title: '下载文件打开失败',
-									// 						icon: 'error'
-									// 					});
-									// 				},
-									// 			})
-									// 		}
-									// 	},
-									// 	fail: () => {
-									// 		if (!index){
-									// 			uni.showToast({
-									// 				title:'下载失败',
-									// 				icon:'error'
-									// 			})
-									// 		}
-									// 	},
-									// })
-
-
-
-
+									uni.downloadFile({
+										url: item,
+										filePath: filePath,
+										success: (res) => {
+											uni.showToast({
+												title: '下载成功,文件打开中',
+												icon: 'success'
+											});
+											if (!index) {
+												uni.openDocument({
+													filePath: filePath,
+													showMenu: true,
+													fail: () => {
+														uni.showToast({
+															title: '下载文件打开失败',
+															icon: 'error'
+														});
+													},
+												})
+											}
+										},
+										fail: () => {
+											if (!index) {
+												uni.showToast({
+													title: '下载失败',
+													icon: 'error'
+												})
+											}
+										},
+									})
 								})
 							}
 						});
@@ -552,8 +534,9 @@
 				});
 			},
 			//点击邮箱下载
-			generated(id) {
+			generated(id, title) {
 				this.errorbook_id = id;
+				this.errorbook_title = title
 				this.$refs.botpopup.open();
 			},
 			selected_topic(i) {
@@ -1043,7 +1026,8 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				padding: 0 30rpx;
+				padding: 0 20rpx;
+				padding-right: 10rpx;
 				font-size: 24rpx;
 				font-family: PingFang SC;
 				font-weight: 500;

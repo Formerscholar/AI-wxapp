@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<view class="subtitle">
+		<!-- <view class="subtitle">
 			{{ student_name }} <text>{{ team_name }}</text>
-		</view>
+		</view> -->
 		<view class="flex">
 			<view class="timeTabCon">
 				<view class="timeTab" @click="selectDate(i)" :class="{ tabActive: item.dateStaus }" v-for="(item, i) of dateList" :key="i">{{ item.time }}</view>
@@ -22,12 +22,25 @@
 			</view>
 		</view>
 
-		<view class="fenbu">
-			<view class="blank"></view>
-			<text>错题知识点分布图：</text>
+		<view class="fenbu"><text>错题知识点分布</text></view>
+		<view class="qiun-charts" v-if="analysisList.length && analysisList.length != 0">
+			<view class="item_box" v-for="(item,index) in analysisList" :key="item.data">
+				<view class="top_box">
+					<view class="left_text">
+						{{ item.name }}
+						<text>{{ item.percentage }}</text>
+					</view>
+					<view class="right_text">{{ item.data }}道错题</view>
+				</view>
+				<view class="bot_box" :style="{ width: item.percentage, backgroundColor: colorList[index.toString()[index.toString().length - 1]] }"></view>
+			</view>
 		</view>
-		<view class="qiun-charts" v-if="Pie.series && Pie.series.length != 0"><canvas canvas-id="canvasPie" id="canvasPie" class="charts" @touchstart="touchPie"></canvas></view>
 		<view class="qiun-charts noData" v-else>{{ msg }}</view>
+		
+
+
+
+
 
 		<view class="hotTitle" v-if="exercises_list.length != 0">
 			<view class="beforeLine"></view>
@@ -109,6 +122,7 @@ export default {
 		return {
 			type: '',
 			pieData: [],
+			colorList: ['#EC6941', '#F19EC2', '#00A0E9', '#7E6B5A', '#80C269', '#0068B7', '#f1c40f', '#c0392b', '#8e44ad', '#EA2027'],
 			cWidth: uni.upx2px(750),
 			cHeight: uni.upx2px(500),
 			pixelRatio: 1,
@@ -134,7 +148,8 @@ export default {
 			update: true,
 			page: 1,
 			is_more: 1,
-			same_type: []
+			same_type: [],
+			analysisList: []
 		};
 	},
 	onReachBottom() {
@@ -147,6 +162,9 @@ export default {
 		_self = this;
 		console.log(options);
 		this.student_name = options.student_name;
+		uni.setNavigationBarTitle({
+		    title: this.student_name + '的学情报告'
+		});
 		this.team_name = options.team_name;
 		this.user_id = options.user_id;
 		if (uni.getStorageSync('token')) {
@@ -234,10 +252,12 @@ export default {
 				.then(res => {
 					this.pieData = res.data.count_list;
 					if (res.data.length !== undefined) {
+						this.analysisList = res.data;
 						this.Pie.series = res.data;
 					} else {
 						this.Pie.series = [];
 						this.pieData = [];
+						this.analysisList = [];
 					}
 					this.showPie('canvasPie', this.Pie);
 				});
@@ -450,13 +470,38 @@ page {
 }
 .qiun-charts {
 	height: auto;
-	background-color: #ffffff;
-	margin: 0 25rpx;
-	padding-bottom: 20rpx;
-	border-radius: 0 0 20rpx 20rpx;
-	// display: flex;
-	// flex-flow: row nowrap;
-	// justify-content: space-between;
+	margin: 30rpx;
+	margin-top: 0;
+	background: #fff;
+	border: 1px solid #e5e5e5;
+	border-radius: 16px;
+	.item_box {
+		margin: 30rpx;
+
+		.top_box {
+			font-family: PingFang SC;
+			font-size: 26rpx;
+			font-weight: 500;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			.left_text {
+				color: #333333;
+				text {
+					margin-left: 20rpx;
+					color: #999999;
+				}
+			}
+			.right_text {
+				color: #333333;
+			}
+		}
+		.bot_box {
+			margin-top: 11rpx;
+			height: 10rpx;
+			//
+		}
+	}
 	.fenlei {
 		color: #999;
 		font-size: 28rpx;
@@ -532,10 +577,11 @@ button::after {
 	}
 }
 .fenbu {
-	padding: 30rpx 60rpx;
-	background: #fff;
-	margin: 0rpx 25rpx 0;
-	border-radius: 20rpx 20rpx 0 0;
+	margin: 20rpx 30rpx;
+	font-size: 28rpx;
+	font-family: PingFang SC;
+	font-weight: bold;
+	color: #333333;
 	.blank {
 		width: 8rpx;
 		height: 25rpx;
@@ -543,10 +589,7 @@ button::after {
 		display: inline-block;
 		margin: 0rpx 20rpx 0 -8rpx;
 	}
-	> text:first-child {
-		font-size: 26rpx;
-		color: #999;
-	}
+	
 }
 .btn {
 	button {
@@ -592,7 +635,7 @@ button::after {
 	// justify-content: space-between;
 	// align-items: center;
 	background: #fff;
-	margin: 0rpx 25rpx 25rpx;
+	margin:  25rpx ;
 	border-radius: 20rpx;
 	height: 215rpx;
 	.timeTabCon {

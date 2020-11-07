@@ -428,7 +428,6 @@ page {
 			white-space: nowrap;
 			text-align: center;
 			margin: 5rpx 0;
-			margin-top: 10rpx;
 			.remark_red {
 				margin-left: 10rpx;
 			}

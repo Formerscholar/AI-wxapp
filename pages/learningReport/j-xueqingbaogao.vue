@@ -28,24 +28,8 @@
 				</view> -->
 			</view>
 		</view>
+		
 		<view class="fenbu"><text>错题知识点分布</text></view>
-		<!-- <view class="c-title">
-			<text>错题数量：</text><text>你有{{error_count}}道错题</text>
-		</view> -->
-		<!-- <view class="fenbu">
-			<view class="blank"></view>
-			<text>错题知识点分布图：</text>
-		</view> -->
-		<!--<view class="pie_chart">
-			<piechart  v-if='update' :key='key'  ref="pieChart0" :dataAs="pieData" canvasId="index_pie_1" />
-		</view> -->
-		<!-- <view class="qiun-charts" v-if="Pie.series && Pie.series.length != 0"> -->
-		<!-- <canvas canvas-id="canvasPie" id="canvasPie" class="charts" @touchstart="touchPie"></canvas> -->
-		<!-- <view class="fenlei" v-for="(item,i) of pieData" :key='i'>
-				<text></text>
-				<text>{{item.name}}</text>
-			</view> -->
-		<!-- </view> -->
 		<view class="qiun-charts" v-if="analysisList.length && analysisList.length != 0">
 			<view class="item_box" v-for="(item,index) in analysisList" :key="item.data">
 				<view class="top_box">
@@ -59,6 +43,8 @@
 			</view>
 		</view>
 		<view class="qiun-charts noData" v-else>{{ msg }}</view>
+
+
 
 		<view class="hotTitle" v-if="exercises_list.length != 0">
 			<view class="beforeLine"></view>
