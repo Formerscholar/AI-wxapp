@@ -211,9 +211,9 @@
 			<view class="botpopup">
 				<image class="title" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_icon.png" mode="widthFix"></image>
 				<radio-group class="botpopup_radio" @change="radioChange">
-					<label :class="['radio',evtvalue == 1 ? 'trborcol' : 'flborcol']">不含答案和解析
+					<label :class="['radio',evtvalue == 1 ? 'trborcol' : 'flborcol']"><text>不含答案和解析</text>
 						<radio style="transform:scale(0.5)" color="#E50304" value="1" checked="true" /></label>
-					<label :class="['radio',evtvalue == 2 ? 'trborcol' : 'flborcol']">含答案和解析
+					<label :class="['radio',evtvalue == 2 ? 'trborcol' : 'flborcol']"><text>含答案和解析</text>
 						<radio style="transform:scale(0.5)" color="#E50304" value="2" /></label>
 				</radio-group>
 				<view class="botpopup_btns">
@@ -352,6 +352,10 @@
 					down_type: this.evtvalue,
 					is_email: 0
 				};
+				uni.showToast({
+					title: '下载中...',
+					icon: 'success'
+				});
 				if (this.type == 3) {
 					this.$api.get_teacher_text(data).then(res => {
 						console.log(res);
@@ -362,25 +366,24 @@
 										console.log(res)
 										if (res.platform == "ios") {
 											uni.navigateTo({
-												url:'/pages/errorBook/IosView?url='+item
+												url: '/pages/errorBook/IosView?url=' + item + '&title=' + this.errorbook_title
 											})
-										}else{
+										} else {
 											let filePath = ''
 											if (!index) {
 												filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
 											} else {
 												filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}answer.pdf`;
 											}
-											// filePath: filePath,
 											uni.downloadFile({
 												url: item,
 												header: {
 													"Content-type": "application/pdf"
 												},
-												filePath:filePath,
+												filePath: filePath,
 												success: (res) => {
 													uni.showToast({
-														title: '下载成功,文件打开中',
+														title: '已下载,正在打开',
 														icon: 'success'
 													});
 													if (!index) {
@@ -389,7 +392,7 @@
 															showMenu: true,
 															fail: () => {
 																uni.showToast({
-																	title: '下载文件打开失败',
+																	title: '文件打开失败',
 																	icon: 'error'
 																});
 															},
@@ -408,7 +411,7 @@
 										}
 									}
 								})
-								
+
 
 							})
 						}
@@ -424,14 +427,15 @@
 						this.$api.get_text(data).then(res => {
 							if (res.code == 200) {
 								Object.values(res.data).map((item, index) => {
+
 									uni.getSystemInfo({
 										success: (res) => {
 											console.log(res)
 											if (res.platform == "ios") {
 												uni.navigateTo({
-													url:'/pages/errorBook/IosView?url='+item
+													url: '/pages/errorBook/IosView?url=' + item + '&title=' + this.errorbook_title
 												})
-											}else{
+											} else {
 												let filePath = ''
 												if (!index) {
 													filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
@@ -443,10 +447,10 @@
 													header: {
 														"Content-type": "application/pdf"
 													},
-													filePath:filePath,
+													filePath: filePath,
 													success: (res) => {
 														uni.showToast({
-															title: '下载成功,文件打开中',
+															title: '已下载,正在打开',
 															icon: 'success'
 														});
 														if (!index) {
@@ -455,7 +459,7 @@
 																showMenu: true,
 																fail: () => {
 																	uni.showToast({
-																		title: '下载文件打开失败',
+																		title: '文件打开失败',
 																		icon: 'error'
 																	});
 																},
@@ -474,8 +478,8 @@
 											}
 										}
 									})
-									
-								
+
+
 								})
 							}
 						});
@@ -1027,7 +1031,7 @@
 	}
 
 	.botpopup {
-		width: 490rpx;
+		width: 450rpx;
 		height: 357rpx;
 		background-color: #fff;
 		border: 1px solid #E5E5E5;
@@ -1049,21 +1053,23 @@
 			flex-direction: column;
 			justify-content: space-between;
 			align-items: flex-start;
-
+			width: 100%;
+			
 			.radio {
-				width: 370rpx;
+				width: 100%;
 				height: 63rpx;
 				border: 1px solid #fff;
 				border-radius: 16rpx;
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				padding: 0 20rpx;
-				padding-right: 10rpx;
 				font-size: 24rpx;
 				font-family: PingFang SC;
 				font-weight: 500;
 				color: #222222;
+				text{
+					margin-left: 20rpx;
+				}
 
 				&:first-child {
 					margin-bottom: 30rpx;
@@ -1083,9 +1089,9 @@
 
 		.botpopup_btns {
 			display: flex;
-			justify-content: center;
+			justify-content: space-between;
 			align-items: center;
-
+			width: 100%;
 			.item_btn {
 				width: 200rpx;
 				height: 50rpx;
@@ -1106,18 +1112,6 @@
 				}
 			}
 		}
-
-		// .Noanswer {
-		// 	height: 100rpx;
-		// 	line-height: 100rpx;
-		// 	background: #ffffff;
-		// }
-
-		// .answer {
-		// 	height: 100rpx;
-		// 	line-height: 100rpx;
-		// 	background: #ffffff;
-		// }
 	}
 
 	.student {

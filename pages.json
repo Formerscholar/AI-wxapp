@@ -19,7 +19,7 @@
 		},{
 			"path": "pages/errorBook/IosView",
 			"style": {
-				"navigationBarTitleText": "错题本"
+				"navigationBarTitleText": ""
 			}
 		}, {
 			"path": "pages/knowledgeBase/knowledgeBase",

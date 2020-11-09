@@ -8,18 +8,24 @@
 				param
 			} = options
 			console.log('param', param)
+			let params = JSON.parse(decodeURIComponent(param))
+
 			uni.requestPayment({
-				...param,
+				timeStamp: params.timeStamp,
+				nonceStr: params.nonceStr,
+				package: params.package,
+				signType: params.signType,
+				paySign: params.paySign,
 				success: function(res) {
-					// uni.navigateTo({
-					// 	url:'/pages/mall/index?url=https://mall.aictb.com/m/member/'
-					// })
+					uni.redirectTo({
+						url: '/pages/mall/index?url=https://mall.aictb.com/m/member/'
+					})
 					console.log('支付成功', res)
 				},
 				fail: function(res) {
-					// uni.navigateTo({
-					// 	url:'/pages/mall/index?url=https://mall.aictb.com/m/member/'
-					// })
+					uni.redirectTo({
+						url: '/pages/mall/index?url=https://mall.aictb.com/m/member/'
+					})
 					console.log('支付失败', res)
 				},
 				complete: function(res) {

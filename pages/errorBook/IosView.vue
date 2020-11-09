@@ -11,15 +11,14 @@
 		},
 		onLoad(options) {
 			const {
-				url
+				url,
+				title
 			} = options
-			this.url = url
-		},
-		onShareAppMessage: (res) =>{
-			return {
-				title: '自定义转发标题',
-				path: this.url
-			}
+			// this.url = url
+			this.url = "https://www.aictb.com/wechat/webview/user_errorbook_view/"
+			wx.setNavigationBarTitle({
+				title: title
+			})
 		}
 
 	}

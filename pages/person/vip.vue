@@ -90,32 +90,27 @@ export default {
 			});
 		},
 		login_pay() {
-			uni.login({
-				success: res => {
-					console.log(res);
-					this.$api.app_pay({ code: res.code, token: this.token }).then(reslove => {
-						console.log('reslove', reslove);
-						let wx_pay = reslove.data.wx_pay;
-						uni.requestPayment({
-							provider: 'wxpay',
-							timeStamp: wx_pay.timeStamp,
-							nonceStr: wx_pay.nonceStr,
-							package: wx_pay.package,
-							signType: 'MD5',
-							paySign: wx_pay.paySign,
-							success: res => {
-								console.log(res);
-								uni.setStorage({
-									key: 'is_vip',
-									data: 1
-								});
-							},
-							fail: err => {
-								console.log(err);
-							}
+			this.$api.app_pay({ token: this.token }).then(reslove => {
+				console.log('reslove', reslove);
+				let wx_pay = reslove.data.wx_pay;
+				uni.requestPayment({
+					provider: 'wxpay',
+					timeStamp: wx_pay.timeStamp,
+					nonceStr: wx_pay.nonceStr,
+					package: wx_pay.package,
+					signType: 'MD5',
+					paySign: wx_pay.paySign,
+					success: res => {
+						console.log(res);
+						uni.setStorage({
+							key: 'is_vip',
+							data: 1
 						});
-					});
-				}
+					},
+					fail: err => {
+						console.log(err);
+					}
+				});
 			});
 		}
 	}

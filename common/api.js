@@ -64,7 +64,7 @@ module.exports = {
 	// get_school: data => request(ApiUrl+'user/school/',data),//学校
 
 	get_verify_code: data => request(ApiUrl + 'user/get_verify_code/', data), //验证码
-	app_pay: data => request(ApiUrl + 'member/_app_pay/', data), //支付
+	app_pay: data => request(ApiUrl + 'user/_app_pay/', data), //支付
 
 
 
