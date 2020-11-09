@@ -2,13 +2,21 @@
 export default {
 	globalData: {
 		settings: {},
-		email: ['@qq.com', '@163.com', '@126.com', '@sina.com', '@sohu.com', '@yeah.net', '@139.com', '@189.cn']
+		email: ['@qq.com', '@163.com', '@126.com', '@sina.com', '@sohu.com', '@yeah.net', '@139.com', '@189.cn'],
+		systemInfo:{}
 	},
 	onLaunch: function() {
 		this.$api.get_settings('Get').then(res => {
 			this.globalData.settings = res.data;
 		});
 		uni.setStorageSync('is_totul', true);
+		let that = this
+		uni.getSystemInfo({
+			success: function (res) {
+				console.log(res,'app.globalData.systemInfo')
+				that.globalData.systemInfo = res
+			}
+		})
 	},
 	onShow: () => {
 		const updateManager = uni.getUpdateManager();

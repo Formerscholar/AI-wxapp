@@ -16,11 +16,6 @@
 			"style": {
 				"navigationBarTitleText": "错题本"
 			}
-		},{
-			"path": "pages/errorBook/IosView",
-			"style": {
-				"navigationBarTitleText": ""
-			}
 		}, {
 			"path": "pages/knowledgeBase/knowledgeBase",
 			"style": {

@@ -352,67 +352,97 @@
 					down_type: this.evtvalue,
 					is_email: 0
 				};
-				uni.showToast({
-					title: '下载中...',
-					icon: 'success'
-				});
 				if (this.type == 3) {
 					this.$api.get_teacher_text(data).then(res => {
 						console.log(res);
 						if (res.code == 200) {
-							Object.values(res.data).map((item, index) => {
-								uni.getSystemInfo({
+							uni.showToast({
+								title: '下载中...',
+								icon: 'loading',
+								duration:5000
+							});
+							if (app.globalData.systemInfo.platform == "ios") {
+								uni.downloadFile({
+									url: res.data.pdf,
+									header: {
+										"Content-type": "application/pdf"
+									},
 									success: (res) => {
-										console.log(res)
-										if (res.platform == "ios") {
-											uni.navigateTo({
-												url: '/pages/errorBook/IosView?url=' + item + '&title=' + this.errorbook_title
-											})
-										} else {
-											let filePath = ''
-											if (!index) {
-												filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
-											} else {
-												filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}answer.pdf`;
+										uni.saveFile({
+											tempFilePath: res.tempFilePath,
+											success: (res) => {
+												uni.showToast({
+													title: '已下载,正在打开',
+													icon: 'success'
+												});
+												uni.showModal({
+													title: '温馨提示',
+													content: '如无法打开,请使用邮箱下载!',
+													cancelColor: '#eeeeee',
+													confirmColor: '#FF0000',
+													showCancel:false,
+													success(res2) {
+														if (res2.confirm) {
+															uni.openDocument({
+																filePath: res.savedFilePath,
+																fileType: "pdf",
+																showMenu: true,
+																fail: () => {
+																	uni.showToast({
+																		title: '文件打开失败',
+																		icon: 'error'
+																	});
+																},
+															})
+														}
+													}
+												});
 											}
-											uni.downloadFile({
-												url: item,
-												header: {
-													"Content-type": "application/pdf"
-												},
-												filePath: filePath,
-												success: (res) => {
-													uni.showToast({
-														title: '已下载,正在打开',
-														icon: 'success'
-													});
-													if (!index) {
-														uni.openDocument({
-															filePath: filePath,
-															showMenu: true,
-															fail: () => {
-																uni.showToast({
-																	title: '文件打开失败',
-																	icon: 'error'
-																});
-															},
-														})
-													}
-												},
-												fail: () => {
-													if (!index) {
-														uni.showToast({
-															title: '下载失败',
-															icon: 'error'
-														})
-													}
-												},
-											})
-										}
-									}
+										})
+									},
+									fail: () => {
+										uni.showToast({
+											title: '下载失败',
+											icon: 'error'
+										})
+									},
 								})
-
-
+							} else {
+								let filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
+								uni.downloadFile({
+									url: res.data.pdf,
+									header: {
+										"Content-type": "application/pdf"
+									},
+									filePath: filePath,
+									success: (res) => {
+										uni.showToast({
+											title: '已下载,正在打开',
+											icon: 'success'
+										});
+										uni.openDocument({
+											filePath: filePath,
+											showMenu: true,
+											fail: () => {
+												uni.showToast({
+													title: '文件打开失败',
+													icon: 'error'
+												});
+											},
+										})
+									},
+									fail: () => {
+										uni.showToast({
+											title: '下载失败',
+											icon: 'error'
+										})
+									},
+								})
+							}
+						} else {
+							uni.showToast({
+								title: res.msg,
+								icon: 'error'
 							})
 						}
 					});
@@ -426,61 +456,92 @@
 					} else {
 						this.$api.get_text(data).then(res => {
 							if (res.code == 200) {
-								Object.values(res.data).map((item, index) => {
-
-									uni.getSystemInfo({
+								uni.showToast({
+									title: '下载中...',
+									icon: 'loading',
+								duration:5000
+								});
+								if (app.globalData.systemInfo.platform == "ios") {
+									console.log('ios')
+									uni.downloadFile({
+										url: res.data.pdf,
+										header: {
+											"Content-type": "application/pdf"
+										},
 										success: (res) => {
-											console.log(res)
-											if (res.platform == "ios") {
-												uni.navigateTo({
-													url: '/pages/errorBook/IosView?url=' + item + '&title=' + this.errorbook_title
-												})
-											} else {
-												let filePath = ''
-												if (!index) {
-													filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
-												} else {
-													filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}answer.pdf`;
+											uni.saveFile({
+												tempFilePath: res.tempFilePath,
+												success: (res) => {
+													uni.showToast({
+														title: '已下载,正在打开',
+														icon: 'success'
+													});
+													uni.showModal({
+														title: '温馨提示',
+														content: '如无法打开,请使用邮箱下载!',
+														cancelColor: '#eeeeee',
+														confirmColor: '#FF0000',
+														showCancel:false,
+														success(res2) {
+															if (res2.confirm) {
+																uni.openDocument({
+																	filePath: res.savedFilePath,
+																	fileType: "pdf",
+																	showMenu: true,
+																	fail: () => {
+																		uni.showToast({
+																			title: '文件打开失败',
+																			icon: 'error'
+																		});
+																	},
+																})
+															}
+														}
+													});
 												}
-												uni.downloadFile({
-													url: item,
-													header: {
-														"Content-type": "application/pdf"
-													},
-													filePath: filePath,
-													success: (res) => {
-														uni.showToast({
-															title: '已下载,正在打开',
-															icon: 'success'
-														});
-														if (!index) {
-															uni.openDocument({
-																filePath: filePath,
-																showMenu: true,
-																fail: () => {
-																	uni.showToast({
-																		title: '文件打开失败',
-																		icon: 'error'
-																	});
-																},
-															})
-														}
-													},
-													fail: () => {
-														if (!index) {
-															uni.showToast({
-																title: '下载失败',
-																icon: 'error'
-															})
-														}
-													},
-												})
-											}
-										}
+											})
+										},
+										fail: () => {
+											uni.showToast({
+												title: '下载失败',
+												icon: 'error'
+											})
+										},
 									})
+								} else {
+									let filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
+									uni.downloadFile({
+										url: res.data.pdf,
+										header: {
+											"Content-type": "application/pdf"
+										},
+										filePath: filePath,
+										success: (res) => {
+											uni.showToast({
+												title: '已下载,正在打开',
+												icon: 'success'
+											});
+											uni.openDocument({
+												filePath: filePath,
+												showMenu: true,
+												fail: () => {
+													uni.showToast({
+														title: '文件打开失败',
+														icon: 'error'
+													});
+												},
+											})
+										},
+										fail: () => {
+											uni.showToast({
+												title: '下载失败',
+												icon: 'error'
+											})
+										},
+									})
+								}
 
 
-								})
 							}
 						});
 					}
@@ -1054,7 +1115,7 @@
 			justify-content: space-between;
 			align-items: flex-start;
 			width: 100%;
-			
+
 			.radio {
 				width: 100%;
 				height: 63rpx;
@@ -1067,7 +1128,8 @@
 				font-family: PingFang SC;
 				font-weight: 500;
 				color: #222222;
-				text{
+
+				text {
 					margin-left: 20rpx;
 				}
 
@@ -1092,6 +1154,7 @@
 			justify-content: space-between;
 			align-items: center;
 			width: 100%;
+
 			.item_btn {
 				width: 200rpx;
 				height: 50rpx;
