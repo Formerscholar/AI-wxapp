@@ -95,13 +95,11 @@
 				<button open-type="share">分享</button>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
-			<view class="item" @click="touser('/pages/mall/index')">
+			<view class="item" @click="shopClick">
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/shop_icon.png" mode=""></image>
 				<text>会员商城</text>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
-			
-			<!--  -->
 		</view>
 
 		<button class="logout" @click="logout()" v-show="token">切换身份</button>
@@ -109,6 +107,7 @@
 </template>
 
 <script>
+	let app = getApp()
 import { mapState, mapMutations } from 'vuex';
 export default {
 	data() {
@@ -141,6 +140,13 @@ export default {
 	},
 	methods: {
 		...mapMutations(['login', 'logout']),
+		shopClick(){
+			if (app.globalData.systemInfo.platform == "ios") {
+				this.touser('/pages/mall/iostip')
+			}else{
+				this.touser('/pages/mall/index')
+			}
+		},
 		get_vip_info() {
 			this.$api.vip_info({ token: this.token }).then(res => {
 				console.log(res);

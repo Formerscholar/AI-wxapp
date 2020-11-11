@@ -52,9 +52,9 @@
 		</view>
 		<view class="photobox">
 			<!-- <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(0)" v-if="from == 1"></image> -->
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(1)" v-if="from == 1"></image>
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/allsearch.png" class="photo" @click="checkimg(1)" v-if="from == 1"></image>
 			<!-- <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(0)" v-if="from == 2"></image> -->
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(1)" v-if="from == 2"></image>
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/allsearch.png" class="photo" @click="checkimg(1)" v-if="from == 2"></image>
 		</view>
 	</view>
 </template>
@@ -82,6 +82,7 @@ export default {
 			type: 4,
 			textbook_list: [],
 			tpage: '',
+			fpage: '',
 			title: '',
 			subject_name: '',
 			flag: true
@@ -108,7 +109,7 @@ export default {
 			let _this = this;
 			setTimeout(function() {
 				_this.chooseTeaching(0);
-			}, 1000);
+			}, 618);
 		} else if (this.from == 2) {
 			//我的教辅详情
 			this.subtitle = '当前教辅';
@@ -120,7 +121,6 @@ export default {
 			console.log('this.obj', this.obj);
 			console.log('this.obj.tpage', this.obj.tpage);
 			console.log('onLoad(option)', this.textbook_id, this.subject_name);
-			//this.sumPage(5)
 			if (!this.obj.tpage) {
 				this.tpage = 1;
 				this.numArr = ['第1页'];
@@ -138,19 +138,19 @@ export default {
 				elem.status = false;
 				if (i == j) {
 					_this.tpage = elem.tpage;
+					_this.fpage = elem.fpage;
 					_this.textbook_id = elem.textbook_id;
 					_this.title = elem.textbook_name;
 					_this.textbook_list[i].status = true;
 				}
 			});
-			//this.sumPage(5)
-			_this.sumPage(_this.tpage);
+			_this.sumPage(_this.fpage,_this.tpage);
 		},
 		//页码总页数
-		sumPage(it) {
+		sumPage(ft  = 0,it) {
 			if (it) {
 				this.numArr = [];
-				for (let i = 0; i < it; i++) {
+				for (let i = ft; i < it; i++) {
 					this.numArr.push('第' + (i + 1) + '页');
 				}
 			}

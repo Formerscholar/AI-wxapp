@@ -14,13 +14,16 @@
 		</view>
 
 		<view class="card" @click="toTeachingPhoto(textbook_list[i], subject_name)" v-for="(item, i) of textbook_list" :key="i" v-if="textbook_list.length != 0">
-			<image :src="item.icon" mode="" class="subject"></image>
+			<image :src="item.icon"  class="subject"></image>
 			<view class="title">
 				<view>{{ item.textbook_name }}</view>
 				<view class="term">{{ item.semester }}学期</view>
 				<view class="version">{{ item.version_title }}</view>
 			</view>
-			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/phone_icons.png" mode="" class="detail"></image>
+			<view class="phone_icons">
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/phone_icons.png" mode="" class="detail"></image>
+				<text>单题拍照</text>
+			</view>
 		</view>
 		<view class="kong" v-if="textbook_list.length == 0">
 			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
@@ -228,14 +231,15 @@ page {
 	background: #fff;
 	display: flex;
 	flex-flow: row nowrap;
-	justify-content: flex-start;
+	justify-content: space-between;
 	image.subject {
-		width: 110rpx;
+		width: 100rpx;
 		height: 100%;
 		margin: 0 30rpx 0 0;
 		vertical-align: middle;
 	}
 	.title {
+		flex:1;
 		font-size: 0;
 		position: relative;
 		view {
@@ -245,7 +249,6 @@ page {
 		view:nth-of-type(1) {
 			color: #666666;
 			font-size: 30rpx;
-			width: 450rpx;
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
@@ -263,14 +266,22 @@ page {
 			display: inline-block;
 		}
 	}
-	image.detail {
-		width: 62rpx;
-		height: 62rpx;
-		position: absolute;
-		top: 50%;
-		right: 35rpx;
-		transform: translateY(-50%);
+	.phone_icons{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		
+		image.detail {
+			width: 62rpx;
+			height: 62rpx;
+		}
+		text{
+			font-size: 20rpx;
+			color: #808080;
+		}
 	}
+	
 }
 .card:nth-last-of-type(1) {
 	margin-bottom: 50rpx !important;

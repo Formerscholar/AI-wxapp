@@ -83,6 +83,11 @@
 			"style": {
 				"navigationBarTitleText": "支付页面"
 			}
+		},{
+			"path": "pages/mall/iostip",
+			"style": {
+				"navigationBarTitleText": "打开公众号"
+			}
 		}, {
 			"path": "pages/person/addClass",
 			"style": {

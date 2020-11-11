@@ -3,6 +3,7 @@
 </template>
 
 <script>
+	
 	export default {
 		data() {
 			return {
@@ -10,6 +11,7 @@
 			}
 		},
 		onLoad: function(options) {
+			
 			console.log(options)
 			const {
 				url
@@ -19,6 +21,7 @@
 			} else {
 				this.url = 'https://mall.aictb.com/m?wxapp_openid=' + uni.getStorageSync('openid')
 			}
+			
 		},
 	}
 </script>

@@ -129,7 +129,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="tabbarshop_warp" @click="tabbarshopClick">
+			<view class="tabbarshop_warp" @click="tabbarshopClick" >
 				<image class="tabbarshop" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tabbarshop.png" mode="widthFix"></image>
 			</view>
 		</view>
@@ -148,7 +148,7 @@
 </template>
 
 <script>
-// let app = getApp()
+	let app = getApp()
 import { mapState, mapMutations } from 'vuex';
 import { de_vip } from '@/common/common.js';
 export default {
@@ -209,9 +209,15 @@ export default {
 	},
 	methods: {
 		tabbarshopClick(){
-			uni.navigateTo({
-				url:'/pages/mall/index'
-			})
+			if (app.globalData.systemInfo.platform == "ios") {
+				uni.navigateTo({
+					url:"/pages/mall/iostip"
+				})
+			}else{
+				uni.navigateTo({
+					url:'/pages/mall/index'
+				})
+			}
 		},
 		closeTotul(){
 			uni.setStorageSync('is_totul', false);
