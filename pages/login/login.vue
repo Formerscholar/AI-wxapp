@@ -4,212 +4,227 @@
 			<image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/loginBg.png'></image>
 		</view>
 		<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/aiFalse.png" mode="" class='aiFalse'>
-		<view class="login">
-			<view class="sf">
-				请选择您的身份
-			</view>
-			<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,4)">我是学生(家长)</button>
-			<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,3)">我是老师</button>
-		</view>
-		<uni-popup ref="popup" type="center">
-			<view class="bindphone">
-				<view >
-					需要授权获取手机号
+			<view class="login">
+				<view class="sf">
+					请选择您的身份
 				</view>
-				<button open-type="getPhoneNumber" @getphonenumber="getphone">授权</button>
+				<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,4)">我是学生(家长)</button>
+				<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,3)">我是老师</button>
 			</view>
-		</uni-popup>
+			<uni-popup ref="popup" type="center">
+				<view class="bindphone">
+					<view>
+						需要授权获取手机号
+					</view>
+					<button open-type="getPhoneNumber" @getphonenumber="getphone">授权</button>
+				</view>
+			</uni-popup>
 	</view>
 </template>
 
 <script>
 	import uniPopup from "@/components/uni-popup/uni-popup.vue"
-	import { 
+	import {
 		mapState,
 		mapMutations
 	} from 'vuex';
-	
+
 	export default {
-		components: {uniPopup},
+		components: {
+			uniPopup
+		},
 		data() {
 			return {
-				number:'',
-				password:'',
-				loginmode:4,
-				type:4,
-				user_id:'',
-				userInfo:{},
-				sessionkey:'',
-				openid:'',
-				code:'',
+				number: '',
+				password: '',
+				loginmode: 4,
+				type: 4,
+				user_id: '',
+				userInfo: {},
+				sessionkey: '',
+				openid: '',
+				code: '',
 			};
 		},
 		onLoad() {
-			
+
 		},
-		methods:{ 
-			...mapMutations(['login','set_type']),
-			bindgetuserinfo(e,i){
+		methods: {
+			...mapMutations(['login', 'set_type']),
+			bindgetuserinfo(e, i) {
 				uni.login({
 					success: (res) => {
 						this.code = res.code
 						console.log(this.code)
 						uni.setStorage({
-							key:'type',
-							data:i,
+							key: 'type',
+							data: i,
 						})
-						console.log('bindgetuserinfo',e)
+						console.log('bindgetuserinfo', e)
 						this.userInfo = e.detail.userInfo
-						uni.setStorageSync('info',e.detail.userInfo)//头像  姓名
-						if(i==3){
+						uni.setStorageSync('info', e.detail.userInfo) //头像  姓名
+						if (i == 3) {
 							console.log(this.userInfo)
 							this.$api.teacher_login({
-								code:this.code,
-							})
-							.then(res=>{
-								this.sessionkey=res.data.session_key
-								this.openid=res.data.openid
-								uni.setStorage({
-									key:"openid",
-									data:this.openid
+									code: this.code,
 								})
-								console.log('res.data.data ',res.data)
-								if(res.code==200){
-									this.login(res.data)
-									uni.setStorage({//缓存用户登陆状态
-										key: 'userInfo',  
-										data: res.data
+								.then(res => {
+									this.sessionkey = res.data.session_key
+									this.openid = res.data.openid
+									uni.setStorage({
+										key: "unionid",
+										data: res.data.unionid
 									})
 									uni.setStorage({
-										key:"type",
-										data:3
+										key: "openid",
+										data: this.openid
 									})
-									uni.reLaunch({
-										url:'/pages/index/index'
-									})
-									// this.user_id=res.data.user_id 
-								}else{ 	
-									uni.setStorage({
-										key: 'openid',  
-										data: res.data.openid
-									})
-									this.$refs.popup.open()
-								}
-							})
-						}else{
-							console.log('学生登录',this.userInfo);
+									console.log('res.data.data ', res.data)
+									if (res.code == 200) {
+										this.login(res.data)
+										uni.setStorage({ //缓存用户登陆状态
+											key: 'userInfo',
+											data: res.data
+										})
+										uni.setStorage({
+											key: "type",
+											data: 3
+										})
+										uni.reLaunch({
+											url: '/pages/index/index'
+										})
+										// this.user_id=res.data.user_id 
+									} else {
+										uni.setStorage({
+											key: 'openid',
+											data: res.data.openid
+										})
+										this.$refs.popup.open()
+									}
+								})
+						} else {
+							console.log('学生登录', this.userInfo);
 							this.$api.student_login({
-								code:this.code
-							})
-							.then(res=>{
-								this.session_key=res.data.session_key
-								this.openid=res.data.openid
-								uni.setStorage({
-									key:"openid",
-									data:this.openid
+									code: this.code
 								})
-								console.log('res',res) 
-								if(res.code==200){
-									this.login(res.data)
+								.then(res => {
+									this.session_key = res.data.session_key
+									this.openid = res.data.openid
 									uni.setStorage({
-										key: 'is_vip',  
-										data: res.data.is_vip
-									})
-									uni.setStorage({//缓存用户登陆状态
-										key: 'userInfo',  
-										data: res.data
+										key: "unionid",
+										data: res.data.unionid
 									})
 									uni.setStorage({
-										key:"type",
-										data:4
+										key: "openid",
+										data: this.openid
 									})
-									uni.reLaunch({
-										url:'/pages/index/index'
-									})
-								}else if(res.code == 300){
-									uni.showToast({
-										title: res.msg,
-										icon: 'none'
-									});
-								}else{
-									uni.navigateTo({
-										url:'/pages/login/bindinfo'
-									})
-								}
-								
-							})
-						}		
+									console.log('res', res)
+									if (res.code == 200) {
+										this.login(res.data)
+										uni.setStorage({
+											key: 'is_vip',
+											data: res.data.is_vip
+										})
+										uni.setStorage({ //缓存用户登陆状态
+											key: 'userInfo',
+											data: res.data
+										})
+										uni.setStorage({
+											key: "type",
+											data: 4
+										})
+										uni.reLaunch({
+											url: '/pages/index/index'
+										})
+									} else if (res.code == 300) {
+										uni.showToast({
+											title: res.msg,
+											icon: 'none'
+										});
+									} else {
+										uni.navigateTo({
+											url: '/pages/login/bindinfo'
+										})
+									}
+
+								})
+						}
 					}
 				})
 			},
-			getphone(e){
-				
-				console.log(e)			
-				let data={
-					code:this.code,
-					iv:e.detail.iv,
-					encryptedData:e.detail.encryptedData,
-					sessionkey:this.sessionkey,
-					openid:this.openid,
-					user_name:this.userInfo.nickName,
-					avatar:this.userInfo.avatarUrl,
-					gender:this.userInfo.gender,
+			getphone(e) {
+
+				console.log(e)
+				let data = {
+					code: this.code,
+					iv: e.detail.iv,
+					encryptedData: e.detail.encryptedData,
+					sessionkey: this.sessionkey,
+					openid: this.openid,
+					user_name: this.userInfo.nickName,
+					avatar: this.userInfo.avatarUrl,
+					gender: this.userInfo.gender,
 				}
 				this.$api.get_mobile(data)
-				.then(res=>{
-					if(res.code==200){
-						this.login(res.data)
-						uni.reLaunch({
-							url:'/pages/index/index'
-						})
-					}else if(res.code==300){
-						uni.setStorageSync('mobile',res.data.mobile)
-						uni.reLaunch({
-							url:'/pages/login/bindinfo'
-						})
-					}
-					else{
-						uni.showToast({
-							title:res.msg,
-							icon:'none'
-						})
-					}
-					console.log(res)
-				})
+					.then(res => {
+						if (res.code == 200) {
+							this.login(res.data)
+							uni.reLaunch({
+								url: '/pages/index/index'
+							})
+						} else if (res.code == 300) {
+							uni.setStorageSync('mobile', res.data.mobile)
+							uni.reLaunch({
+								url: '/pages/login/bindinfo'
+							})
+						} else {
+							uni.showToast({
+								title: res.msg,
+								icon: 'none'
+							})
+						}
+						console.log(res)
+					})
 			},
 		}
 	}
 </script>
 
 <style lang="scss">
-	page{
-		font-family:PingFang SC;
+	page {
+		font-family: PingFang SC;
 	}
-	.content{
+
+	.content {
 		position: relative;
-		width:100vw;
+		width: 100vw;
 		height: 100vh;
 	}
-	.topBg{
-		width:100%;
+
+	.topBg {
+		width: 100%;
 		height: 518rpx;
-		image{
-			width:100%;
-			height:100%;
+
+		image {
+			width: 100%;
+			height: 100%;
 		}
 	}
-	.aiFalse{
-		width:367rpx;
-		height:80rpx;
+
+	.aiFalse {
+		width: 367rpx;
+		height: 80rpx;
 		margin: 72rpx auto 39rpx;
 		display: block;
 	}
-	.btn{
+
+	.btn {
 		display: flex;
 		justify-content: space-between;
 		//margin-top: 387rpx;
 		padding: 387rpx 30rpx 0;
-		view{
+
+		view {
 			text-align: center;
 			width: 256rpx;
 			height: 20rpx;
@@ -218,39 +233,44 @@
 			border-radius: 10rpx;
 			height: 80rpx;
 			line-height: 80rpx;
-			color: rgb(236,119,39);
+			color: rgb(236, 119, 39);
 			font-size: 35rpx;
 		}
 	}
-	.login{
+
+	.login {
 		width: 590rpx;
 		background: #fff;
 		margin: 0 auto;
 		border-radius: 10rpx;
 		display: flex;
 		flex-direction: column;
-		.sf{
+
+		.sf {
 			height: 40rpx;
 			line-height: 40rpx;
 			font-size: 28rpx;
 			color: #cccccc;
 			text-align: left;
 		}
-		button{
+
+		button {
 			// border: 1rpx solid #fff;
 			width: 100%;
 			height: 112rpx;
 			margin: 26rpx auto 0;
 			line-height: 112rpx;
-			color:#fff;
+			color: #fff;
 			font-size: 42rpx;
 			background: #ff2121;
 		}
-		button:nth-of-type(2){
+
+		button:nth-of-type(2) {
 			margin-top: 34rpx;
 		}
-		.zhanhao{
-			width:540rpx ;
+
+		.zhanhao {
+			width: 540rpx;
 			height: 80rpx;
 			margin: 35rpx 0 0 50%;
 			transform: translateX(-50%);
@@ -260,30 +280,34 @@
 			justify-content: space-between;
 			align-items: center;
 			padding: 0 30rpx;
-			image{			
+
+			image {
 				width: 40rpx;
 				height: 40rpx;
 			}
-			input{
+
+			input {
 				width: 80%;
 				height: 100%;
 			}
 		}
 	}
-	.text{
-		padding:0 50rpx;
+
+	.text {
+		padding: 0 50rpx;
 		height: 100rpx;
 		line-height: 100rpx;
 		display: flex;
 		justify-content: space-between;
-		color: rgb(236,119,39);
+		color: rgb(236, 119, 39);
 	}
-	.login-btn{
+
+	.login-btn {
 		width: 580rpx;
 		height: 80rpx;
 		color: #fff;
 		border-radius: 10rpx;
-		background-image:linear-gradient(left,rgb(222,81,28) 0%,rgb(240,150,50) 100%);
+		background-image: linear-gradient(left, rgb(222, 81, 28) 0%, rgb(240, 150, 50) 100%);
 		line-height: 80rpx;
 		text-align: center;
 		font-size: 30rpx;
@@ -291,48 +315,54 @@
 		margin-left: 50%;
 		transform: translateX(-50%);
 	}
-	.wx-btn{
+
+	.wx-btn {
 		width: 580rpx;
 		height: 80rpx;
 		border-radius: 50rpx;
-		border: 1rpx solid rgb(222,81,28);
+		border: 1rpx solid rgb(222, 81, 28);
 		background: #fff;
-		color: rgb(222,81,28);
+		color: rgb(222, 81, 28);
 		margin-top: 50rpx;
 		line-height: 80rpx
 	}
-	.banquan{
+
+	.banquan {
 		font-size: 20rpx;
 		color: #dedede;
 		text-align: center;
 		margin-top: 50rpx;
 	}
-	.bindphone{
+
+	.bindphone {
 		background: #fff;
 		width: 550rpx;
 		height: 600rpx;
 		border-radius: 20rpx;
-		view{
+
+		view {
 			font-size: 35rpx;
 			color: #888;
 			text-align: center;
 			height: 300rpx;
 			line-height: 300rpx;
 		}
-		button{
+
+		button {
 			width: 60%;
 			height: 100rpx;
 			margin: 0rpx auto;
 			line-height: 100rpx;
-			color:#fff;
+			color: #fff;
 			font-size: 32rpx;
 			border-radius: 20rpx;
-			background-image:linear-gradient(left,#e50304 0%,#f74300 80%);
+			background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
 		}
 	}
-	.b-b{
+
+	.b-b {
 		background: #F8601C !important;
-		border:1rpx solid transparent !important;
+		border: 1rpx solid transparent !important;
 		color: #fff !important;
 	}
 </style>

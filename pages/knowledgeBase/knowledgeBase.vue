@@ -310,7 +310,7 @@ export default {
 		//筛选习题
 		exercise_selection() {
 			console.log('123', this.know_point_list);
-			console.log('this.know_point_list[this.num_z]', this.know_point_list[this.num_z].id);
+			console.log('this.know_point_list[this.num_z]', this.know_point_list[this.num_z]?.id);
 			if (uni.getStorageSync('type') == 3) {
 				let data = {
 					token: this.token,
@@ -319,7 +319,7 @@ export default {
 					level: this.level_id,
 					//   this.grade is not an object
 					grade_id: this.grade[this.num_g]?.grade_id,
-					know_point: this.know_point_list[this.num_z].id,
+					know_point: this.know_point_list[this.num_z]?.id,
 					page: this.page
 				};
 				var req = this.$api.teacher_textbook_exercises(data);
@@ -331,7 +331,7 @@ export default {
 					type: this.question_id,
 					level: this.level_id,
 					grade_id: this.grade[this.num_g]?.grade_id,
-					know_point: this.know_point_list[this.num_z].id,
+					know_point: this.know_point_list[this.num_z]?.id,
 					page: this.page
 				};
 				var req = this.$api.textbook_exercises(data);
