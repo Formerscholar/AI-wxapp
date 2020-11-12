@@ -103,7 +103,7 @@
 									}
 								})
 						} else {
-							console.log('学生登录', this.userInfo);
+							console.log('学生登录', this.userInfo, this.code);
 							this.$api.student_login({
 									code: this.code
 								})
@@ -146,7 +146,6 @@
 											url: '/pages/login/bindinfo'
 										})
 									}
-
 								})
 						}
 					}
