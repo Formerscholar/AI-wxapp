@@ -32,6 +32,11 @@
 				school: '',
 				class_id: '',
 				school_id: '',
+				province_id:'',
+				city_id:'',
+				area_id:'',
+				grade_ids:'',
+				team_ids:'',
 				teacher_name: '',
 				token: '',
 				userInfo: {},
@@ -61,12 +66,12 @@
 					})
 					.then(res => {
 						console.log('get_team_location', res);
-						this.school_id = res.data.school_id;
+						this.school_id = res.data?.school_id || 0;
 						this.province_id = res.data?.area?.province_id || 0;
-						this.city_id = res.data.area.city_id;
-						this.area_id = res.data.area.area_id;
-						this.grade_ids = res.data.grade_id;
-						this.team_ids = res.data.id;
+						this.city_id = res.data?.area?.city_id || 0;
+						this.area_id = res.data?.area?.area_id || 0;
+						this.grade_ids = res.data?.grade_id || 0;
+						this.team_ids = res.data?.id || 0;
 						console.log('if (!res.data.isbind)', this.school_id);
 					});
 			},

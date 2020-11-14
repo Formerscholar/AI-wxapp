@@ -262,9 +262,17 @@
 				return `${ConvertedYear}-${ConvertedMonth}-${ConvertedDate}`;
 			},
 			pageToVip: function() {
-				uni.navigateTo({
-					url: '/pages/person/vip'
-				});
+				if (app.globalData.systemInfo.platform == 'ios') {
+					uni.showModal({
+						title: '温馨提示',
+						content: 'ios不支持该服务!',
+						showCancel:false
+					});
+				} else {
+					uni.navigateTo({
+						url: '/pages/person/vip'
+					});
+				}
 			},
 			uploadPaper: function() {
 				uni.navigateTo({

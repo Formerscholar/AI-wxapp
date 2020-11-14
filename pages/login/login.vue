@@ -69,7 +69,7 @@
 									code: this.code,
 								})
 								.then(res => {
-									this.sessionkey = res.data.session_key
+									this.sessionkey = res.data?.session_key
 									this.openid = res.data.openid
 									uni.setStorage({
 										key: "unionid",
@@ -108,7 +108,7 @@
 									code: this.code
 								})
 								.then(res => {
-									this.session_key = res.data.session_key
+									this.sessionkey = res.data?.session_key
 									this.openid = res.data.openid
 									uni.setStorage({
 										key: "unionid",

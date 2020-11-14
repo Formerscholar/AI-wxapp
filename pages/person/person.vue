@@ -17,14 +17,14 @@
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/rightWhite.png" class="detail"></image>
 			</view>
 
-			<view class="vip" v-if="info.user_vip_end_time && type == 4" @click="touser('/pages/person/vip')">
+			<view class="vip" v-if="info.user_vip_end_time && type == 4" @click="pageToVip">
 				<view class="endTimeInfo">
 					<view>我的VIP会员</view>
 					<view>VIP到期时间: {{ info.user_vip_end_time }}</view>
 				</view>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime.png"></image>
 			</view>
-			<view class="vip" v-if="!info.user_vip_end_time && type == 4" @click="touser('/pages/person/vip')">
+			<view class="vip" v-if="!info.user_vip_end_time && type == 4" @click="pageToVip">
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip.png"></image>
 			</view>
 			<view class="minePaper" @click="tocuoti()" v-if="type == 3">
@@ -145,6 +145,17 @@ export default {
 				this.touser('/pages/mall/iostip')
 			}else{
 				this.touser('/pages/mall/index')
+			}
+		},
+		pageToVip: function() {
+			if (app.globalData.systemInfo.platform == 'ios') {
+				uni.showModal({
+					title: '温馨提示',
+					content: 'ios不支持该服务!',
+					showCancel:false
+				});
+			} else {
+				this.touser('/pages/person/vip')
 			}
 		},
 		get_vip_info() {
