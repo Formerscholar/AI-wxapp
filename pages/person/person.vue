@@ -134,8 +134,8 @@ export default {
 	},
 	onShareAppMessage() {
 		return {
-			title: '错题宝',
-			path: '/pages/login/login?id=' + this.user_info.user_id
+			title: 'AI错题宝',
+			path: '/pages/index/index' 
 		};
 	},
 	methods: {
@@ -151,7 +151,7 @@ export default {
 			if (app.globalData.systemInfo.platform == 'ios') {
 				uni.showModal({
 					title: '温馨提示',
-					content: 'ios不支持该服务!',
+					content: '由于相关规范,ios功能暂不可用!',
 					showCancel:false
 				});
 			} else {

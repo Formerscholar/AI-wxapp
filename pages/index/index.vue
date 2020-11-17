@@ -44,7 +44,7 @@
 				</view>
 			</view>
 			<view class="right">
-				<view class="item" @click="todetail(7)">
+				<view class="item" @click="tobead">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mine_shijuan.png" mode=""></image>
 					<view class="title">
 						<text>校本试卷</text>
@@ -54,8 +54,7 @@
 						</view>
 					</view>
 				</view>
-
-				<view class="item" @click="todetail(9)">
+				<view class="item" @click="toresources">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaofu.png" mode=""></image>
 					<view class="title">
 						<text>名校资源</text>
@@ -174,6 +173,7 @@
 				banner_list: '',
 				token: '',
 				teacher_info: {},
+				teacher_infos: {},
 				student_info: {},
 				is_vip: '',
 				vip_time: '',
@@ -228,15 +228,53 @@
 			this.get_banner();
 			if (this.token && this.type == 3) {
 				this.get_teacher();
+				this.get_teacher_info()
 			}
 			if (this.token && this.type == 4) {
 				this.get_student();
 			}
 		},
+		onShareAppMessage() {
+			return {
+				title: 'AI错题宝',
+				path: '/pages/index/index'
+			};
+		},
 		computed: {
 			// ...mapState(['type'])
 		},
 		methods: {
+			get_teacher_info() {
+				let _this = this
+				this.$api.get_teacher_info({
+					token: _this.token
+				}).then(res => {
+					console.log(res, 'get_teacher_info')
+					_this.teacher_infos = res.data
+				})
+			},
+			toresources() {
+				if (this.teacher_infos.cert == 1 || this.teacher_infos.over_day < app.globalData.settings.over_day) {
+					this.todetail(9)
+				} else {
+					console.log('tishi', app.globalData.settings.over_day)
+					uni.showToast({
+						title: '您未认证无法查看名校资源!',
+						icon:'none'
+					});
+				}
+			},
+			tobead() {
+				if (this.teacher_infos.cert == 1) {
+					this.todetail(7)
+				} else {
+					console.log('tishi')
+					uni.showToast({
+						title: '您未认证无法查看校本试卷!',
+						icon:'none'
+					});
+				}
+			},
 			tabbarshopClick() {
 				if (app.globalData.systemInfo.platform == "ios") {
 					uni.navigateTo({
@@ -265,8 +303,8 @@
 				if (app.globalData.systemInfo.platform == 'ios') {
 					uni.showModal({
 						title: '温馨提示',
-						content: 'ios不支持该服务!',
-						showCancel:false
+						content: '由于相关规范,ios功能暂不可用!',
+						showCancel: false
 					});
 				} else {
 					uni.navigateTo({

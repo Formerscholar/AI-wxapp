@@ -71,6 +71,7 @@
 								.then(res => {
 									this.sessionkey = res.data?.session_key
 									this.openid = res.data.openid
+									
 									uni.setStorage({
 										key: "unionid",
 										data: res.data.unionid

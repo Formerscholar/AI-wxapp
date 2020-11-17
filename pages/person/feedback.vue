@@ -1,34 +1,48 @@
 <template>
 	<view>
-		<textarea v-model="str" maxlength="300" @input="sub" placeholder="请留下您的宝贵建议" placeholder-style="color:#dedede" />
+		<view class="title_box">
+			您的问题或建议：
+		</view>
+		<textarea v-model="str" maxlength="300" @input="sub" placeholder="请输入您的反馈意见" placeholder-style="color:#dedede" />
 		<!-- <text class="num">{{num}}</text> -->
-
+<view class="title_box">
+			上传图片
+		</view>
 		<view class="picInfo">
-			<view class="advice">上传图片</view>
 			<view v-for="(item, i) of imgSrc" class="picView" :key="i">
 				<image class="delete" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/deletePic.png" @click="deleteImg(i)"></image>
 				<image :src="item" class="pics"></image>
 			</view>
 			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/uploadPics.png" class="uploadPics" @click="checkimg()"></image>
 		</view>
+		<!-- phone -->
+		<view class="title_box">
+					您的联系方式：
+				</view>
+				<input class="input_box" v-model="phone"  type="number" placeholder="输入电话号码" placeholder-style="color:#dedede" />
+				<view class="pl_text">留下您的联系方式，以便我们了解问题后及时反馈和结果，紧急问题请联系客服。</view>
 		<button class="btn" @click="tj()">确定</button>
 	</view>
 </template>
 
 <script>
+	let app = getApp();
 export default {
 	data() {
 		return {
 			num: 300,
 			str: '',
+			phone: '',
 			imgSrc: [],
-			picData: ''
+			picData: '',
+			tpmid:''
 		};
 	},
 	onLoad() {
 		if (uni.getStorageSync('token')) {
 			this.token = uni.getStorageSync('token');
 		}
+		this.tpmid = app.globalData.settings.tmpid;
 	},
 	methods: {
 		deleteImg: function(i) {
@@ -71,26 +85,36 @@ export default {
 			}
 		},
 		tj() {
-			if (uni.getStorageSync('type') == 3) {
-				var req = this.$api.teacher_feedback({ token: this.token, content: this.str, pics: this.imgSrc });
-			} else {
-				var req = this.$api.feedback({ token: this.token, content: this.str, pics: this.imgSrc });
-			}
-			req.then(res => {
-				console.log(res);
-				if (res.code == 200) {
-					uni.showToast({
-						title: '提交成功！'
+			let arrTpmid = this.tpmid.feedback_notice;
+			console.log(arrTpmid)
+			uni.requestSubscribeMessage({
+				tmplIds: arrTpmid,
+				complete: res => {
+					if (uni.getStorageSync('type') == 3) {
+						var req = this.$api.teacher_feedback({ token: this.token, content: this.str, pics: this.imgSrc ,contact:this.phone });
+					} else {
+						var req = this.$api.feedback({ token: this.token, content: this.str, pics: this.imgSrc,contact:this.phone });
+					}
+					req.then(res => {
+						console.log(res);
+						if (res.code == 200) {
+							uni.showToast({
+								title: '提交成功!'
+							});
+							setTimeout(() => {
+								uni.navigateBack();
+							}, 1000);
+							
+						} else {
+							uni.showToast({
+								title: res.msg,
+								icon: 'none'
+							});
+						}
 					});
-					setTimeout(() => {
-						uni.navigateBack();
-					}, 1000);
-				} else {
-					uni.showToast({
-						title: res.msg,
-						icon: 'none'
-					});
-				}
+				},
+				success: function(res) {},
+				fail: function(res) {}
 			});
 		},
 		sub(e) {
@@ -105,7 +129,14 @@ page {
 	box-sizing: border-box;
 	background: #eee;
 }
-textarea {
+.title_box{
+	font-size: 30rpx;
+	font-family: 'PingFang SC';
+	font-weight: bold;
+	color: #333333;
+	margin: 24rpx;
+}
+textarea{
 	padding: 30rpx;
 	width: 700rpx;
 	height: 500rpx;
@@ -116,6 +147,24 @@ textarea {
 	font-size: 32rpx;
 	background: #fff;
 	// color:#cdcdcd;
+}
+.input_box{
+	height: 85rpx;
+	background: #FFFFFF;
+	border: 1px solid #E5E5E5;
+	border-radius: 16rpx;
+	padding: 20rpx;
+	margin: 25rpx;
+	box-sizing: border-box;
+	font-size: 32rpx;
+}
+.pl_text{
+	font-size: 20rpx;
+	font-family: PingFang SC;
+	font-weight: 500;
+	color: #CCCCCC;
+margin: 25rpx;
+text-align: center;
 }
 .num {
 	display: block;
@@ -145,15 +194,20 @@ textarea {
 	box-sizing: border-box;
 	width: 700rpx;
 	border-radius: 20rpx;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
 	.picView {
 		width: 143rpx;
 		height: 143rpx;
 		position: relative;
 		margin: 30rpx 20rpx 0 0;
-		display: inline-block;
+	
 		.pics {
-			width: 100%;
-			height: 100%;
+			width: 139rpx;
+			height: 140rpx;
+			border-radius: 16rpx;
+
 			vertical-align: middle;
 		}
 	}
