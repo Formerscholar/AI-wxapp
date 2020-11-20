@@ -54,7 +54,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="item" @click="toresources">
+				<view class="item" @click="todetail(9)">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaofu.png" mode=""></image>
 					<view class="title">
 						<text>名校资源</text>
@@ -228,7 +228,6 @@
 			this.get_banner();
 			if (this.token && this.type == 3) {
 				this.get_teacher();
-				this.get_teacher_info()
 			}
 			if (this.token && this.type == 4) {
 				this.get_student();
@@ -240,30 +239,7 @@
 				path: '/pages/index/index'
 			};
 		},
-		computed: {
-			// ...mapState(['type'])
-		},
 		methods: {
-			get_teacher_info() {
-				let _this = this
-				this.$api.get_teacher_info({
-					token: _this.token
-				}).then(res => {
-					console.log(res, 'get_teacher_info')
-					_this.teacher_infos = res.data
-				})
-			},
-			toresources() {
-				if (this.teacher_infos.cert == 1 || this.teacher_infos.over_day < app.globalData.settings.over_day) {
-					this.todetail(9)
-				} else {
-					console.log('tishi', app.globalData.settings.over_day)
-					uni.showToast({
-						title: '您未认证无法查看名校资源!',
-						icon: 'none'
-					});
-				}
-			},
 			tobead() {
 				if (this.teacher_infos.cert == 1) {
 					this.todetail(7)
@@ -382,11 +358,7 @@
 				} else if (i == 8) {
 					url = '/pages/learningReport/j-xueqingbaogao';
 				} else if (i == 9) {
-					if (this.type == 4) {
-						url = de_vip(this.is_vip, '名校资源', '/pages/myPaper/new_paper');
-					} else {
-						url = '/pages/myPaper/new_paper';
-					}
+					url = '/pages/myPaper/new_paper';
 				}
 				uni.navigateTo({
 					url: url

@@ -20,7 +20,7 @@
 						<view class="time">{{ item.add_time }}</view>
 					</view>
 				</view>
-				<view class="right" @click.stop="generated(item.paper_id,item.title)">
+				<view class="right" @click.stop="generated(item.paper_id,item.title,0)">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image>
 				</view>
 			</view>
@@ -36,7 +36,7 @@
 						<view class="time">{{ item.add_time }}</view>
 					</view>
 				</view>
-				<view class="right" @click.stop="generated(item.based_id,item.title)">
+				<view class="right" @click.stop="generated(item.based_id,item.title,1)">
 					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image>
 				</view>
 				<!-- <image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png' class='right'></image> -->
@@ -118,7 +118,8 @@
 				email_arr: [],
 				evtvalue: 1,
 				is_vip: false,
-				errorbook_title: ''
+				errorbook_title: '',
+				teacher_infos: {},
 			};
 		},
 		onReachBottom() {
@@ -173,16 +174,16 @@
 					down_type: this.evtvalue,
 					is_email: 0
 				};
-				
+
 				if (this.type == 3) {
 					this.$api.get_download_based(data).then(res => {
 						uni.showToast({
 							title: '下载中...',
 							icon: 'loading',
-								duration:5000
+							duration: 5000
 						});
 						if (res.code == 200) {
-							if (app.globalData.systemInfo.platform  == "ios") {
+							if (app.globalData.systemInfo.platform == "ios") {
 								uni.downloadFile({
 									url: res.data.pdf,
 									header: {
@@ -190,8 +191,8 @@
 									},
 									success: (res) => {
 										uni.saveFile({
-											tempFilePath:res.tempFilePath,
-											success:(res)=>{
+											tempFilePath: res.tempFilePath,
+											success: (res) => {
 												uni.showToast({
 													title: '已下载,正在打开',
 													icon: 'success'
@@ -201,12 +202,12 @@
 													content: '如无法打开,请使用邮箱下载!',
 													cancelColor: '#eeeeee',
 													confirmColor: '#FF0000',
-													showCancel:false,
+													showCancel: false,
 													success(res2) {
 														if (res2.confirm) {
 															uni.openDocument({
 																filePath: res.savedFilePath,
-																fileType:"pdf",
+																fileType: "pdf",
 																showMenu: true,
 																fail: () => {
 																	uni.showToast({
@@ -229,7 +230,7 @@
 									},
 								})
 							} else {
-								let filePath =  `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
+								let filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
 								uni.downloadFile({
 									url: res.data.pdf,
 									header: {
@@ -260,7 +261,7 @@
 									},
 								})
 							}
-						}else{
+						} else {
 							uni.showToast({
 								title: res.msg,
 								icon: 'error'
@@ -279,7 +280,7 @@
 							uni.showToast({
 								title: '下载中...',
 								icon: 'loading',
-								duration:5000
+								duration: 5000
 							});
 							if (res.code == 200) {
 								if (app.globalData.systemInfo.platform == "ios") {
@@ -290,8 +291,8 @@
 										},
 										success: (res) => {
 											uni.saveFile({
-												tempFilePath:res.tempFilePath,
-												success:(res)=>{
+												tempFilePath: res.tempFilePath,
+												success: (res) => {
 													uni.showToast({
 														title: '已下载,正在打开',
 														icon: 'success'
@@ -301,12 +302,12 @@
 														content: '如无法打开,请使用邮箱下载!',
 														cancelColor: '#eeeeee',
 														confirmColor: '#FF0000',
-														showCancel:false,
+														showCancel: false,
 														success(res2) {
 															if (res2.confirm) {
 																uni.openDocument({
 																	filePath: res.savedFilePath,
-																	fileType:"pdf",
+																	fileType: "pdf",
 																	showMenu: true,
 																	fail: () => {
 																		uni.showToast({
@@ -329,7 +330,7 @@
 										},
 									})
 								} else {
-									let filePath =  `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
+									let filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
 									uni.downloadFile({
 										url: res.data.pdf,
 										header: {
@@ -360,12 +361,12 @@
 										},
 									})
 								}
-							}else{
-							uni.showToast({
-								title: res.msg,
-								icon: 'error'
-							})
-						}
+							} else {
+								uni.showToast({
+									title: res.msg,
+									icon: 'error'
+								})
+							}
 						});
 					}
 				}
@@ -431,11 +432,42 @@
 					}
 				});
 			},
+			get_teacher_info() {
+				let _this = this
+				this.$api.get_teacher_info({
+					token: _this.token
+				}).then(res => {
+					console.log(res, 'get_teacher_info')
+					_this.teacher_infos = res.data
+				})
+			},
 			//点击生成错题本/生成试卷
-			generated(id, title) {
-				this.based_id = id;
-				this.errorbook_title = title
-				this.$refs.botpopup.open();
+			generated(id, title, type) {
+				if (type) {
+					if (this.teacher_infos.cert == 1 || this.teacher_infos.over_day < app.globalData.settings.over_day) {
+						this.based_id = id;
+						this.errorbook_title = title
+						this.$refs.botpopup.open();
+					} else {
+						console.log('tishi', app.globalData.settings.over_day)
+						uni.showToast({
+							title: '您未认证无法下载名校资源!',
+							icon: 'none'
+						});
+					}
+				} else {
+					let is_vip = uni.getStorageSync('is_vip')
+					if (is_vip) {
+						this.based_id = id;
+						this.errorbook_title = title
+						this.$refs.botpopup.open();
+					} else{
+						uni.showToast({
+							title: '非会员用户不可下载名校资源!',
+							icon: 'none'
+						});
+					}
+				}
 			},
 			//发送邮箱
 			fasong(type) {
