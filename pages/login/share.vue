@@ -32,16 +32,17 @@
 				school: '',
 				class_id: '',
 				school_id: '',
-				province_id:'',
-				city_id:'',
-				area_id:'',
-				grade_ids:'',
-				team_ids:'',
+				province_id: '',
+				city_id: '',
+				area_id: '',
+				grade_ids: '',
+				team_ids: '',
 				teacher_name: '',
 				token: '',
 				userInfo: {},
 				code: '',
-				openid: ''
+				openid: '',
+				unionid:''
 			};
 		},
 		onLoad(options) {
@@ -85,55 +86,46 @@
 				});
 			},
 			get_bind_info() {
-				uni.login({
-					success: res => {
-						this.$api.student_login({
-							code: res.code
-						}).then(res => {
-							this.$api
-								.bind_info({
-									school_id: this.school_id,
-									province_id: this.province_id,
-									city_id: this.city_id,
-									area_id: this.area_id,
-									grade_ids: this.grade_ids,
-									team_ids: this.team_ids,
-									true_name: this.true_name,
-									user_name: this.userInfo?.nickName || '',
-									avatar: this.userInfo?.avatarUrl || '',
-									gender: this.userInfo?.gender || '',
-									openid: this.openid_tmp,
-									unionid: res.data.unionid
-								})
-								.then(reslove => {
-									console.log('bind_info', reslove);
-									uni.showToast({
-										title: reslove.msg,
-										icon: 'none'
-									});
-									if (reslove.code == 200) {
-										this.login(reslove.data);
-										uni.setStorage({
-											key: 'userinfo_tmp',
-											data: reslove.data
-										});
-										uni.setStorage({
-											key: 'token',
-											data: reslove.data.token
-										});
-										uni.setStorage({
-											key: 'userInfo',
-											data: reslove.data
-										});
-										uni.reLaunch({
-											url: '/pages/index/index'
-										});
-									}
-								});
-						})
-					}
-				});
-
+				this.$api
+					.bind_info({
+						school_id: this.school_id,
+						province_id: this.province_id,
+						city_id: this.city_id,
+						area_id: this.area_id,
+						grade_ids: this.grade_ids,
+						team_ids: this.team_ids,
+						true_name: this.true_name,
+						user_name: this.userInfo?.nickName || '',
+						avatar: this.userInfo?.avatarUrl || '',
+						gender: this.userInfo?.gender || '',
+						openid: this.openid_tmp,
+						unionid: this.unionid
+					})
+					.then(reslove => {
+						console.log('bind_info', reslove);
+						uni.showToast({
+							title: reslove.msg,
+							icon: 'none'
+						});
+						if (reslove.code == 200) {
+							this.login(reslove.data);
+							uni.setStorage({
+								key: 'userinfo_tmp',
+								data: reslove.data
+							});
+							uni.setStorage({
+								key: 'token',
+								data: reslove.data.token
+							});
+							uni.setStorage({
+								key: 'userInfo',
+								data: reslove.data
+							});
+							uni.reLaunch({
+								url: '/pages/index/index'
+							});
+						}
+					});
 			},
 			get_student_login() {
 				this.$api
@@ -146,6 +138,7 @@
 						if (res.code == 200) {
 							this.user_id = res.data.user_id;
 							this.true_name = res.data.true_name;
+							this.unionid = res.data.unionid
 							uni.setStorage({
 								key: 'userinfo_tmp',
 								data: res.data

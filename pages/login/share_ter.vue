@@ -61,7 +61,8 @@
 				$e: '',
 				$i: '',
 				sessionkey: '',
-				openid: ''
+				openid: '',
+				unionid:''
 			};
 		},
 		onLoad(options) {
@@ -109,47 +110,39 @@
 					});
 			},
 			get_teacher_bind_info() {
-				uni.login({
-					success: res => {
-						this.$api.teacher_login({
-							code: res.code
-						}).then(res => {
-							this.$api
-								.teacher_bind_info({
-									province_id: this.province_id,
-									city_id: this.city_id,
-									area_id: this.area_id,
-									school_id: this.school,
-									subject_id: this.subject_id,
-									true_name: this.true_name,
-									mobile: this.mobile,
-									openid: this.openid,
-									nickName: this.user_info.nickName,
-									avatar: this.user_info.avatarUrl,
-									gender: this.user_info.gender,
-									unionid: res.data.unionid
-								})
-								.then(res => {
-									console.log(res);
-									if (res.code == 200) {
-										uni.setStorage({
-											key: 'token',
-											data: res.data.token,
-											success:()=>{
-												this.login(res.data);
-												this.joinTeam();
-											}
-										});
-									} else {
-										uni.showToast({
-											title: res.msg,
-											icon: 'none'
-										});
-									}
-								});
-						})
-					}
-				});
+				this.$api
+					.teacher_bind_info({
+						province_id: this.province_id,
+						city_id: this.city_id,
+						area_id: this.area_id,
+						school_id: this.school,
+						subject_id: this.subject_id,
+						true_name: this.true_name,
+						mobile: this.mobile,
+						openid: this.openid,
+						nickName: this.user_info.nickName,
+						avatar: this.user_info.avatarUrl,
+						gender: this.user_info.gender,
+						unionid: this.unionid
+					})
+					.then(res => {
+						console.log(res);
+						if (res.code == 200) {
+							uni.setStorage({
+								key: 'token',
+								data: res.data.token,
+								success: () => {
+									this.login(res.data);
+									this.joinTeam();
+								}
+							});
+						} else {
+							uni.showToast({
+								title: res.msg,
+								icon: 'none'
+							});
+						}
+					});
 			},
 			bindgetuserinfo(e, i) {
 				this.user_info = e.detail.userInfo;
@@ -198,6 +191,7 @@
 								console.log('get_teacher_login', res);
 								this.sessionkey = res.data.session_key;
 								this.openid = res.data.openid;
+								this.unionId = res.data.unionId
 								if (res.code == 200) {
 									this.login(res.data);
 									this.mobile = res.data.mobile;

@@ -260,7 +260,7 @@
 					console.log('tishi', app.globalData.settings.over_day)
 					uni.showToast({
 						title: '您未认证无法查看名校资源!',
-						icon:'none'
+						icon: 'none'
 					});
 				}
 			},
@@ -271,7 +271,7 @@
 					console.log('tishi')
 					uni.showToast({
 						title: '您未认证无法查看校本试卷!',
-						icon:'none'
+						icon: 'none'
 					});
 				}
 			},
@@ -301,10 +301,9 @@
 			},
 			pageToVip: function() {
 				if (app.globalData.systemInfo.platform == 'ios') {
-					uni.showModal({
-						title: '温馨提示',
-						content: '由于相关规范,ios功能暂不可用!',
-						showCancel: false
+					uni.showToast({
+						title: '由于相关规范,ios功能暂不可用!',
+						icon: 'none'
 					});
 				} else {
 					uni.navigateTo({
