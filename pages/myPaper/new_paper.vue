@@ -147,6 +147,9 @@
 				this.subject_fenlei();
 			}
 		},
+		onShow() {
+			this.get_teacher_info()
+		},
 		methods: {
 			radioChange(evt) {
 				const {

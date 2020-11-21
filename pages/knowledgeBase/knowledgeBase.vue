@@ -202,7 +202,7 @@ export default {
 		if (uni.getStorageSync('is_vip')) {
 			this.is_vip = uni.getStorageSync('is_vip');
 		}
-		this.get_konw();
+		// this.get_konw();
 	},
 	methods: {
 		changeStyle(item) {
@@ -249,6 +249,7 @@ export default {
 				this.exercise_type();
 				this.get_konw();
 				// this.select_s()
+				 this.subject_id = list[0].id
 				console.log(this.subject_list);
 			});
 		},

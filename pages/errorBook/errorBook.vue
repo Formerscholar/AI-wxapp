@@ -666,59 +666,52 @@
 			//点击加入试卷确认按钮
 			add_exercises_to_errorbook() {
 				this.$refs.popupJoin.close();
-				uni.showModal({
-					title: '确定加入吗？',
-					success: res => {
-						if (res.confirm) {
-							let arrWei = [],
-								arrYi = [],
-								str = '',
-								str1 = '';
-
-							this.exercises_list.forEach((elem, i, arr1) => {
-								if (elem.select) {
-									arrWei.push(elem.exercises_id);
-								}
-							});
-							this.errorbook_list.forEach((elem, i, arr1) => {
-								if (elem.status) {
-									arrYi.push(elem.errorbook_id);
-								}
-							});
-							str = arrWei.toString();
-							str1 = arrYi.toString();
-							let req = '';
-							if (this.type == 4) {
-								req = this.$api.add_exercises_to_errorbook_user({
-									token: this.token,
-									exercises_ids: str,
-									error_book_ids: str1
-								});
-							} else {
-								req = this.$api.add_exercises_to_errorbook({
-									token: this.token,
-									exercises_ids: str,
-									error_book_ids: str1
-								});
-							}
-							req.then(res => {
-								console.log(res);
-								if (res.code == 200) {
-									uni.showToast({
-										title: '添加成功'
-									});
-									this.page = 1;
-									this.wei_error_book();
-									this.generated_error_book();
-									this.all = true;
-								} else {
-									uni.showToast({
-										title: res.msg,
-										icon: 'none'
-									});
-								}
-							});
-						}
+				let arrWei = [],
+					arrYi = [],
+					str = '',
+					str1 = '';
+				
+				this.exercises_list.forEach((elem, i, arr1) => {
+					if (elem.select) {
+						arrWei.push(elem.exercises_id);
+					}
+				});
+				this.errorbook_list.forEach((elem, i, arr1) => {
+					if (elem.status) {
+						arrYi.push(elem.errorbook_id);
+					}
+				});
+				str = arrWei.toString();
+				str1 = arrYi.toString();
+				let req = '';
+				if (this.type == 4) {
+					req = this.$api.add_exercises_to_errorbook_user({
+						token: this.token,
+						exercises_ids: str,
+						error_book_ids: str1
+					});
+				} else {
+					req = this.$api.add_exercises_to_errorbook({
+						token: this.token,
+						exercises_ids: str,
+						error_book_ids: str1
+					});
+				}
+				req.then(res => {
+					console.log(res);
+					if (res.code == 200) {
+						uni.showToast({
+							title: '添加成功'
+						});
+						this.page = 1;
+						this.wei_error_book();
+						this.generated_error_book();
+						this.all = true;
+					} else {
+						uni.showToast({
+							title: res.msg,
+							icon: 'none'
+						});
 					}
 				});
 			},

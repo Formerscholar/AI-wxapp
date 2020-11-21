@@ -149,10 +149,9 @@ export default {
 		},
 		pageToVip: function() {
 			if (app.globalData.systemInfo.platform == 'ios') {
-				uni.showModal({
-					title: '温馨提示',
-					content: '由于相关规范,ios功能暂不可用!',
-					showCancel:false
+				uni.showToast({
+					title: '由于相关规范,ios功能暂不可用!',
+					icon: 'none'
 				});
 			} else {
 				this.touser('/pages/person/vip')
