@@ -148,7 +148,9 @@
 			}
 		},
 		onShow() {
-			this.get_teacher_info()
+			if (this.type == 3) {
+				this.get_teacher_info()
+			}
 		},
 		methods: {
 			radioChange(evt) {

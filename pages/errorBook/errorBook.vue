@@ -148,12 +148,19 @@
 				</view>
 				<scroll-view scroll-y="true">
 					<view class="listJoin" v-if="errorbook_list.length != 0">
-						<view v-for="(item, i) of errorbook_list" :key="i" @click="seletJoin(i)">
+						<radio-group @change="seletJoin">
+							<label class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in errorbook_list" :key="index">
+								<view class="grop_box">
+									<radio :value="index" :checked="index === current" color="#e50304" />{{item.title}}
+								</view>
+							</label>
+						</radio-group>
+						<!-- <view v-for="(item, i) of errorbook_list" :key="i" @click="seletJoin(i)">
 							<view v-if="update" :class="{ 'b-n': item.status }" class="kuang"></view>
 							<view>
 								<text>{{ item.title }}</text>
 							</view>
-						</view>
+						</view> -->
 					</view>
 					<view v-else class="listJoin none">您还没有生成{{ type == 4 ? '错题本' : '试卷' }}!</view>
 				</scroll-view>
@@ -264,7 +271,11 @@
 				email_arr: [],
 				btndisabled: true,
 				evtvalue: 1,
-				errorbook_title: ''
+				errorbook_title: '',
+				arrWei: [],
+				arrYi: [],
+				str: '',
+				str1: ''
 			};
 		},
 		onReachBottom() {
@@ -359,7 +370,7 @@
 							uni.showToast({
 								title: '下载中...',
 								icon: 'loading',
-								duration:5000
+								duration: 5000
 							});
 							if (app.globalData.systemInfo.platform == "ios") {
 								uni.downloadFile({
@@ -380,7 +391,7 @@
 													content: '如无法打开,请使用邮箱下载!',
 													cancelColor: '#eeeeee',
 													confirmColor: '#FF0000',
-													showCancel:false,
+													showCancel: false,
 													success(res2) {
 														if (res2.confirm) {
 															uni.openDocument({
@@ -459,7 +470,7 @@
 								uni.showToast({
 									title: '下载中...',
 									icon: 'loading',
-								duration:5000
+									duration: 5000
 								});
 								if (app.globalData.systemInfo.platform == "ios") {
 									console.log('ios')
@@ -481,7 +492,7 @@
 														content: '如无法打开,请使用邮箱下载!',
 														cancelColor: '#eeeeee',
 														confirmColor: '#FF0000',
-														showCancel:false,
+														showCancel: false,
 														success(res2) {
 															if (res2.confirm) {
 																uni.openDocument({
@@ -542,12 +553,12 @@
 								}
 
 
-							}else {
-							uni.showToast({
-								title: res.msg,
-								icon: 'error'
-							})
-						}
+							} else {
+								uni.showToast({
+									title: res.msg,
+									icon: 'error'
+								})
+							}
 						});
 					}
 				}
@@ -652,13 +663,22 @@
 				this.update = false;
 				this.update = true;
 			},
-			seletJoin(i) {
-				console.log('i', i);
-				if (this.errorbook_list[i].status) {
-					this.errorbook_list[i].status = false;
-				} else {
-					this.errorbook_list[i].status = true;
-				}
+			seletJoin(e) {
+				console.log('e', e.detail.value);
+				const idx = e.detail.value
+				this.arrYi=[]
+				this.errorbook_list.map((item, index) => {
+					if (index == idx) {
+						item.status = true
+					} else {
+						item.status = false
+					}
+				})
+				// if (this.errorbook_list[idx].status) {
+				// 	this.errorbook_list[idx].status = false;
+				// } else {
+				// 	this.errorbook_list[idx].status = true;
+				// }
 			},
 			cancelPopupJoin() {
 				this.$refs.popupJoin.close();
@@ -666,35 +686,33 @@
 			//点击加入试卷确认按钮
 			add_exercises_to_errorbook() {
 				this.$refs.popupJoin.close();
-				let arrWei = [],
-					arrYi = [],
-					str = '',
-					str1 = '';
-				
+				this.arrWei=[]
 				this.exercises_list.forEach((elem, i, arr1) => {
 					if (elem.select) {
-						arrWei.push(elem.exercises_id);
+						this.arrWei.push(elem.exercises_id);
 					}
 				});
 				this.errorbook_list.forEach((elem, i, arr1) => {
 					if (elem.status) {
-						arrYi.push(elem.errorbook_id);
+						this.arrYi.push(elem.errorbook_id);
 					}
 				});
-				str = arrWei.toString();
-				str1 = arrYi.toString();
+				this.str = ''
+				this.str = this.arrWei.toString();
+				this.str1 = ''
+				this.str1 = this.arrYi.toString();
 				let req = '';
 				if (this.type == 4) {
 					req = this.$api.add_exercises_to_errorbook_user({
 						token: this.token,
-						exercises_ids: str,
-						error_book_ids: str1
+						exercises_ids: this.str,
+						error_book_ids: this.str1
 					});
 				} else {
 					req = this.$api.add_exercises_to_errorbook({
 						token: this.token,
-						exercises_ids: str,
-						error_book_ids: str1
+						exercises_ids: this.str,
+						error_book_ids: this.str1
 					});
 				}
 				req.then(res => {
@@ -707,10 +725,16 @@
 						this.wei_error_book();
 						this.generated_error_book();
 						this.all = true;
+						this.errorbook_list.map((elem, i) => {
+							elem.status = false
+						});
 					} else {
 						uni.showToast({
 							title: res.msg,
 							icon: 'none'
+						});
+						this.errorbook_list.map((elem, i) => {
+							elem.status = false
 						});
 					}
 				});
@@ -1587,6 +1611,11 @@
 
 			.listJoin {
 				padding: 10rpx 0;
+
+				.grop_box {
+					padding: 25rpx;
+					padding-bottom: 0;
+				}
 
 				>view {
 					display: flex;
