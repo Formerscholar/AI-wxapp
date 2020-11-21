@@ -2,17 +2,15 @@ import {
 	request
 } from './util.js'
 
-// const ApiUrl = 'https://api.aictb.com/v1/' //生产环境
-// const ApiUrl = 'https://api.aictb.com/v2/' //生产环境ss
-const ApiUrl = 'https://api.aictb.com/v3/' //生产环境sss
-// const ApiUrl = 'http://test.aictb.com:8083/v2/' //测试环境
-
+const ApiUrl = 'https://api.aictb.com/v3/' //生产环境
 
 
 
 module.exports = {
 	// : data => request(ApiUrl+'',data),
 	url: ApiUrl,
+	login: data => request(ApiUrl + 'wechat/login/', data), //
+	update_userinfo: data => request(ApiUrl + 'wechat/update/', data), //
 	//----------------------------- 学生
 	//登录注册
 	bind_info: data => request(ApiUrl + 'user/bind_info/', data), //绑定信息
