@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="bg2"></view>
 		<view class="card">
-			<view class="price">
+			<view class="price" v-if="platform != 'ios'">
 				<view class="original" v-if="is_discount">￥{{ price }}</view>
 				<view class="discount">￥{{ info.vip_money ? info.vip_money : '' }}</view>
 			</view>
@@ -43,7 +43,7 @@
 			<text>{{ userInfo.is_vip ? '立即续费' : '开通会员' }}</text>
 		</view>
 		<view class="ios_tip" v-else>
-			由于相关规范,ios功能暂不可用!
+			由于相关规范，IOS暂不可购买会员!
 			<view class="paddbot">
 				
 			</view>
