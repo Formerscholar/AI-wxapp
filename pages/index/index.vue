@@ -83,8 +83,9 @@
 			<view class="vipouttime" @click="pageToVip" v-if="invest">
 				<image class="left_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/indexvipicon.png" mode="widthFix"></image>
 				<view class="content_text">{{ is_vip ? `您的会员将于${setTimeType(vip_time * 1000) || 0}到期` : '申请VIP会员 · 了解更多特权' }}</view>
-				<image class="right_btn" v-if="is_vip" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/Renew.png" mode="widthFix"></image>
-				<image class="right_btn" v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/indexvipbtn.png" mode="widthFix"></image>
+			 <image class="right_btn"  src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vip_info.png" mode="widthFix"></image>
+					<!--<image class="right_btn" v-if="is_vip" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/Renew.png" mode="widthFix"></image>
+				<image class="right_btn" v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/indexvipbtn.png" mode="widthFix"></image> -->
 			</view>
 
 			<view class="flex">
@@ -276,16 +277,19 @@
 				return `${ConvertedYear}-${ConvertedMonth}-${ConvertedDate}`;
 			},
 			pageToVip: function() {
-				if (app.globalData.systemInfo.platform == 'ios') {
-					uni.showToast({
-						title: '由于相关规范,ios功能暂不可用!',
-						icon: 'none'
-					});
-				} else {
-					uni.navigateTo({
-						url: '/pages/person/vip'
-					});
-				}
+				uni.navigateTo({
+					url: '/pages/person/vip'
+				});
+				// if (app.globalData.systemInfo.platform == 'ios') {
+				// 	uni.showToast({
+				// 		title: '由于相关规范,ios功能暂不可用!',
+				// 		icon: 'none'
+				// 	});
+				// } else {
+				// 	uni.navigateTo({
+				// 		url: '/pages/person/vip'
+				// 	});
+				// }
 			},
 			uploadPaper: function() {
 				uni.navigateTo({

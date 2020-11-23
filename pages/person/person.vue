@@ -148,14 +148,15 @@ export default {
 			}
 		},
 		pageToVip: function() {
-			if (app.globalData.systemInfo.platform == 'ios') {
-				uni.showToast({
-					title: '由于相关规范,ios功能暂不可用!',
-					icon: 'none'
-				});
-			} else {
-				this.touser('/pages/person/vip')
-			}
+			this.touser('/pages/person/vip')
+			// if (app.globalData.systemInfo.platform == 'ios') {
+			// 	uni.showToast({
+			// 		title: '由于相关规范,ios功能暂不可用!',
+			// 		icon: 'none'
+			// 	});
+			// } else {
+				
+			// }
 		},
 		get_vip_info() {
 			this.$api.vip_info({ token: this.token }).then(res => {

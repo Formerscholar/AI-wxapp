@@ -39,8 +39,11 @@
 			<text>学情报告统计错题数据</text>
 			<text>总结学习过程，方便提优补差</text>
 		</view>
-		<view class="xufei" @click="pay()">
+		<view class="xufei" @click="pay()" v-if="platform != 'ios'">
 			<text>{{ userInfo.is_vip ? '立即续费' : '开通会员' }}</text>
+		</view>
+		<view class="ios_tip" v-else>
+			由于相关规范,ios功能暂不可用!
 		</view>
 	</view>
 </template>
@@ -55,7 +58,8 @@
 				price: 0,
 				is_discount: 1,
 				is_vip: 0,
-				tpmid: ''
+				tpmid: '',
+				platform: ''
 			};
 		},
 		onLoad() {
@@ -64,6 +68,16 @@
 			this.price = app.globalData.settings.vip_money;
 			this.tpmid = app.globalData.settings.tmpid;
 			console.log('this.tpmid', this.tpmid);
+			this.platform = app.globalData.systemInfo.platform
+			if (this.platform == 'ios') {
+				uni.setNavigationBarTitle({
+					title: '会员特权'
+				});
+			} else {
+				uni.setNavigationBarTitle({
+					title: '开通会员'
+				});
+			}
 		},
 		onShow() {
 			this.get_info();
@@ -227,6 +241,19 @@
 		// 	color:rgba(255,255,255,1);
 		// }
 	}
+
+	.ios_tip {
+		font-size: 20rpx;
+		font-family: PingFang SC;
+		font-weight: 500;
+		color: #999999;
+		border-top: 1px solid #E5E5E5;
+		padding-top: 45rpx;
+		margin: 0 55rpx;
+		margin-top: 60rpx;
+		text-align: center;
+	}
+
 
 	.b-title {
 		width: 659rpx;
