@@ -83,9 +83,11 @@
 			<view class="vipouttime" @click="pageToVip" v-if="invest">
 				<image class="left_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/indexvipicon.png" mode="widthFix"></image>
 				<view class="content_text">{{ is_vip ? `您的会员将于${setTimeType(vip_time * 1000) || 0}到期` : '申请VIP会员 · 了解更多特权' }}</view>
-			 <image class="right_btn"  src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vip_info.png" mode="widthFix"></image>
-					<!--<image class="right_btn" v-if="is_vip" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/Renew.png" mode="widthFix"></image>
-				<image class="right_btn" v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/indexvipbtn.png" mode="widthFix"></image> -->
+				<image class="right_btn" v-if="platform == 'ios'" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vip_info.png"
+				 mode="widthFix"></image>
+				<image class="right_btn" v-else-if="is_vip" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/Renew.png"
+				 mode="widthFix"></image>
+				<image class="right_btn" v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/indexvipbtn.png" mode="widthFix"></image>
 			</view>
 
 			<view class="flex">
@@ -180,7 +182,8 @@
 				vip_time: '',
 				is_totul: false,
 				invest: 0,
-				renew: 0
+				renew: 0,
+				platform: ""
 			};
 		},
 		onLoad() {
@@ -191,6 +194,7 @@
 				});
 			}
 			this.is_totul = uni.getStorageSync('is_totul')
+			this.platform = app.globalData.systemInfo.platform
 		},
 		onShow() {
 			this.type = uni.getStorageSync('type');
@@ -222,20 +226,20 @@
 			let _this = this;
 			// 查看是否授权
 			wx.getSetting({
-			  success (res){
-				if (res.authSetting['scope.userInfo']) {
-				  // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-				  wx.getUserInfo({
-					success: function(res) {
-					  console.log(res.userInfo)
-					  res.openid = uni.getStorageSync('userInfo').openid;
-					  _this.$api.update_userinfo(res).then(res => {
-						console.log(res);
-					  });
+				success(res) {
+					if (res.authSetting['scope.userInfo']) {
+						// 已经授权，可以直接调用 getUserInfo 获取头像昵称
+						wx.getUserInfo({
+							success: function(res) {
+								console.log(res.userInfo)
+								res.openid = uni.getStorageSync('userInfo').openid;
+								_this.$api.update_userinfo(res).then(res => {
+									console.log(res);
+								});
+							}
+						})
 					}
-				  })
 				}
-			  }
 			})
 		},
 		onShareAppMessage() {

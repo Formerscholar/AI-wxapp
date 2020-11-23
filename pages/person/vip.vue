@@ -251,6 +251,7 @@
 		padding-top: 45rpx;
 		margin: 0 55rpx;
 		margin-top: 60rpx;
+		margin-bottom: 90rpx;
 		text-align: center;
 	}
 

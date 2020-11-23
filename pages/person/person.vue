@@ -22,10 +22,12 @@
 					<view>我的VIP会员</view>
 					<view>VIP到期时间: {{ info.user_vip_end_time }}</view>
 				</view>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime.png"></image>
+				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime.png" v-if="platform == 'ios'"></image>
+				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime1.png" v-else></image>
 			</view>
 			<view class="vip" v-if="!info.user_vip_end_time && type == 4" @click="pageToVip">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip.png"></image>
+				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip.png" v-if="platform == 'ios'"></image>
+				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip1.png" v-else></image>
 			</view>
 			<view class="minePaper" @click="tocuoti()" v-if="type == 3">
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/minePaper.png" mode=""></image>
@@ -119,10 +121,12 @@ export default {
 			school: '',
 			flag: false,
 			grade_names: '',
-			is_vip: 0
+			is_vip: 0,
+			platform:''
 		};
 	},
 	onLoad() {
+		this.platform = app.globalData.systemInfo.platform
 	},
 	onShow() {
 		this.token = uni.getStorageSync('token');
