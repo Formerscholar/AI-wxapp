@@ -22,6 +22,9 @@
 				<input class="input_box" v-model="phone"  type="number" placeholder="输入电话号码" placeholder-style="color:#dedede" />
 				<view class="pl_text">留下您的联系方式，以便我们了解问题后及时反馈和结果，紧急问题请联系客服。</view>
 		<button class="btn" @click="tj()">确定</button>
+		<view class="mgb">
+			
+		</view>
 	</view>
 </template>
 
@@ -173,13 +176,19 @@ text-align: center;
 	padding: 10rpx 30rpx;
 }
 .btn {
-	margin: 50rpx auto;
+	margin: 0 auto;
+	margin-top: 50rpx;
 	width: 400rpx;
 	height: 80rpx;
 	line-height: 80rpx;
 	font-size: 30rpx;
 	color: #fff;
 	background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
+}
+.mgb{
+	width: 100%;
+	height: 50rpx;
+	background-color: #eee;
 }
 .picInfo {
 	.advice {

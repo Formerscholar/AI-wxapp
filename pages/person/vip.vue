@@ -44,6 +44,9 @@
 		</view>
 		<view class="ios_tip" v-else>
 			由于相关规范,ios功能暂不可用!
+			<view class="paddbot">
+				
+			</view>
 		</view>
 	</view>
 </template>
@@ -251,8 +254,12 @@
 		padding-top: 45rpx;
 		margin: 0 55rpx;
 		margin-top: 60rpx;
-		margin-bottom: 90rpx;
 		text-align: center;
+		.paddbot{
+			height: 90rpx;
+			width: 100%;
+			background-color: #fff;
+		}
 	}
 
 
