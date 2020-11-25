@@ -69,6 +69,11 @@
 				"navigationBarTitleText": "试卷内容"
 			}
 		}, {
+			"path": "pages/myPaper/seePaperss",
+			"style": {
+				"navigationBarTitleText": "试卷内容"
+			}
+		}, {
 			"path": "pages/learningReport/learningReport",
 			"style": {
 				"navigationBarTitleText": "学情报告"

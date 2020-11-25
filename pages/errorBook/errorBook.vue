@@ -1059,7 +1059,7 @@
 			},
 			seepaper(id, title, subject_name, is) {
 				uni.navigateTo({
-					url: '/pages/myPaper/seePapers?based_id=' + id + '&st=1' + '&title=' + title + '&subject_name=' + subject_name +
+					url: '/pages/myPaper/seePaperss?based_id=' + id + '&st=1' + '&title=' + title + '&subject_name=' + subject_name +
 						'&is=' + is
 				});
 			},
