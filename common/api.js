@@ -54,7 +54,8 @@ module.exports = {
 	get_download: data => request(ApiUrl + 'user/download_based/', data),
 	orc_one: data => request(ApiUrl + 'user/orc_one/', data),
 	// orc_one: data => request(ApiUrl + 'user/orc_one_l/', data),
-
+// v3/user/delete_errorbook_exercises   数据 errorbook_id    exercises_ids
+	delete_exercises: data => request(ApiUrl + 'user/delete_errorbook_exercises/', data),
 	// register : data => request(ApiUrl+'user/user_register/',data),//注册
 	//search_password : data => request(ApiUrl+'user/search_password/',data),//找回密码
 	catalogue: data => request(ApiUrl + 'question/catalogue/', data), //教辅目录

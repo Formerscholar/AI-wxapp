@@ -143,9 +143,7 @@
 			</view>
 		</view>
 
-
-
-		<view class="vip_totul" v-if="is_totul && renew">
+		<view class="vip_totul" v-if="is_totul" @click="closeTotul">
 			<image class="home_vip_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_icon.png" mode="widthFix"
 			 @click="closeTotul"></image>
 			<image class="home_vip_image" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_image.png" mode="widthFix"
@@ -193,7 +191,6 @@
 					url: '/pages/login/login'
 				});
 			}
-			this.is_totul = uni.getStorageSync('is_totul')
 			this.platform = app.globalData.systemInfo.platform
 		},
 		onShow() {
@@ -272,7 +269,6 @@
 				}
 			},
 			closeTotul() {
-				uni.setStorageSync('is_totul', false);
 				this.is_totul = false
 			},
 			setTimeType(timer) {
@@ -312,6 +308,8 @@
 			//获取学生信息
 			get_student() {
 				let _this = this;
+				let istol = uni.getStorageSync('istol')
+				let istolbool = uni.getStorageSync('istolbool')
 				_this.$api.student_index({
 					token: _this.token
 				}).then(res => {
@@ -321,6 +319,12 @@
 					_this.vip_time = res.data.vip_time;
 					_this.invest = res.data.invest;
 					_this.renew = res.data.renew;
+					if (res.data.renew && istol === new Date().getDate() && istolbool) {
+						_this.is_totul = true
+						uni.setStorageSync('istolbool', false)
+					} else {
+						_this.is_totul = false
+					}
 					uni.setStorage({
 						key: 'is_vip',
 						data: this.is_vip
@@ -402,7 +406,6 @@
 	}
 
 	.vip_totul {
-		position: relative;
 		position: absolute;
 		top: 0;
 		left: 0;

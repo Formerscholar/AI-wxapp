@@ -9,7 +9,6 @@
 			this.$api.get_settings('Get').then(res => {
 				this.globalData.settings = res.data;
 			});
-			uni.setStorageSync('is_totul', true);
 			let that = this
 			uni.getSystemInfo({
 				success: function(res) {
@@ -17,6 +16,8 @@
 					that.globalData.systemInfo = res
 				}
 			})
+			uni.setStorageSync('istol', new Date().getDate())
+			uni.setStorageSync('istolbool', true)
 		},
 		onShow: () => {
 			const updateManager = uni.getUpdateManager();
