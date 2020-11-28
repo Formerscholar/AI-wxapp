@@ -17,7 +17,7 @@
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/rightWhite.png" class="detail"></image>
 			</view>
 
-			<view class="vip" v-if="info.user_vip_end_time && type == 4" @click="pageToVip">
+			<view class="vip" v-if="info.is_vip == 1 && type == 4" @click="pageToVip">
 				<view class="endTimeInfo">
 					<view>我的VIP会员</view>
 					<view>VIP到期时间: {{ info.user_vip_end_time }}</view>
@@ -25,7 +25,7 @@
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime.png" v-if="platform == 'ios'"></image>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime1.png" v-else></image>
 			</view>
-			<view class="vip" v-if="!info.user_vip_end_time && type == 4" @click="pageToVip">
+			<view class="vip" v-if="!info.is_vip == 1 && type == 4" @click="pageToVip">
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip.png" v-if="platform == 'ios'"></image>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip1.png" v-else></image>
 			</view>

@@ -294,7 +294,6 @@
 			this.tpmid = app.globalData.settings.tmpid;
 			console.log('this.tpmid', this.tpmid);
 			this.type = uni.getStorageSync('type');
-			this.is_vip = uni.getStorageSync('is_vip');
 			if (this.type == 3) {
 				this.subject_id = -1;
 				this.wei_error_book();
@@ -328,6 +327,7 @@
 					selectedIconPath: '/static/imgs/icon/myPaper.png'
 				});
 			} else {
+				this.is_vip = uni.getStorageSync('is_vip');
 				this.page = 1;
 			}
 			this.wei_error_book();
@@ -650,7 +650,14 @@
 			generated(id, title) {
 				this.errorbook_id = id;
 				this.errorbook_title = title
-				this.$refs.botpopup.open();
+				if (this.is_vip) {
+					this.$refs.botpopup.open();
+				} else{
+					uni.showToast({
+						title: '非会员用户无法下载',
+						icon: 'none'
+					});
+				}
 			},
 			selected_topic(i) {
 				console.log(i);
