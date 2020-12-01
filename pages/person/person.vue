@@ -167,10 +167,10 @@ export default {
 				console.log(res);
 				this.info = res.data;
 				this.is_vip = res.data.is_vip;
-				uni.setStorage({
-					key: 'is_vip',
-					data: this.is_vip
-				});
+				// uni.setStorage({
+				// 	key: 'is_vip',
+				// 	data: this.is_vip
+				// });
 			});
 		},
 		//获取用户信息

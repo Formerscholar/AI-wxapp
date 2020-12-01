@@ -650,7 +650,7 @@
 			generated(id, title) {
 				this.errorbook_id = id;
 				this.errorbook_title = title
-				if (this.is_vip) {
+				if (this.type == 3 || this.is_vip  ) {
 					this.$refs.botpopup.open();
 				} else{
 					uni.showToast({

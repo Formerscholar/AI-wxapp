@@ -216,6 +216,7 @@
 			this.get_banner();
 			if (this.token && this.type == 3) {
 				this.get_teacher();
+				this.get_teacher_info()
 			}
 			if (this.token && this.type == 4) {
 				this.get_student();
@@ -246,6 +247,15 @@
 			};
 		},
 		methods: {
+			get_teacher_info() {
+				let _this = this
+				this.$api.get_teacher_info({
+					token: _this.token
+				}).then(res => {
+					console.log(res, 'get_teacher_info')
+					_this.teacher_infos = res.data
+				})
+			},
 			tobead() {
 				if (this.teacher_infos.cert == 1) {
 					this.todetail(7)
