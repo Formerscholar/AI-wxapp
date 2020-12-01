@@ -150,6 +150,7 @@
 			 @click="pageToVip"></image>
 			<image class="home_vip_btn" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_btn.png" mode="widthFix"
 			 @click="pageToVip"></image>
+			 <div class="tit_text">您的会员将于{{setTimeType(vip_time * 1000) || 0}}到期</div>
 		</view>
 
 	</view>
@@ -422,6 +423,16 @@
 		right: 0;
 		bottom: 0;
 		background-color: rgba($color: #000000, $alpha: .5);
+		.tit_text{
+			position: absolute;
+			top: 43%;
+			left: 49%;
+			transform: translate(-50%,-50%);
+			font-size: 26rpx;
+			font-family: 'PingFang SC';
+			font-weight: 500;
+			color: #FFEC95;
+		}
 
 		.home_vip_icon {
 			position: absolute;
