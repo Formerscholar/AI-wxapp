@@ -195,6 +195,7 @@
 			this.platform = app.globalData.systemInfo.platform
 		},
 		onShow() {
+			this.token = uni.getStorageSync('token');
 			this.type = uni.getStorageSync('type');
 			if (uni.getStorageSync('is_vip')) {
 				this.is_vip = uni.getStorageSync('is_vip');
@@ -222,6 +223,7 @@
 			if (this.token && this.type == 4) {
 				this.get_student();
 			}
+			// #ifdef MP-WEIXIN
 			let _this = this;
 			// 查看是否授权
 			wx.getSetting({
@@ -240,6 +242,7 @@
 					}
 				}
 			})
+			// #endif
 		},
 		onShareAppMessage() {
 			return {
@@ -269,6 +272,7 @@
 				}
 			},
 			tabbarshopClick() {
+				// #ifdef MP-WEIXIN
 				if (app.globalData.systemInfo.platform == "ios") {
 					uni.navigateTo({
 						url: "/pages/mall/iostip"
@@ -278,6 +282,13 @@
 						url: '/pages/mall/index'
 					})
 				}
+				// #endif
+				
+				// #ifdef APP-PLUS
+				uni.navigateTo({
+					url: "/pages/mall/iostip"
+				})
+				// #endif
 			},
 			closeTotul() {
 				this.is_totul = false
