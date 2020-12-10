@@ -151,7 +151,7 @@
 						<radio-group @change="seletJoin">
 							<label class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in errorbook_list" :key="index">
 								<view class="grop_box">
-									<radio :value="index" :checked="index === current" color="#e50304" />{{item.title}}
+									<radio :value="index" color="#e50304" />{{item.title}}
 								</view>
 							</label>
 						</radio-group>
@@ -948,7 +948,6 @@
 						// 		icon:'none'
 						// 	})
 						// }
-						console.log(res.code != 200);
 						if (res.code != 200) {
 							this.errorbook_list = [];
 							return;
