@@ -1,49 +1,5 @@
 <template>
 	<view>
-		<!-- <view class="" v-if="false">
-			<view class="select">
-				<view class="xueke" >
-					<view>学科</view>
-					<text :class="{'s-b':item.subject_id==subject_id}" v-for="(item,i) of subject_list" :key='i' @click="select_xk(item.id)">{{item.title}}</text>
-				</view>
-			</view>
-
-			<view class="jiaocai">
-				<view class="left">
-					<text>年级</text>
-					<picker  :range="grade" range-key="name" @change="select_g">
-						<view class="value">{{grade[num_g].name}}</view>
-					</picker>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/xiala.png" mode=""></image>
-				</view>		
-				<view class="right left">
-					<text>知识点</text>
-					<picker  :range="know_point_list" range-key="title" @change="select_z">
-						<view class="value" style="overflow: hidden;
-						text-overflow: ellipsis;white-space: nowrap;">
-						{{ know_point_list[num_z].title?know_point_list[num_z].title:'暂无' }}</view>
-					</picker>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/xiala.png" mode=""></image>
-				</view>
-			</view>
-			
-			<view class="select">
-				<view class="xueke">
-					<view>难度</view>
-					<text :class="{'s-b':item.id==level_id}" @click="select_n(item.id)" v-for="(item,i) of level_list" :key='i'>{{item.title}}</text>
-				</view>
-			</view>
-			
-			<view class="select m-t">
-				<view class="xueke">
-					<view>题型</view>
-					<scroll-view scroll-x="true" >
-						<text class="picker" :class="{'s-b':item.id==question_id}" @click="select_t(item.id)" v-for="(item,i) of question_type" :key='i'>{{item.title}}</text>
-					</scroll-view>	
-				</view>
-			</view>
-		</view> -->
-
 		<!-- picker start -->
 		<view class="pickes">
 			<picker :range="subject_list" range-key="title" @change="select_s" v-if="type == 4 && subject_list">
@@ -149,7 +105,7 @@ export default {
 	data() {
 		return {
 			banben: [],
-			know_point_list: [],
+			know_point_list: [{ title: '知识点', id: 0 }],
 			num_b: 0, //版本选择
 			num_z: 0, //知识点选择
 			num_g: 0, //班级选择
@@ -157,10 +113,10 @@ export default {
 			num_t: 0, //题型选择
 			num_l: 0, //难度选择
 			leixing: false, //同类型题目是否显示
-			level_list: [], //难度列表
-			subject_list: [], //学科列表
+			level_list: [{ title: '难度', id: 0 }], //难度列表
+			subject_list: [{ title: '学科', id: 0 }], //学科列表
 			version_list: [], //教材版本
-			question_type: [], //题型
+			question_type: [{ title: '题型', id: 0 }], //题型
 			subject_id: 19, //选中的学科id
 			question_id: 0, //选中的题型id
 			level_id: 0, //难度id
@@ -194,7 +150,7 @@ export default {
 		this.subject_fenlei();
 		// this.exercise_type()
 		this.get_level();
-		this.get_grade();
+		// this.get_grade();
 	},
 	onShow() {
 		this.type = uni.getStorageSync('type');
@@ -526,27 +482,7 @@ export default {
 				size: this.size_change
 			};
 			//consle.log('data2',this.know_point_list[this.num_z].know_point_id)
-			if (this.type == 3) {
-				var req = this.$api.teacher_same_type(data);
-			} else {
-				if (this.is_vip == 1) {
-					var req = this.$api.same_type(data);
-				} else {
-					// var req=this.$api.same_type(data)
-
-					//1是不要提示 0是要提示
-					if (status != 1) {
-						uni.showToast({
-							title: '非会员用户不可查看同类型题目',
-							icon: 'none'
-						});
-						return;
-					} else {
-						return;
-					}
-				}
-			}
-			req.then(res => {
+			this.$api.same_type(data).then(res => {
 				console.log(res);
 				if (res.code == 200) {
 					this.same_type = res.data.exercises_list;
