@@ -482,7 +482,12 @@ export default {
 				size: this.size_change
 			};
 			//consle.log('data2',this.know_point_list[this.num_z].know_point_id)
-			this.$api.same_type(data).then(res => {
+			if (uni.getStorageSync('type') == 4) {
+				var req = this.$api.same_type(data);
+			} else {
+				var req = this.$api.teacher_same_type(data);
+			}
+			req.then(res => {
 				console.log(res);
 				if (res.code == 200) {
 					this.same_type = res.data.exercises_list;
