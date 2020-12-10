@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { pathToBase64, base64ToPath } from '../../js_sdk/gsq-image-tools/image-tools/index.js'
 let sysInfo = uni.getSystemInfoSync();
 let SCREEN_WIDTH = sysInfo.screenWidth;
 console.log('SCREEN_WIDTH', SCREEN_WIDTH);
@@ -188,7 +189,7 @@ export default {
 		},
 		getImage: function() {
 			console.log('返回上个页面getImage');
-			this.Gyroscopestop();
+			//this.Gyroscopestop();
 			uni.navigateBack({
 				delta: 1
 			});
@@ -351,8 +352,8 @@ export default {
 			});
 		},
 		getImageInfo() {
-			this.Gyroscopestart();
-			console.log('RateXYZ = ', this.RateXYZ);
+			//this.Gyroscopestart();
+			//console.log('RateXYZ = ', this.RateXYZ);
 			var _this = this;
 			uni.showLoading({
 				title: '图片生成中...'
@@ -385,25 +386,41 @@ export default {
 					canvasId: 'myCanvas',
 					success: res => {
 						uni.hideLoading();
-						this.pic = res.tempFilePath;
-						this.base64({
-							url: this.pic,
-							type: 'png'
-						})
-							.then(res => {
-								console.log('canvasToTempFilePath', res);
+						pathToBase64(res.tempFilePath)
+						  .then(base64 => {
+						    console.log(base64)
 								this.isphbox = false;
 								this.flag = true;
-								this.pic = res;
+								this.pic = base64;
 								this.search_exercises();
-							})
-							.catch(err => {
+						  })
+						  .catch(error => {
+						    console.error(error)
 								uni.showToast({
 									title: '上传图片失败',
 									icon: 'none'
 								});
 								uni.navigateBack();
-							});
+						  })
+						// this.pic = res.tempFilePath;
+						// this.base64({
+						// 	url: this.pic,
+						// 	type: 'png'
+						// })
+						// 	.then(res => {
+						// 		console.log('canvasToTempFilePath', res);
+						// 		this.isphbox = false;
+						// 		this.flag = true;
+						// 		this.pic = res;
+						// 		this.search_exercises();
+						// 	})
+						// 	.catch(err => {
+						// 		uni.showToast({
+						// 			title: '上传图片失败',
+						// 			icon: 'none'
+						// 		});
+						// 		uni.navigateBack();
+						// 	});
 					}
 				});
 			});
