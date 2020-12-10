@@ -16,10 +16,17 @@ function request(url, data = {}, method = "post") {
 				const currentPage = pages[pages.length - 1] || {
 					is: ''
 				}
+				let version = '';
+				// #ifdef APP-PLUS
+				version = plus.runtime.version
+				// #endif
+				// #ifdef MP-WEIXIN
 				const {
 					miniProgram
 				} = uni.getAccountInfoSync()
-				console.log('miniProgram', miniProgram)
+				// console.log('miniProgram', miniProgram)
+				version = miniProgram.version;
+				// #endif
 				uni.request({
 					url: url,
 					data: data,
@@ -30,7 +37,7 @@ function request(url, data = {}, method = "post") {
 						"carrierwindowWidth": res.windowWidth,
 						"carrierwindowHeight": res.windowHeight,
 						"carriersystem": res.system,
-						"carrierversion": miniProgram.version || '',
+						"carrierversion": version,
 						"page": currentPage.is
 					},
 					success: (res) => {
