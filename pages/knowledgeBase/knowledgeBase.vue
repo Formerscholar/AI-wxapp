@@ -80,8 +80,8 @@
 					<rich-text :nodes="changeStyle(item.content)"></rich-text>
 					<!-- <uParse :content="item.content"/> -->
 				</view>
-				<view class="bottom" @click="open(item.exercises_id, 0)">
-					<view class="select">
+				<view class="bottom">
+					<view class="select" @click="open(item.exercises_id, 0)">
 						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
 						同类型题目
 					</view>
@@ -142,440 +142,477 @@
 </template>
 
 <script>
-import uParse from '@/components/u-parse/u-parse.vue';
-import uniPopup from '@/components/uni-popup/uni-popup.vue';
-export default {
-	components: { uParse, uniPopup },
-	data() {
-		return {
-			banben: [],
-			know_point_list: [],
-			num_b: 0, //版本选择
-			num_z: 0, //知识点选择
-			num_g: 0, //班级选择
-			num_s: 0, //学科选择
-			num_t: 0, //题型选择
-			num_l: 0, //难度选择
-			leixing: false, //同类型题目是否显示
-			level_list: [], //难度列表
-			subject_list: [], //学科列表
-			version_list: [], //教材版本
-			question_type: [], //题型
-			subject_id: 19, //选中的学科id
-			question_id: 0, //选中的题型id
-			level_id: 0, //难度id
-			token: '',
-			update: true,
-			page: 1,
-			is_more: 1,
-			same_type: [],
-			type: 4,
-			exercises_list: [],
-			grade: [],
-			page_change: 1,
-			size_change: 2,
-			exercises_id: '',
-			is_vip: ''
-		};
-	},
-	onReachBottom() {
-		console.log(this.is_more);
-		if (this.is_more) {
-			this.page++;
-			if (this.page != 1) {
-				this.exercise_selection();
-			}
-		}
-	},
-	onLoad() {
-		if (uni.getStorageSync('token')) {
-			this.token = uni.getStorageSync('token');
-		}
-		this.subject_fenlei();
-		// this.exercise_type()
-		this.get_level();
-		this.get_grade();
-	},
-	onShow() {
-		this.type = uni.getStorageSync('type');
-		this.page_change = 1;
-		if (uni.getStorageSync('is_vip')) {
-			this.is_vip = uni.getStorageSync('is_vip');
-		}
-		// this.get_konw();
-	},
-	methods: {
-		changeStyle(item) {
-			item = item.replace(new RegExp('<p', 'gi'), '<p style="color: #000;position:relative"');
-			item = item.replace(new RegExp('<img', 'gi'), '<img style="max-width:95%;vertical-align: middle;width:auto;"');
-			return item;
+	import uParse from '@/components/u-parse/u-parse.vue';
+	import uniPopup from '@/components/uni-popup/uni-popup.vue';
+	export default {
+		components: {
+			uParse,
+			uniPopup
 		},
-		//换一批
-		changeData() {
-			this.page_change++;
-			this.open(this.exercises_id, 0);
+		data() {
+			return {
+				banben: [],
+				know_point_list: [],
+				num_b: 0, //版本选择
+				num_z: 0, //知识点选择
+				num_g: 0, //班级选择
+				num_s: 0, //学科选择
+				num_t: 0, //题型选择
+				num_l: 0, //难度选择
+				leixing: false, //同类型题目是否显示
+				level_list: [], //难度列表
+				subject_list: [], //学科列表
+				version_list: [], //教材版本
+				question_type: [], //题型
+				subject_id: 19, //选中的学科id
+				question_id: 0, //选中的题型id
+				level_id: 0, //难度id
+				token: '',
+				update: true,
+				page: 1,
+				is_more: 1,
+				same_type: [],
+				type: 4,
+				exercises_list: [],
+				grade: [],
+				page_change: 1,
+				size_change: 2,
+				exercises_id: '',
+				is_vip: ''
+			};
 		},
-		//查看解析
-		jiexi(id) {
-			uni.navigateTo({
-				// url:'/pages/person/ListStudents?name='+item.team_name+'&team_id='+item.team_id
-				url: '/pages/knowledgeBase/watchExplane?id=' + id
-			});
-		},
-		//获取班级
-		get_grade() {
-			this.$api.get_grade({ token: this.token }).then(res => {
-				console.log(res);
-				this.grade = res.data.grade_list;
-				// this.exercise_selection();
-			});
-		},
-		rn(str) {
-			if (str.length > 4) {
-				return str.splice(0, 3) + '...';
-			} else {
-				return str;
+		onReachBottom() {
+			console.log(this.is_more);
+			if (this.is_more) {
+				this.page++;
+				if (this.page != 1) {
+					this.exercise_selection();
+				}
 			}
 		},
-		//学科分类
-		subject_fenlei() {
-			this.$api.subject({ token: this.token }).then(res => {
-				var list = res.data;
-				list.forEach(function(elem, i, arr) {
-					elem.status = false;
+		onLoad() {
+			if (uni.getStorageSync('token')) {
+				this.token = uni.getStorageSync('token');
+			}
+			this.subject_fenlei();
+			// this.exercise_type()
+			this.get_level();
+			this.get_grade();
+		},
+		onShow() {
+			this.type = uni.getStorageSync('type');
+			this.page_change = 1;
+			if (uni.getStorageSync('is_vip')) {
+				this.is_vip = uni.getStorageSync('is_vip');
+			}
+			// this.get_konw();
+		},
+		methods: {
+			changeStyle(item) {
+				item = item.replace(new RegExp('<p', 'gi'), '<p style="color: #000;position:relative"');
+				item = item.replace(new RegExp('<img', 'gi'), '<img style="max-width:95%;vertical-align: middle;width:auto;"');
+				return item;
+			},
+			//换一批
+			changeData() {
+				this.page_change++;
+				this.open(this.exercises_id, 0);
+			},
+			//查看解析
+			jiexi(id) {
+				uni.navigateTo({
+					// url:'/pages/person/ListStudents?name='+item.team_name+'&team_id='+item.team_id
+					url: '/pages/knowledgeBase/watchExplane?id=' + id
 				});
-				this.subject_list = list;
-				// this.select_xk(this.subject_list[0].subject_id)
-				this.exercise_type();
-				this.get_konw();
-				// this.select_s()
-				 this.subject_id = list[0].id
-				console.log(this.subject_list);
-			});
-		},
-		//教辅版本列表
-		version() {
-			// this.get_konw()
-			this.$api.version().then(res => {
-				console.log(res);
-				if (res.code != 200) {
-					uni.showToast({
-						title: res.msg,
-						icon: 'none',
-						duration: 3000
-					});
+			},
+			//获取班级
+			get_grade() {
+				this.$api.get_grade({
+					token: this.token
+				}).then(res => {
+					console.log(res);
+					this.grade = res.data.grade_list;
+					// this.exercise_selection();
+				});
+			},
+			rn(str) {
+				if (str.length > 4) {
+					return str.splice(0, 3) + '...';
+				} else {
+					return str;
 				}
-				this.version_list = [{ title: '版本', id: 0 }, ...res.data.version_list];
-				this.exercise_selection();
-			});
-		},
-		//知识点
-		get_konw() {
-			if (this.subject_id == 1) return false;
-			if (uni.getStorageSync('type') == 3) {
-				var req = this.$api.teacher_know_point({ token: this.token });
-			} else {
-				var req = this.$api.know_point({ subject_id: this.subject_id, token: this.token });
-			}
-			req.then(res => {
-				console.log(res);
-				if (res.code != 200) {
-					this.know_point_list = [];
-					this.exercises_list = [];
-					uni.showToast({
-						title: res.msg,
-						icon: 'none',
-						duration: 3000
+			},
+			//学科分类
+			subject_fenlei() {
+				this.$api.subject({
+					token: this.token
+				}).then(res => {
+					var list = res.data;
+					list.forEach(function(elem, i, arr) {
+						elem.status = false;
+					});
+					this.subject_list = list;
+					// this.select_xk(this.subject_list[0].subject_id)
+					this.exercise_type();
+					this.get_konw();
+					// this.select_s()
+					this.subject_id = list[0].id
+					console.log(this.subject_list);
+				});
+			},
+			//教辅版本列表
+			version() {
+				// this.get_konw()
+				this.$api.version().then(res => {
+					console.log(res);
+					if (res.code != 200) {
+						uni.showToast({
+							title: res.msg,
+							icon: 'none',
+							duration: 3000
+						});
+					}
+					this.version_list = [{
+						title: '版本',
+						id: 0
+					}, ...res.data.version_list];
+					this.exercise_selection();
+				});
+			},
+			//知识点
+			get_konw() {
+				if (this.subject_id == 1) return false;
+				if (uni.getStorageSync('type') == 3) {
+					var req = this.$api.teacher_know_point({
+						token: this.token
 					});
 				} else {
-					this.know_point_list = [{ title: '知识点', id: 0 }, ...res.data.know_point_list];
-					console.log('this.know_point_list3433', this.know_point_list);
-				}
-				this.exercise_selection();
-			});
-		},
-		//习题难度
-		get_level() {
-			this.$api.level().then(res => {
-				console.log(res);
-				this.level_list = [{ title: '难度', id: 0 }, ...res.data];
-			});
-		},
-		//题型
-		exercise_type() {
-			this.$api.exercise_type({ subject_id: this.subject_id }).then(res => {
-				console.log('题型列表1', res);
-				this.question_type = [{ title: '题型', id: 0 }, ...res.data];
-			});
-		},
-		//筛选习题
-		exercise_selection() {
-			console.log('123', this.know_point_list);
-			console.log('this.know_point_list[this.num_z]', this.know_point_list[this.num_z]?.id);
-			if (uni.getStorageSync('type') == 3) {
-				let data = {
-					token: this.token,
-					// version_id:this.version_list[this.num_b].version_id,
-					type: this.question_id,
-					level: this.level_id,
-					//   this.grade is not an object
-					grade_id: this.grade[this.num_g]?.grade_id,
-					know_point: this.know_point_list[this.num_z]?.id,
-					page: this.page
-				};
-				var req = this.$api.teacher_textbook_exercises(data);
-			} else {
-				let data = {
-					token: this.token,
-					subject_id: this.subject_id,
-					// version_id:this.version_list[this.num_b].version_id,
-					type: this.question_id,
-					level: this.level_id,
-					grade_id: this.grade[this.num_g]?.grade_id,
-					know_point: this.know_point_list[this.num_z]?.id,
-					page: this.page
-				};
-				var req = this.$api.textbook_exercises(data);
-			}
-			req.then(res => {
-				this.is_more = res.is_more;
-				if (res.code != 200) {
-					this.exercises_list = [];
-					uni.showToast({
-						title: res.msg,
-						icon: 'none',
-						duration: 3000
+					var req = this.$api.know_point({
+						subject_id: this.subject_id,
+						token: this.token
 					});
-				} else {
-					if (this.page == 1) {
-						this.exercises_list = res.data.exercises_list;
-						console.log('000', this.exercises_list);
-					} else {
-						this.exercises_list = [...this.exercises_list, ...res.data.exercises_list];
-						console.log('789', this.exercises_list);
-					}
 				}
-			});
-		},
-		//加入错题
-		join_error(i, id) {
-			if (uni.getStorageSync('type') == 3) {
-				var req = this.$api.teacher_join_error({ token: this.token, exercises_id: id, is_vip: 1 });
-			} else {
-				var req = this.$api.join_error({ token: this.token, exercises_id: id, is_vip: 1 });
-			}
-			req.then(res => {
-				if (res.code == 200) {
-					if (this.exercises_list[i].is_error) {
-						this.exercises_list[i].is_error = 0;
+				req.then(res => {
+					console.log(res);
+					if (res.code != 200) {
+						this.know_point_list = [];
+						this.exercises_list = [];
+						uni.showToast({
+							title: res.msg,
+							icon: 'none',
+							duration: 3000
+						});
 					} else {
-						this.exercises_list[i].is_error = 1;
+						this.know_point_list = [{
+							title: '知识点',
+							id: 0
+						}, ...res.data.know_point_list];
+						console.log('this.know_point_list3433', this.know_point_list);
 					}
-					if (this.type == 4) {
-						if (res.msg == '取消成功！') {
-							// this.exercises_list[i].status=false
-							return true;
-						} else if (res.msg == '加入成功') {
-							// this.exercises_list[i].status=true
-							this.open(id, 1);
+					this.exercise_selection();
+				});
+			},
+			//习题难度
+			get_level() {
+				this.$api.level().then(res => {
+					console.log(res);
+					this.level_list = [{
+						title: '难度',
+						id: 0
+					}, ...res.data];
+				});
+			},
+			//题型
+			exercise_type() {
+				this.$api.exercise_type({
+					subject_id: this.subject_id
+				}).then(res => {
+					console.log('题型列表1', res);
+					this.question_type = [{
+						title: '题型',
+						id: 0
+					}, ...res.data];
+				});
+			},
+			//筛选习题
+			exercise_selection() {
+				console.log('123', this.know_point_list);
+				console.log('this.know_point_list[this.num_z]', this.know_point_list[this.num_z]?.id);
+				if (uni.getStorageSync('type') == 3) {
+					let data = {
+						token: this.token,
+						// version_id:this.version_list[this.num_b].version_id,
+						type: this.question_id,
+						level: this.level_id,
+						//   this.grade is not an object
+						grade_id: this.grade[this.num_g]?.grade_id,
+						know_point: this.know_point_list[this.num_z]?.id,
+						page: this.page
+					};
+					var req = this.$api.teacher_textbook_exercises(data);
+				} else {
+					let data = {
+						token: this.token,
+						subject_id: this.subject_id,
+						// version_id:this.version_list[this.num_b].version_id,
+						type: this.question_id,
+						level: this.level_id,
+						grade_id: this.grade[this.num_g]?.grade_id,
+						know_point: this.know_point_list[this.num_z]?.id,
+						page: this.page
+					};
+					var req = this.$api.textbook_exercises(data);
+				}
+				req.then(res => {
+					this.is_more = res.is_more;
+					if (res.code != 200) {
+						this.exercises_list = [];
+						uni.showToast({
+							title: res.msg,
+							icon: 'none',
+							duration: 3000
+						});
+					} else {
+						if (this.page == 1) {
+							this.exercises_list = res.data.exercises_list;
+							console.log('000', this.exercises_list);
+						} else {
+							this.exercises_list = [...this.exercises_list, ...res.data.exercises_list];
+							console.log('789', this.exercises_list);
 						}
 					}
-				} else {
-					/* uni.showToast({
-							title:res.msg,
-							icon:'none'
-						}) */
-				}
-
-				this.update = false;
-				this.update = true;
-			});
-		},
-		join_error2(i, id) {
-			if (uni.getStorageSync('type') == 3) {
-				var req = this.$api.teacher_join_error({
-					token: this.token,
-					exercises_id: id
-					// subject_id:this.subject_id,
-					// know_point:this.know_point_list[this.num_z].know_point_id,
-					// type:this.question_id,
-					//is_vip:1
 				});
-			} else {
-				var req = this.$api.join_error({
-					token: this.token,
-					exercises_id: id,
-					// subject_id:this.subject_id,
-					// know_point:this.know_point_list[this.num_z].know_point_id,
-					// type:this.question_id,
-					is_vip: 1
-				});
-			}
-
-			req.then(res => {
-				if (res.code == 200) {
-					if (this.same_type[i].is_error) {
-						this.same_type[i].is_error = 0;
-					} else {
-						this.same_type[i].is_error = 1;
-					}
+			},
+			//加入错题
+			join_error(i, id) {
+				if (uni.getStorageSync('type') == 3) {
+					var req = this.$api.teacher_join_error({
+						token: this.token,
+						exercises_id: id,
+						is_vip: 1
+					});
 				} else {
-					uni.showToast({
-						title: res.msg,
-						icon: 'none'
+					var req = this.$api.join_error({
+						token: this.token,
+						exercises_id: id,
+						is_vip: 1
 					});
 				}
-				this.update = false;
-				this.update = true;
-			});
-		},
-		select_s(e) {
-			this.num_b = 0;
-			this.num_z = 0;
-			console.log('e', e);
-			if (e == undefined) {
-				this.num_s = 0;
-			} else {
-				this.num_s = e.detail.value;
-			}
+				req.then(res => {
+					if (res.code == 200) {
+						if (this.exercises_list[i].is_error) {
+							this.exercises_list[i].is_error = 0;
+						} else {
+							this.exercises_list[i].is_error = 1;
+						}
+						if (this.type == 4) {
+							if (res.msg == '取消成功！') {
+								// this.exercises_list[i].status=false
+								return true;
+							} else if (res.msg == '加入成功') {
+								// this.exercises_list[i].status=true
+								this.open(id, 1);
+							}
+						}
+					} else {
+						/* uni.showToast({
+								title:res.msg,
+								icon:'none'
+							}) */
+					}
 
-			this.is_more = 1;
-			this.page = 1;
-			this.subject_id = this.subject_list[this.num_s].id;
-			this.get_konw();
-			this.exercise_type();
-		},
-		// //选择学科
-		// select_xk(id){
-		// 	this.num_b=0
-		// 	this.num_z=0
-		// 	this.is_more=1
-		// 	this.page=1
-		// 	this.subject_id=id
-		// 	// this.version()
-		// 	this.get_konw()
-		// 	// this.exercise_selection()
-		// },
-		// //选择教材版本
-		// select_b(e){
-		// 	this.is_more=1
-		// 	this.page=1
-		// 	console.log(e)
-		// 	this.num_b=e.detail.value
-		// 	this.exercise_selection()
-		// },
-		select_g(e) {
-			this.is_more = 1;
-			this.page = 1;
-			console.log(e);
-			this.num_g = e.detail.value;
-			this.exercise_selection();
-		},
-		//选择知识点
-		select_z(e) {
-			this.is_more = 1;
-			this.page = 1;
-			console.log(e);
-			this.num_z = e.detail.value;
-			this.exercise_selection();
-		},
-		//选择题型2
-		select_ty(e) {
-			this.is_more = 1;
-			this.page = 1;
-			this.num_t = e.detail.value;
-			this.question_id = this.question_type[e.detail.value].id;
-			this.exercise_selection();
-		},
-		// //选择题型
-		// select_t(id){
-		// 	this.page=1
-		// 	this.question_id=id
-		// 	this.exercise_selection()
-		// },
-		select_l(e) {
-			this.is_more = 1;
-			this.page = 1;
-			this.num_l = e.detail.value;
-			this.level_id = this.level_list[e.detail.value].id;
-			this.exercise_selection();
-		},
-		// //选择难度
-		// select_n(id){
-		// 	this.is_more=1
-		// 	this.page=1
-		// 	this.level_id=id
-		// 	this.exercise_selection()
-		// },
-		toStr(str) {
-			if (str.length > 5) {
-				return str.splice(0, 5);
-			} else {
-				return str;
-			}
-		},
-		open(id, status) {
-			this.exercises_id = id;
-			let data = {
-				token: this.token,
-				//know_point:this.know_point_list[this.num_z].know_point_id,
-				type: this.question_id,
-				subject_id: this.subject_id,
-				exercises_id: id,
-				page: this.page_change,
-				size: this.size_change
-			};
-			//consle.log('data2',this.know_point_list[this.num_z].know_point_id)
-			if (this.type == 3) {
-				var req = this.$api.teacher_same_type(data);
-			} else {
-				if (this.is_vip == 1) {
-					var req = this.$api.same_type(data);
+					this.update = false;
+					this.update = true;
+				});
+			},
+			join_error2(i, id) {
+				if (uni.getStorageSync('type') == 3) {
+					var req = this.$api.teacher_join_error({
+						token: this.token,
+						exercises_id: id
+						// subject_id:this.subject_id,
+						// know_point:this.know_point_list[this.num_z].know_point_id,
+						// type:this.question_id,
+						//is_vip:1
+					});
 				} else {
-					// var req=this.$api.same_type(data)
+					var req = this.$api.join_error({
+						token: this.token,
+						exercises_id: id,
+						// subject_id:this.subject_id,
+						// know_point:this.know_point_list[this.num_z].know_point_id,
+						// type:this.question_id,
+						is_vip: 1
+					});
+				}
 
-					//1是不要提示 0是要提示
-					if (status != 1) {
+				req.then(res => {
+					if (res.code == 200) {
+						if (this.same_type[i].is_error) {
+							this.same_type[i].is_error = 0;
+						} else {
+							this.same_type[i].is_error = 1;
+						}
+					} else {
 						uni.showToast({
-							title: '非会员用户不可查看同类型题目',
+							title: res.msg,
 							icon: 'none'
 						});
-						return;
-					} else {
-						return;
 					}
-				}
-			}
-			req.then(res => {
-				console.log(res);
-				if (res.code == 200) {
-					this.same_type = res.data.exercises_list;
-					this.$refs.popup.open();
+					this.update = false;
+					this.update = true;
+				});
+			},
+			select_s(e) {
+				this.num_b = 0;
+				this.num_z = 0;
+				console.log('e', e);
+				if (e == undefined) {
+					this.num_s = 0;
 				} else {
-					uni.showToast({
-						title: res.msg,
-						icon: 'none'
-					});
+					this.num_s = e.detail.value;
 				}
-			});
-			// this.$refs.popup.open()
-		},
-		hiddenmodal() {
-			this.$refs.popup.close();
+
+				this.is_more = 1;
+				this.page = 1;
+				this.subject_id = this.subject_list[this.num_s].id;
+				this.get_konw();
+				this.exercise_type();
+			},
+			// //选择学科
+			// select_xk(id){
+			// 	this.num_b=0
+			// 	this.num_z=0
+			// 	this.is_more=1
+			// 	this.page=1
+			// 	this.subject_id=id
+			// 	// this.version()
+			// 	this.get_konw()
+			// 	// this.exercise_selection()
+			// },
+			// //选择教材版本
+			// select_b(e){
+			// 	this.is_more=1
+			// 	this.page=1
+			// 	console.log(e)
+			// 	this.num_b=e.detail.value
+			// 	this.exercise_selection()
+			// },
+			select_g(e) {
+				this.is_more = 1;
+				this.page = 1;
+				console.log(e);
+				this.num_g = e.detail.value;
+				this.exercise_selection();
+			},
+			//选择知识点
+			select_z(e) {
+				this.is_more = 1;
+				this.page = 1;
+				console.log(e);
+				this.num_z = e.detail.value;
+				this.exercise_selection();
+			},
+			//选择题型2
+			select_ty(e) {
+				this.is_more = 1;
+				this.page = 1;
+				this.num_t = e.detail.value;
+				this.question_id = this.question_type[e.detail.value].id;
+				this.exercise_selection();
+			},
+			// //选择题型
+			// select_t(id){
+			// 	this.page=1
+			// 	this.question_id=id
+			// 	this.exercise_selection()
+			// },
+			select_l(e) {
+				this.is_more = 1;
+				this.page = 1;
+				this.num_l = e.detail.value;
+				this.level_id = this.level_list[e.detail.value].id;
+				this.exercise_selection();
+			},
+			// //选择难度
+			// select_n(id){
+			// 	this.is_more=1
+			// 	this.page=1
+			// 	this.level_id=id
+			// 	this.exercise_selection()
+			// },
+			toStr(str) {
+				if (str.length > 5) {
+					return str.splice(0, 5);
+				} else {
+					return str;
+				}
+			},
+			open(id, status) {
+				this.exercises_id = id;
+				let data = {
+					token: this.token,
+					//know_point:this.know_point_list[this.num_z].know_point_id,
+					type: this.question_id,
+					subject_id: this.subject_id,
+					exercises_id: id,
+					page: this.page_change,
+					size: this.size_change
+				};
+				//consle.log('data2',this.know_point_list[this.num_z].know_point_id)
+				if (this.type == 3) {
+					var req = this.$api.teacher_same_type(data);
+				} else {
+					var req = this.$api.same_type(data);
+					// if (this.is_vip == 1) {
+					// 	var req = this.$api.same_type(data);
+					// } else {
+					// 	// var req=this.$api.same_type(data)
+
+					// 	//1是不要提示 0是要提示
+					// 	if (status != 1) {
+					// 		uni.showToast({
+					// 			title: '非会员用户不可查看同类型题目',
+					// 			icon: 'none'
+					// 		});
+					// 		return;
+					// 	} else {
+					// 		return;
+					// 	}
+					// }
+				}
+				req.then(res => {
+					console.log(res);
+					if (res.code == 200) {
+						this.same_type = res.data.exercises_list;
+						this.$refs.popup.open();
+					} else {
+						uni.showToast({
+							title: res.msg,
+							icon: 'none'
+						});
+					}
+				});
+				// this.$refs.popup.open()
+			},
+			hiddenmodal() {
+				this.$refs.popup.close();
+			}
 		}
-	}
-};
+	};
 </script>
 
 <style lang="scss">
-page {
-	//font-family:PingFang SC;
-	background: #eee;
-}
-button::after {
-	border: none;
-}
-/* .m-t{
+	page {
+		//font-family:PingFang SC;
+		background: #eee;
+	}
+
+	button::after {
+		border: none;
+	}
+
+	/* .m-t{
 		margin-bottom:20rpx ;
 	}
 	.xueke{
@@ -657,98 +694,108 @@ button::after {
 			}
 	} */
 
-.item {
-	padding: 30rpx 30rpx 0;
-	box-sizing: border-box;
-	display: flex;
-	flex-direction: column;
-	background: #fff;
-	color: #999;
-	margin: 25rpx;
-	border-radius: 20rpx;
-	border: 1rpx solid #e9e9e9;
-	overflow: hidden;
-	.bottom {
+	.item {
+		padding: 30rpx 30rpx 0;
+		box-sizing: border-box;
 		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		font-size: 28rpx;
-		color: #666666;
-		border-top: 1rpx solid #f5f5f5;
-		padding: 15rpx 0 20rpx;
-		margin-top: 30rpx;
-		.select {
-			image {
-				width: 35rpx;
-				height: 35rpx;
-				vertical-align: middle;
-				margin: 0 15rpx 0 0;
+		flex-direction: column;
+		background: #fff;
+		color: #999;
+		margin: 25rpx;
+		border-radius: 20rpx;
+		border: 1rpx solid #e9e9e9;
+		overflow: hidden;
+
+		.bottom {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 28rpx;
+			color: #666666;
+			border-top: 1rpx solid #f5f5f5;
+			padding: 15rpx 0 20rpx;
+			margin-top: 30rpx;
+
+			.select {
+				image {
+					width: 35rpx;
+					height: 35rpx;
+					vertical-align: middle;
+					margin: 0 15rpx 0 0;
+				}
 			}
-		}
-		.btn {
-			image {
-				width: 35rpx;
-				height: 35rpx;
-				vertical-align: middle;
-				margin: 0 15rpx 0 0;
+
+			.btn {
+				image {
+					width: 35rpx;
+					height: 35rpx;
+					vertical-align: middle;
+					margin: 0 15rpx 0 0;
+				}
+
+				border-radius: 8rpx;
+				padding: 10rpx 0rpx;
 			}
-			border-radius: 8rpx;
-			padding: 10rpx 0rpx;
 		}
 	}
-}
-/* img .latex{
+
+	/* img .latex{
 		height:10px;
 	}
 	.kfformula{
 		height: 10px;
 	} */
-.zt {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100vh;
-	background: #666;
-	opacity: 0.5;
-	z-index: 99;
-}
-.s-b {
-	// background-image:linear-gradient(left,#e50304 0%,#f74300 80%) !important;
-	// color:#fff !important;
-}
-.pickes {
-	height: 70rpx;
-	line-height: 70rpx;
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	width: 100%;
-	position: fixed;
-	background: #fff;
-	border-bottom: 1rpx solid #e7e7e7;
-	z-index: 99;
-	picker {
-		width: 25%;
+	.zt {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		background: #666;
+		opacity: 0.5;
+		z-index: 99;
 	}
-	.value {
+
+	.s-b {
+		// background-image:linear-gradient(left,#e50304 0%,#f74300 80%) !important;
+		// color:#fff !important;
+	}
+
+	.pickes {
 		height: 70rpx;
 		line-height: 70rpx;
-		text-align: center;
-		position: relative;
-		color: #4c4c4c;
-		font-size: 30rpx;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		image {
-			position: absolute;
-			top: 50%;
-			transform: translateY(-50%);
-			width: 13rpx;
-			height: 11rpx;
-			margin: 0 0 0 8rpx;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		width: 100%;
+		position: fixed;
+		background: #fff;
+		border-bottom: 1rpx solid #e7e7e7;
+		z-index: 99;
+
+		picker {
+			width: 25%;
+		}
+
+		.value {
+			height: 70rpx;
+			line-height: 70rpx;
+			text-align: center;
+			position: relative;
+			color: #4c4c4c;
+			font-size: 30rpx;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+
+			image {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 13rpx;
+				height: 11rpx;
+				margin: 0 0 0 8rpx;
+			}
 		}
 	}
-}
 </style>

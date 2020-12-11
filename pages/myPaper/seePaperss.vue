@@ -285,20 +285,20 @@
 				};
 				if (uni.getStorageSync('type') == 4) {
 					console.log('this.is_vip', data, this.is_vip);
-					if (this.is_vip == 1) {
 						var req = this.$api.same_type(data);
-					} else {
-						//1不可见 0可见
-						if (status != 1) {
-							uni.showToast({
-								title: '非会员用户不可查看同类型题目',
-								icon: 'none'
-							});
-							return;
-						} else {
-							return;
-						}
-					}
+					// if (this.is_vip == 1) {
+					// } else {
+					// 	//1不可见 0可见
+					// 	if (status != 1) {
+					// 		uni.showToast({
+					// 			title: '非会员用户不可查看同类型题目',
+					// 			icon: 'none'
+					// 		});
+					// 		return;
+					// 	} else {
+					// 		return;
+					// 	}
+					// }
 				} else {
 					var req = this.$api.teacher_same_type(data);
 				}
