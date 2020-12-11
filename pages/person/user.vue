@@ -55,7 +55,7 @@
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 		</view>
-		<view class="center youxiang" @click="touser('/pages/login/changePassword')" :class="type == 3 ? 'teacherEmial' : ''">
+		<view class="center youxiang" @click="changeEmail" :class="type == 3 ? 'teacherEmial' : ''">
 			<text>邮箱</text>
 			<text v-if="!user_info.email"></text>
 			<text v-else="user_info.email">{{ user_info.email }}</text>
@@ -80,6 +80,20 @@
 				</div>
 			</view>
 		</uniPopup>
+    <!-- 修改邮箱 -->
+    <uniPopup ref="botpopups" type="center">
+    	<view class="botpopup">
+    		<div class="title_box">
+    			<image class="setinputicon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/setinputicon.png" mode="widthFix"></image>
+    			<span class="text">修改邮箱</span>
+    		</div>
+    		<input type="text" :value="newEmail" @input="newEmailChange" class="newnameinp" />
+    		<div class="btns">
+    			<button size="mini" type="default" class="cancle" @click="newEmailcancleClick">取消</button>
+    			<button size="mini" type="warn" class="confirm" @click="newEmailconfirmClick">确定</button>
+    		</div>
+    	</view>
+    </uniPopup>
 	</view>
 </template>
 
@@ -106,7 +120,8 @@
 				grade: [],
 				school: [],
 				type: '',
-				newName: ''
+				newName: '',
+				newEmail: '',
 			};
 		},
 		onLoad() {
@@ -127,7 +142,56 @@
 			}
 		},
 		methods: {
+      changeEmail(){
+        this.$refs.botpopups.open()
+      },
+      newEmailconfirmClick(){
+        console.log('changeEmail',this.newEmail)
+        this.$refs.botpopups.close()
+        if (!this.newEmail) {
+        	uni.showToast({
+        		title: '不能为空！',
+        		icon: 'none'
+        	});
+        	return;
+        }
+        if(this.newEmail == this.user_info.email){
+          uni.showToast({
+          	title: '新邮箱不可与原邮箱一致！',
+          	icon: 'none'
+          });
+          return;
+        }
+        var data = {
+        	email: this.newEmail,
+        	token: this.token
+        };
+        var res
+        if(this.type == 4){
+           res = this.$api.save_email(data)
+        }else{
+          res = this.$api.save_teacher_email(data)
+        }
+        res.then(res => {
+        	console.log(res);
+        	if (res.code == 200) {
+        		uni.showToast({
+        			title: '修改成功'
+        		});
+        		setTimeout(() => {
+        			this.newName = '';
+        			this.getuserinfo();
+        		}, 1000);
+        	} else {
+        		uni.showToast({
+        			title: res.msg,
+        			icon: 'none'
+        		});
+        	}
+        });
+      },
 			confirmClick(){
+        this.$refs.botpopup.close()
 				if (!this.newName) {
 					uni.showToast({
 						title: '不能为空！',
@@ -139,8 +203,13 @@
 					true_name: this.newName,
 					token: this.token
 				};
-				// change_teacher_info
-				this.$api.change_user_info(data).then(res => {
+        var res
+        if(this.type == 4){
+           res = this.$api.change_user_info(data)
+        }else{
+          res = this.$api.change_teacher_info(data)
+        }
+				res.then(res => {
 					console.log(res);
 					if (res.code == 200) {
 						uni.showToast({
@@ -148,7 +217,6 @@
 						});
 						setTimeout(() => {
 							this.newName = '';
-							this.$refs.botpopup.close()
 							this.getuserinfo();
 						}, 1000);
 					} else {
@@ -163,9 +231,17 @@
 				const {value} = e.detail 
 				this.newName = value
 			},
+      newEmailChange(e){
+				const {value} = e.detail 
+				this.newEmail = value
+			},
 			cancleClick(){
 				this.newName = '';
 				this.$refs.botpopup.close()
+			},
+      newEmailcancleClick(){
+				this.newEmail = '';
+				this.$refs.botpopups.close()
 			},
 			checkimg() {
 				this.update = false;

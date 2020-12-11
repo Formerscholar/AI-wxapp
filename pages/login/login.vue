@@ -11,14 +11,14 @@
 				<view :class="{'b-b':loginmode==3}" @click="setlogin(3)">我是老师</view>
 			</view>
 			<view class="zhanhao">
-				<image src="../../static/img/wode.png" mode=""></image>
+				<!-- <image src="../../static/img/wode.png" mode=""></image> -->
 				<input type="text" v-model="account" placeholder="请输入账号" placeholder-style="color:#dedede"/>
-				<image @click="del(1)" src="../../static/img/del.png" v-show="account.length>0" mode=""></image>
+				<!-- <image @click="del(1)" src="../../static/img/del.png" v-show="account.length>0" mode=""></image> -->
 			</view>
 			<view class="zhanhao">
-				<image src="../../static/img/password.png" mode=""></image>
+				<!-- <image src="../../static/img/password.png" mode=""></image> -->
 				<input type="password" v-model="password" placeholder="请输入密码" placeholder-style="color:#dedede"/>
-				<image @click="del(2)" src="../../static/img/del.png" v-show="password.length>0" mode=""></image>
+				<!-- <image @click="del(2)" src="../../static/img/del.png" v-show="password.length>0" mode=""></image> -->
 			</view>
 			<view class="text">
 				<text @click="toReg()" v-if="type==4">注册账号</text>

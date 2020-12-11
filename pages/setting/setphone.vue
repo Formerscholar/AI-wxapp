@@ -37,12 +37,14 @@ export default {
 			password2: '',
 			token: '',
 			code1: '',
-			code2: ''
+			code2: '',
+      type: '',
 		};
 	},
 	onLoad() {
 		if (uni.getStorageSync('userInfo').token) {
 			this.token = uni.getStorageSync('userInfo').token;
+      this.type = uni.getStorageSync('type');
 		}
 		this.old_mobile = uni.getStorageSync('userInfo').display.mobile;
 	},
