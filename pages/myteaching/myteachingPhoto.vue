@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { pathToBase64, base64ToPath } from '../../js_sdk/gsq-image-tools/image-tools/index.js'
 	import uniPopup from '@/components/uni-popup/uni-popup.vue';
 	export default {
 		components: {
@@ -227,109 +228,141 @@
 			},
 			//上传图片
 			checkimg(num) {
-				if (this.textbook_id) {
-					// this.update=false
-					if (num) {
-						uni.navigateTo({
-							url: '/pages/myteaching/customPhotos?textbook_id=' + this.textbook_id + '&choosePage=' + this.choosePage +
-								'&title=' + this.title + '&subject_name=' + this.subject_name,
-							success: () => {
-								console.log('跳转自定义拍照页面', this.textbook_id, this.choosePage, this.title, this.subject_name);
-							}
-						});
-					} else {
-						uni.navigateTo({
-							url: '/pages/myteaching/customPhoto?textbook_id=' + this.textbook_id + '&choosePage=' + this.choosePage +
-								'&title=' + this.title + '&subject_name=' + this.subject_name,
-							success: () => {
-								console.log('跳转自定义拍照页面', this.textbook_id, this.choosePage, this.title, this.subject_name);
-							}
-						});
-					}
-
-					// let _this = this;
-					// uni.chooseImage({
-					// 	count: 1, //默认9
-					// 	sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					// 	sourceType: ['camera'], //从相册选择
-					// 	success: res => {
-					// 		console.log(res.tempFilePaths);
-					// 		_this.img = res.tempFilePaths[0];
-					// 		let url = _this.$api.url + 'main/upload_pic';
-					// 		uni.uploadFile({
-					// 			url: url,
-					// 			filePath: _this.img,
-					// 			name: 'file',
-					// 			formData: {
-					// 				token: _this.token,
-					// 				path: 'search'
-					// 			},
-					// 			success: res => {
-					// 				_this.pic = res.data;
-					// 				console.log('返回', res.data);
-					// 				if (this.from == 2) {
-					// 					this.title = this.obj.textbook_name;
-					// 				}
-					// 				// _this.search_exercises()
-					// 				uni.navigateTo({
-					// 					url:
-					// 						'/pages/myteaching/myteachingPhoto_result?pic=' +
-					// 						_this.pic +
-					// 						'&textbook_id=' +
-					// 						_this.textbook_id +
-					// 						'&choosePage=' +
-					// 						_this.choosePage +
-					// 						'&title=' +
-					// 						_this.title +
-					// 						'&subject_name=' +
-					// 						_this.subject_name
-					// 				});
-					// 				/* if(_this.from==1){
-					// 						_this.textbook_id=''
-					// 						_this.tpage=1
-					// 						_this.numArr=['第1页']
-					// 					}
-					// 					_this.index=0 */
-					// 			},
-					// 			error: function(e) {
-					// 				/* if(_this.from==1){
-					// 						_this.textbook_id=''
-					// 						_this.tpage=1
-					// 						_this.numArr=['第1页']
-					// 					}
-					// 					_this.index=0 */
-					// 			}
-					// 		});
-					// 	},
-					// 	fail: e => {
-					// 		console.log(e);
-					// 		/* if(_this.from==1){
-					// 				_this.textbook_id=''
-					// 				_this.tpage=1
-					// 				_this.numArr=['第1页']
-					// 			}
-					// 			_this.index=0 */
-					// 	}
-					// });
-				} else {
+				if (this.textbook_id == '') {
 					uni.showToast({
 						title: '请先选择相应的教辅',
 						icon: 'none'
 					});
 					return;
 				}
-			}
+				let _this = this;
+				// #ifdef APP-PLUS
+				uni.chooseImage({
+					count: 1, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					// sourceType: ['album'], //从相册选择
+					success: function (res) {
+						console.log(JSON.stringify(res.tempFilePaths));
+						pathToBase64(res.tempFilePaths[0])
+						  .then(base64 => {
+							console.log(base64)
+								_this.pic = base64;
+								_this.search_exercises();
+						  })
+						  .catch(error => {
+							console.error(error)
+								uni.showToast({
+									title: '上传图片失败',
+									icon: 'none'
+								});
+						  })
+					}
+				});
+				// #endif
+		
+				// #ifdef MP-WEIXIN
+				// this.update=false
+				if (num) {
+					uni.navigateTo({
+						url: '/pages/myteaching/customPhotos?textbook_id=' + this.textbook_id + '&choosePage=' + this.choosePage +
+							'&title=' + this.title + '&subject_name=' + this.subject_name,
+						success: () => {
+							console.log('跳转自定义拍照页面', this.textbook_id, this.choosePage, this.title, this.subject_name);
+						}
+					});
+				} else {
+					uni.navigateTo({
+						url: '/pages/myteaching/customPhoto?textbook_id=' + this.textbook_id + '&choosePage=' + this.choosePage +
+							'&title=' + this.title + '&subject_name=' + this.subject_name,
+						success: () => {
+							console.log('跳转自定义拍照页面', this.textbook_id, this.choosePage, this.title, this.subject_name);
+						}
+					});
+				}
+				// #endif
+				// let _this = this;
+				// uni.chooseImage({
+				// 	count: 1, //默认9
+				// 	sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				// 	sourceType: ['camera'], //从相册选择
+				// 	success: res => {
+				// 		console.log(res.tempFilePaths);
+				// 		_this.img = res.tempFilePaths[0];
+				// 		let url = _this.$api.url + 'main/upload_pic';
+				// 		uni.uploadFile({
+				// 			url: url,
+				// 			filePath: _this.img,
+				// 			name: 'file',
+				// 			formData: {
+				// 				token: _this.token,
+				// 				path: 'search'
+				// 			},
+				// 			success: res => {
+				// 				_this.pic = res.data;
+				// 				console.log('返回', res.data);
+				// 				if (this.from == 2) {
+				// 					this.title = this.obj.textbook_name;
+				// 				}
+				// 				// _this.search_exercises()
+				// 				uni.navigateTo({
+				// 					url:
+				// 						'/pages/myteaching/myteachingPhoto_result?pic=' +
+				// 						_this.pic +
+				// 						'&textbook_id=' +
+				// 						_this.textbook_id +
+				// 						'&choosePage=' +
+				// 						_this.choosePage +
+				// 						'&title=' +
+				// 						_this.title +
+				// 						'&subject_name=' +
+				// 						_this.subject_name
+				// 				});
+				// 				/* if(_this.from==1){
+				// 						_this.textbook_id=''
+				// 						_this.tpage=1
+				// 						_this.numArr=['第1页']
+				// 					}
+				// 					_this.index=0 */
+				// 			},
+				// 			error: function(e) {
+				// 				/* if(_this.from==1){
+				// 						_this.textbook_id=''
+				// 						_this.tpage=1
+				// 						_this.numArr=['第1页']
+				// 					}
+				// 					_this.index=0 */
+				// 			}
+				// 		});
+				// 	},
+				// 	fail: e => {
+				// 		console.log(e);
+				// 		/* if(_this.from==1){
+				// 				_this.textbook_id=''
+				// 				_this.tpage=1
+				// 				_this.numArr=['第1页']
+				// 			}
+				// 			_this.index=0 */
+				// 	}
+				// });
+			},
 			//获取题目数据
-			/* search_exercises(){
+			search_exercises(){
 					console.log(this.textbook_id)
 					this.$api.search_exercises({textbook_id:this.textbook_id,page:this.choosePage,pic:this.pic,token:this.token})
 					.then(res=>{
 						console.log('res',res)
-						uni.navigateTo({
-							url:'/pages/myPaper/seePapers?status=photo&listData='+encodeURIComponent(JSON.stringify(res.data))+'&title='+this.title+'&subject_name='+this.subject_name
-						})
+						if (res.code == 200) {
+							uni.redirectTo({
+								url: '/pages/myPaper/seePapers?status=photo&listData=' + encodeURIComponent(JSON.stringify(res.data)) + '&title=' + this.title + '&subject_name=' + this.subject_name
+							});
+						} else {
+							uni.showToast({
+								title: res.msg,
+								icon: 'none'
+							});
+						}
 					})
-				} */
+				}
 		}
 	};
 </script>

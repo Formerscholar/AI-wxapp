@@ -1,49 +1,5 @@
 <template>
 	<view>
-		<!-- <view class="" v-if="false">
-			<view class="select">
-				<view class="xueke" >
-					<view>学科</view>
-					<text :class="{'s-b':item.subject_id==subject_id}" v-for="(item,i) of subject_list" :key='i' @click="select_xk(item.id)">{{item.title}}</text>
-				</view>
-			</view>
-
-			<view class="jiaocai">
-				<view class="left">
-					<text>年级</text>
-					<picker  :range="grade" range-key="name" @change="select_g">
-						<view class="value">{{grade[num_g].name}}</view>
-					</picker>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/xiala.png" mode=""></image>
-				</view>		
-				<view class="right left">
-					<text>知识点</text>
-					<picker  :range="know_point_list" range-key="title" @change="select_z">
-						<view class="value" style="overflow: hidden;
-						text-overflow: ellipsis;white-space: nowrap;">
-						{{ know_point_list[num_z].title?know_point_list[num_z].title:'暂无' }}</view>
-					</picker>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/xiala.png" mode=""></image>
-				</view>
-			</view>
-			
-			<view class="select">
-				<view class="xueke">
-					<view>难度</view>
-					<text :class="{'s-b':item.id==level_id}" @click="select_n(item.id)" v-for="(item,i) of level_list" :key='i'>{{item.title}}</text>
-				</view>
-			</view>
-			
-			<view class="select m-t">
-				<view class="xueke">
-					<view>题型</view>
-					<scroll-view scroll-x="true" >
-						<text class="picker" :class="{'s-b':item.id==question_id}" @click="select_t(item.id)" v-for="(item,i) of question_type" :key='i'>{{item.title}}</text>
-					</scroll-view>	
-				</view>
-			</view>
-		</view> -->
-
 		<!-- picker start -->
 		<view class="pickes">
 			<picker :range="subject_list" range-key="title" @change="select_s" v-if="type == 4 && subject_list">
@@ -142,12 +98,82 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 	import uParse from '@/components/u-parse/u-parse.vue';
 	import uniPopup from '@/components/uni-popup/uni-popup.vue';
 	export default {
 		components: {
 			uParse,
 			uniPopup
+=======
+import uParse from '@/components/u-parse/u-parse.vue';
+import uniPopup from '@/components/uni-popup/uni-popup.vue';
+export default {
+	components: { uParse, uniPopup },
+	data() {
+		return {
+			banben: [],
+			know_point_list: [{ title: '知识点', id: 0 }],
+			num_b: 0, //版本选择
+			num_z: 0, //知识点选择
+			num_g: 0, //班级选择
+			num_s: 0, //学科选择
+			num_t: 0, //题型选择
+			num_l: 0, //难度选择
+			leixing: false, //同类型题目是否显示
+			level_list: [{ title: '难度', id: 0 }], //难度列表
+			subject_list: [{ title: '学科', id: 0 }], //学科列表
+			version_list: [], //教材版本
+			question_type: [{ title: '题型', id: 0 }], //题型
+			subject_id: 19, //选中的学科id
+			question_id: 0, //选中的题型id
+			level_id: 0, //难度id
+			token: '',
+			update: true,
+			page: 1,
+			is_more: 1,
+			same_type: [],
+			type: 4,
+			exercises_list: [],
+			grade: [],
+			page_change: 1,
+			size_change: 2,
+			exercises_id: '',
+			is_vip: ''
+		};
+	},
+	onReachBottom() {
+		console.log(this.is_more);
+		if (this.is_more) {
+			this.page++;
+			if (this.page != 1) {
+				this.exercise_selection();
+			}
+		}
+	},
+	onLoad() {
+		if (uni.getStorageSync('token')) {
+			this.token = uni.getStorageSync('token');
+		}
+		this.subject_fenlei();
+		// this.exercise_type()
+		this.get_level();
+		// this.get_grade();
+	},
+	onShow() {
+		this.type = uni.getStorageSync('type');
+		this.page_change = 1;
+		if (uni.getStorageSync('is_vip')) {
+			this.is_vip = uni.getStorageSync('is_vip');
+		}
+		// this.get_konw();
+	},
+	methods: {
+		changeStyle(item) {
+			item = item.replace(new RegExp('<p', 'gi'), '<p style="color: #000;position:relative"');
+			item = item.replace(new RegExp('<img', 'gi'), '<img style="max-width:95%;vertical-align: middle;width:auto;"');
+			return item;
+>>>>>>> d7ddd84a6ce38ee4db4bc2cebcfa5219094684d2
 		},
 		data() {
 			return {
@@ -473,6 +499,7 @@
 					this.num_s = e.detail.value;
 				}
 
+<<<<<<< HEAD
 				this.is_more = 1;
 				this.page = 1;
 				this.subject_id = this.subject_list[this.num_s].id;
@@ -597,6 +624,98 @@
 			},
 			hiddenmodal() {
 				this.$refs.popup.close();
+=======
+			this.is_more = 1;
+			this.page = 1;
+			this.subject_id = this.subject_list[this.num_s].id;
+			this.get_konw();
+			this.exercise_type();
+		},
+		// //选择学科
+		// select_xk(id){
+		// 	this.num_b=0
+		// 	this.num_z=0
+		// 	this.is_more=1
+		// 	this.page=1
+		// 	this.subject_id=id
+		// 	// this.version()
+		// 	this.get_konw()
+		// 	// this.exercise_selection()
+		// },
+		// //选择教材版本
+		// select_b(e){
+		// 	this.is_more=1
+		// 	this.page=1
+		// 	console.log(e)
+		// 	this.num_b=e.detail.value
+		// 	this.exercise_selection()
+		// },
+		select_g(e) {
+			this.is_more = 1;
+			this.page = 1;
+			console.log(e);
+			this.num_g = e.detail.value;
+			this.exercise_selection();
+		},
+		//选择知识点
+		select_z(e) {
+			this.is_more = 1;
+			this.page = 1;
+			console.log(e);
+			this.num_z = e.detail.value;
+			this.exercise_selection();
+		},
+		//选择题型2
+		select_ty(e) {
+			this.is_more = 1;
+			this.page = 1;
+			this.num_t = e.detail.value;
+			this.question_id = this.question_type[e.detail.value].id;
+			this.exercise_selection();
+		},
+		// //选择题型
+		// select_t(id){
+		// 	this.page=1
+		// 	this.question_id=id
+		// 	this.exercise_selection()
+		// },
+		select_l(e) {
+			this.is_more = 1;
+			this.page = 1;
+			this.num_l = e.detail.value;
+			this.level_id = this.level_list[e.detail.value].id;
+			this.exercise_selection();
+		},
+		// //选择难度
+		// select_n(id){
+		// 	this.is_more=1
+		// 	this.page=1
+		// 	this.level_id=id
+		// 	this.exercise_selection()
+		// },
+		toStr(str) {
+			if (str.length > 5) {
+				return str.splice(0, 5);
+			} else {
+				return str;
+			}
+		},
+		open(id, status) {
+			this.exercises_id = id;
+			let data = {
+				token: this.token,
+				//know_point:this.know_point_list[this.num_z].know_point_id,
+				type: this.question_id,
+				subject_id: this.subject_id,
+				exercises_id: id,
+				page: this.page_change,
+				size: this.size_change
+			};
+			//consle.log('data2',this.know_point_list[this.num_z].know_point_id)
+			if (uni.getStorageSync('type') == 4) {
+				var req = this.$api.same_type(data);
+			} else {
+				var req = this.$api.teacher_same_type(data);
 			}
 		}
 	};

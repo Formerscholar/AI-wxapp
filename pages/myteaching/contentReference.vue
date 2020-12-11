@@ -148,12 +148,38 @@ export default {
 			// uni.navigateTo({
 			// 	url: '/pages/myteaching/myteachingPhoto?from=2&obj=' + JSON.stringify(obj) + '&subject_name=' + subject_name
 			// });
+			// #ifdef APP-PLUS
+			uni.chooseImage({
+				count: 1, //默认9
+				sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				// sourceType: ['album'], //从相册选择
+				success: function (res) {
+					console.log(JSON.stringify(res.tempFilePaths));
+					uni.navigateTo({
+						url: '/pages/myteaching/cropperPhoto?ImagePath=' +
+							res.tempFilePaths[0] +
+							'&textbook_id=' +
+							obj.textbook_id +
+							'&title=' +
+							obj.textbook_name +
+							'&subject_name=' +
+							subject_name,
+						success: () => {
+							console.log('跳转图片裁剪页面', res.tempFilePaths[0]);
+						}
+					});
+				}
+			});
+			// #endif
+			
+			// #ifdef MP-WEIXIN
 			uni.navigateTo({
 				url: '/pages/myteaching/customPhoto?textbook_id=' + obj.textbook_id + '&title=' + obj.textbook_name + '&subject_name=' + subject_name,
 				success: () => {
 					console.log('toTeachingPhoto', obj.textbook_id, obj.textbook_name, subject_name);
 				}
 			});
+			// #endif
 		}
 	}
 };

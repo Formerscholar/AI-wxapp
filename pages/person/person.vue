@@ -145,11 +145,23 @@ export default {
 	methods: {
 		...mapMutations(['login', 'logout']),
 		shopClick(){
+			// #ifdef MP-WEIXIN
 			if (app.globalData.systemInfo.platform == "ios") {
-				this.touser('/pages/mall/iostip')
-			}else{
-				this.touser('/pages/mall/index')
+				uni.navigateTo({
+					url: "/pages/mall/iostip"
+				})
+			} else {
+				uni.navigateTo({
+					url: '/pages/mall/index'
+				})
 			}
+			// #endif
+			
+			// #ifdef APP-PLUS
+			uni.navigateTo({
+				url: "/pages/mall/iostip"
+			})
+			// #endif
 		},
 		pageToVip: function() {
 			this.touser('/pages/person/vip')
