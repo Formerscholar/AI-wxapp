@@ -4,21 +4,47 @@
 			<image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/loginBg.png'></image>
 		</view>
 		<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/aiFalse.png" mode="" class='aiFalse'>
-			<view class="login">
-				<view class="sf">
-					请选择您的身份
-				</view>
+		<view class="login">
+			<!-- #ifdef APP-PLUS -->
+			<view class="btn">
+				<view :class="{'b-b':loginmode==4}" @click="setlogin(4)">我是学生(家长)</view>
+				<view :class="{'b-b':loginmode==3}" @click="setlogin(3)">我是老师</view>
+			</view>
+			<view class="zhanhao">
+				<image src="../../static/img/wode.png" mode=""></image>
+				<input type="text" v-model="account" placeholder="请输入账号" placeholder-style="color:#dedede"/>
+				<image @click="del(1)" src="../../static/img/del.png" v-show="account.length>0" mode=""></image>
+			</view>
+			<view class="zhanhao">
+				<image src="../../static/img/password.png" mode=""></image>
+				<input type="password" v-model="password" placeholder="请输入密码" placeholder-style="color:#dedede"/>
+				<image @click="del(2)" src="../../static/img/del.png" v-show="password.length>0" mode=""></image>
+			</view>
+			<view class="text">
+				<text @click="toReg()" v-if="type==4">注册账号</text>
+				<text @click="topassword()">忘记密码</text>
+			</view>
+			<view class="login-btn" @click="login2">登 录</view>
+			<button class="wx-btn" open-type="getUserInfo" @getuserinfo="getuserinfo">微信登录</button>
+			<!-- #endif -->
+			<!-- #ifdef MP-WEIXIN -->
+			<view class="sf">
+				请选择您的身份
+			</view>
+			<view class="weixin">
 				<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,4)">我是学生(家长)</button>
 				<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,3)">我是老师</button>
 			</view>
-			<uni-popup ref="popup" type="center">
-				<view class="bindphone">
-					<view>
-						需要授权获取手机号
-					</view>
-					<button open-type="getPhoneNumber" @getphonenumber="getphone">授权</button>
+			<!-- #endif -->
+		</view>
+		<uni-popup ref="popup" type="center">
+			<view class="bindphone">
+				<view>
+					需要授权获取手机号
 				</view>
-			</uni-popup>
+				<button open-type="getPhoneNumber" @getphonenumber="getphone">授权</button>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -35,7 +61,7 @@
 		},
 		data() {
 			return {
-				number: '',
+				account: '',
 				password: '',
 				loginmode: 4,
 				type: 4,
@@ -51,6 +77,15 @@
 		},
 		methods: {
 			...mapMutations(['login', 'set_type']),
+			setlogin(i){
+				this.type = i
+				this.loginmode = i
+				this.set_type(i);
+				uni.setStorage({
+					key:'type',
+					data:i
+				})
+			},
 			bindgetuserinfo(e, i) {
 				uni.login({
 					success: (res) => {
@@ -186,6 +221,61 @@
 						console.log(res)
 					})
 			},
+			login2(){
+				var user_type=this.loginmode
+				uni.setStorage({
+					key:'type',
+					data:user_type
+				})
+				var data={
+					user_name:this.account,
+					password:this.password
+				}
+				var req = this.$api.login(data);
+				if(user_type == 3){
+					req = this.$api.teacher_login(data);
+				}
+				req.then(res=>{
+					console.log(res)
+					if(res.code==200){
+						this.login(res.data)
+						uni.showToast({
+							title:'登录成功'
+						})
+						setTimeout(()=>{
+							uni.switchTab({
+								url:'/pages/index/index'
+							})
+						},500)
+					}else{
+						uni.showToast({
+							title:res.msg,
+							icon:'none'
+						})
+					}
+				})
+			
+			},
+			getuserinfo(){
+				
+			},
+			toReg(){
+				uni.navigateTo({
+					url:'/pages/login/register'
+				})
+			},
+			topassword(){
+				uni.navigateTo({
+					url:'/pages/login/changePassword'
+				})
+			},
+			del(i){
+				if(i==1){
+					this.account=''
+				}else{
+					this.password=''
+				}
+			}
 		}
 	}
 </script>
@@ -222,7 +312,7 @@
 		display: flex;
 		justify-content: space-between;
 		//margin-top: 387rpx;
-		padding: 387rpx 30rpx 0;
+		padding: 0 30rpx 0;
 
 		view {
 			text-align: center;
@@ -253,20 +343,21 @@
 			color: #cccccc;
 			text-align: left;
 		}
+		.weixin{
+			button {
+				// border: 1rpx solid #fff;
+				width: 100%;
+				height: 112rpx;
+				margin: 26rpx auto 0;
+				line-height: 112rpx;
+				color: #fff;
+				font-size: 42rpx;
+				background: #ff2121;
+			}
 
-		button {
-			// border: 1rpx solid #fff;
-			width: 100%;
-			height: 112rpx;
-			margin: 26rpx auto 0;
-			line-height: 112rpx;
-			color: #fff;
-			font-size: 42rpx;
-			background: #ff2121;
-		}
-
-		button:nth-of-type(2) {
-			margin-top: 34rpx;
+			button:nth-of-type(2) {
+				margin-top: 34rpx;
+			}
 		}
 
 		.zhanhao {
