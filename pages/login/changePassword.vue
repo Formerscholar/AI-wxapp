@@ -1,15 +1,11 @@
 <template>
 	<view class="container">
 		<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/email.png" class="emailPic" />
-		<!-- <view class="reg">
-			<input type="text" v-model="oldEmail" placeholder="请输入原邮箱" placeholder-style="color:#dedede"/>
-			<image @click="del(1)" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png" v-show="name.length>0" mode=""></image>
-		</view> -->
 		<view class="reg">
-			<input type="text" v-model="email" placeholder="请输入新邮箱" placeholder-style="color:#dedede" />
-			<image @click="del(1)" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png" v-show="name.length > 0" mode=""></image>
+			<input type="text" v-model="phone" placeholder="请输入手机号" placeholder-style="color:#dedede"/>
+			<image @click="del(1)" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png" v-show="phone.length>0" mode=""></image>
 		</view>
-		<!-- 	<view class="yzcode">
+		<view class="yzcode">
 			<input type="text" v-model="code" placeholder="请输入验证码" placeholder-style="color:#dedede"/>
 			<button @click="getcode()">{{codeStr}}</button>
 		</view>
@@ -23,8 +19,8 @@
 		<view class="reg">
 			<input type="text" v-model="password2" placeholder="请再次输入新密码" placeholder-style="color:#dedede"/>
 			<image @click="del(3)" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png"  v-show="password2.length>0" mode=""></image>
-		</view> -->
-		<button class="btn" @click="xiugai()">修改邮箱</button>
+		</view>
+		<button class="btn" @click="xiugai()">修改密码</button>
 	</view>
 </template>
 
@@ -37,19 +33,11 @@ export default {
 			phone: '',
 			password: '',
 			password2: '',
-			code: '',
-			email: '',
-			oldEmail: ''
+			code: ''
 		};
 	},
 	onLoad() {
-		if (uni.getStorageSync('token')) {
-			this.token = uni.getStorageSync('token');
-		}
-		if (uni.getStorageSync('type')) {
-			this.type = uni.getStorageSync('type');
-		}
-		this.getuserinfo();
+		this.type = uni.getStorageSync('type');
 	},
 	methods: {
 		del(i) {
@@ -61,115 +49,59 @@ export default {
 				this.password2 = '';
 			}
 		},
-		//获取用户信息
-		getuserinfo() {
-			if (this.type == 3) {
-				var req = this.$api.get_teacher_info({ token: this.token });
-			} else {
-				var req = this.$api.get_user_info({ token: this.token });
-			}
-			req.then(res => {
-				console.log(res);
-				this.oldEmail = res.data.email;
-			});
-		},
-		//提交
-		xiugai() {
-			if (!this.email) {
+		xiugai(){
+			if(this.phone==''){
 				uni.showToast({
-					title: '请输入新邮箱',
-					icon: 'none'
-				});
-				return;
+					title:'手机号码不能为空',
+					icon:'none'
+				})
+				return
 			}
-			if (this.email == this.oldEmail) {
+			if(this.password==''){
 				uni.showToast({
-					title: '新邮箱不可与原邮箱一致',
-					icon: 'none'
-				});
-				return;
+					title:'密码不能为空',
+					icon:'none'
+				})
+				return
 			}
-			if (this.type == 3) {
-				var req = this.$api.save_teacher_email({ token: this.token, email: this.email });
-			} else {
-				var req = this.$api.save_email({ token: this.token, email: this.email });
+			if(this.password!=this.password2){
+				uni.showToast({
+					title:'两次密码不一致',
+					icon:'none'
+				})
+				return
 			}
-			req.then(res => {
-				console.log(res);
-				if (res.code == 200) {
-					uni.showToast({
-						title: '修改成功'
-					});
-					setTimeout(() => {
-						uni.navigateBack();
-					}, 1000);
-				} else {
-					/* uni.showToast({
-							title:res.msg,
-							icon:'none'
-						}) */
+			if(!/^[0-9A-Za-z]{6,}$/.test(this.password)){
+				uni.showToast({
+					title:'请输入有效的密码！',
+					icon:'none'
+				})
+				return
+			}
+			var data={
+				mobile:this.phone,
+				verify_code:this.code,
+				password:this.password,
+				password_again:this.password2,
+			}
+			this.$api.search_password(data).then(res=>{
+				uni.showToast({
+					title: res.msg
+				})
+				if(res.code==200){
+					setTimeout(()=>{
+						uni.redirectTo({
+							url:'/pages/login/login'
+						},1000)
+					})
 				}
-			});
+			})
 		},
-		// xiugai(){
-		// 	if(this.phone==''){
-		// 		uni.showToast({
-		// 			title:'手机号码不能为空',
-		// 			icon:'none'
-		// 		})
-		// 		return
-		// 	}
-		// 	if(this.password==''){
-		// 		uni.showToast({
-		// 			title:'密码不能为空',
-		// 			icon:'none'
-		// 		})
-		// 		return
-		// 	}
-		// 	if(this.password!=this.password2){
-		// 		uni.showToast({
-		// 			title:'两次密码不一致',
-		// 			icon:'none'
-		// 		})
-		// 		return
-		// 	}
-		// 	if(!/^[0-9A-Za-z]{6,}$/.test(this.password)){
-		// 		uni.showToast({
-		// 			title:'请输入有效的密码！',
-		// 			icon:'none'
-		// 		})
-		// 		return
-		// 	}
-		// 	var data={
-		// 		mobile:this.phone,
-		// 		verify_code:this.code,
-		// 		password:this.password,
-		// 		password_again:this.password2,
-		// 	}
-		// 	this.$api.search_password(data).then(res=>{
-		// 		console.log(res)
-		// 		if(res.code==200){
-		// 			uni.showToast({
-		// 				title:'修改成功！'
-		// 			})
-		// 			setTimeout(()=>{
-		// 				uni.redirectTo({
-		// 					url:'/pages/login/login'
-		// 				},1000)
-		// 			})
-		// 		}else{
-		// 			uni.showToast({
-		// 				title:res.msg,
-		// 				icon:"none"
-		// 			})
-		// 		}
-		// 	})
-		// },
 		//发送验证码
 		getcode() {
 			if (this.codeStatus && this.phone) {
 				this.codeStatus = false;
-				this.$api.get_verify_code({ token: this.token, mobile: this.phone, type: 'change_password' });
+				this.$api.get_verify_code({ mobile: this.phone, type: 'change_password' });
 				uni.showToast({
 					title: '发送成功,请查看短信！',
 					icon: 'none'
