@@ -138,9 +138,9 @@
 					</view>
 				</view>
 			</view>
-			<view class="tabbarshop_warp" @click="tabbarshopClick">
+			<!-- <view class="tabbarshop_warp" @click="tabbarshopClick">
 				<image class="tabbarshop" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tabbarshop.png" mode="widthFix"></image>
-			</view>
+			</view> -->
 		</view>
 
 		<view class="vip_totul" v-if="is_totul" @click="closeTotul">
