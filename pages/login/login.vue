@@ -25,7 +25,7 @@
 				<text @click="topassword()">忘记密码</text>
 			</view>
 			<view class="login-btn" @click="login2">登 录</view>
-			<button class="wx-btn" open-type="getUserInfo" @getuserinfo="getuserinfo">微信登录</button>
+			<button class="wx-btn" @click="wx_login">微信登录</button>
 			<!-- #endif -->
 			<!-- #ifdef MP-WEIXIN -->
 			<view class="sf">
@@ -228,12 +228,12 @@
 					data:user_type
 				})
 				var data={
-					user_name:this.account,
+					mobile:this.account,
 					password:this.password
 				}
-				var req = this.$api.login(data);
+				var req = this.$api.app_login(data);
 				if(user_type == 3){
-					req = this.$api.teacher_login(data);
+					req = this.$api.teacher_app_login(data);
 				}
 				req.then(res=>{
 					console.log(res)
@@ -275,6 +275,73 @@
 				}else{
 					this.password=''
 				}
+			},
+			wx_login(){
+				console.log("App微信拉起授权")
+				let _this = this;
+				var weixinService = null;
+				plus.oauth.getServices(function(services) {
+					console.log(services)
+					if (services && services.length) {
+						for (var i = 0, len = services.length; i < len; i++) {
+							if (services[i].id === 'weixin') {
+								weixinService = services[i];
+								console.log('授权对象')
+								console.log(weixinService)
+								break;
+							}
+						}
+						if (!weixinService) {
+							console.log('没有微信登录授权服务');
+							return;
+						}
+						weixinService.authorize(function(event) {  //此处获取code的关键
+							console.log(event.code)
+							let data={code: event.code};
+							if(_this.loginmode == 3){
+								var req = _this.$api.teacher_app_wx_login(data);
+							}else{
+								var req = _this.$api.app_wx_login(data);
+							}
+							req.then(res=>{
+								console.log(res)
+								if(res.code==200){
+									_this.login(res.data)
+									uni.showToast({
+										title:'登录成功'
+									})
+									if(!res.data.is_bind){
+										setTimeout(()=>{
+											uni.switchTab({
+												url:'/pages/login/bindinfo'
+											})
+										},500)
+									}else{
+										setTimeout(()=>{
+											uni.switchTab({
+												url:'/pages/index/index'
+											})
+										},500)
+									}
+								}else{
+									uni.showToast({
+										title:res.msg,
+										icon:'none'
+									})
+								}
+							})
+						}, function(error) {
+							console.error('authorize fail:' + JSON.stringify(error));
+						}, {
+							
+						});
+					} else {
+						console.log('无可用的登录授权服务');
+					}
+				}, function(error) {
+					console.error('getServices fail:' + JSON.stringify(error));
+				});
+				
 			}
 		}
 	}
