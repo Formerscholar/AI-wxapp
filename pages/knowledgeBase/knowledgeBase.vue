@@ -190,7 +190,7 @@
       jiexi(id) {
         uni.navigateTo({
           // url:'/pages/person/ListStudents?name='+item.team_name+'&team_id='+item.team_id
-          url: '/pages/knowledgeBase/watchExplane?id=' + id
+          url: '/pages/knowledgeBase/watchExplane?id=' + id + '&source=4'
         });
       },
       //获取班级
@@ -363,7 +363,8 @@
           var req = this.$api.join_error({
             token: this.token,
             exercises_id: id,
-            is_vip: 1
+            is_vip: 1,
+            source: 4
           });
         }
         req.then(res => {
@@ -407,6 +408,7 @@
           var req = this.$api.join_error({
             token: this.token,
             exercises_id: id,
+            source:5,
             // subject_id:this.subject_id,
             // know_point:this.know_point_list[this.num_z].know_point_id,
             // type:this.question_id,

@@ -73,6 +73,8 @@ module.exports = {
   //教师端
   get_mobile: data => request(ApiUrl + 'teacher/get_mobile/', data), //注册获取手机号
   get_mobile_for_share: data => request(ApiUrl + 'teacher/get_mobile_for_share/', data), //分享获取手机号
+  teacher_change_mobile: data => request(ApiUrl + 'teacher/change_mobile/', data), //更换手机号
+  get_teacher_verify_code: data => request(ApiUrl + 'teacher/get_verify_code/', data), //发送验证码
   //bind_mobile: data => request(ApiUrl+'teacher/check_teacher_mobile/',data),
   teacher_index: data => request(ApiUrl + 'teacher/index/', data), //教师首页信息
   teacher_login: data => request(ApiUrl + 'teacher/wx_teacher_login/', data), //登录

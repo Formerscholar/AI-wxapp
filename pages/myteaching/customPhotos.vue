@@ -101,7 +101,7 @@ export default {
 				console.log('res', res);
 				if (res.code == 200) {
 					uni.redirectTo({
-						url: '/pages/myPaper/seePapers?status=photo&listData=' + encodeURIComponent(JSON.stringify(res.data)) + '&title=' + this.title + '&subject_name=' + this.subject_name
+						url: '/pages/myPaper/seePapers?status=photo&listData=' + encodeURIComponent(JSON.stringify(res.data)) + '&title=' + this.title + '&subject_name=' + this.subject_name + '&source=1'
 					});
 				} else {
 					uni.showToast({

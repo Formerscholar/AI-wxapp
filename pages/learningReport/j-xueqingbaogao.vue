@@ -361,7 +361,7 @@ export default {
 		jiexi(id) {
 			uni.navigateTo({
 				// url:'/pages/person/ListStudents?name='+item.team_name+'&team_id='+item.team_id
-				url: '/pages/knowledgeBase/watchExplane?id=' + id
+				url: '/pages/knowledgeBase/watchExplane?id=' + id 
 			});
 		},
 		//获取热门易错题型

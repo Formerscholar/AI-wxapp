@@ -488,31 +488,104 @@
 						}
 					});
 				} else {
-					if (this.is_vip != 1) {
-						uni.showToast({
-							title: '非会员用户无法下载',
-							icon: 'none'
-						});
-						return;
-					} else {
-						this.$api.get_text(data).then(res => {
-							if (res.code == 200) {
-								uni.showToast({
-									title: '下载中...',
-									icon: 'loading',
-									duration: 5000
-								});
-								// #ifdef APP-PLUS
-								plus.downloader.createDownload(res.data.pdf, {
-									filename: "_documents/"+this.errorbook_title+".pdf"
-								}, function(d, status) {
-									if(status == 200) {
+					this.$api.get_text(data).then(res => {
+						if (res.code == 200) {
+							uni.showToast({
+								title: '下载中...',
+								icon: 'loading',
+								duration: 5000
+							});
+							// #ifdef APP-PLUS
+							plus.downloader.createDownload(res.data.pdf, {
+								filename: "_documents/"+this.errorbook_title+".pdf"
+							}, function(d, status) {
+								if(status == 200) {
+									uni.showToast({
+										title: '文件打开中',
+										icon: 'error'
+									})
+									uni.openDocument({
+										filePath: d.filename,
+										showMenu: true,
+										fail: () => {
+											uni.showToast({
+												title: '文件打开失败',
+												icon: 'error'
+											});
+										},
+									})
+								} else {
+									uni.showToast({
+										title: '下载失败',
+										icon: 'error'
+									})
+								}
+							}).start();
+							// #endif
+							// #ifdef MP-WEIXIN
+							if (app.globalData.systemInfo.platform == "ios") {
+								console.log('ios')
+								uni.downloadFile({
+									url: res.data.pdf,
+									header: {
+										"Content-type": "application/pdf"
+									},
+									success: (res) => {
+										uni.saveFile({
+											tempFilePath: res.tempFilePath,
+											success: (res) => {
+												uni.showToast({
+													title: '已下载,正在打开',
+													icon: 'success'
+												});
+												uni.showModal({
+													title: '温馨提示',
+													content: '如无法打开,请使用邮箱下载!',
+													cancelColor: '#eeeeee',
+													confirmColor: '#FF0000',
+													showCancel: false,
+													success(res2) {
+														if (res2.confirm) {
+															uni.openDocument({
+																filePath: res.savedFilePath,
+																fileType: "pdf",
+																showMenu: true,
+																fail: () => {
+																	uni.showToast({
+																		title: '文件打开失败',
+																		icon: 'error'
+																	});
+																},
+															})
+														}
+													}
+												});
+											}
+										})
+									},
+									fail: () => {
 										uni.showToast({
-											title: '文件打开中',
+											title: '下载失败',
 											icon: 'error'
 										})
+									},
+								})
+							} else {
+								let filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
+								uni.downloadFile({
+									url: res.data.pdf,
+									header: {
+										"Content-type": "application/pdf"
+									},
+									filePath: filePath,
+									success: (res) => {
+										uni.showToast({
+											title: '已下载,正在打开',
+											icon: 'success'
+										});
+										console.log(filePath);
 										uni.openDocument({
-											filePath: d.filename,
+											filePath: filePath,
 											showMenu: true,
 											fail: () => {
 												uni.showToast({
@@ -521,104 +594,23 @@
 												});
 											},
 										})
-									} else {
+									},
+									fail: () => {
 										uni.showToast({
 											title: '下载失败',
 											icon: 'error'
 										})
-									}
-								}).start();
-								// #endif
-								// #ifdef MP-WEIXIN
-								if (app.globalData.systemInfo.platform == "ios") {
-									console.log('ios')
-									uni.downloadFile({
-										url: res.data.pdf,
-										header: {
-											"Content-type": "application/pdf"
-										},
-										success: (res) => {
-											uni.saveFile({
-												tempFilePath: res.tempFilePath,
-												success: (res) => {
-													uni.showToast({
-														title: '已下载,正在打开',
-														icon: 'success'
-													});
-													uni.showModal({
-														title: '温馨提示',
-														content: '如无法打开,请使用邮箱下载!',
-														cancelColor: '#eeeeee',
-														confirmColor: '#FF0000',
-														showCancel: false,
-														success(res2) {
-															if (res2.confirm) {
-																uni.openDocument({
-																	filePath: res.savedFilePath,
-																	fileType: "pdf",
-																	showMenu: true,
-																	fail: () => {
-																		uni.showToast({
-																			title: '文件打开失败',
-																			icon: 'error'
-																		});
-																	},
-																})
-															}
-														}
-													});
-												}
-											})
-										},
-										fail: () => {
-											uni.showToast({
-												title: '下载失败',
-												icon: 'error'
-											})
-										},
-									})
-								} else {
-									let filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
-									uni.downloadFile({
-										url: res.data.pdf,
-										header: {
-											"Content-type": "application/pdf"
-										},
-										filePath: filePath,
-										success: (res) => {
-											uni.showToast({
-												title: '已下载,正在打开',
-												icon: 'success'
-											});
-											console.log(filePath);
-											uni.openDocument({
-												filePath: filePath,
-												showMenu: true,
-												fail: () => {
-													uni.showToast({
-														title: '文件打开失败',
-														icon: 'error'
-													});
-												},
-											})
-										},
-										fail: () => {
-											uni.showToast({
-												title: '下载失败',
-												icon: 'error'
-											})
-										},
-									})
-								}
-								// #endif
-							} else {
-								uni.showToast({
-									title: res.msg,
-									icon: 'error'
+									},
 								})
 							}
-						});
-					}
+							// #endif
+						} else {
+							uni.showToast({
+								title: res.msg,
+								icon: 'none'
+							})
+						}
+					});
 				}
 			},
 			texthandleClick(e) {
@@ -656,13 +648,13 @@
 				let arrTpmid = [];
 				if (this.type == 4) {
 					arrTpmid = this.tpmid?.user_errorbook || [];
-					if (!this.is_vip) {
-						uni.showToast({
-							title: '非会员无法下载',
-							icon: 'none'
-						});
-						return false;
-					}
+					// if (!this.is_vip) {
+					// 	uni.showToast({
+					// 		title: '非会员无法下载',
+					// 		icon: 'none'
+					// 	});
+					// 	return false;
+					// }
 				} else {
 					arrTpmid = this.tpmid.teacher_paper;
 				}
@@ -683,13 +675,13 @@
 				let arrTpmid = [];
 				if (this.type == 4) {
 					arrTpmid = this.tpmid?.user_errorbook || [];
-					if (!this.is_vip) {
-						uni.showToast({
-							title: '非会员无法下载',
-							icon: 'none'
-						});
-						return false;
-					}
+					// if (!this.is_vip) {
+					// 	uni.showToast({
+					// 		title: '非会员无法下载',
+					// 		icon: 'none'
+					// 	});
+					// 	return false;
+					// }
 				} else {
 					arrTpmid = this.tpmid.teacher_paper;
 				}
@@ -708,14 +700,7 @@
 			generated(id, title) {
 				this.errorbook_id = id;
 				this.errorbook_title = title
-				if (this.type == 3 || this.is_vip  ) {
-					this.$refs.botpopup.open();
-				} else{
-					uni.showToast({
-						title: '非会员用户无法下载',
-						icon: 'none'
-					});
-				}
+				this.$refs.botpopup.open();
 			},
 			selected_topic(i) {
 				console.log(i);
@@ -831,10 +816,10 @@
 							icon: 'none'
 						});
 					} else {
-						/* uni.showToast({
-								title:res.msg,
-								icon:'none'
-							}) */
+						uni.showToast({
+              title:res.msg,
+              icon:'none'
+						})
 					}
 				});
 			},
@@ -867,33 +852,25 @@
 						}
 					});
 				} else {
-					if (this.is_vip != 1) {
-						uni.showToast({
-							title: '非会员用户无法下载',
-							icon: 'none'
-						});
-						return;
-					} else {
-						this.$api.get_text(data).then(res => {
-							console.log(res);
-							if (res.code == 200) {
-								this.email = '';
-								this.$refs.popup2.close();
-								uni.showToast({
-									title: res.msg,
-									icon: 'none'
-								});
-							} else {
-								/* uni.showToast({
-										title:res.msg,
-										icon:'none'
-									}) */
-							}
-							if (res.code == 300) {
-								this.$refs.popup2.open();
-							}
-						});
-					}
+					this.$api.get_text(data).then(res => {
+						console.log(res);
+						if (res.code == 200) {
+							this.email = '';
+							this.$refs.popup2.close();
+							uni.showToast({
+								title: res.msg,
+								icon: 'none'
+							});
+						} else {
+							uni.showToast({
+                title:res.msg,
+                icon:'none'
+							})
+						}
+						if (res.code == 300) {
+							this.$refs.popup2.open();
+						}
+					});
 				}
 			},
 			//未生成错题本列表

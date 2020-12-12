@@ -157,7 +157,7 @@ export default {
 		},
 		chakan(id, title, subject, subject_name) {
 			uni.navigateTo({
-				url: '/pages/myPaper/seePapers?based_id=' + id + '&title=' + title + '&subject=' + subject + '&subject_name=' + subject_name
+				url: '/pages/myPaper/seePapers?based_id=' + id + '&title=' + title + '&subject=' + subject + '&subject_name=' + subject_name + '&source=2' 
 			});
 		}
 	}

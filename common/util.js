@@ -71,7 +71,7 @@ function request(url, data = {}, method = "post") {
 					},
 					fail: function(err) {
 						uni.hideLoading();
-						reject(err);
+						// reject(err);
 
 					}
 				})

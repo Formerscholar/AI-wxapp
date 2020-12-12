@@ -315,7 +315,7 @@ export default {
 				if (res.code == 200) {
 					if (res.data.data.length == 1) {
 						uni.redirectTo({
-							url: '/pages/knowledgeBase/watchExplane?id=' + res.data.data[0].exercises_id
+							url: '/pages/knowledgeBase/watchExplane?id=' + res.data.data[0].exercises_id + '&source=1'
 						});
 					} else {
 						uni.redirectTo({
@@ -325,7 +325,7 @@ export default {
 								'&title=' +
 								this.title +
 								'&subject_name=' +
-								this.subject_name
+								this.subject_name + '&source=1'
 						});
 					}
 				} else {

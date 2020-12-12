@@ -97,12 +97,14 @@ export default {
 			is_vip: '',
 			type: '',
 			update: true,
-			same_type: ''
+			same_type: '',
+      source:''
 		};
 	},
 	onLoad(options) {
 		this.id = options.id;
 		this.token = uni.getStorageSync('token');
+    this.source = options.source
 	},
 	onShow() {
 		this.get_exercise_analysis();
@@ -115,7 +117,7 @@ export default {
 		jiexi(id) {
 			uni.navigateTo({
 				// url:'/pages/person/ListStudents?name='+item.team_name+'&team_id='+item.team_id
-				url: '/pages/knowledgeBase/watchExplane?id=' + id
+				url: '/pages/knowledgeBase/watchExplane?id=' + id + '&source=5'
 			});
 		},
 		join_error2(i, id) {
@@ -132,10 +134,11 @@ export default {
 				var req = this.$api.join_error({
 					token: this.token,
 					exercises_id: id,
+          source: 5
 					// subject_id:this.subject_id,
 					// know_point:this.know_point_list[this.num_z].know_point_id,
 					// type:this.question_id,
-					is_vip: 1
+					// is_vip: 1
 				});
 			}
 
@@ -164,7 +167,7 @@ export default {
 			if (uni.getStorageSync('type') == 3) {
 				var req = this.$api.teacher_join_error({ token: this.token, exercises_id: id, is_vip: 1 });
 			} else {
-				var req = this.$api.join_error({ token: this.token, exercises_id: id, is_vip: 1 });
+				var req = this.$api.join_error({ token: this.token, exercises_id: id, is_vip: 1  ,source:this.source});
 			}
 			req.then(res => {
 				if (res.code == 200) {

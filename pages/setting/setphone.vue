@@ -72,7 +72,13 @@ export default {
 				new_mobile: this.new_mobile,
 				verify_code: this.code2
 			};
-			this.$api.change_mobile(data).then(res => {
+      var res
+      if(this.type == 4){
+        res = this.$api.change_mobile(data)
+      }else{
+        res = this.$api.teacher_change_mobile(data)
+      }
+      res.then(res => {
 				console.log(res);
 				if (res.code == 200) {
 					uni.showToast({
@@ -122,12 +128,15 @@ export default {
 		getcode2() {
 			if (this.codeStatus2) {
 				this.codeStatus2 = false;
-				this.$api.get_verify_code({ token: this.token, type: 'update', mobile: this.new_mobile });
+        if(this.type == 4){
+          this.$api.get_verify_code({ token: this.token, type: 'update', mobile: this.new_mobile });
+        }else{
+          this.$api.get_teacher_verify_code({ token: this.token, type: 'update', mobile: this.new_mobile });
+        }
 				uni.showToast({
 					title: '发送成功,请查看手机！',
 					icon: 'none'
 				});
-
 				var time = 60;
 				var y = setInterval(() => {
 					time--;

@@ -62,7 +62,11 @@
 			</view> -->
     <!-- </view> -->
     <view class="qiun-charts" v-if="analysisList.length && analysisList.length != 0">
-      <view class="item_box" v-for="(item, index) in analysisList" :key="item.data" @click="toseeDetail(item)">
+      <view class="item_box" v-for="(item, index) in analysisList" :key="item.data" @click="toseeDetail({
+        id:item.id,
+        name:item.name,
+        data:item.data
+      })">
         <view class="top_box">
           <view class="left_text">
             {{ item.name }}
@@ -120,12 +124,14 @@
           series: []
         },
         analysisList: [],
-        subject_name:''
+        subject_name: '',
+        isvip: ''
       };
     },
     onLoad() {
       if (uni.getStorageSync('token')) {
         this.token = uni.getStorageSync('token');
+        this.isvip = uni.getStorageSync('is_vip')
       }
       _self = this;
       this.class_name = uni.getStorageSync('userInfo').school.grade_name + uni.getStorageSync('userInfo').true_name;
@@ -135,11 +141,23 @@
       this.subject_fenlei();
     },
     methods: {
-      toseeDetail(item) {
-        console.log(item)
-        uni.navigateTo({
-          url: `/pages/learningReport/seeKnowledge?id=${item.id}&subject_id=${this.subject_id}&start_time=${this.time}&end_time=${this.time2}&subject_name=${this.subject_name}&title=${item.name}&count=${item.data}`
-        })
+      toseeDetail({
+        id,
+        name,
+        data
+      }) {
+        if (this.isvip == 1) {
+          uni.navigateTo({
+            url: `/pages/learningReport/seeKnowledge?id=${id}&subject_id=${this.subject_id}&start_time=${this.time}&end_time=${this.time2}&subject_name=${this.subject_name}&title=${name}&count=${data}`
+          })
+        } else {
+          uni.showToast({
+            icon: "none",
+            title: '需开通会员查看'
+          })
+
+        }
+
       },
       Randomcolor() {
         return '#' + Math.floor(Math.random() * (2 << 23)).toString(16);

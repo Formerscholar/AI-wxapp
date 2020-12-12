@@ -330,6 +330,8 @@
 						console.log(res);
 						this.user_info = res.data;
 						this.img = res.data.avatar;
+            this.newName = res.data.true_name
+            this.newEmail = res.data.email
 						// this.getschool();
 					});
 				} else {
@@ -339,6 +341,8 @@
 						console.log(res);
 						this.user_info = res.data;
 						this.img = res.data.avatar;
+            this.newName = res.data.true_name
+            this.newEmail = res.data.email
 						// this.getschool();
 					});
 				}
@@ -623,7 +627,7 @@
 
 			.cancle {
 				width: 200rpx;
-				height: 50rpx;
+				height: 54rpx;
 				margin: 0;
 				margin-right: 30rpx;
 				border: 1px solid #B3B3B3;
@@ -637,7 +641,7 @@
 
 			.confirm {
 				width: 200rpx;
-				height: 50rpx;
+				height: 54rpx;
 				background: linear-gradient(86deg, #E50304, #F74300);
 				border-radius: 16rpx;
 				font-size: 24rpx;

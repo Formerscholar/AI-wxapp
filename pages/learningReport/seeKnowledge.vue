@@ -11,7 +11,7 @@
         </div>
       </view>
 
-      <view class="rich-text-box" @click.stop="jiexi(item.id)">
+      <view class="rich-text-box" @click.stop="jiexi(item.id,6)">
         <rich-text class="rich-text-content" :nodes="changeStyle(item.content_all)"></rich-text>
         <!-- <uParse :content="item.content"/> -->
       </view>
@@ -53,7 +53,7 @@
               <!-- <uParse :content="item.content"/> -->
             </view>
             <view class="btnCon">
-              <view @click="jiexi(item.exercises_id)">
+              <view @click="jiexi(item.exercises_id,5)">
                 <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
                 查看解析
               </view>
@@ -163,10 +163,10 @@
         this.open();
       },
       //查看解析
-      jiexi(id) {
+      jiexi(id, source) {
         uni.navigateTo({
           // url:'/pages/person/ListStudents?name='+item.team_name+'&team_id='+item.team_id
-          url: '/pages/knowledgeBase/watchExplane?id=' + id
+          url: '/pages/knowledgeBase/watchExplane?id=' + id + '&source=' + source
         });
       },
       //试卷内容列表
@@ -261,7 +261,8 @@
         if (uni.getStorageSync('type') == 4) {
           var req = this.$api.join_error({
             token: this.token,
-            exercises_id: id
+            exercises_id: id,
+            source: 6
           });
         } else {
           var req = this.$api.teacher_join_error({
@@ -304,7 +305,8 @@
           var req = this.$api.join_error({
             token: this.token,
             exercises_id: id,
-            is_type: 1
+            is_type: 1,
+            source: 5
           });
         } else {
           var req = this.$api.teacher_join_error({
@@ -382,8 +384,9 @@
         color: #e50304;
       }
     }
-    .cont{
-       color: #2c2c2c;
+
+    .cont {
+      color: #2c2c2c;
     }
 
   }
