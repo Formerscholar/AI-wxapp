@@ -127,6 +127,7 @@ import { pathToBase64, base64ToPath } from '../../js_sdk/gsq-image-tools/image-t
 					this.tpage = 1;
 					this.numArr = ['第1页'];
 				}
+        this.page = this.obj.tpage 
 				this.sumPage(this.obj.tpage);
 			}
 		},
