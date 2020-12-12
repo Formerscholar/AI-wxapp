@@ -108,6 +108,11 @@
 			"style": {
 				"navigationBarTitleText": "试卷"
 			}
+		} ,{
+			"path": "pages/learningReport/seeKnowledge",
+			"style": {
+				"navigationBarTitleText": "错题知识点"
+			}
 		}, {
 			"path": "pages/person/bindClassID",
 			"style": {

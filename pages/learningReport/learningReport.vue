@@ -61,15 +61,15 @@
 			</view> -->
 		<!-- </view> -->
 		<view class="qiun-charts" v-if="analysisList.length && analysisList.length != 0">
-			<view class="item_box" v-for="(item, index) in analysisList" :key="item.data">
+			<view class="item_box" v-for="(item, index) in analysisList" :key="item.data" @click="toseeDetail(item.id)">
 				<view class="top_box">
 					<view class="left_text">
 						{{ item.name }}
-						<text>{{ item.percentage }}</text>
+						<text>{{ item.percentage }}%</text>
 					</view>
 					<view class="right_text">{{ item.data }}道错题</view>
 				</view>
-				<view class="bot_box" :style="{ width: item.percentage, backgroundColor: colorList[index.toString()[index.toString().length - 1]] }"></view>
+				<view class="bot_box" :style="{ width: item.percentage + '%', backgroundColor: colorList[index.toString()[index.toString().length - 1]] }"></view>
 			</view>
 		</view>
 		<view class="qiun-charts noData" v-else>{{ msg }}</view>
@@ -120,6 +120,9 @@ export default {
 		this.subject_fenlei();
 	},
 	methods: {
+    toseeDetail(id){
+      console.log(id)
+    },
 		Randomcolor() {
 			return '#' + Math.floor(Math.random() * (2 << 23)).toString(16);
 		},

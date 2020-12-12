@@ -16,7 +16,7 @@
 				success: (res) => {  
 					if (res.statusCode == 200 && res.data.status === 1) {  
 						uni.showModal({ //提醒用户更新  
-							title: "更新提示",  
+							title: "更新提示",   
 							content: res.data.note,  
 							success: (res) => {  
 								if (res.confirm) {  

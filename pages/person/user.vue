@@ -61,11 +61,13 @@
 			<text v-else="user_info.email">{{ user_info.email }}</text>
 			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 		</view>
-		<view class="center youxiang phone" @click="touser('/pages/setting/setphone')">
+    
+		<view class="center youxiang phone"  @click="touser('/pages/setting/setphone')">
 			<text>手机号</text>
 			<text class="infoCon">{{ user_info.display_list.mobile }}</text>
 			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 		</view>
+    
 		<!-- 修改姓名 -->
 		<uniPopup ref="botpopup" type="center">
 			<view class="botpopup">
