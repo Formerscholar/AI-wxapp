@@ -174,7 +174,7 @@
 				type: 4,
 				banner_list: '',
 				token: '',
-				teacher_info: {},
+				teacher_info: {subject_name:{title:''}},
 				teacher_infos: {},
 				student_info: {},
 				is_vip: '',
