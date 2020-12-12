@@ -372,6 +372,34 @@
 								icon: 'loading',
 								duration: 5000
 							});
+							// #ifdef APP-PLUS
+							plus.downloader.createDownload(res.data.pdf, {
+							    filename: "_documents/"+this.errorbook_title+".pdf"
+							}, function(d, status) {
+							    if(status == 200) {
+									uni.showToast({
+										title: '文件打开中',
+										icon: 'error'
+									})
+									uni.openDocument({
+										filePath: d.filename,
+										showMenu: true,
+										fail: () => {
+											uni.showToast({
+												title: '文件打开失败',
+												icon: 'error'
+											});
+										},
+									})
+							    } else {
+									uni.showToast({
+										title: '下载失败',
+										icon: 'error'
+									})
+							    }
+							}).start();
+							// #endif
+							// #ifdef MP-WEIXIN
 							if (app.globalData.systemInfo.platform == "ios") {
 								uni.downloadFile({
 									url: res.data.pdf,
@@ -431,6 +459,7 @@
 											title: '已下载,正在打开',
 											icon: 'success'
 										});
+										console.log(filePath);
 										uni.openDocument({
 											filePath: filePath,
 											showMenu: true,
@@ -450,6 +479,7 @@
 									},
 								})
 							}
+							// #endif
 						} else {
 							uni.showToast({
 								title: res.msg,
@@ -472,6 +502,34 @@
 									icon: 'loading',
 									duration: 5000
 								});
+								// #ifdef APP-PLUS
+								plus.downloader.createDownload(res.data.pdf, {
+									filename: "_documents/"+this.errorbook_title+".pdf"
+								}, function(d, status) {
+									if(status == 200) {
+										uni.showToast({
+											title: '文件打开中',
+											icon: 'error'
+										})
+										uni.openDocument({
+											filePath: d.filename,
+											showMenu: true,
+											fail: () => {
+												uni.showToast({
+													title: '文件打开失败',
+													icon: 'error'
+												});
+											},
+										})
+									} else {
+										uni.showToast({
+											title: '下载失败',
+											icon: 'error'
+										})
+									}
+								}).start();
+								// #endif
+								// #ifdef MP-WEIXIN
 								if (app.globalData.systemInfo.platform == "ios") {
 									console.log('ios')
 									uni.downloadFile({
@@ -532,6 +590,7 @@
 												title: '已下载,正在打开',
 												icon: 'success'
 											});
+											console.log(filePath);
 											uni.openDocument({
 												filePath: filePath,
 												showMenu: true,
@@ -551,8 +610,7 @@
 										},
 									})
 								}
-
-
+								// #endif
 							} else {
 								uni.showToast({
 									title: res.msg,
