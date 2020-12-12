@@ -97,7 +97,7 @@ export default {
 		},
 		del(i) {
 			if (i == 1) {
-				this.name = '';
+				this.new_mobile = '';
 			} else if (i == 2) {
 				this.password = '';
 			} else if (i == 3) {
