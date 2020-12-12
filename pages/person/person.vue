@@ -97,11 +97,11 @@
 				<button open-type="share">分享</button>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
-			<view class="item" @click="shopClick">
+			<!-- <view class="item" @click="shopClick">
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/shop_icon.png" mode=""></image>
 				<text>会员商城</text>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
-			</view>
+			</view> -->
 		</view>
 
 		<button class="logout" @click="logout()" v-show="token">切换身份</button>
