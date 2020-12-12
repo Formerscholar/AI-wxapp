@@ -18,7 +18,7 @@
 			<view class="center">
 				<text>性别</text>
 				<picker mode="selector" :range="sex" range-key="name" @change="bindChange2" class="infoCon">
-					<view class="picker">{{ user_info.school_list.gender == 0 ? '女' : '男' }}</view>
+					<view class="picker">{{ user_info.gender == 0 ? '女' : '男' }}</view>
 				</picker>
 				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 				<!-- <text>{{user_info.school_list.gender==1?'男':'女'}}</text> -->
@@ -108,7 +108,7 @@
 		data() {
 			return {
 				img: '',
-				user_info: {},
+				user_info: {school_list:{school_name:''},display_list:{mobile:''}},
 				token: '',
 				location: [],
 				sex: [{
