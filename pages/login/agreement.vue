@@ -6,16 +6,22 @@
   export default {
     data() {
       return {
-        agreement: null
+        agreement: '',
+        type:''
       };
     },
-    onLoad() {
+    onLoad(options) {
+      const {type} = options
+      console.log('options',options)
+      this.type = type
+    },
+    onShow() {
       this.get_agreements()
     },
     methods: {
       get_agreements: function() {
         this.$api.get_agreement({
-          type: 'register'
+          type: this.type
         }).then(res => {
           this.agreement = res.data.content
         })
