@@ -27,7 +27,10 @@
 				<text>公司邮箱</text>
 				<text class="infoCon">{{ email }}</text>
 			</view>
-		</view>
+    </view>
+    <view class="center_text">
+    	<text class="info">扬州骐骥信息科技有限公司</text>
+    </view>
 	</view>
 </template>
 
@@ -125,5 +128,11 @@ page {
 }
 .center:nth-last-of-type(1) {
 	border-bottom: none;
+}
+.center_text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20rpx;
 }
 </style>

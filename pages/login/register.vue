@@ -47,11 +47,22 @@ page {
   }
   .setcode{
     position: relative;
+    margin-top: 39rpx;
+    height: 80rpx;
+    background: #F4F4F4;
+    border-radius: 38rpx;
+    padding-left: 50rpx;
+    box-sizing: border-box;
     .getCode{
       position: absolute;
       right: 50rpx;
       top: 50%;
       transform: translateY(-50%);
+      font-size: 26rpx;
+      font-family: PingFang SC;
+      font-weight: 500;
+      color: #E50304;
+
     }
   }
 }
