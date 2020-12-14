@@ -133,6 +133,7 @@ page {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20rpx;
+  margin-top: 40rpx;
+  font-size: 12px;
 }
 </style>
