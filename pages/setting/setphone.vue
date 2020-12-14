@@ -126,6 +126,14 @@ export default {
 				}		
 			}, */
 		getcode2() {
+      let reg = /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/
+      if (!reg.test(this.new_mobile)) {
+      	uni.showToast({
+      		title: '请输入正确的手机号',
+      		icon: 'none'
+      	});
+      	return;
+      }
 			if (this.codeStatus2) {
 				this.codeStatus2 = false;
         if(this.type == 4){

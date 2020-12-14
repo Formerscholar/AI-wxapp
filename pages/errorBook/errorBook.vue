@@ -219,7 +219,7 @@
 				<image class="title" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_icon.png" mode="widthFix"></image>
 				<radio-group class="botpopup_radio" @change="radioChange">
 					<label :class="['radio',evtvalue == 1 ? 'trborcol' : 'flborcol']"><text>不含答案和解析</text>
-						<radio style="transform:scale(0.5)" color="#E50304" value="1" checked="true" /></label>
+						<radio style="transform:scale(0.5)" color="#E50304" value="1" :checked="true" /></label>
 					<label :class="['radio',evtvalue == 2 ? 'trborcol' : 'flborcol']"><text>含答案和解析</text>
 						<radio style="transform:scale(0.5)" color="#E50304" value="2" /></label>
 				</radio-group>
@@ -271,6 +271,7 @@
 				email_arr: [],
 				btndisabled: true,
 				evtvalue: 1,
+				evtcheck: 1,
 				errorbook_title: '',
 				arrWei: [],
 				arrYi: [],
@@ -294,6 +295,7 @@
 			this.tpmid = app.globalData.settings.tmpid;
 			console.log('this.tpmid', this.tpmid);
 			this.type = uni.getStorageSync('type');
+      this.is_vip = uni.getStorageSync('is_vip')
 			if (this.type == 3) {
 				this.subject_id = -1;
 				this.wei_error_book();
@@ -341,22 +343,48 @@
 				const {
 					value
 				} = evt.detail
-				this.evtvalue = value
-				if (this.evtvalue == 1) {
-					console.log('不含答案和解析', value)
-				} else {
-					console.log('含答案和解析', value)
-				}
+         this.evtvalue = value
+				// if (value == 1) {
+    //       this.evtvalue = value
+				// } else {
+    //       if (this.is_vip) {
+    //         this.evtvalue = value
+    //       } else{
+    //         this.evtvalue = 1
+    //         uni.showToast({
+    //         	title: '非会员无法下载答案解析',
+    //         	icon: 'none',
+    //         	duration: 18888
+    //         });
+    //       }
+				// }
 			},
 			sendEmail() {
 				if (this.evtvalue == 1) {
 					this.noanswerClick()
 				} else {
-					this.answerClick()
+          if (this.is_vip) {
+            this.answerClick()
+          } else{
+            this.$refs.botpopup.close();
+            uni.showToast({
+              title: '非会员无法下载答案解析',
+              icon: 'none',
+              duration: 1888
+            });
+          }
 				}
 			},
 			sendPhone() {
 				this.$refs.botpopup.close();
+        if (!this.is_vip) {
+          uni.showToast({
+            title: '非会员无法下载答案解析',
+            icon: 'none',
+            duration: 1888
+          });
+          return 
+        } 
 				let data = {
 					token: this.token,
 					errorbook_id: this.errorbook_id,
