@@ -10,7 +10,12 @@ module.exports = {
   // : data => request(ApiUrl+'',data),
   url: ApiUrl,
   //   app
-  app_login: data => request(appApiUrl + 'user/login/', data), //登录
+  app_login: data => request(appApiUrl + 'user/login/', data), //学生登录
+  teacher_app_login: data => request(appApiUrl + 'teacher/login/', data), //老师登录
+  get_app_verify_code: data => request(appApiUrl + 'user/get_verify_code/', data), //学生获取验证码
+  get_app_teacher_verify_code: data => request(appApiUrl + 'teacher/get_verify_code/', data), //老师获取验证码
+  get_app_user_register: data => request(appApiUrl + 'user/register/', data), //学生注册
+  get_app_teacher_register: data => request(appApiUrl + 'teacher/register/', data), //老师注册
   
   
   //   app

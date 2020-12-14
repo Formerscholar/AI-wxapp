@@ -28,7 +28,7 @@
         </view>
         <view class="login-btn" @click="login2">登 录</view>
         <view class="text">
-          <text @click="toReg()" v-if="type==4">立即注册</text>
+          <text @click="toReg()">立即注册</text>
           <text @click="topassword()">忘记密码?</text>
         </view>
         <view class="wx_box">
@@ -37,7 +37,8 @@
             <text class="span">其他登录方式</text>
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/login_wx_icon.png" mode="widthFix"></image>
           </view>
-          <image class="img_wx" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/wechat_icon.png" mode="widthFix" @click="wx_login"></image>
+          <image class="img_wx" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/wechat_icon.png" mode="widthFix"
+            @click="wx_login"></image>
         </view>
         <!-- #endif -->
 
@@ -250,9 +251,11 @@
           mobile: this.account,
           password: this.password
         }
-        var req = this.$api.app_login(data);
+        var req 
         if (user_type == 3) {
           req = this.$api.teacher_app_login(data);
+        }else {
+          req = this.$api.app_login(data);
         }
         req.then(res => {
           console.log(res)
@@ -275,17 +278,14 @@
         })
 
       },
-      getuserinfo() {
-
-      },
       toReg() {
         uni.navigateTo({
-          url: '/pages/login/register'
+          url: '/pages/login/register?type=' + this.type
         })
       },
       topassword() {
         uni.navigateTo({
-          url: '/pages/login/changePassword'
+          url: '/pages/login/changePassword?type=' + this.type
         })
       },
       del(i) {
@@ -460,7 +460,7 @@
       align-items: center;
       padding-left: 30rpx;
       box-sizing: border-box;
-      
+
 
       image {
         width: 40rpx;
@@ -472,31 +472,36 @@
         height: 80rpx;
       }
     }
-    .wx_box{
+
+    .wx_box {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      .text_bg{
+
+      .text_bg {
         display: flex;
         justify-content: center;
         align-items: center;
         margin-bottom: 40rpx;
-        .span{
+
+        .span {
           font-size: 24rpx;
           font-family: Source Han Sans CN;
           font-weight: 400;
           color: #999999;
           margin: 0 26rpx;
         }
-        image{
+
+        image {
           width: 54rpx;
           height: 2rpx;
         }
       }
-      .img_wx{
-         width: 66rpx;
-         height: 66rpx;
+
+      .img_wx {
+        width: 66rpx;
+        height: 66rpx;
       }
     }
   }
