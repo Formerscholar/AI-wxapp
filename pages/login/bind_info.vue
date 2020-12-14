@@ -59,7 +59,7 @@
 			<!-- <view class="item">
 				<input type="text" placeholder="请输入邮箱" v-model="email" placeholder-style="color:#dedede"/>
 			</view> -->
-			<button class="btn" open-type="getUserInfo" @getuserinfo="tijiao($event)">绑定信息</button>
+			<button class="btn" @click="tijiao($event)">绑定信息</button>
 		</view>
 	</view>
 </template>
@@ -97,7 +97,6 @@
 				type: 4,
 				token: '',
 				userInfo: {},
-				openid: ''
 			};
 		},
 		onLoad() {
@@ -107,7 +106,6 @@
 			if (uni.getStorageSync('type') == 3) {
 				this.type = uni.getStorageSync('type');
 			}
-			this.openid = uni.getStorageSync('openid');
 			this.get_location_list();
 			this.get_grade();
 			this.get_subject();
@@ -140,9 +138,10 @@
 						school_id: this.school[this.s_num].id,
 						subject_id: this.subject[this.s_num1].id,
 						true_name: this.name,
+            token:this.token 
 					};
-					this.$api.teacher_bind_info(data).then(res => {
-						console.log(res);
+					this.$api.get_app_teacher_bind(data).then(res => {
+						this.login(res.data);
 						if (res.code == 200) {
 							uni.setStorage({
 								//缓存用户登陆状态
@@ -186,11 +185,11 @@
 						area_id: this.area[this.index2].value,
 						school_id: this.school[this.s_num].id,
 						grade_ids: this.grade[this.g_num].grade_id,
-						true_name: this.name
+						true_name: this.name,
+            token:this.token 
 					};
 					console.log(data);
-					this.$api.bind_info(data).then(res => {
-						console.log(res);
+					this.$api.get_app_user_bind(data).then(res => {
 						this.login(res.data);
 						if (res.code == 200) {
 							uni.setStorage({

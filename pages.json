@@ -39,9 +39,14 @@
 				"navigationBarTitleText": "绑定个人信息"
 			}
 		}, {
+			"path": "pages/login/bind_info",
+			"style": {
+				"navigationBarTitleText": "绑定个人信息"
+			}
+		},{
 			"path": "pages/login/changePassword",
 			"style": {
-				"navigationBarTitleText": "修改邮箱"
+				"navigationBarTitleText": "忘记密码"
 			}
 		}, {
 			"path": "pages/myteaching/myteaching",

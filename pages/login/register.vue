@@ -120,7 +120,7 @@
             })
             setTimeout(() => {
               uni.navigateTo({
-                url: '/pages/login/bindinfo'
+                url: '/pages/login/bind_info'
               })
             }, 500)
           } else {

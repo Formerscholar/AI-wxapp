@@ -1,26 +1,16 @@
 <template>
-	<view class="container">
-		<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/email.png" class="emailPic" />
-		<view class="reg">
-			<input type="text" v-model="phone" placeholder="请输入手机号" placeholder-style="color:#dedede"/>
-			<image @click="del(1)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png" v-show="phone.length>0" mode=""></image>
+	<view class="changePass">
+    <image class="bg2" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/registe_bg.png" mode="widthFix"></image>
+		<view class="registe">
+		  <input class="phoneNum" type="text" v-model="phone"  placeholder="请输入手机号" />
+		  <view class="setcode">
+		    <input class="code" type="text" v-model="code" placeholder="验证码" />
+		    <text class="getCode" @click="getCodeClick">发送验证码</text>
+		  </view>
+		  <input class="passwordNum" type="password" v-model="password" placeholder="请输入新密码" />
+      <input class="passwordNum" type="password" v-model="password1" placeholder="请输入新密码" />
+		  <button class="loginClick" type="default" @click="loginClick">提交</button>
 		</view>
-		<view class="yzcode">
-			<input type="text" v-model="code" placeholder="请输入验证码" placeholder-style="color:#dedede"/>
-			<button @click="getcode()">{{codeStr}}</button>
-		</view>
-		<view class="tishi">
-			请设置不少于6位数字或字母的密码
-		</view>
-		<view class="reg">
-			<input type="text" v-model="password" placeholder="请输入新密码" placeholder-style="color:#dedede"/>
-			<image @click="del(2)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png"  v-show="password.length>0" mode=""></image>
-		</view>
-		<view class="reg">
-			<input type="text" v-model="password2" placeholder="请再次输入新密码" placeholder-style="color:#dedede"/>
-			<image @click="del(3)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png"  v-show="password2.length>0" mode=""></image>
-		</view>
-		<button class="btn" @click="xiugai()">修改密码</button>
 	</view>
 </template>
 
@@ -28,103 +18,118 @@
 export default {
 	data() {
 		return {
-			codeStr: '获取验证码',
-			codeStatus: true,
-			phone: '',
-			password: '',
-			password2: '',
-			code: ''
+      type:0,
+      phone: '',
+      code: '',
+      password: '',
+      password1: '',
 		};
 	},
-	onLoad() {
-		this.type = uni.getStorageSync('type');
+	onLoad(options) {
+		const {type} = options
+		console.log('options',options)
+		this.type = type
 	},
 	methods: {
-		del(i) {
-			if (i == 1) {
-				this.phone = '';
-			} else if (i == 2) {
-				this.password = '';
-			} else if (i == 3) {
-				this.password2 = '';
-			}
-		},
-		xiugai(){
-			if(this.phone==''){
-				uni.showToast({
-					title:'手机号码不能为空',
-					icon:'none'
-				})
-				return
-			}
-			if(this.password==''){
-				uni.showToast({
-					title:'密码不能为空',
-					icon:'none'
-				})
-				return
-			}
-			if(this.password!=this.password2){
-				uni.showToast({
-					title:'两次密码不一致',
-					icon:'none'
-				})
-				return
-			}
-			if(!/^[0-9A-Za-z]{6,}$/.test(this.password)){
-				uni.showToast({
-					title:'请输入有效的密码！',
-					icon:'none'
-				})
-				return
-			}
-			var data={
-				mobile:this.phone,
-				verify_code:this.code,
-				password:this.password,
-				password_again:this.password2,
-			}
-			this.$api.search_password(data).then(res=>{
-				uni.showToast({
-					title: res.msg
-				})
-				if(res.code==200){
-					setTimeout(()=>{
-						uni.redirectTo({
-							url:'/pages/login/login'
-						},1000)
-					})
-				}
-			})
-		},
-		//发送验证码
-		getcode() {
-			if (this.codeStatus && this.phone) {
-				this.codeStatus = false;
-				this.$api.get_verify_code({ mobile: this.phone, type: 'change_password' });
-				uni.showToast({
-					title: '发送成功,请查看短信！',
-					icon: 'none'
-				});
-				var time = 60;
-				var t = setInterval(() => {
-					time--;
-					this.codeStr = time + 'S';
-					if (time <= 0) {
-						this.codeStatus = true;
-						this.codeStr = '获取验证码';
-						clearInterval(t);
-					}
-				}, 1000);
-			}
-		}
+    getCodeClick: function(){
+      let reg = /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/
+      if (!reg.test(this.phone)) {
+        uni.showToast({
+          icon:'none',
+          title:'手机号不合法,请重新输入'
+        })
+        return
+      }
+      var data = {
+        mobile:this.phone,
+        type:'change_password'
+      }
+      var reslove 
+      if (this.type == 4) {
+       reslove = this.$api.get_app_verify_code(data)
+      } else{
+       reslove = this.$api.get_app_teacher_verify_code(data)
+      }
+      reslove.then(res=>{
+        if (res.code == 200) {
+          uni.showToast({
+            icon:'none',
+            title:'验证码已发送'
+          })
+        } else{
+          uni.showToast({
+            icon:'none',
+            title: res.msg
+          })
+        }
+      })
+    },
+    loginClick:function(){
+      if(!this.code) {
+        uni.showToast({
+          icon:'none',
+          title:'验证码不能为空!'
+        })
+        return
+      }
+      if(!this.password) {
+        uni.showToast({
+          icon:'none',
+          title:'新密码不能为空!'
+        })
+        return
+      }
+      if(!this.password1) {
+        uni.showToast({
+          icon:'none',
+          title:'新密码不能为空!'
+        })
+        return
+      }
+      if(this.password != this.password1) {
+        uni.showToast({
+          icon:'none',
+          title:'两次密码输入不一致!'
+        })
+        return
+      }
+      var data = {
+        mobile:this.phone,
+        verify_code:this.code,
+        password:this.password,
+        password_again:this.password1,
+      }
+      var reslove 
+      if (this.type == 4) {
+       reslove = this.$api.get_app_user_search_password(data)
+      } else{
+       reslove = this.$api.get_app_teacher_search_password(data)
+      }
+      reslove.then(res => {
+        if (res.code == 200) {
+          uni.showToast({
+            title: '修改成功,请登录'
+          })
+          setTimeout(() => {
+            uni.navigateTo({
+              url: '/pages/login/login'
+            })
+          }, 500)
+        } else {
+          uni.showToast({
+            title: res.msg,
+            icon: 'none'
+          })
+        }
+      })
+    },
 	}
 };
 </script>
 
 <style lang="scss">
 page {
-	background: #eee;
+	background: #fff;
 	font-family: PingFang SC;
 	width: 100vw;
 	height: 100vh;
@@ -132,83 +137,69 @@ page {
 button::after {
 	border: none;
 }
-.y-bg {
-	position: absolute;
-	background-image: linear-gradient(left, #f6a136 0%, #f8b25a 100%);
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 200rpx;
-	z-index: -1;
-	border-bottom-right-radius: 100rpx;
-	border-bottom-left-radius: 100rpx;
-}
-.reg {
-	width: 570rpx;
-	height: 85rpx;
-	border: 1rpx solid #e7e7e7;
-	border-radius: 16rpx;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 0 30rpx;
-	margin: 30rpx auto;
-	background: #fff;
-	input {
-		height: 100%;
-		width: 80%;
-		font-size: 30rpx;
-	}
-	image {
-		width: 40rpx;
-		height: 40rpx;
-	}
-}
-.emailPic {
-	width: 391rpx;
-	height: 291rpx;
-	margin: 200rpx auto 50rpx;
-	display: block;
-}
-.yzcode {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	input {
-		border: 1rpx solid #eee;
-		height: 100rpx;
-		width: 320rpx;
-		border-radius: 8rpx;
-		padding-left: 30rpx;
-	}
-	button {
-		width: 220rpx;
-		height: 100rpx;
-		background: #fff;
-		border: 1rpx solid #fdb79b;
-		color: #fdb79b;
-		line-height: 100rpx;
-		margin: 0;
-		font-size: 28rpx;
-	}
-}
-.tishi {
-	height: 80rpx;
-	line-height: 80rpx;
-	font-size: 24rpx;
-	color: #b4b7c2;
-}
-.btn {
-	border: 1rpx solid #fff;
-	width: 400rpx;
-	font-size: 30rpx;
-	text-align: center;
-	height: 80rpx;
-	line-height: 80rpx;
-	color: #fff;
-	background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
-	margin-top: 50rpx;
-	border-radius: 20rpx;
+
+.changePass{
+  .bg2 {
+    width: 100%;
+  }
+  .registe {
+    padding: 0 80rpx;
+  
+    .phoneNum {
+      margin-top: 80rpx;
+      height: 80rpx;
+      background: #F4F4F4;
+      border-radius: 38rpx;
+      padding-left: 50rpx;
+      box-sizing: border-box;
+    }
+  
+    .setcode {
+      position: relative;
+      margin-top: 39rpx;
+  
+      .code {
+        height: 80rpx;
+        background: #F4F4F4;
+        border-radius: 38rpx;
+        padding-left: 50rpx;
+        box-sizing: border-box;
+      }
+  
+      .getCode {
+        position: absolute;
+        right: 50rpx;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 26rpx;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: #E50304;
+  
+      }
+    }
+  
+    .passwordNum {
+      margin-top: 39rpx;
+      height: 80rpx;
+      background: #F4F4F4;
+      border-radius: 38rpx;
+      padding-left: 50rpx;
+      box-sizing: border-box;
+    }
+  
+    .loginClick {
+      margin-top: 60rpx;
+      height: 80rpx;
+      background: linear-gradient(86deg, #E50304, #F74300);
+      border-radius: 40rpx;
+      font-size: 30rpx;
+      font-family: PingFang SC;
+      font-weight: 500;
+      color: #FFFFFF;
+  
+    }
+  
+  }
 }
 </style>

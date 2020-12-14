@@ -79,7 +79,8 @@
     },
     data() {
       return {
-        account: '13987654321',
+        // account: '13987654321',
+        account: '18083795906',
         password: '123456',
         // account: '',
         // password: '',
@@ -261,14 +262,21 @@
           console.log(res)
           if (res.code == 200) {
             this.login(res.data)
-            uni.showToast({
-              title: '登录成功'
-            })
-            setTimeout(() => {
-              uni.switchTab({
-                url: '/pages/index/index'
+            if (res.data.is_bind == 0){
+              console.log('bind_info执行跳转')
+              uni.navigateTo({
+                url: '/pages/login/bind_info'
               })
-            }, 500)
+            }else {
+              uni.showToast({
+                title: '登录成功'
+              })
+              setTimeout(() => {
+                uni.switchTab({
+                  url: '/pages/index/index'
+                })
+              }, 500)
+            }
           } else {
             uni.showToast({
               title: res.msg,
