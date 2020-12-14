@@ -133,7 +133,7 @@
       },
       pagetoAbout:function(){
         uni.navigateTo({
-            url: '/pages/person/about'
+            url: "/pages/login/agreement"
         });
       }
     }

@@ -38,6 +38,11 @@
 			"style": {
 				"navigationBarTitleText": "绑定个人信息"
 			}
+		},{
+			"path": "pages/login/agreement",
+			"style": {
+				"navigationBarTitleText": "注册协议"
+			}
 		}, {
 			"path": "pages/login/bind_info",
 			"style": {
