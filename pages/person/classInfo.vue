@@ -5,7 +5,7 @@
 				<view @click="add(item)" class="up">
 					<view class="className">
 						{{ item.team_name }}
-						<image class='guan' v-if="user_id == item.teacher_id" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/admin.png" mode="widthFix"></image>
+						<image class='guan' v-if="user_id == item.teacher_id" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/admin.png" mode="widthFix"></image>
 					</view>
 					<view class="num">ID:{{ item.classid }}</view>
 				</view>
@@ -20,11 +20,11 @@
 			</view>
 			<view class="flex">
 				<view class="down">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/invent_stu.png" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/invent_stu.png" />
 					<button class="downCon" open-type="share" :data-name="item.team_name" :data-class_id="item.classid" data-it="stu">邀请学生</button>
 				</view>
 				<view class="down">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/invent_ter.png" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/invent_ter.png" />
 					<button class="downCon" open-type="share" :data-team_id="item.team_id" :data-name="item.team_name" :data-class_id="item.classid" data-it="ter">邀请老师</button>
 				</view>
 			</view>

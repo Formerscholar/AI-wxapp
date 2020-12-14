@@ -43,15 +43,15 @@
 			<picker :range="numArr" :value="index" @change="select_l">
 				<view class="value" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
 					{{ tpage ? (numArr[index] ? numArr[index] : '第1页') : '第1页' }}
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 				</view>
 			</picker>
 		</view>
 		<view class="photobox">
-			<!-- <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(0)" v-if="from == 1"></image> -->
+			<!-- <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(0)" v-if="from == 1"></image> -->
 			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/allsearch.png" class="photo" @click="checkimg(1)"
 			 v-if="from == 1"></image>
-			<!-- <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(0)" v-if="from == 2"></image> -->
+			<!-- <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/photo.png" class="photo" @click="checkimg(0)" v-if="from == 2"></image> -->
 			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/allsearch.png" class="photo" @click="checkimg(1)"
 			 v-if="from == 2"></image>
 		</view>

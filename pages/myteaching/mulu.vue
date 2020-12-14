@@ -11,7 +11,7 @@
 		</view>
 
 		<view class="kong" v-if="mulu_list.length == 0">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 			<view>空空如也~</view>
 			<view>没有更多目录!</view>
 		</view>

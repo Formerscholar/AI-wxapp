@@ -1,29 +1,29 @@
 <template>
 	<view class="container">
-		<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/aboutUs.png" />
+		<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/aboutUs.png" />
 		<view class="edit">
 			<view class="center">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/wechat.png"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/wechat.png"></image>
 				<text>微信公众号</text>
 				<text class="infoCon">{{ official_account }}</text>
 			</view>
 			<view class="center">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/weibo.png"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/weibo.png"></image>
 				<text>官方微博</text>
 				<text class="infoCon">{{ weibo }}</text>
 			</view>
 			<view class="center">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/website.png"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/website.png"></image>
 				<text>官方网站</text>
 				<text class="infoCon">{{ website }}</text>
 			</view>
 			<view class="center">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/phone.png"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/phone.png"></image>
 				<text>客服电话</text>
 				<text class="infoCon">{{ customer_service }}</text>
 			</view>
 			<view class="center">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/emial.png"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/emial.png"></image>
 				<text>公司邮箱</text>
 				<text class="infoCon">{{ email }}</text>
 			</view>

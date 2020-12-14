@@ -26,7 +26,7 @@
 			</view>
 		</view>
 		<view class="kong" v-if="textbook_list.length == 0">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 			<view>还没有选择教辅材料</view>
 		</view>
 		<view class="btn" @click="toselect()">选择教辅</view>
@@ -400,7 +400,7 @@ page {
 }
 .b-n {
 	border: 0;
-	background-image: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/gou.png);
+	background-image: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/gou.png);
 	background-size: cover;
 }
 .btn {

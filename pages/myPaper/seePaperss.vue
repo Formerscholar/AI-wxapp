@@ -12,24 +12,24 @@
       </view>
       <view class="bottom">
         <view class="select" @click.stop="open(item)">
-          <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
+          <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
           同类型题目
         </view>
         <view class="btn" :class="{ 's-b': item.is_error }" v-if="update">
           <view v-if="type == 3" @click.stop="join_error(i, item.exercises_id)">
-            <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
-            <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
+            <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
+            <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
             {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
           </view>
           <view v-else @click.stop="deleteExercises(item.exercises_id)">
-            <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" mode="" />删除错题
+            <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" mode="" />删除错题
           </view>
         </view>
       </view>
     </view>
     <view v-if="is_more == 0" class="is_more">没有更多{{ type == 3 ? '试卷' : '错题' }}了</view>
     <view class="kong" v-if="!list || list.length == 0">
-      <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+      <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
       <view>空空如也~</view>
       <view v-if="!is">无相关教辅内容查看哦!</view>
       <view v-else>无相关试卷内容查看哦!</view>
@@ -38,11 +38,11 @@
       <view class="leixing">
         <view class="title">
           <view class="sameType">
-            <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/sameType.png"></image>
+            <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/sameType.png"></image>
             同类型题目
           </view>
           <view class="change" @click="changeData()">
-            <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/change.png"></image>
+            <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/change.png"></image>
             换一批
           </view>
         </view>
@@ -54,13 +54,13 @@
             </view>
             <view class="btnCon">
               <view @click="jiexi(item.exercises_id,5)">
-                <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
+                <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
                 查看解析
               </view>
               <view></view>
               <view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.exercises_id)">
-                <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
-                <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
+                <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
+                <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
                 {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
               </view>
             </view>

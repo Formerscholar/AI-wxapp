@@ -20,7 +20,7 @@
 						<view class="time">{{ item.add_time }}</view>
 					</view>
 				</view>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" class="right"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" class="right"></image>
 			</view>
 			<view v-if="is_more2 == 0" class="is_more">没有更多试卷了</view>
 		</view>
@@ -34,18 +34,18 @@
 						<view class="time">{{ item.add_time }}</view>
 					</view>
 				</view>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" class="right"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" class="right"></image>
 			</view>
 			<view v-if="is_more == 0" class="is_more">没有更多试卷了</view>
 		</view>
 
 		<view class="kong" v-if="(student_list.length == 0 || !student_list) && type == 4">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 			<view>空空如也~</view>
 			<view>本校暂未上传试卷!</view>
 		</view>
 		<view class="kong" v-if="(xb_list.length == 0 || !xb_list) && type == 3">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 			<view>空空如也~</view>
 			<view>您还没有校本试卷哦!</view>
 		</view>

@@ -10,10 +10,10 @@
 		</view>
 		<view class="picInfo">
 			<view v-for="(item, i) of imgSrc" class="picView" :key="i">
-				<image class="delete" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/deletePic.png" @click="deleteImg(i)"></image>
+				<image class="delete" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/deletePic.png" @click="deleteImg(i)"></image>
 				<image :src="item" class="pics"></image>
 			</view>
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/uploadPics.png" class="uploadPics" @click="checkimg()"></image>
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/uploadPics.png" class="uploadPics" @click="checkimg()"></image>
 		</view>
 		<!-- phone -->
 		<view class="title_box">

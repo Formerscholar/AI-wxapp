@@ -8,20 +8,20 @@
 		<view class="formCon" v-show="flag">
 			<view class="inputInfo">
 				<view>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tianxie.png"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tianxie.png"></image>
 					<input type="text" v-model="value1" placeholder="填写试卷名称" placeholder-style="color:#e7e7e7" />
 				</view>
 				<view>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/beizhu.png"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/beizhu.png"></image>
 					<input type="text" v-model="value2" placeholder="备注:" placeholder-style="color:#e7e7e7" />
 				</view>
 			</view>
 			<view class="picInfo">
 				<view v-for="(item, i) of imgSrc" class="picView" :key="i">
-					<image class="delete" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/deletePic.png" @click="deleteImg(i)"></image>
+					<image class="delete" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/deletePic.png" @click="deleteImg(i)"></image>
 					<image :src="item" class="pics"></image>
 				</view>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/uploadPics.png" class="uploadPics" @click="checkimg()"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/uploadPics.png" class="uploadPics" @click="checkimg()"></image>
 			</view>
 			<view class="btn" @click="save()">保存</view>
 		</view>
@@ -39,7 +39,7 @@
 			</view>
 			<view v-if="is_more == 0" class="is_more">没有更多试卷记录了</view>
 			<view class="kong" v-if="recordList.length == 0 || !recordList">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 				<view>空空如也~</view>
 				<view>您还没有试卷记录哦!</view>
 			</view>

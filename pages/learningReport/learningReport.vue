@@ -24,15 +24,15 @@
       </view>
       <view class="time">
         <picker mode="date" :value="time" @change="bindMultiPickerChange" :fields="it">
-          <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
+          <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
           <view class="picker">{{ time }}</view>
-          <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
+          <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
         </picker>
         -
         <picker mode="date" :value="time2" @change="bindMultiPickerChange2" :fields="it">
-          <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
+          <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
           <view class="picker">{{ time2 }}</view>
-          <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
+          <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
         </picker>
         <!-- <view class="btn" @click="get_baogao()">
 					查询

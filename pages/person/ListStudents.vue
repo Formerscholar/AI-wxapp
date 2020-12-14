@@ -11,7 +11,7 @@
 							<view class="subjectName">{{ item.subject_title }}</view>
 						</view>
 						<view class="deleteteacherwarp">
-							<image v-if="userid == teacher_id &&  item.id != teacher_id && is_active == 0" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="deleteteacher" @click.stop="deItemTeacher(item.id)" />
+							<image v-if="userid == teacher_id &&  item.id != teacher_id && is_active == 0" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="deleteteacher" @click.stop="deItemTeacher(item.id)" />
 						</view>
 					</view>
 				</view>
@@ -26,24 +26,24 @@
 							<image :src="item.avatar" v-if="item.avatar"></image>
 							<view v-if="item.student_name">
 								{{ item.student_name }}
-								<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon.png" v-if="item.is_vip == 1"></image>
+								<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon.png" v-if="item.is_vip == 1"></image>
 							</view>
 						</view>
 						<view>
 							<view class="cuo_tag">已收集{{ item.err_cnt }}道错题</view>
-							<image v-if="userid == teacher_id && is_active == 0" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="delete" @click.stop="deItem(item.user_id)"></image>
+							<image v-if="userid == teacher_id && is_active == 0" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="delete" @click.stop="deItem(item.user_id)"></image>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="kong" v-if="teacher.length == 0 && student.length == 0">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 			<view>空空如也~</view>
 			<view>没有班级成员哦!</view>
 		</view>
 		<view v-if="userid == teacher_id && is_active == 0" class="btn" @click="delClass">
-			<!-- <image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del.png"></image> -->
+			<!-- <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del.png"></image> -->
 			删除班级
 		</view>
 	</view>
@@ -303,7 +303,7 @@ page {
 	}
 }
 .b-c {
-	background-image: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png);
+	background-image: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png);
 	background-size: cover;
 	border: 0 !important;
 	width: 30rpx !important;

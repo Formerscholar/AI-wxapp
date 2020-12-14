@@ -4,11 +4,17 @@ import {
 
 const ApiUrl = 'https://api.aictb.com/v3/' //生产环境
 
-
+const appApiUrl = 'https://api.aictb.com/app/' //生产环境
 
 module.exports = {
   // : data => request(ApiUrl+'',data),
   url: ApiUrl,
+  //   app
+  app_login: data => request(appApiUrl + 'user/login/', data), //登录
+  
+  
+  //   app
+  
   wx_login: data => request(ApiUrl + 'wechat/login/', data), //
   update_userinfo: data => request(ApiUrl + 'wechat/update/', data), //
   //----------------------------- 学生
@@ -17,7 +23,7 @@ module.exports = {
   get_settings: md => request(ApiUrl + 'main/get_settings/', md), //获取配置信息
   //首页
   student_login: data => request(ApiUrl + 'user/wx_student_login/', data), //登录
-  login: data => request(ApiUrl + 'user/login/', data), //登录
+  
   student_index: data => request(ApiUrl + 'user/index/', data), //学生端首页信息	
   newest_paper: data => request(ApiUrl + 'user/newest_paper/', data), //名校资源
   my_study_analysis: data => request(ApiUrl + 'user/my_study_analysis/', data), //学情报告

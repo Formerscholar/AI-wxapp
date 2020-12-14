@@ -95,7 +95,7 @@ button::after {
 
 .b-n {
 	border: none !important;
-	background-image: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/gou.png);
+	background-image: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/gou.png);
 	background-size: cover;
 }
 .b-b {

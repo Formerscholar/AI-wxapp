@@ -23,11 +23,11 @@
 			<view class="bottom">
 				<view class="select" @click="open(item)">
 					同类型题目
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/xiala.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/xiala.png" mode=""></image>
 				</view>
 				<view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click="join_error(i, item.exercises_id, item)">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
 					{{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
 				</view>
 			</view>
@@ -55,7 +55,7 @@
 			</view>
 		</uni-popup>
 		<view class="kong" v-if="exercises_list.length == 0">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/kong.png" mode=""></image>
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/kong.png" mode=""></image>
 			<view class="">没有更多习题了！</view>
 		</view>
 

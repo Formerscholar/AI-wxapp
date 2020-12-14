@@ -17,7 +17,7 @@
 			</view>
 			<view v-if="is_more == 0" class="is_more">没有更多积分记录了</view>
 			<view class="kong" v-if="dataList.length == 0 || !dataList">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 				<view>空空如也~</view>
 				<view>您还没有试卷记录哦!</view>
 			</view>
@@ -87,7 +87,7 @@ page {
 	text-align: center;
 	font-size: 36rpx;
 	color: #fff;
-	background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/recordBg.png) no-repeat top left;
+	background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/recordBg.png) no-repeat top left;
 	background-size: cover;
 	view:nth-of-type(1) {
 		font-size: 48rpx;

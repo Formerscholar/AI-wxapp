@@ -4,7 +4,7 @@
 			<view class="touxiangCon" @click="checkimg()">
 				<image :src="img" mode=""></image>
 				<view class="editIcon">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/editHead.png" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/editHead.png" />
 				</view>
 			</view>
 		</view>
@@ -13,14 +13,14 @@
 			<view class="center" @click="set('姓名')">
 				<text>姓名</text>
 				<text class="infoCon">{{ user_info.true_name ? user_info.true_name : '' }}</text>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 			<view class="center">
 				<text>性别</text>
 				<picker mode="selector" :range="sex" range-key="name" @change="bindChange2" class="infoCon">
 					<view class="picker">{{ user_info.gender == 0 ? '女' : '男' }}</view>
 				</picker>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 				<!-- <text>{{user_info.school_list.gender==1?'男':'女'}}</text> -->
 			</view>
 			<view class="center">
@@ -31,7 +31,7 @@
 				<!-- <picker mode="region" :range="location"  @change="bindChange" class='infoCon'>
 					<view class="picker">{{user_info.school_list.province_name+' '+user_info.school_list.city_name+' '+user_info.school_list.area_name}}</view>
 				</picker> -->
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 			<view class="center">
 				<text>学校</text>
@@ -39,7 +39,7 @@
 				<!-- <picker mode="selector" :range="school" range-key="name"  @change="changesc" class='infoCon'>
 					<view class="picker">{{user_info.school_list.school_name}}</view>
 				</picker> -->
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 			<view class="center" v-if="type == 4">
 				<text>年级</text>
@@ -47,25 +47,25 @@
 					<view class="picker">{{ user_info.school_list.grade_names ? user_info.school_list.grade_names : '' }}</view>
 				</picker>
 				<text class="infoCon" v-else>{{ user_info.school_list.grade_names ? user_info.school_list.grade_names : '' }}</text>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 			<view class="center" v-if="type == 4" @click="touser('/pages/person/bindClassID')">
 				<text>(班级)绑定</text>
 				<text class="infoCon">{{ user_info.school_list.team_name ? user_info.school_list.team_name : '' }}</text>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 		</view>
 		<view class="center youxiang" @click="changeEmail" :class="type == 3 ? 'teacherEmial' : ''">
 			<text>邮箱</text>
 			<text v-if="!user_info.email"></text>
 			<text v-else="user_info.email">{{ user_info.email }}</text>
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 		</view>
     
 		<view class="center youxiang phone"  @click="touser('/pages/setting/setphone')">
 			<text>手机号</text>
 			<text class="infoCon">{{ user_info.display_list.mobile }}</text>
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 		</view>
     
 		<!-- 修改姓名 -->
@@ -461,7 +461,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/editBg.png) no-repeat center center;
+		background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/editBg.png) no-repeat center center;
 		background-size: cover;
 		z-index: -1;
 

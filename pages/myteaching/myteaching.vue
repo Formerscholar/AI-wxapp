@@ -5,7 +5,7 @@
 			<picker :range="semester_list" range-key="name" @change="select_l">
 				<view class="value" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
 					{{ semester_list[num_l].name ? semester_list[num_l].name : '上学期' }}
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/xiala.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/xiala.png" mode=""></image>
 				</view>
 			</picker>
 		</view>
@@ -22,7 +22,7 @@
 				</view>
 			</block>
 			<view class="kong" v-if="textbook_list.length == 0">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 				<view>空空如也~</view>
 				<view>暂时还没有教辅材料</view>
 			</view>
@@ -410,11 +410,11 @@ page {
 		transform: translateY(-50%);
 		width: 35rpx;
 		height: 35rpx;
-		background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/default_red.png) no-repeat center center;
+		background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/default_red.png) no-repeat center center;
 		background-size: 100%;
 	}
 	.b-g {
-		background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png) no-repeat center center;
+		background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png) no-repeat center center;
 		background-size: 100%;
 	}
 }

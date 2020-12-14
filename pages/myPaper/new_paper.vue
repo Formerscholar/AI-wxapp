@@ -21,7 +21,7 @@
 					</view>
 				</view>
 				<view class="right" @click.stop="generated(item.paper_id,item.title,0)">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image>
 				</view>
 			</view>
 			<view v-if="is_more2 == 0" class="is_more">没有更多试卷了</view>
@@ -37,7 +37,7 @@
 					</view>
 				</view>
 				<view class="right" @click.stop="generated(item.based_id,item.title,1)">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image>
 				</view>
 				<!-- <image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png' class='right'></image> -->
 			</view>
@@ -45,12 +45,12 @@
 		</view>
 
 		<view class="kong" v-if="(student_list.length == 0 || !student_list) && type == 4">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 			<view>空空如也~</view>
 			<view>您还没有名校资源哦!</view>
 		</view>
 		<view class="kong" v-if="(xb_list.length == 0 || !xb_list) && type == 3">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 			<view>空空如也~</view>
 			<view>您还没有名校资源哦!</view>
 		</view>
@@ -58,11 +58,11 @@
 		<uni-popup ref="popup2" type="center">
 			<view class="mask2">
 				<view class="">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/creatPaper.png" style="left:130rpx" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/creatPaper.png" style="left:130rpx" />
 					绑定邮箱
 				</view>
 				<view class="put">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/inputIcon.png" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/inputIcon.png" />
 					<input type="text" @input="inputHandle" v-model="email" placeholder="输入邮箱" />
 					<view class="text_tip" v-if="is_tip">
 						<text v-for="(item, index) in email_arr" :key="index" :data-suffix="item" @click="texthandleClick">{{ email + item }}</text>

@@ -3,7 +3,7 @@
 		<view>
 			<!-- <view class="reg">
 				<input type="text" v-model="old_mobile" placeholder="请输入旧手机" placeholder-style="color:#dedede"/>
-				<image @click="del(1)" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png" v-show="name.length>0" mode=""></image>
+				<image @click="del(1)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png" v-show="name.length>0" mode=""></image>
 			</view>
 			<view class="yzcode">
 				<input type="text" v-model="code1" placeholder="请输入验证码" placeholder-style="color:#dedede"/>
@@ -11,7 +11,7 @@
 			</view> -->
 			<view class="reg">
 				<input type="text" v-model="new_mobile" placeholder="请输入新手机" placeholder-style="color:#dedede" />
-				<image @click="del(1)" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png" v-show="new_mobile.length > 0" mode=""></image>
+				<image @click="del(1)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png" v-show="new_mobile.length > 0" mode=""></image>
 			</view>
 			<view class="yzcode">
 				<input type="text" v-model="code2" placeholder="请输入验证码" placeholder-style="color:#dedede" />

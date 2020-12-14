@@ -29,7 +29,7 @@
 					</view>
 					<view v-if="is_more == 0 && exercises_list.length != 0" class="is_more">没有更多错题了</view>
 					<view class="kong" v-if="exercises_list.length == 0">
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 						<view>空空如也~</view>
 						<view>您还没有创建试卷哦!</view>
 					</view>
@@ -61,14 +61,14 @@
 						</view>
 					</view>
 					<view class="btnCons">
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" @click.stop="delete_errorbook(i)" />
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" @click.stop="delete_errorbook(i)" />
 						<view class="line"></view>
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download.png" @click.stop="generated(item.errorbook_id ,item.title)" />
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download.png" @click.stop="generated(item.errorbook_id ,item.title)" />
 					</view>
 				</view>
 				<view v-if="is_more2 == 0 && errorbook_list.length != 0" class="is_more">没有更多错题本了</view>
 				<view class="kong" v-if="errorbook_list.length == 0">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 					<view>空空如也~</view>
 					<view>您还没有生成试卷哦!</view>
 				</view>
@@ -94,7 +94,7 @@
 				</view>
 				<view v-if="is_more == 0 && exercises_list.length != 0" class="is_more">没有更多试题了</view>
 				<view class="kong" v-if="exercises_list.length == 0">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 					<view>空空如也~</view>
 					<view>您还没有创建试卷哦!</view>
 				</view>
@@ -124,14 +124,14 @@
 						</view>
 					</view>
 					<view class="btnCons">
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" @click.stop="delete_errorbook(i)" />
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" @click.stop="delete_errorbook(i)" />
 						<view class="line"></view>
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download.png" @click.stop="generated(item.errorbook_id,item.title)" />
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download.png" @click.stop="generated(item.errorbook_id,item.title)" />
 					</view>
 				</view>
 				<view v-if="is_more2 == 0 && errorbook_list.length != 0" class="is_more">没有更多试卷了</view>
 				<view class="kong" v-if="errorbook_list.length == 0">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
 					<view>空空如也~</view>
 					<view>您还没有创建试卷哦!</view>
 				</view>
@@ -143,7 +143,7 @@
 		<uni-popup ref="popupJoin" type="center">
 			<view class="maskJoin">
 				<view style="color: #000;">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/creatPaper.png" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/creatPaper.png" />
 					选择加入{{ type == 4 ? '错题本' : '试卷' }}
 				</view>
 				<scroll-view scroll-y="true">
@@ -174,15 +174,15 @@
 		<uni-popup ref="popup" type="center">
 			<view class="mask2">
 				<view v-if="type == 4">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/creatPaper.png" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/creatPaper.png" />
 					创建错题本
 				</view>
 				<view v-if="type == 3">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/creatPaper.png" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/creatPaper.png" />
 					创建试卷
 				</view>
 				<view class="put">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/inputIcon.png" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/inputIcon.png" />
 					<input type="text" v-model="title" placeholder="输入试卷名称" v-if="type == 3" />
 					<input type="text" v-model="title" placeholder="输入错题本名称" v-if="type == 4" />
 				</view>
@@ -197,11 +197,11 @@
 		<uni-popup ref="popup2" type="center">
 			<view class="mask2" style="height: 335rpx;">
 				<view>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/creatPaper.png" style="left:130rpx" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/creatPaper.png" style="left:130rpx" />
 					绑定邮箱
 				</view>
 				<view class="put">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/inputIcon.png" />
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/inputIcon.png" />
 					<input type="text" @input="inputHandle" v-model="email" placeholder="输入邮箱" />
 					<view class="text_tip" v-if="is_tip">
 						<text v-for="(item, index) in email_arr" :key="index" :data-suffix="item" @click="texthandleClick">{{ email + item }}</text>
@@ -1855,7 +1855,7 @@
 	// list
 	.b-default {
 		/* border: none !important;
-		background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/default.png);
+		background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/default.png);
 		background-size: cover;
 		width: 25rpx !important;
 		height: 25rpx !important; */
@@ -1868,7 +1868,7 @@
 
 	.b-n {
 		border: 0.5rpx solid #e50304 !important;
-		background: #e50304 url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png) no-repeat center center;
+		background: #e50304 url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png) no-repeat center center;
 		background-size: 100%;
 	}
 

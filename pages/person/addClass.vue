@@ -7,13 +7,13 @@
 				<picker :range="grade" range-key="name" @change="change1">
 					<view class="select" :class="{ 'c-d': g_num == 0 }">{{ grade[g_num].name }}</view>
 				</picker>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" />
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" />
 			</view>
 			<view class="item">
 				<picker :range="class_name" @change="change2">
 					<view class="select" :class="{ 'c-d': s_num == 0 }">{{ class_name[s_num] }}</view>
 				</picker>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" />
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" />
 			</view>
 			<button class="btn" @click="tijiao()">创建</button>
 		</view>
@@ -119,7 +119,7 @@ page {
 .joinClassBg {
 	width: 100%;
 	height: 450rpx;
-	background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png) no-repeat center center;
+	background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png) no-repeat center center;
 	background-size: 100% 100%;
 	image {
 		display: block;

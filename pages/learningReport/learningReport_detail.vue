@@ -9,15 +9,15 @@
 			</view>
 			<view class="time">
 				<picker mode="date" :value="time" @change="bindMultiPickerChange" :fields="it">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
 					<view class="picker">{{ time }}</view>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
 				</picker>
 				-
 				<picker mode="date" :value="time2" @change="bindMultiPickerChange2" :fields="it">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/rili.png" class="rili"></image>
 					<view class="picker">{{ time2 }}</view>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
 				</picker>
 			</view>
 		</view>
@@ -57,12 +57,12 @@
 				</view>
 				<view class="bottom" @click="open(item.exercises_id, 0)">
 					<view class="select">
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
 						同类型题目
 					</view>
 					<view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click.stop="join_error(i, item.exercises_id)">
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
 						{{ item.is_error ? '取消加入' : '加入试卷' }}
 					</view>
 				</view>
@@ -74,11 +74,11 @@
 			<view class="leixing">
 				<view class="title">
 					<view class="sameType">
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/sameType.png"></image>
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/sameType.png"></image>
 						同类型题目
 					</view>
 					<view class="change" @click="changeData()">
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/change.png"></image>
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/change.png"></image>
 						换一批
 					</view>
 				</view>
@@ -90,12 +90,12 @@
 						</view>
 						<view class="btnCon">
 							<view @click="jiexi(item.exercises_id)">
-								<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
+								<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
 								查看解析
 							</view>
 							<view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.exercises_id)">
-								<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
-								<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
+								<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
+								<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
 								{{ item.is_error ? '取消加入' : '加入试卷' }}
 							</view>
 						</view>

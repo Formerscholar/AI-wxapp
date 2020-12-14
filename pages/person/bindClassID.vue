@@ -2,9 +2,9 @@
 	<view>
 		<view class="joinClassBg"></view>
 		<view class="input">
-			<image class="input_searchIcon" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/searchIcon.png" mode="widthFix"></image>
+			<image class="input_searchIcon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/searchIcon.png" mode="widthFix"></image>
 			<input type="text" v-model="num" placeholder="请输入班级ID或老师手机号码" />
-			<image class="input_X" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/X.png" mode="widthFix"></image>
+			<image class="input_X" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/X.png" mode="widthFix"></image>
 		</view>
 
 		<button class="btn" @click="search_team()">查找班级</button>
@@ -12,11 +12,11 @@
 			<view v-for="(item, i) of classList" :key="i" class="card">
 				<view class="flex">
 					<view class="up" @click="add(item)">
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/grade.png" />
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/grade.png" />
 						<view class="upCon">{{ item.team_name }}</view>
 					</view>
 					<view class="up">
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/invent.png" />
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/invent.png" />
 						<button class="upCon" @click="join(item.classid)">加入班级</button>
 					</view>
 				</view>
@@ -108,7 +108,7 @@ page {
 .joinClassBg {
 	width: 100%;
 	height: 450rpx;
-	background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png) no-repeat center center;
+	background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png) no-repeat center center;
 	background-size: 100% 101%;
 	image {
 		display: block;

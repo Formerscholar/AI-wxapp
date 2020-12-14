@@ -1,9 +1,9 @@
 <template>
 	<view class="container">
-		<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/email.png" class="emailPic" />
+		<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/email.png" class="emailPic" />
 		<view class="reg">
 			<input type="text" v-model="phone" placeholder="请输入手机号" placeholder-style="color:#dedede"/>
-			<image @click="del(1)" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png" v-show="phone.length>0" mode=""></image>
+			<image @click="del(1)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png" v-show="phone.length>0" mode=""></image>
 		</view>
 		<view class="yzcode">
 			<input type="text" v-model="code" placeholder="请输入验证码" placeholder-style="color:#dedede"/>
@@ -14,11 +14,11 @@
 		</view>
 		<view class="reg">
 			<input type="text" v-model="password" placeholder="请输入新密码" placeholder-style="color:#dedede"/>
-			<image @click="del(2)" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png"  v-show="password.length>0" mode=""></image>
+			<image @click="del(2)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png"  v-show="password.length>0" mode=""></image>
 		</view>
 		<view class="reg">
 			<input type="text" v-model="password2" placeholder="请再次输入新密码" placeholder-style="color:#dedede"/>
-			<image @click="del(3)" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png"  v-show="password2.length>0" mode=""></image>
+			<image @click="del(3)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/del2.png"  v-show="password2.length>0" mode=""></image>
 		</view>
 		<button class="btn" @click="xiugai()">修改密码</button>
 	</view>

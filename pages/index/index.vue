@@ -12,29 +12,29 @@
 		<view class="teacher" v-if="type == 3">
 			<view class="tab_info">
 				<view class="tb">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/subject.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/subject.png" mode=""></image>
 					<text>学科</text>
 					<text>{{ teacher_info.subject_name.title }}</text>
 				</view>
 
 				<view class="tb" @click="toclassinfo()">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/class.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/class.png" mode=""></image>
 					<text>班级</text>
 					<text>{{ teacher_info.team_count }}</text>
 				</view>
 
 				<view class="tb" @click="toclassinfo()">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/classmate.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/classmate.png" mode=""></image>
 					<text>学生</text>
 					<text>{{ teacher_info.student_count ? teacher_info.student_count : 0 }}</text>
 				</view>
 			</view>
 			<view class="upload" @click="uploadPaper()">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/upload.png"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/upload.png"></image>
 			</view>
 			<view class="item left" @click="todetail(8)">
 				<view class="title">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/report.png" mode="" class="report"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/report.png" mode="" class="report"></image>
 					<text>学情报告</text>
 					<text class="showDe" v-for="(item, i) of teacher_info.analysis" :key="i" v-if="teacher_info.analysis">
 						{{ item.grade_name }}{{ item.team_name }},
@@ -45,7 +45,7 @@
 			</view>
 			<view class="right">
 				<view class="item" @click="tobead">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mine_shijuan.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mine_shijuan.png" mode=""></image>
 					<view class="title">
 						<text>校本试卷</text>
 						<view>
@@ -55,7 +55,7 @@
 					</view>
 				</view>
 				<view class="item" @click="todetail(9)">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaofu.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaofu.png" mode=""></image>
 					<view class="title">
 						<text>名校资源</text>
 						<view>
@@ -72,7 +72,7 @@
 		<view class="student" v-else>
 			<view class="item itemPhoto" @click="todetail(0)">
 				<view>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/photo.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/photo.png" mode=""></image>
 				</view>
 				<view class="title">
 					<text>拍照识题</text>
@@ -92,7 +92,7 @@
 
 			<view class="flex">
 				<view class="item itemSpec0" @click="todetail(1)">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaofu.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaofu.png" mode=""></image>
 					<view class="title">
 						<text>我的教辅</text>
 						<view>
@@ -103,7 +103,7 @@
 				</view>
 
 				<view class="item itemSpec" @click="todetail(2)">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mine_shijuan.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mine_shijuan.png" mode=""></image>
 					<view class="title">
 						<text>校本试卷</text>
 						<view>
@@ -116,7 +116,7 @@
 
 			<view class="flex">
 				<view class="item itemSpec0" @click="todetail(9)">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mingxiao.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mingxiao.png" mode=""></image>
 					<view class="title">
 						<text>名校资源</text>
 						<view>
@@ -127,7 +127,7 @@
 				</view>
 
 				<view class="item itemSpec" @click="todetail(4)">
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mine_xueqingbaogao.png" mode=""></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mine_xueqingbaogao.png" mode=""></image>
 					<view class="title">
 						<text>学情报告</text>
 						<view>

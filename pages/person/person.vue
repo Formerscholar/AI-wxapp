@@ -6,15 +6,15 @@
 				<view class="info">
 					<view class="nick" v-if="user_info.true_name">{{ user_info.true_name }}</view>
 					<view class="schoolName" v-if="type == 4">
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/schoolIcon.png"></image>
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/schoolIcon.png"></image>
 						<text>{{ school }}</text>
 					</view>
 					<view class="schoolName" v-if="type == 3">
-						<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/jifen.png"></image>
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/jifen.png"></image>
 						<text>积分:{{ user_info.points ? user_info.points : 0 }}</text>
 					</view>
 				</view>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/rightWhite.png" class="detail"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/rightWhite.png" class="detail"></image>
 			</view>
 
 			<view class="vip" v-if="info.is_vip == 1 && type == 4" @click="pageToVip">
@@ -22,15 +22,15 @@
 					<view>我的VIP会员</view>
 					<view>VIP到期时间: {{ info.user_vip_end_time }}</view>
 				</view>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime.png" v-if="platform == 'ios'"></image>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime1.png" v-else></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime.png" v-if="platform == 'ios'"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime1.png" v-else></image>
 			</view>
 			<view class="vip" v-if="!info.is_vip == 1 && type == 4" @click="pageToVip">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip.png" v-if="platform == 'ios'"></image>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip1.png" v-else></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip.png" v-if="platform == 'ios'"></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip1.png" v-else></image>
 			</view>
 			<view class="minePaper" @click="tocuoti()" v-if="type == 3">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/minePaper.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/minePaper.png" mode=""></image>
 				<view>
 					<text>我的试卷</text>
 					<view class="paperInfo">
@@ -41,66 +41,66 @@
 						题
 					</view>
 				</view>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
 		</view>
 
 		<!-- 教师端 -->
 		<view class="card" v-if="type == 3">
 			<view class="item" @click="toMyUploadPaper()">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/uploadPaper.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/uploadPaper.png" mode=""></image>
 				<text>我上传的试卷</text>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
 			<view class="item" @click="toJifen()">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/mineJifen.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/mineJifen.png" mode=""></image>
 				<text>我的积分</text>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
 			<view class="item" @click="touser('/pages/person/classInfo')">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/classId.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/classId.png" mode=""></image>
 				<text>我的班级</text>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
 			<view class="item" @click="touser('/pages/person/feedback')">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/advice.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/advice.png" mode=""></image>
 				<text>意见反馈</text>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
 			<!-- <view class="item">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/share.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/share.png" mode=""></image>
 				<button open-type="share">分享给老师</button>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view> -->
 		</view>
 
 		<!-- 学生端 -->
 		<view class="card student" v-if="type == 4">
 			<view class="item" @click="toClassID()">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/classId.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/classId.png" mode=""></image>
 				<text>绑定班级</text>
 				<view class="item_info">{{ grade_names ? grade_names : '' }}</view>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
 			<view class="item" @click="touser('/pages/person/about')">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/aboutWe.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/aboutWe.png" mode=""></image>
 				<text>关于我们</text>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
 			<view class="item" @click="touser('/pages/person/feedback')">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/advice.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/advice.png" mode=""></image>
 				<text>意见反馈</text>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
 			<view class="item">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/share.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/share.png" mode=""></image>
 				<button open-type="share">分享</button>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view>
 			<!-- <view class="item" @click="shopClick">
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/shop_icon.png" mode=""></image>
 				<text>会员商城</text>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" mode=""></image>
 			</view> -->
 		</view>
 
@@ -295,7 +295,7 @@ page {
 }
 .top {
 	width: 100%;
-	background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/personInfo_bg.png) no-repeat center center;
+	background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/personInfo_bg.png) no-repeat center center;
 	background-size: cover;
 	position: relative;
 	margin-top: -2rpx;

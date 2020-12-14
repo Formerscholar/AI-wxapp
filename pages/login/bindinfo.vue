@@ -3,49 +3,49 @@
 		<view class="container">
 			<view class="joinClassBg"></view>
 			<view class="item firstItem">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/provice.png" class="icon" />
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/provice.png" class="icon" />
 				<picker :range="Province" range-key="name" @change="bindPickerChange">
 					<view class="select" :class="{ 'c-d': index == 0 }">{{ Province[index].name }}</view>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" class="down"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" class="down"></image>
 				</picker>
 			</view>
 			<view class="item">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/city.png" class="icon" />
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/city.png" class="icon" />
 				<picker :range="city" range-key="name" @change="bindPickerChange1">
 					<view class="select" :class="{ 'c-d': index1 == 0 }">{{ city[index1].name }}</view>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" class="down"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" class="down"></image>
 				</picker>
 			</view>
 			<view class="item">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/area.png" class="icon" />
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/area.png" class="icon" />
 				<picker :range="area" range-key="name" @change="bindPickerChange2">
 					<view class="select" :class="{ 'c-d': index2 == 0 }">{{ area[index2].name }}</view>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" class="down"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" class="down"></image>
 				</picker>
 			</view>
 			<view class="item">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/school.png" class="icon" />
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/school.png" class="icon" />
 				<picker :range="school" range-key="name" @change="change">
 					<view class="select school_name" :class="{ 'c-d': s_num == 0 }">{{ school[s_num].name }}</view>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" class="down"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" class="down"></image>
 				</picker>
 			</view>
 			<view class="item" v-if="type == 4">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/subject.png" class="icon" />
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/subject.png" class="icon" />
 				<picker :range="grade" range-key="name" @change="change4">
 					<view class="select" :class="{ 'c-d': g_num == 0 }">{{ grade[g_num].name }}</view>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" class="down"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" class="down"></image>
 				</picker>
 			</view>
 			<view class="item" v-if="type == 3">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/subject.png" class="icon" />
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/subject.png" class="icon" />
 				<picker :range="subject" range-key="title" @change="changeSub">
 					<view class="select" :class="{ 'c-d': s_num1 == 0 }">{{ subject[s_num1].title }}</view>
-					<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" class="down"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode="" class="down"></image>
 				</picker>
 			</view>
 			<view class="item">
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/name.png" class="icon" />
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/name.png" class="icon" />
 				<input type="text" placeholder="请输入姓名" v-model="name" placeholder-style="color:#dedede" />
 			</view>
 			<!-- <view class="item" v-if="type==4" >
@@ -459,7 +459,7 @@
 	.joinClassBg {
 		width: 100%;
 		height: 110rpx;
-		background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/bindInfoBg.png) no-repeat top left;
+		background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/bindInfoBg.png) no-repeat top left;
 		background-size: cover;
 	}
 </style>

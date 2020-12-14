@@ -10,32 +10,32 @@
 			<view class="time" v-if="!info.user_vip_end_time">到期时间：未开通</view>
 		</view>
 		<view class="b-title">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon1.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon1.png" />
 			<text>电子错题本下载</text>
 			<text>节省时间、方便快捷</text>
 		</view>
 		<view class="b-title">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon2.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon2.png" />
 			<text>下载举一反三相似题</text>
 			<text>加强同类知识点训练，提高学校效率</text>
 		</view>
 		<view class="b-title">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon3.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon3.png" />
 			<text>查看答案和解析</text>
 			<text>了解解题思路，掌握知识结构</text>
 		</view>
 		<view class="b-title">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon4.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon4.png" />
 			<text>查看和下载名校资源</text>
 			<text>拓展训练，方便区域错位比较</text>
 		</view>
 		<view class="b-title">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon6.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon6.png" />
 			<text>知识库资源任意组卷和下载</text>
 			<text>丰富学习资源，拓展训练好帮手</text>
 		</view>
 		<view class="b-title">
-			<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon5.png" />
+			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon5.png" />
 			<text>学情报告统计错题数据</text>
 			<text>总结学习过程，方便提优补差</text>
 		</view>
@@ -164,7 +164,7 @@
 	}
 
 	.card {
-		background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vip-bg.png) no-repeat top left;
+		background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vip-bg.png) no-repeat top left;
 		background-size: cover;
 		width: 700rpx;
 		height: 244rpx;

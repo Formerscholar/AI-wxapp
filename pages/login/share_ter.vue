@@ -12,7 +12,7 @@
 				<view class="picker">
 					{{ !num ? (subject_id ? subject_title : '请选择你的学科') : subject_id ? (subject_title ? subject_title : subject_list[num].title) : subject_list[num].title }}
 				</view>
-				<image src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode=""></image>
+				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode=""></image>
 			</picker>
 			<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event, 3)">确认加入</button>
 			<uni-popup ref="popup" type="center">
@@ -277,7 +277,7 @@
 	.joinClassBg {
 		width: 100%;
 		height: 510rpx;
-		background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png) no-repeat center center;
+		background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/joinClass.png) no-repeat center center;
 		background-size: 100% 100%;
 		display: flex;
 

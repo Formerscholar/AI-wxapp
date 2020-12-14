@@ -9,7 +9,7 @@
 					<view class="list">
 						<view class="rtbor"></view>
 						<view class="Flashlightbox" :style="!isflashBool ? 'background-color: rgba(0, 0, 0, 0.5);' : 'background-color: rgba(229,3,4, 0.8);'" @click="FlashlightClick">
-							<image class="Flashimg" src="//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/Flashlight.png" mode="widthFix"></image>
+							<image class="Flashimg" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/Flashlight.png" mode="widthFix"></image>
 						</view>
 					</view>
 					<view class="list"></view>
