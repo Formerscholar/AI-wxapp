@@ -133,7 +133,7 @@
       },
       pagetoAbout:function(){
         uni.navigateTo({
-            url: "/pages/login/agreement"
+            url: "/pages/login/agreement?type=register"
         });
       }
     }

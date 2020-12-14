@@ -1,21 +1,27 @@
 <template>
-  <view v-html="agreement"></view>
+  <view class="agreement" v-html="agreement"></view>
 </template>
 
 <script>
   export default {
     data() {
       return {
-        agreement: null
+        agreement: '',
+        type:''
       };
     },
-    onLoad() {
+    onLoad(options) {
+      const {type} = options
+      console.log('options',options)
+      this.type = type
+    },
+    onShow() {
       this.get_agreements()
     },
     methods: {
       get_agreements: function() {
         this.$api.get_agreement({
-          type: 'register'
+          type: this.type
         }).then(res => {
           this.agreement = res.data.content
         })
@@ -27,5 +33,8 @@
 <style lang="scss">
   page {
     background: #fff;
+  }
+  .agreement{
+    padding: 15rpx;
   }
 </style>
