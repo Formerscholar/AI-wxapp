@@ -1,5 +1,5 @@
 <template>
-  <view v-html="agreement"></view>
+  <view class="agreement" v-html="agreement"></view>
 </template>
 
 <script>
@@ -27,5 +27,8 @@
 <style lang="scss">
   page {
     background: #fff;
+  }
+  .agreement{
+    padding: 15rpx;
   }
 </style>
