@@ -23,6 +23,7 @@
         this.$api.get_agreement({
           type: this.type
         }).then(res => {
+          console.log(res.data)
           this.agreement = res.data.content
         })
       }

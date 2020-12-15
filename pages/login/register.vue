@@ -9,14 +9,13 @@
       </view>
       <input class="passwordNum" type="password" v-model="password" placeholder="请设置登录密码" />
       <button class="loginClick" type="default" @click="loginClick">注册并登录</button>
-      <radio-group @change="radioChange">
+      <checkbox-group @change="radioChange" >
         <label class="radio_warp">
-          <radio value="1" :checked="isCheck" color="#E50304" />
+          <checkbox value="1" color="#E50304" />
           <view class="text"> 注册即视为同意<text class="pageTo" @click.stop="pagetoAbout">《注册协议》</text></view>
         </label>
-      </radio-group>
+      </checkbox-group>
     </view>
-
   </view>
 </template>
 
@@ -43,7 +42,8 @@
     methods: {
       ...mapMutations(['login', 'set_type']),
       radioChange: function(evt) {
-        this.isCheck = evt.target.value
+        console.log(evt.detail.value)
+        this.isCheck = evt.detail.value
       },
       getCodeClick: function(){
         let reg = /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/

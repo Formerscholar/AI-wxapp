@@ -17,15 +17,15 @@
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/rightWhite.png" class="detail"></image>
 			</view>
 
-			<view class="vip" v-if="info.is_vip == 1 && type == 4" @click="pageToVip">
+			<view class="vip" v-if="user_info.is_vip == 1 && type == 4" @click="pageToVip">
 				<view class="endTimeInfo">
 					<view>我的VIP会员</view>
-					<view>VIP到期时间: {{ info.user_vip_end_time }}</view>
+					<view>VIP到期时间: {{ user_info.vip_time }}</view>
 				</view>
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime.png" v-if="platform == 'ios'"></image>
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime1.png" v-else></image>
 			</view>
-			<view class="vip" v-if="!info.is_vip == 1 && type == 4" @click="pageToVip">
+			<view class="vip" v-if="!user_info.is_vip == 1 && type == 4" @click="pageToVip">
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip.png" v-if="platform == 'ios'"></image>
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip1.png" v-else></image>
 			</view>
@@ -194,7 +194,8 @@ export default {
 					this.user_info = res.data;
 					this.grade_names = res.data?.school_list?.grade_name || '未绑定班级';
 					this.school = res.data?.school_list?.school_name || '';
-					this.get_vip_info();
+          this.is_vip = res.data?.is_vip
+					// this.get_vip_info();
 				});
 			} else {
 				this.$api.get_teacher_info({ token: this.token }).then(res => {

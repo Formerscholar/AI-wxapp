@@ -4,7 +4,6 @@
 		<view class="con">
 			<view class="content">
 				<rich-text :nodes="changeStyle(jiexiList.content ? jiexiList.content : '')"></rich-text>
-
 				<view class="bottom" @click="open(jiexiList.id, 0)">
 					<view class="select">
 						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
@@ -17,6 +16,9 @@
 					</view>
 				</view>
 			</view>
+      <view class="viptip" v-if="is_vip == 0 && type == 4" @click="toVipPage">
+        <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/viptip.png" mode="widthFix"></image>
+      </view>
 
 			<view v-if="jiexiList.answer && is_vip == 1 && type == 4" class="daAn">
 				<view class="tag">答案</view>
@@ -26,7 +28,6 @@
 				<view class="tag">解析</view>
 				<view class="context"><rich-text :nodes="changeStyle(jiexiList.analysis ? jiexiList.analysis : '')"></rich-text></view>
 			</view>
-
 			<view v-if="jiexiList.answer && type == 3" class="daAn">
 				<view class="tag">答案</view>
 				<view class="context"><rich-text :nodes="changeStyle(jiexiList.answer ? jiexiList.answer : '')"></rich-text></view>
@@ -35,11 +36,14 @@
 				<view class="tag">解析</view>
 				<view class="context"><rich-text :nodes="changeStyle(jiexiList.analysis ? jiexiList.analysis : '')"></rich-text></view>
 			</view>
-
-			<view v-if="jiexiList.know_point_info" class="knowPoint">
+			<view v-if="jiexiList.know_point_info  && is_vip == 1 && type == 4" class="knowPoint">
 				<view class="tag">知识点</view>
 				<view class="context"><rich-text :nodes="changeStyle(jiexiList.know_point_info ? jiexiList.know_point_info : '')"></rich-text></view>
 			</view>
+      <view v-if="jiexiList.know_point_info  && type == 3" class="knowPoint">
+      	<view class="tag">知识点</view>
+      	<view class="context"><rich-text :nodes="changeStyle(jiexiList.know_point_info ? jiexiList.know_point_info : '')"></rich-text></view>
+      </view>
 		</view>
 
 		<!-- <view class="kong"  v-if="errorbook_list.length==0||!errorbook_list">
@@ -114,6 +118,11 @@ export default {
 		this.type = uni.getStorageSync('type');
 	},
 	methods: {
+    toVipPage(){
+      uni.navigateTo({
+        url:'/pages/person/vip'
+      })
+    },
 		jiexi(id) {
 			uni.navigateTo({
 				// url:'/pages/person/ListStudents?name='+item.team_name+'&team_id='+item.team_id
@@ -301,6 +310,15 @@ page {
 			color: #878787;
 		}
 	}
+  .viptip{
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    image{
+      height: 219rpx;
+      width: 100%;
+    }
+  }
 	.content {
 		padding: 30rpx;
 		margin-top: 95rpx;
