@@ -54,7 +54,7 @@
 				"navigationBarTitleText": "忘记密码"
 			}
 		},{
-			"path": "pages/login/forgetPassword",
+			"path": "pages/person/forgetPassword",
 			"style": {
 				"navigationBarTitleText": "修改密码"
 			}

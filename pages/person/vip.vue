@@ -45,22 +45,20 @@
       <text class="redio_title">
         选择支付方式
       </text>
-      <radio-group @change="radioChange">
+      <radio-group @change="e=> pay_type = e.target.value">
         <label class="item_redio_box" >
           <view class="item_redio_box_body">
             <image class="pay_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/wc_pay_icon.png" mode="widthFix"></image>
             <text class="item_redio_box_text">微信支付</text>
           </view>
-            <radio value="1" checked color="#E50304" />
-          <view>{{item.name}}</view>
+            <radio value="wxpay" checked color="#E50304" />
         </label>
         <label class="item_redio_box" >
           <view class="item_redio_box_body">
             <image class="pay_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/zfb_pay_icon.png" mode="widthFix"></image>
             <text class="item_redio_box_text">支付宝支付</text>
           </view>
-            <radio value="2" color="#E50304" />
-          <view>{{item.name}}</view>
+            <radio value="alipay" color="#E50304" />
         </label>
       </radio-group>
     </view>
@@ -88,7 +86,8 @@
         is_discount: 1,
         is_vip: 0,
         tpmid: '',
-        platform: ''
+        platform: '',
+        pay_type:'wxpay'
       };
     },
     onLoad() {
@@ -112,9 +111,6 @@
       this.get_info();
     },
     methods: {
-      radioChange: function(evt) {
-        console.log(evt.target.value)
-      },
       get_info() {
         this.$api.vip_info({
           token: this.token
@@ -127,6 +123,7 @@
         });
       },
       pay() {
+        // #ifdef MP-WEIXIN
         uni.requestSubscribeMessage({
           tmplIds: this.tpmid.vip_notice,
           complete: res => {
@@ -135,11 +132,37 @@
           success: res => {},
           fail: function(res) {}
         });
+        // #endif
+        // #ifdef APP-PLUS
+          this.login_pays()
+        // #endif
+      },
+      login_pays(){
+        this.$api.app_pay({ type: this.pay_type })
+        .then(reslove => {
+          if (reslove.code != 200) {
+            uni.showModal({
+              title: '温馨提示',
+              content: reslove.msg,
+              showCancel: false
+            })
+          } else {
+            uni.requestPayment({
+              provider: this.pay_type,
+              orderInfo: res.data, //微信、支付宝订单数据
+              success: function (res) {
+                  console.log('success:' + JSON.stringify(res));
+              },
+              fail: function (err) {
+                  console.log('fail:' + JSON.stringify(err));
+              }
+            });
+          }
+        });
       },
       login_pay() {
         this.$api.app_pay({
-          token: this.token,
-          platform: app.globalData.systemInfo.platform
+          platform: app.globalData.systemInfo.platform,
         }).then(reslove => {
           if (reslove.code != 200) {
             uni.showModal({

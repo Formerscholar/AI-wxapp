@@ -10,8 +10,6 @@ module.exports = {
   // : data => request(ApiUrl+'',data),
   url: ApiUrl,
   //   app
-  // main
-  get_agreement : data => request(ApiUrl + 'main/get_agreement/', data),// 注册协议
   // teacher
   teacher_app_login: data => request(appApiUrl + 'teacher/login/', data), //老师登录
   teacher_app_wx_login: data => request(appApiUrl + 'teacher/wx_login/', data), //
@@ -19,7 +17,6 @@ module.exports = {
   get_app_teacher_register: data => request(appApiUrl + 'teacher/register/', data), //老师注册
   get_app_teacher_bind: data => request(appApiUrl + 'teacher/bind_info/', data), //老师绑定信息
   get_app_teacher_search_password: data => request(appApiUrl + 'teacher/search_password/', data), //老师忘记密码
-  get_app_teacher_edit_password: data => request(appApiUrl + 'teacher/edit_password/', data), //老师修改密码
   // student
   app_login: data => request(appApiUrl + 'user/login/', data), //学生登录
   app_wx_login: data => request(appApiUrl + 'user/wx_login/', data), //
@@ -27,7 +24,6 @@ module.exports = {
   get_app_user_register: data => request(appApiUrl + 'user/register/', data), //学生注册
   get_app_user_bind: data => request(appApiUrl + 'user/bind_info/', data), //学生绑定信息
   get_app_user_search_password: data => request(appApiUrl + 'user/search_password/', data), //学生忘记密码
-  get_app_user_edit_password: data => request(appApiUrl + 'user/edit_password/', data), //学生修改密码
   
   //   app
   
@@ -87,6 +83,7 @@ module.exports = {
 
   get_verify_code: data => request(ApiUrl + 'user/get_verify_code/', data), //验证码
   app_pay: data => request(ApiUrl + 'user/_app_pay/', data), //支付
+  get_app_user_edit_password: data => request(ApiUrl + 'user/edit_password/', data), //学生修改密码
 
 
 
@@ -139,6 +136,7 @@ module.exports = {
   ter_join_team: data => request(ApiUrl + 'teacher/join_team/', data), //邀请老师加入班级
   ter_share_login: data => request(ApiUrl + 'teacher/wx_share_login/', data), //登录
   get_paper: data => request(ApiUrl + 'teacher/get_paper/', data), //老师获取最新试卷
+  get_app_teacher_edit_password: data => request(ApiUrl + 'teacher/edit_password/', data), //老师修改密码
 
 
   //通用
@@ -155,5 +153,6 @@ module.exports = {
   get_exercise_analysis: data => request(ApiUrl + 'exercises/get_exercise_analysis/', data), //查看解析
   search_team: data => request(ApiUrl + 'main/search_team/', data), //搜索班级
   get_team_subject: data => request(ApiUrl + 'main/get_team_subject/', data), //邀请老师的学科下拉列表
-  get_team_location: data => request(ApiUrl + "main/get_team_location/", data)
+  get_team_location: data => request(ApiUrl + "main/get_team_location/", data),
+  get_agreement : data => request(ApiUrl + 'main/get_agreement/', data),// 注册协议
 }

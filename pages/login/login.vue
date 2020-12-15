@@ -84,11 +84,8 @@
     },
     data() {
       return {
-        // account: '13987654321',
-        account: '18083795906',
-        password: '123123',
-        // account: '',
-        // password: '',
+        account: '',
+        password: '',
         loginmode: 4,
         type: 4,
         user_id: '',

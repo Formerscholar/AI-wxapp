@@ -39,16 +39,10 @@
         pass_show: false,
         pass_show1: false,
         pass_show2: false,
-        token:''
       };
     },
     onLoad(options) {
-      const {
-        type
-      } = options
-      console.log('options', options)
-      this.type = type
-      this.token = uni.getStorageSync('userInfo').token;
+      this.type = uni.getStorageSync('type');
     },
     methods: {
       loginClick: function() {
@@ -81,7 +75,6 @@
           return
         }
         var data = {
-          token: this.token,
           old_password: this.passwordold,
           password: this.password,
           password_again: this.password1,
