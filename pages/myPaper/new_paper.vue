@@ -90,15 +90,18 @@
 				</view>
 			</view>
 		</uniPopup>
+    <aiVipEndTip :is_show="is_show" @CloseClickChild="is_show = false" />
 	</view>
 </template>
 
 <script>
 	let app = getApp();
 	import uniPopup from '@/components/uni-popup/uni-popup.vue';
+  import aiVipEndTip from '@/components/ai_vip_end_tip/ai_vip_end_tip.vue'
 	export default {
 		components: {
-			uniPopup
+			uniPopup,
+      aiVipEndTip
 		},
 		data() {
 			return {
@@ -120,6 +123,7 @@
 				is_vip: false,
 				errorbook_title: '',
 				teacher_infos: {},
+        is_show:false
 			};
 		},
 		onReachBottom() {
@@ -182,12 +186,40 @@
 
 				if (this.type == 3) {
 					this.$api.get_download_based(data).then(res => {
-						uni.showToast({
-							title: '下载中...',
-							icon: 'loading',
-							duration: 5000
-						});
 						if (res.code == 200) {
+              uni.showToast({
+              	title: '下载中...',
+              	icon: 'loading',
+              	duration: 5000
+              });
+              // #ifdef APP-PLUS
+              plus.downloader.createDownload(res.data.pdf, {
+                  filename: "_documents/"+this.errorbook_title+".pdf"
+              }, function(d, status) {
+                  if(status == 200) {
+              		uni.showToast({
+              			title: '文件打开中',
+              			icon: 'error'
+              		})
+              		uni.openDocument({
+              			filePath: d.filename,
+              			showMenu: true,
+              			fail: () => {
+              				uni.showToast({
+              					title: '文件打开失败',
+              					icon: 'error'
+              				});
+              			},
+              		})
+                  } else {
+                    uni.showToast({
+                      title: '下载失败',
+                      icon: 'error'
+                    })
+                  }
+              }).start();
+              // #endif
+              // #ifdef MP-WEIXIN
 							if (app.globalData.systemInfo.platform == "ios") {
 								uni.downloadFile({
 									url: res.data.pdf,
@@ -266,7 +298,9 @@
 									},
 								})
 							}
-						} else {
+              // #endif
+            
+            } else {
 							uni.showToast({
 								title: res.msg,
 								icon: 'error'
@@ -275,19 +309,44 @@
 					});
 				} else {
 					if (this.is_vip != 1) {
-						uni.showToast({
-							title: '非会员用户无法下载',
-							icon: 'none'
-						});
+						this.is_show = true
 						return;
 					} else {
 						this.$api.get_download(data).then(res => {
-							uni.showToast({
-								title: '下载中...',
-								icon: 'loading',
-								duration: 5000
-							});
 							if (res.code == 200) {
+                uni.showToast({
+                	title: '下载中...',
+                	icon: 'loading',
+                	duration: 5000
+                });
+                // #ifdef APP-PLUS
+                plus.downloader.createDownload(res.data.pdf, {
+                	filename: "_documents/"+this.errorbook_title+".pdf"
+                }, function(d, status) {
+                	if(status == 200) {
+                		uni.showToast({
+                			title: '文件打开中',
+                			icon: 'error'
+                		})
+                		uni.openDocument({
+                			filePath: d.filename,
+                			showMenu: true,
+                			fail: () => {
+                				uni.showToast({
+                					title: '文件打开失败',
+                					icon: 'error'
+                				});
+                			},
+                		})
+                	} else {
+                		uni.showToast({
+                			title: '下载失败',
+                			icon: 'error'
+                		})
+                	}
+                }).start();
+                // #endif
+                // #ifdef MP-WEIXIN
 								if (app.globalData.systemInfo.platform == "ios") {
 									uni.downloadFile({
 										url: res.data.pdf,
@@ -366,7 +425,8 @@
 										},
 									})
 								}
-							} else {
+                // #endif
+              } else {
 								uni.showToast({
 									title: res.msg,
 									icon: 'error'
@@ -467,10 +527,7 @@
 						this.errorbook_title = title
 						this.$refs.botpopup.open();
 					} else{
-						uni.showToast({
-							title: '非会员用户不可下载名校资源!',
-							icon: 'none'
-						});
+						this.is_show = true
 					}
 				}
 			},

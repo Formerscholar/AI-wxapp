@@ -113,6 +113,10 @@
 		methods: {
 			...mapMutations(['login', 'set_type']),
 			tijiao(e) {
+        uni.showToast({
+        	title: '数据加载中...',
+        	icon: 'loading'
+        });
 				this.userInfo = e.detail.userInfo;
 				let unionid = uni.getStorageSync('unionid')
 				if (this.s_num == 0) {

@@ -164,9 +164,6 @@
 		mapState,
 		mapMutations
 	} from 'vuex';
-	import {
-		de_vip
-	} from '@/common/common.js';
 	export default {
 		data() {
 			return {
@@ -383,7 +380,6 @@
 						url: '/pages/errorBook/errorBook'
 					});
 				} else if (i == 4) {
-					// url=de_vip(this.is_vip,'学情报告','/pages/learningReport/learningReport')
 					url = '/pages/learningReport/learningReport';
 				} else if (i == 5) {
 					url = '';

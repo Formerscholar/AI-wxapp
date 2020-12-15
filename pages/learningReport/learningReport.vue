@@ -78,16 +78,21 @@
       </view>
     </view>
     <view class="qiun-charts noData" v-else>{{ msg }}</view>
+    <aiVipEndTip :is_show="is_show" @CloseClickChild="is_show = false" />
   </view>
 </template>
 
 <script>
   import PieChart from '@/components/stan-ucharts/PieChart.vue';
   import uCharts from '@/components/u-charts/u-charts.js/';
+  import aiVipEndTip from '@/components/ai_vip_end_tip/ai_vip_end_tip.vue'
   var _self;
   var canvaPie = null;
 
   export default {
+    components: {
+      aiVipEndTip
+    },
     data() {
       return {
         update: true,
@@ -125,7 +130,8 @@
         },
         analysisList: [],
         subject_name: '',
-        isvip: ''
+        isvip: '',
+        is_show:false
       };
     },
     onLoad() {
@@ -151,13 +157,8 @@
             url: `/pages/learningReport/seeKnowledge?id=${id}&subject_id=${this.subject_id}&start_time=${this.time}&end_time=${this.time2}&subject_name=${this.subject_name}&title=${name}&count=${data}`
           })
         } else {
-          uni.showToast({
-            icon: "none",
-            title: '需开通会员查看'
-          })
-
+          this.is_show = true
         }
-
       },
       Randomcolor() {
         return '#' + Math.floor(Math.random() * (2 << 23)).toString(16);

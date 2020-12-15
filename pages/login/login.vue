@@ -19,11 +19,13 @@
         <view class="zhanhao" style="margin-top: 0;">
           <!-- <image src="../../static/img/wode.png" mode=""></image> -->
           <input type="text" v-model="account" placeholder="请输入手机号" placeholder-style="color:#dedede" />
-          <!-- <image @click="del(1)" src="../../static/img/del.png" v-show="account.length>0" mode=""></image> -->
+          <image @click="account = ''" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/input_del.png" v-show="account.length>0" mode="widthFix"></image>
         </view>
         <view class="zhanhao">
           <!-- <image src="../../static/img/password.png" mode=""></image> -->
-          <input type="password" v-model="password" placeholder="请输入密码" placeholder-style="color:#dedede" />
+          <input :password="!pass_show" v-model="password" placeholder="请输入密码" placeholder-style="color:#dedede" />
+          <image @click="passChange(true)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/pass_false.png" v-if="!pass_show" mode="widthFix"></image>
+          <image @click="passChange(false)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/pass_true.png" v-else mode="widthFix"></image>
           <!-- <image @click="del(2)" src="../../static/img/del.png" v-show="password.length>0" mode=""></image> -->
         </view>
         <view class="login-btn" @click="login2">登 录</view>
@@ -91,6 +93,7 @@
         sessionkey: '',
         openid: '',
         code: '',
+        pass_show:false
       };
     },
     onLoad() {
@@ -98,6 +101,9 @@
     },
     methods: {
       ...mapMutations(['login', 'set_type']),
+      passChange(bool){
+        this.pass_show = bool
+      },
       setlogin(i) {
         this.type = i
         this.loginmode = i
@@ -467,10 +473,10 @@
       padding-left: 30rpx;
       box-sizing: border-box;
 
-
       image {
         width: 40rpx;
         height: 40rpx;
+        margin-right: 30rpx;
       }
 
       input {

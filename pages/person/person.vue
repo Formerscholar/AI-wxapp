@@ -16,7 +16,6 @@
 				</view>
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/rightWhite.png" class="detail"></image>
 			</view>
-
 			<view class="vip" v-if="user_info.is_vip == 1 && type == 4" @click="pageToVip">
 				<view class="endTimeInfo">
 					<view>我的VIP会员</view>
@@ -312,6 +311,7 @@ page {
 			top: 50%;
 			transform: translateY(-50%);
 			left: 100rpx;
+      z-index: 1;
 			/* >view{
 					height: 62rpx;
 					line-height: 62rpx;

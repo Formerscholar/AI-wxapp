@@ -229,12 +229,14 @@
 				</view>
 			</view>
 		</uniPopup>
+    <aiVipEndTip :is_show="is_show" @CloseClickChild="is_show = false" />
 	</view>
 </template>
 
 <script>
 	let app = getApp();
 	import uniPopup from '@/components/uni-popup/uni-popup.vue';
+  import aiVipEndTip from '@/components/ai_vip_end_tip/ai_vip_end_tip.vue'
 	import {
 		mapState,
 		mapMutations
@@ -242,7 +244,8 @@
 
 	export default {
 		components: {
-			uniPopup
+			uniPopup,
+      aiVipEndTip
 		},
 		data() {
 			return {
@@ -276,7 +279,8 @@
 				arrWei: [],
 				arrYi: [],
 				str: '',
-				str1: ''
+				str1: '',
+        is_show:false
 			};
 		},
 		onReachBottom() {
@@ -344,20 +348,6 @@
 					value
 				} = evt.detail
          this.evtvalue = value
-				// if (value == 1) {
-    //       this.evtvalue = value
-				// } else {
-    //       if (this.is_vip) {
-    //         this.evtvalue = value
-    //       } else{
-    //         this.evtvalue = 1
-    //         uni.showToast({
-    //         	title: '非会员无法下载答案解析',
-    //         	icon: 'none',
-    //         	duration: 18888
-    //         });
-    //       }
-				// }
 			},
 			sendEmail() {
 				if (this.evtvalue == 1) {
@@ -367,22 +357,14 @@
             this.answerClick()
           } else{
             this.$refs.botpopup.close();
-            uni.showToast({
-              title: '非会员无法下载答案解析',
-              icon: 'none',
-              duration: 1888
-            });
+            this.is_show = true
           }
 				}
 			},
 			sendPhone() {
 				this.$refs.botpopup.close();
         if (!this.is_vip) {
-          uni.showToast({
-            title: '非会员无法下载答案解析',
-            icon: 'none',
-            duration: 1888
-          });
+          this.is_show = true
           return 
         } 
 				let data = {
@@ -420,10 +402,10 @@
 										},
 									})
 							    } else {
-									uni.showToast({
-										title: '下载失败',
-										icon: 'error'
-									})
+                    uni.showToast({
+                      title: '下载失败',
+                      icon: 'error'
+                    })
 							    }
 							}).start();
 							// #endif

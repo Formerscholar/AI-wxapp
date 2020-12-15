@@ -224,22 +224,7 @@ export default {
 			if (this.type == 3) {
 				var req = this.$api.teacher_same_type(data);
 			} else {
-					var req = this.$api.same_type(data);
-				// if (this.is_vip == 1) {
-				// } else {
-				// 	// var req=this.$api.same_type(data)
-
-				// 	//1是不要提示 0是要提示
-				// 	if (status != 1) {
-				// 		uni.showToast({
-				// 			title: '非会员用户不可查看同类型题目',
-				// 			icon: 'none'
-				// 		});
-				// 		return;
-				// 	} else {
-				// 		return;
-				// 	}
-				// }
+				var req = this.$api.same_type(data);
 			}
 			req.then(res => {
 				console.log(res);
