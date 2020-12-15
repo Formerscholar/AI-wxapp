@@ -61,6 +61,7 @@
 			<text v-else="user_info.email">{{ user_info.email }}</text>
 			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 		</view>
+    <!-- # ifdef endif -->
     <!-- #ifdef APP-PLUS -->
     <view class="center youxiang apppass"  @click="pageToChangePass">
     	<text>修改密码</text>
@@ -152,7 +153,7 @@
 		methods: {
       pageToChangePass(){
         uni.navigateTo({
-          url: '/pages/login/changePassword?type=' + this.type
+          url: '/pages/login/forgetPassword?type=' + this.type
         })
       },
       changeEmail(){

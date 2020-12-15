@@ -18,14 +18,16 @@ module.exports = {
   get_app_teacher_verify_code: data => request(appApiUrl + 'teacher/get_verify_code/', data), //老师获取验证码
   get_app_teacher_register: data => request(appApiUrl + 'teacher/register/', data), //老师注册
   get_app_teacher_bind: data => request(appApiUrl + 'teacher/bind_info/', data), //老师绑定信息
-  get_app_teacher_search_password: data => request(appApiUrl + 'teacher/search_password/', data), //老师修改密码
+  get_app_teacher_search_password: data => request(appApiUrl + 'teacher/search_password/', data), //老师忘记密码
+  get_app_teacher_edit_password: data => request(appApiUrl + 'teacher/edit_password/', data), //老师修改密码
   // student
   app_login: data => request(appApiUrl + 'user/login/', data), //学生登录
   app_wx_login: data => request(appApiUrl + 'user/wx_login/', data), //
   get_app_verify_code: data => request(appApiUrl + 'user/get_verify_code/', data), //学生获取验证码
   get_app_user_register: data => request(appApiUrl + 'user/register/', data), //学生注册
   get_app_user_bind: data => request(appApiUrl + 'user/bind_info/', data), //学生绑定信息
-  get_app_user_search_password: data => request(appApiUrl + 'user/search_password/', data), //学生修改密码
+  get_app_user_search_password: data => request(appApiUrl + 'user/search_password/', data), //学生忘记密码
+  get_app_user_edit_password: data => request(appApiUrl + 'user/edit_password/', data), //学生修改密码
   
   //   app
   

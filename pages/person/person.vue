@@ -103,7 +103,7 @@
 			</view> -->
 		</view>
 
-		<button class="logout" @click="logout()" v-show="token">切换身份</button>
+		<button class="logout" @click="logout()" v-show="token">退出登录</button>
 	</view>
 </template>
 

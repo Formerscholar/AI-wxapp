@@ -51,9 +51,14 @@
 		},{
 			"path": "pages/login/changePassword",
 			"style": {
+				"navigationBarTitleText": "忘记密码"
+			}
+		},{
+			"path": "pages/login/forgetPassword",
+			"style": {
 				"navigationBarTitleText": "修改密码"
 			}
-		}, {
+		},  {
 			"path": "pages/myteaching/myteaching",
 			"style": {
 				"navigationBarTitleText": "选择教辅"
