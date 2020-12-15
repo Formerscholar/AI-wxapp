@@ -24,7 +24,7 @@ module.exports = {
   get_app_user_register: data => request(appApiUrl + 'user/register/', data), //学生注册
   get_app_user_bind: data => request(appApiUrl + 'user/bind_info/', data), //学生绑定信息
   get_app_user_search_password: data => request(appApiUrl + 'user/search_password/', data), //学生忘记密码
-  
+  get_app_pay: data => request(appApiUrl + 'user/pay/', data), //支付
   //   app
   
   wx_login: data => request(ApiUrl + 'wechat/login/', data), //

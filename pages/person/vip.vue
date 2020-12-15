@@ -138,8 +138,9 @@
         // #endif
       },
       login_pays(){
-        this.$api.app_pay({ type: this.pay_type })
+        this.$api.get_app_pay({ type: this.pay_type })
         .then(reslove => {
+			console.log(reslove)
           if (reslove.code != 200) {
             uni.showModal({
               title: '温馨提示',
@@ -149,7 +150,7 @@
           } else {
             uni.requestPayment({
               provider: this.pay_type,
-              orderInfo: res.data, //微信、支付宝订单数据
+              orderInfo: reslove.data, //微信、支付宝订单数据
               success: function (res) {
                   console.log('success:' + JSON.stringify(res));
               },
