@@ -3,8 +3,8 @@
     <view class="item" v-for="(item, i) of list" :key="i" v-if="list.length != 0">
       <view class="subtitle">
         <div class="div">
-          <text>【{{ subject_name ? subject_name : '' }}】</text>
-          {{ title }}
+          <text class="div_text">【{{ subject_name ? subject_name : '' }}】</text>
+          <text class="div_txt"> {{ title }} </text>
         </div>
         <div class="cont">
           {{count}}道错题
@@ -378,15 +378,31 @@
     align-items: center;
     padding: 0 20rpx;
     box-sizing: border-box;
-
+    overflow: hidden;
+      
     .div {
-      text {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      overflow: hidden;
+      .div_text{
+        width: 130rpx;
         color: #e50304;
+      }
+      .div_txt {
+        flex: 1;
+        overflow: hidden;
+        text-overflow:ellipsis; 
+        white-space:nowrap;
       }
     }
 
     .cont {
-      color: #2c2c2c;
+      width: 115rpx;
+      color: #666;
+      font-size: 26rpx;
+      
     }
 
   }

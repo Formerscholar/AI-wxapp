@@ -210,7 +210,7 @@
           height: 80rpx;
           background: #F4F4F4;
           border-radius: 38rpx;
-          padding-left: 50rpx;
+          padding-left: 30rpx;
           box-sizing: border-box;
         }
 

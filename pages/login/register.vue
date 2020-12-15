@@ -141,6 +141,7 @@
           if (res.code == 200) {
             this.login(res.data)
             uni.showToast({
+              icon: 'none',
               title: '登录成功,请绑定信息'
             })
             setTimeout(() => {

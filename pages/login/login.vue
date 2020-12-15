@@ -19,13 +19,16 @@
         <view class="zhanhao" style="margin-top: 0;">
           <!-- <image src="../../static/img/wode.png" mode=""></image> -->
           <input type="text" v-model="account" placeholder="请输入手机号" placeholder-style="color:#dedede" />
-          <image @click="account = ''" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/input_del.png" v-show="account.length>0" mode="widthFix"></image>
+          <image @click="account = ''" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/input_del.png" v-show="account.length>0"
+            mode="widthFix"></image>
         </view>
         <view class="zhanhao">
           <!-- <image src="../../static/img/password.png" mode=""></image> -->
           <input :password="!pass_show" v-model="password" placeholder="请输入密码" placeholder-style="color:#dedede" />
-          <image @click="passChange(true)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/pass_false.png" v-if="!pass_show" mode="widthFix"></image>
-          <image @click="passChange(false)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/pass_true.png" v-else mode="widthFix"></image>
+          <image @click="passChange(true)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/pass_false.png" v-if="!pass_show"
+            mode="widthFix"></image>
+          <image @click="passChange(false)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/pass_true.png" v-else
+            mode="widthFix"></image>
           <!-- <image @click="del(2)" src="../../static/img/del.png" v-show="password.length>0" mode=""></image> -->
         </view>
         <view class="login-btn" @click="login2">登 录</view>
@@ -93,7 +96,7 @@
         sessionkey: '',
         openid: '',
         code: '',
-        pass_show:false
+        pass_show: false
       };
     },
     onLoad() {
@@ -101,7 +104,7 @@
     },
     methods: {
       ...mapMutations(['login', 'set_type']),
-      passChange(bool){
+      passChange(bool) {
         this.pass_show = bool
       },
       setlogin(i) {
@@ -258,22 +261,22 @@
           mobile: this.account,
           password: this.password
         }
-        var req 
+        var req
         if (user_type == 3) {
           req = this.$api.teacher_app_login(data);
-        }else {
+        } else {
           req = this.$api.app_login(data);
         }
         req.then(res => {
           console.log(res)
           if (res.code == 200) {
             this.login(res.data)
-            if (res.data.is_bind == 0){
+            if (res.data.is_bind == 0) {
               console.log('bind_info执行跳转')
               uni.navigateTo({
                 url: '/pages/login/bind_info'
               })
-            }else {
+            } else {
               uni.showToast({
                 title: '登录成功'
               })
@@ -312,69 +315,71 @@
       wx_login() {
         console.log("App微信拉起授权")
         let _this = this;
-		var weixinService = null;
-		plus.oauth.getServices(function(services) {
-			console.log(services)
-			if (services && services.length) {
-				for (var i = 0, len = services.length; i < len; i++) {
-					if (services[i].id === 'weixin') {
-						weixinService = services[i];
-						console.log('授权对象')
-						console.log(weixinService)
-						break;
-					}
-				}
-				if (!weixinService) {
-					console.log('没有微信登录授权服务');
-					return;
-				}
-				weixinService.authorize(function(event) {  //此处获取code的关键
-					console.log(event)
-					let data={code: event.code};
-					if(_this.loginmode == 3){
-						var req = _this.$api.teacher_app_wx_login(data);
-					}else{
-						var req = _this.$api.app_wx_login(data);
-					}
-					req.then(res=>{
-						console.log(res)
-						if(res.code==200){
-							_this.login(res.data)
-							uni.showToast({
-								title:'登录成功'
-							})
-							if(!res.data.is_bind){
-								setTimeout(()=>{
-									uni.switchTab({
-										url:'/pages/login/bindinfo'
-									})
-								},500)
-							}else{
-								setTimeout(()=>{
-									uni.switchTab({
-										url:'/pages/index/index'
-									})
-								},500)
-							}
-						}else{
-							uni.showToast({
-								title:res.msg,
-								icon:'none'
-							})
-						}
-					})
-				}, function(error) {
-					console.error('authorize fail:' + JSON.stringify(error));
-				}, {
-					
-				});
-			} else {
-				console.log('无可用的登录授权服务');
-			}
-		}, function(error) {
-			console.error('getServices fail:' + JSON.stringify(error));
-		});
-				
+        var weixinService = null;
+        plus.oauth.getServices(function(services) {
+          console.log(services)
+          if (services && services.length) {
+            for (var i = 0, len = services.length; i < len; i++) {
+              if (services[i].id === 'weixin') {
+                weixinService = services[i];
+                console.log('授权对象')
+                console.log(weixinService)
+                break;
+              }
+            }
+            if (!weixinService) {
+              console.log('没有微信登录授权服务');
+              return;
+            }
+            weixinService.authorize(function(event) { //此处获取code的关键
+              console.log(event)
+              let data = {
+                code: event.code
+              };
+              if (_this.loginmode == 3) {
+                var req = _this.$api.teacher_app_wx_login(data);
+              } else {
+                var req = _this.$api.app_wx_login(data);
+              }
+              req.then(res => {
+                console.log(res)
+                if (res.code == 200) {
+                  _this.login(res.data)
+                  uni.showToast({
+                    title: '登录成功'
+                  })
+                  if (!res.data.is_bind) {
+                    setTimeout(() => {
+                      uni.switchTab({
+                        url: '/pages/login/bindinfo'
+                      })
+                    }, 500)
+                  } else {
+                    setTimeout(() => {
+                      uni.switchTab({
+                        url: '/pages/index/index'
+                      })
+                    }, 500)
+                  }
+                } else {
+                  uni.showToast({
+                    title: res.msg,
+                    icon: 'none'
+                  })
+                }
+              })
+            }, function(error) {
+              console.error('authorize fail:' + JSON.stringify(error));
+            }, {
+
+            });
+          } else {
+            console.log('无可用的登录授权服务');
+          }
+        }, function(error) {
+          console.error('getServices fail:' + JSON.stringify(error));
+        });
+
       }
     }
   }

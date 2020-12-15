@@ -61,7 +61,13 @@
 			<text v-else="user_info.email">{{ user_info.email }}</text>
 			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 		</view>
-    
+    <!-- #ifdef APP-PLUS -->
+    <view class="center youxiang apppass"  @click="pageToChangePass">
+    	<text>修改密码</text>
+    	<text class="infoCon"></text>
+    	<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+    </view>
+    <!-- #endif -->
 		<view class="center youxiang phone"  @click="touser('/pages/setting/setphone')">
 			<text>手机号</text>
 			<text class="infoCon">{{ user_info.display_list.mobile }}</text>
@@ -144,6 +150,11 @@
 			}
 		},
 		methods: {
+      pageToChangePass(){
+        uni.navigateTo({
+          url: '/pages/login/changePassword?type=' + this.type
+        })
+      },
       changeEmail(){
         this.$refs.botpopups.open()
       },
@@ -558,6 +569,13 @@
 		margin-top: 0;
 		border-radius: 0 0 20rpx 20rpx;
 	}
+  
+  .youxiang.center.apppass {
+  	border-top: none;
+  	margin-top: 0;
+  	border-radius: 0 ;
+  }
+  
 
 	.picker {
 		height: 80rpx;
