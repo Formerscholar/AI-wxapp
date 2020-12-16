@@ -353,20 +353,15 @@
 				if (this.evtvalue == 1) {
 					this.noanswerClick()
 				} else {
-          if (this.is_vip) {
-            this.answerClick()
-          } else{
-            this.$refs.botpopup.close();
-            this.is_show = true
-          }
+          this.answerClick()
 				}
 			},
 			sendPhone() {
 				this.$refs.botpopup.close();
-        if (!this.is_vip) {
-          this.is_show = true
-          return 
-        } 
+        // if (!this.is_vip) {
+        //   this.is_show = true
+        //   return 
+        // } 
 				let data = {
 					token: this.token,
 					errorbook_id: this.errorbook_id,
@@ -581,6 +576,7 @@
 									},
 								})
 							} else {
+                console.log('判断是否显示VIP——tip',res)
 								let filePath = `${wx.env.USER_DATA_PATH}/${this.errorbook_title}.pdf`;
 								uni.downloadFile({
 									url: res.data.pdf,
@@ -614,12 +610,15 @@
 								})
 							}
 							// #endif
-						} else {
-							uni.showToast({
-								title: res.msg,
-								icon: 'none'
-							})
-						}
+						}  else {
+              uni.showToast({
+                title: res.msg,
+                icon: 'none'
+              })
+            }
+             if (res.code == 500) {
+              this.is_show = true
+            }
 					});
 				}
 			},
@@ -863,7 +862,7 @@
 					});
 				} else {
 					this.$api.get_text(data).then(res => {
-						console.log(res);
+						console.log('判断是否显示VIP——tip',res)
 						if (res.code == 200) {
 							this.email = '';
 							this.$refs.popup2.close();
@@ -876,6 +875,7 @@
                 title:res.msg,
                 icon:'none'
 							})
+               this.is_show = true
 						}
 						if (res.code == 300) {
 							this.$refs.popup2.open();

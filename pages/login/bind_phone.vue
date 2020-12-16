@@ -17,6 +17,10 @@
 </template>
 
 <script>
+  import {
+    mapState,
+    mapMutations
+  } from 'vuex';
   export default {
     data() {
       return {
@@ -35,6 +39,7 @@
       this.openid = openid
     },
     methods: {
+       ...mapMutations(['login', 'set_type']),
       getCodeClick: function() {
         let num = 60
         let OutTimeinval = setInterval(() => {
@@ -99,6 +104,7 @@
         }
         reslove.then(res => {
           if (res.code == 200) {
+            this.login(res.data)
             uni.showToast({
               title: '绑定成功!'
             })

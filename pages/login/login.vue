@@ -356,6 +356,12 @@
                         url: '/pages/login/bind_info'
                       })
                     }, 500)
+                  } else if (res.data.mobile == '') {
+                    setTimeout(() => {
+                      uni.navigateTo({
+                        url: '/pages/setting/setphone?type=index'
+                      })
+                    }, 500)
                   } else {
                     setTimeout(() => {
                       uni.switchTab({
@@ -366,7 +372,7 @@
                 } else if (res.code == 300) {
                   setTimeout(() => {
                     uni.navigateTo({
-                      url: '/pages/login/bind_phone&openid=' + res.data.openid
+                      url: '/pages/login/bind_phone?openid=' + res.data.openid
                     })
                   }, 500)
                 } else {

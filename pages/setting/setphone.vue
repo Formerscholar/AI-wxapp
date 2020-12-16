@@ -39,9 +39,14 @@ export default {
 			code1: '',
 			code2: '',
       type: '',
+      toType: '',
 		};
 	},
-	onLoad() {
+	onLoad(options) {
+    const {
+      type
+    } = options
+    this.toType = type
 		if (uni.getStorageSync('userInfo').token) {
 			this.token = uni.getStorageSync('userInfo').token;
       this.type = uni.getStorageSync('type');
@@ -85,13 +90,21 @@ export default {
 						title: '修改成功！'
 					});
 					setTimeout(() => {
-						uni.navigateBack();
+            if (this.toType = 'index') {
+              uni.switchTab({
+                url: '/pages/index/index'
+              })
+            } else{
+              uni.navigateBack({
+                delta:1
+              })
+            }
 					}, 1000);
 				} else {
-					/* uni.showToast({
+					uni.showToast({
 							title:res.msg,
 							icon:'none'
-						}) */
+					})
 				}
 			});
 		},

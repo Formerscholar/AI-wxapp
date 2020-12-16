@@ -1,6 +1,8 @@
 <template>
   <view class="end_tip" v-if="is_show" @click="closeClick">
-    <image class="endtipclose" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/endtipclose.png" mode="widthFix"></image>
+    <view class="endtipclose_warp">
+      <image class="endtipclose" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/endtipclose.png" mode="widthFix"></image>
+    </view>
     <image class="endtipbody" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/endtipbody.png" mode="widthFix" @click.stop="pageToVip"></image>
     <!-- <image class="endtipbtn" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/endtipbtn.png" mode="widthFix"  @click.stop="pageToVip"></image> -->
   </view>
@@ -40,13 +42,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
-    .endtipclose {
-      width: 67rpx;
+    .endtipclose_warp{
+      width: 561rpx;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
       z-index: 10;
-      position: absolute;
-      right: 10%;
-      top: 15%;
+      .endtipclose {
+        width: 67rpx;
+      }
     }
 
     .endtipbody {
