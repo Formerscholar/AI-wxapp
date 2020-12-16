@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "拍照识题",
-  "usingComponents": {
-    "uni-popup": "/components/uni-popup/uni-popup"
-  }
-}

@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "错题知识点",
-  "usingComponents": {
-    "uni-popup": "/components/uni-popup/uni-popup"
-  }
-}
