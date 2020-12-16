@@ -128,7 +128,7 @@ page {
 .joinClassBg {
   width: 100%;
   height: 110rpx;
-  background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/bindInfoBg.png) no-repeat top left;
+  background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/bindInfoBg.png) no-repeat top left;
   background-size: cover;
 }
 

@@ -279,11 +279,11 @@ page {
           transform: translateY(-50%);
   width: 35rpx;
   height: 35rpx;
-  background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/default_red.png) no-repeat center center;
+  background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/default_red.png) no-repeat center center;
   background-size: 100%;
 }
 .s-item .b-g {
-  background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png) no-repeat center center;
+  background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png) no-repeat center center;
   background-size: 100%;
 }
 

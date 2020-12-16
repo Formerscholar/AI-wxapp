@@ -746,7 +746,7 @@ button::after {
 }
 .b-default {
   /* border: none !important;
-	background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/default.png);
+	background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/default.png);
 	background-size: cover;
 	width: 25rpx !important;
 	height: 25rpx !important; */
@@ -759,7 +759,7 @@ button::after {
 }
 .b-n {
   border: 0.5rpx solid #e50304 !important;
-  background: #e50304 url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png) no-repeat center center;
+  background: #e50304 url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png) no-repeat center center;
   background-size: 100%;
 }
 .b-b {

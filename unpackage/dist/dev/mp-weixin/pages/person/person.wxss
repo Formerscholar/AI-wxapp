@@ -94,7 +94,7 @@ page {
 }
 .top {
   width: 100%;
-  background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/personInfo_bg.png) no-repeat center center;
+  background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/personInfo_bg.png) no-repeat center center;
   background-size: cover;
   position: relative;
   margin-top: -2rpx;
@@ -113,6 +113,7 @@ page {
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   left: 100rpx;
+  z-index: 1;
   /* >view{
 					height: 62rpx;
 					line-height: 62rpx;

@@ -34,7 +34,7 @@ page {
   text-align: center;
   font-size: 36rpx;
   color: #fff;
-  background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/recordBg.png) no-repeat top left;
+  background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/recordBg.png) no-repeat top left;
   background-size: cover;
 }
 .top view:nth-of-type(1) {

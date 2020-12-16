@@ -97,7 +97,8 @@
       };
     },
     onLoad() {
-
+      this.loginmode = 4
+      this.type = 4
     },
     methods: {
       ...mapMutations(['login', 'set_type']),
@@ -347,8 +348,8 @@
                   })
                   if (!res.data.is_bind) {
                     setTimeout(() => {
-                      uni.switchTab({
-                        url: '/pages/login/bindinfo'
+                      uni.navigateTo({
+                        url: '/pages/login/bind_info'
                       })
                     }, 500)
                   } else {

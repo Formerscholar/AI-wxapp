@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "学情报告",
-  "usingComponents": {}
+  "usingComponents": {
+    "ai-vip-end-tip": "/components/ai_vip_end_tip/ai_vip_end_tip"
+  }
 }

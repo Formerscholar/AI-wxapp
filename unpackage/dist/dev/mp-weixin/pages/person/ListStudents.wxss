@@ -160,7 +160,7 @@ page {
   margin-right: 25rpx;
 }
 .b-c {
-  background-image: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png);
+  background-image: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png);
   background-size: cover;
   border: 0 !important;
   width: 30rpx !important;

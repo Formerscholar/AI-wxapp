@@ -13,21 +13,19 @@
   "libVersion": "",
   "appid": "wx64468960ba0a610e",
   "projectname": "AI错题宝",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
   "condition": {
     "search": {
-      "current": -1,
       "list": []
     },
     "conversation": {
-      "current": -1,
       "list": []
     },
     "game": {
-      "current": -1,
       "list": []
     },
     "miniprogram": {
-      "current": 0,
       "list": [
         {
           "name": "登录",

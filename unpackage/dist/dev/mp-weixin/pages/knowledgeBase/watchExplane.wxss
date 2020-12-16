@@ -62,6 +62,13 @@ page {
   font-size: 30rpx;
   color: #878787;
 }
+.con .viptip {
+  height: 219rpx;
+  width: 100%;
+  padding: 0 25rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
 .con .content {
   padding: 30rpx;
   margin-top: 95rpx;
@@ -105,16 +112,16 @@ page {
   color: #595656;
 }
 .con .daAn .tag {
-  background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/daAnBg.png) no-repeat top right;
+  background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/daAnBg.png) no-repeat top right;
 }
 .con .jieXi .tag {
-  background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/jixiBg.png) no-repeat top right;
+  background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/jixiBg.png) no-repeat top right;
 }
 .con .knowPoint {
   margin-bottom: 50rpx;
 }
 .con .knowPoint .tag {
-  background: url(//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/kPointBg.png) no-repeat top right;
+  background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/kPointBg.png) no-repeat top right;
 }
 .con .knowPoint .context {
   display: inline-block;
