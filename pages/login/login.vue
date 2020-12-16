@@ -346,7 +346,13 @@
                   uni.showToast({
                     title: '登录成功'
                   })
-                  if (!res.data.is_bind) {
+                  if (!res.data.is_mobile) {
+                    setTimeout(() => {
+                      uni.navigateTo({
+                        url: '/pages/login/bind_phone&openid='+ res.data.openid
+                      })
+                    }, 500)
+                  }else if (!res.data.is_bind) {
                     setTimeout(() => {
                       uni.navigateTo({
                         url: '/pages/login/bind_info'

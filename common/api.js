@@ -17,6 +17,7 @@ module.exports = {
   get_app_teacher_register: data => request(appApiUrl + 'teacher/register/', data), //老师注册
   get_app_teacher_bind: data => request(appApiUrl + 'teacher/bind_info/', data), //老师绑定信息
   get_app_teacher_search_password: data => request(appApiUrl + 'teacher/search_password/', data), //老师忘记密码
+  get_teacher_bind_mobile: data => request(appApiUrl + 'teacher/bind_mobile/', data), //学生绑定手机
   // student
   app_login: data => request(appApiUrl + 'user/login/', data), //学生登录
   app_wx_login: data => request(appApiUrl + 'user/wx_login/', data), //
@@ -25,6 +26,7 @@ module.exports = {
   get_app_user_bind: data => request(appApiUrl + 'user/bind_info/', data), //学生绑定信息
   get_app_user_search_password: data => request(appApiUrl + 'user/search_password/', data), //学生忘记密码
   get_app_pay: data => request(appApiUrl + 'user/pay/', data), //支付
+  get_bind_mobile: data => request(appApiUrl + 'user/bind_mobile/', data), //学生绑定手机
   //   app
   
   wx_login: data => request(ApiUrl + 'wechat/login/', data), //

@@ -54,6 +54,11 @@
 				"navigationBarTitleText": "忘记密码"
 			}
 		},{
+			"path": "pages/login/bind_phone",
+			"style": {
+				"navigationBarTitleText": "绑定手机"
+			}
+		},{
 			"path": "pages/person/forgetPassword",
 			"style": {
 				"navigationBarTitleText": "修改密码"
