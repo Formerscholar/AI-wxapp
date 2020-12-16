@@ -175,13 +175,17 @@
               imageUrl: 'https://aictb.oss-cn-shanghai.aliyuncs.com/App/share_icon.png',
               title: 'AI错题宝',
               miniProgram: {
-                id: 'wx64468960ba0a610e',
+                id: 'gh_762f64585df2',
                 path: 'pages/index/index',
-                type: 0
+                type: 0,
+				webUrl: 'http://m.aictb.com/'
               },
               success: ret => {
                 console.log(JSON.stringify(ret));
-              }
+              },
+				fail: function(err) {
+					console.log("fail:" + JSON.stringify(err));
+				}
             });
             break;
           case 1:
