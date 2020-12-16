@@ -311,6 +311,10 @@
         }
       },
       wx_login() {
+        uni.setStorage({
+          key: 'type',
+          data: this.loginmode
+        })
         console.log("App微信拉起授权")
         let _this = this;
         var weixinService = null;
