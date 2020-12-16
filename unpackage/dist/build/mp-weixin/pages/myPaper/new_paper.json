@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "名校资源",
-  "usingComponents": {
-    "uni-popup": "/components/uni-popup/uni-popup"
-  }
-}
