@@ -78,6 +78,9 @@
                     "weixin" : {
                         "appid" : "wx86ad15dc13935f97",
                         "UniversalLinks" : ""
+                    },
+                    "qq" : {
+                        "appid" : "1111319396"
                     }
                 }
             },
