@@ -178,21 +178,22 @@
                 id: 'gh_762f64585df2',
                 path: 'pages/index/index',
                 type: 0,
-				webUrl: 'http://m.aictb.com/'
+                webUrl: 'http://m.aictb.com/'
               },
               success: ret => {
                 console.log(JSON.stringify(ret));
-              },
-				fail: function(err) {
-					console.log("fail:" + JSON.stringify(err));
-				}
+              },fail: function(err) {
+                console.log("fail:" + JSON.stringify(err));
+              }
             });
             break;
           case 1:
             uni.share({
               provider: "qq",
+              scene: "WXSceneSession",
               type: 1,
-              summary: "AI错题宝下载地址:https://www.aictb.com/app/",
+              summary:'AI错题宝',
+              href:'https://www.aictb.com/app/',
               success: function(res) {
                 console.log("success:" + JSON.stringify(res));
               },

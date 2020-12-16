@@ -10,9 +10,9 @@
 
 			</view>
 		</view>
-		<view class="uni-share-button-box">
+		<!-- <view class="uni-share-button-box">
 			<button class="uni-share-button" @click="close">取消</button>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -38,11 +38,11 @@
 					// 	icon: 'https://img-cdn-qiniu.dcloud.net.cn/uni-ui/grid-8.png',
 					// 	name: 'wx'
 					// },
-					{
-						text: 'QQ',
-						icon: 'https://img-cdn-qiniu.dcloud.net.cn/uni-ui/gird-3.png',
-						name: 'qq'
-					},
+					// {
+					// 	text: 'QQ',
+					// 	icon: 'https://img-cdn-qiniu.dcloud.net.cn/uni-ui/gird-3.png',
+					// 	name: 'qq'
+					// },
 					// {
 					// 	text: '新浪',
 					// 	icon: 'https://img-cdn-qiniu.dcloud.net.cn/uni-ui/grid-1.png',

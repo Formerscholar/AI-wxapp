@@ -21,26 +21,47 @@
 			<view class="flex">
 				<view class="down">
 					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/invent_stu.png" />
+          <!-- #ifdef MP-WEIXIN -->
 					<button class="downCon" open-type="share" :data-name="item.team_name" :data-class_id="item.classid" data-it="stu">邀请学生</button>
+          <!-- #endif -->
+          <!-- #ifdef APP-PLUS -->
+					<button class="downCon" @click="InviteStudent(item)">邀请学生</button>
+          <!-- #endif -->
 				</view>
 				<view class="down">
 					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/invent_ter.png" />
+          <!-- #ifdef MP-WEIXIN -->
 					<button class="downCon" open-type="share" :data-team_id="item.team_id" :data-name="item.team_name" :data-class_id="item.classid" data-it="ter">邀请老师</button>
+          <!-- #endif -->
+          <!-- #ifdef APP-PLUS -->
+					<button class="downCon" @click="InviteStudent(item)">邀请老师</button>
+          <!-- #endif -->
 				</view>
 			</view>
 		</view>
 		<view class="btn" @click="touser('/pages/person/addClass')">创建新的班级</view>
+    <uniPopup ref="uniPopupShare" type="share">
+      <uniPopupShare title="分享到" @select="selectShare"></uniPopupShare>
+    </uniPopup>
 	</view>
 </template>
 
 <script>
+  import uniPopup from '@/components/uni-popup/uni-popup.vue';
+  import uniPopupShare from '@/components/uni-popup/uni-popup-share.vue';
+  
 export default {
+  components: {
+    uniPopup,
+    uniPopupShare
+  },
 	data() {
 		return {
 			token: '',
 			list: [],
 			team_name: '',
-			user_id:''
+			user_id:'',
+      shareItem:''
 		};
 	},
 	onShareAppMessage(e) {
@@ -73,6 +94,55 @@ export default {
 		this.get_class_list();
 	},
 	methods: {
+    selectShare({
+      item,
+      index
+    }) {
+      console.log('selectShare', item, index ,this.shareItem)
+      switch (index) {
+        case 0:
+          uni.share({
+            provider: "weixin",
+            scene: "WXSceneSession",
+            type: 0,
+            href: `https://www.aictb.com/app/invite/?team_id=${this.shareItem.team_id}`,
+            title: `${uni.getStorageSync('userInfo').true_name}老师邀请您加入${this.shareItem.team_name}`,
+            summary: `打开AI错题宝,输入班级ID（${this.shareItem.classid}）,加入我的班级吧~`,
+            imageUrl: "https://aictb.oss-cn-shanghai.aliyuncs.com/App/share_icon.png",
+            success: function (res) {
+                console.log("success:" + JSON.stringify(res));
+            },
+            fail: function (err) {
+                console.log("fail:" + JSON.stringify(err));
+            }
+          });
+          break;
+        case 1:
+          uni.share({
+            provider: "qq",
+            scene: "WXSceneSession",
+            type: 1,
+            title:`${uni.getStorageSync('userInfo').true_name}老师邀请您加入${this.shareItem.team_name}`,
+            summary: `打开AI错题宝,输入班级ID（${this.shareItem.classid}）,加入我的班级吧~`,
+            href:`https://www.aictb.com/app/invite/?team_id=${this.shareItem.team_id}`,
+            success: function(res) {
+              console.log("success:" + JSON.stringify(res));
+            },
+            fail: function(err) {
+              console.log("fail:" + JSON.stringify(err));
+            }
+          });
+          break;
+        default:
+          break;
+      }
+      this.$refs.uniPopupShare.close()
+    },
+    InviteStudent(item){
+      console.log('InviteStudent',item)
+      this.shareItem = item
+      this.$refs.uniPopupShare.open()
+    },
 		get(name) {
 			this.team_name = name;
 		},
