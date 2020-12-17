@@ -101,7 +101,9 @@
       this.type = 4
     },
     onShow() {
+      // #ifdef MP-WEIXIN
       this.get_wechat_login_tip()
+      // #endif
     },
     methods: {
       ...mapMutations(['login', 'set_type']),
@@ -145,14 +147,19 @@
           .then(res => {
             if (res.code == 200) {
               this.login(res.data)
+              
               if (res.data.is_bind == 0) {
                 uni.navigateTo({
                   url: '/pages/login/bindinfo'
                 })
               } else {
-                uni.reLaunch({
-                  url: '/pages/index/index'
-                })
+                if (res.data.mobile == '') {
+                  this.$refs.popup.open()
+                } else{
+                  uni.reLaunch({
+                    url: '/pages/index/index'
+                  })
+                }
               }
             } else if (res.code == 500) {
               this.$refs.popup.open()
@@ -182,9 +189,15 @@
                 key: "type",
                 data: 3
               })
-              uni.reLaunch({
-                url: '/pages/index/index'
-              })
+              if (res.data.is_bind == 0) {
+                uni.navigateTo({
+                  url: '/pages/login/bindinfo'
+                })
+              } else {
+                uni.reLaunch({
+                  url: '/pages/index/index'
+                })
+              }
             } else {
               uni.setStorage({
                 key: 'openid',
@@ -201,7 +214,7 @@
             encryptedData: e.detail.encryptedData,
             openid: this.openid,
           }
-          this.$api.teacher_mobile_login(data)
+          this.$api.get_mobile(data)
             .then(res => {
               if (res.code == 200) {
                 this.login(res.data)

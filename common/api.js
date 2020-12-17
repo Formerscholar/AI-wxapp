@@ -33,7 +33,7 @@ module.exports = {
   update_userinfo: data => request(ApiUrl + 'wechat/update/', data), //
   //----------------------------- 学生
   //登录注册
-  bind_info: data => request(ApiUrl + 'user/bind_info/', data), //绑定信息
+  bind_info: data => request(ApiUrl + 'user/bindinfo/', data), //绑定信息
   get_settings: md => request(ApiUrl + 'main/get_settings/', md), //获取配置信息
   //首页
   student_login: data => request(ApiUrl + 'user/wx_login/', data), //登录
@@ -126,7 +126,7 @@ module.exports = {
   teacher_exercise_type: data => request(ApiUrl + 'teacher/exercises_type/', data), //题型  
   teacher_same_type: data => request(ApiUrl + 'teacher/same_type_exercises/', data), //章节课时习题 同类型题目 
   change_teacher_info: data => request(ApiUrl + 'teacher/change_teacher_info/', data), //修改个人信息 
-  teacher_bind_info: data => request(ApiUrl + 'teacher/bind_info/', data), //绑定信息
+  teacher_bind_info: data => request(ApiUrl + 'teacher/bindinfo/', data), //绑定信息
   teacher_feedback: data => request(ApiUrl + 'teacher/feedback/', data), //意见反馈
   teacher_newest_paper: data => request(ApiUrl + 'teacher/newest_paper/', data), //最新试卷
   teacher_add_class: data => request(ApiUrl + 'teacher/add_class/', data), //添加班级

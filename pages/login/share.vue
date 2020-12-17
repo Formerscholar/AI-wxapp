@@ -132,9 +132,10 @@
 					}
 				});
 			},
-			get_bind_info() {
+			get_bind_info(token) {
 				this.$api
 					.bind_info({
+            token,
 						school_id: this.school_id,
 						province_id: this.province_id,
 						city_id: this.city_id,
@@ -142,11 +143,6 @@
 						grade_ids: this.grade_ids,
 						team_ids: this.team_ids,
 						true_name: this.true_name,
-						user_name: this.userInfo?.nickName || '',
-						avatar: this.userInfo?.avatarUrl || '',
-						gender: this.userInfo?.gender || '',
-						openid: this.openid_tmp,
-						unionid: this.unionid
 					})
 					.then(reslove => {
 						console.log('bind_info', reslove);
@@ -186,28 +182,20 @@
 							this.user_id = res.data.user_id;
 							this.true_name = res.data.true_name;
 							this.unionid = res.data.unionid
-							uni.setStorage({
+							uni.setStorageSync({
 								key: 'userinfo_tmp',
 								data: res.data
 							});
-							uni.setStorage({
+							uni.setStorageSync({
 								key: 'token',
 								data: res.data.token
 							});
-							uni.setStorage({
+							uni.setStorageSync({
 								key: 'type',
 								data: 4
 							});
 							this.login(res.data);
-              if (res.data.is_bind == 0) {
-                uni.navigateTo({
-                  url: '/pages/login/bindinfo'
-                })
-              } else {
-                uni.reLaunch({
-                  url: '/pages/index/index'
-                })
-              }
+              this.get_bind_info(res.data.token)
 						}else if (res.code == 500) {
               this.$refs.popup.open()
             }
