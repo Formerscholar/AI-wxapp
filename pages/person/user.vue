@@ -157,6 +157,7 @@
         })
       },
       changeEmail(){
+        this.newEmail = this.user_info.email
         this.$refs.botpopups.open()
       },
       newEmailconfirmClick(){
@@ -445,6 +446,7 @@
 				});
 			},
 			set(t) {
+        this.newName = this.user_info.true_name
 				console.log('打开弹窗');
 				this.$refs.botpopup.open();
 				// if (uni.getStorageSync('type') == 4) {

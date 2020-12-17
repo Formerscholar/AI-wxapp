@@ -52,7 +52,7 @@
           请选择您的身份
         </view>
         <view class="weixin">
-          <button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,4)">我是学生(家长)</button>
+          <button open-type="getPhoneNumber" @getphonenumber="bindgetuserinfo($event,4)">我是学生(家长)</button>
           <button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,3)">我是老师</button>
         </view>
         <!-- #endif -->
@@ -184,7 +184,6 @@
                   })
                   console.log('res', res)
                   if (res.code == 200) {
-                    this.login(res.data)
                     uni.setStorage({
                       key: 'is_vip',
                       data: res.data.is_vip
@@ -197,9 +196,33 @@
                       key: "type",
                       data: 4
                     })
-                    uni.reLaunch({
-                      url: '/pages/index/index'
-                    })
+                    let data = {
+                      code: this.code,
+                      iv: e.detail.iv,
+                      encryptedData: e.detail.encryptedData,
+                      sessionkey: this.sessionkey,
+                      openid: this.openid
+                    }
+                    this.$api.get_mobile(data)
+                      .then(res => {
+                        if (res.code == 200) {
+                          this.login(res.data)
+                          uni.reLaunch({
+                            url: '/pages/index/index'
+                          })
+                        } else if (res.code == 300) {
+                          uni.setStorageSync('mobile', res.data.mobile)
+                          uni.reLaunch({
+                            url: '/pages/login/bindinfo'
+                          })
+                        } else {
+                          uni.showToast({
+                            title: res.msg,
+                            icon: 'none'
+                          })
+                        }
+                        console.log(res)
+                      })
                   } else if (res.code == 300) {
                     uni.showToast({
                       title: res.msg,
