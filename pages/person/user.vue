@@ -13,14 +13,14 @@
 			<view class="center" @click="set('姓名')">
 				<text>姓名</text>
 				<text class="infoCon">{{ user_info.true_name ? user_info.true_name : '' }}</text>
-				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+				<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 			<view class="center">
 				<text>性别</text>
 				<picker mode="selector" :range="sex" range-key="name" @change="bindChange2" class="infoCon">
 					<view class="picker">{{ user_info.gender == 0 ? '女' : '男' }}</view>
 				</picker>
-				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+				<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 				<!-- <text>{{user_info.school_list.gender==1?'男':'女'}}</text> -->
 			</view>
 			<view class="center">
@@ -31,7 +31,7 @@
 				<!-- <picker mode="region" :range="location"  @change="bindChange" class='infoCon'>
 					<view class="picker">{{user_info.school_list.province_name+' '+user_info.school_list.city_name+' '+user_info.school_list.area_name}}</view>
 				</picker> -->
-				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+				<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 			<view class="center">
 				<text>学校</text>
@@ -39,7 +39,7 @@
 				<!-- <picker mode="selector" :range="school" range-key="name"  @change="changesc" class='infoCon'>
 					<view class="picker">{{user_info.school_list.school_name}}</view>
 				</picker> -->
-				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+				<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 			<view class="center" v-if="type == 4">
 				<text>年级</text>
@@ -47,60 +47,60 @@
 					<view class="picker">{{ user_info.school_list.grade_names ? user_info.school_list.grade_names : '' }}</view>
 				</picker>
 				<text class="infoCon" v-else>{{ user_info.school_list.grade_names ? user_info.school_list.grade_names : '' }}</text>
-				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+				<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 			<view class="center" v-if="type == 4" @click="touser('/pages/person/bindClassID')">
 				<text>(班级)绑定</text>
 				<text class="infoCon">{{ user_info.school_list.team_name ? user_info.school_list.team_name : '' }}</text>
-				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+				<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 		</view>
 		<view class="center youxiang" @click="changeEmail" :class="type == 3 ? 'teacherEmial' : ''">
 			<text>邮箱</text>
 			<text v-if="!user_info.email"></text>
 			<text v-else="user_info.email">{{ user_info.email }}</text>
-			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+			<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 		</view>
     <!-- ifdef endif -->
     <!-- #ifdef APP-PLUS -->
     <view class="center youxiang apppass"  @click="pageToChangePass">
     	<text>修改密码</text>
     	<text class="infoCon"></text>
-    	<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+    	<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
     </view>
     <!-- #endif -->
 		<view class="center youxiang phone"  @click="touser('/pages/setting/setphone')">
 			<text>手机号</text>
 			<text class="infoCon">{{ user_info.display_list.mobile }}</text>
-			<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+			<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 		</view>
     
 		<!-- 修改姓名 -->
 		<uniPopup ref="botpopup" type="center">
 			<view class="botpopup">
-				<div class="title_box">
+				<view class="title_box">
 					<image class="setinputicon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/setinputicon.png" mode="widthFix"></image>
 					<span class="text">修改姓名</span>
-				</div>
+				</view>
 				<input type="text" :value="newName" @input="newNameChange" class="newnameinp" />
-				<div class="btns">
+				<view class="btns">
 					<button size="mini" type="default" class="cancle" @click="cancleClick">取消</button>
 					<button size="mini" type="warn" class="confirm" @click="confirmClick">确定</button>
-				</div>
+				</view>
 			</view>
 		</uniPopup>
     <!-- 修改邮箱 -->
     <uniPopup ref="botpopups" type="center">
     	<view class="botpopup">
-    		<div class="title_box">
+    		<view class="title_box">
     			<image class="setinputicon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/setinputicon.png" mode="widthFix"></image>
     			<span class="text">修改邮箱</span>
-    		</div>
+    		</view>
     		<input type="text" :value="newEmail" @input="newEmailChange" class="newnameinp" />
-    		<div class="btns">
+    		<view class="btns">
     			<button size="mini" type="default" class="cancle" @click="newEmailcancleClick">取消</button>
     			<button size="mini" type="warn" class="confirm" @click="newEmailconfirmClick">确定</button>
-    		</div>
+    		</view>
     	</view>
     </uniPopup>
 	</view>
@@ -534,7 +534,7 @@
 			margin-right: 15rpx;
 		}
 
-		image {
+		.right_icon {
 			width: 14rpx;
 			height: 27rpx;
 			position: absolute;
@@ -546,7 +546,6 @@
 
 	.youxiang.center {
 		background: #fff;
-		border: 1px solid #e6e6e6;
 		border-radius: 20rpx 20rpx 0 0;
 		padding: 0 30rpx;
 
