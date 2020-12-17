@@ -141,6 +141,8 @@ module.exports = {
   ter_share_login: data => request(ApiUrl + 'teacher/wx_share_login/', data), //登录
   get_paper: data => request(ApiUrl + 'teacher/get_paper/', data), //老师获取最新试卷
   get_app_teacher_edit_password: data => request(ApiUrl + 'teacher/edit_password/', data), //老师修改密码
+  techer_search_team: data => request(ApiUrl + 'teacher/search_team/', data), //搜索班级
+  teacher_join_team: data => request(ApiUrl + 'teacher/join_team/', data), //邀请学生加入班级
 
 
   //通用

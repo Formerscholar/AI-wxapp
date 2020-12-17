@@ -461,18 +461,26 @@
 					arrTpmid = this.tpmid.teacher_paper;
 				}
 				console.log('arrTpmid', arrTpmid);
-				uni.requestSubscribeMessage({
-					tmplIds: arrTpmid,
-					complete: (res) => {
-						console.log('requestSubscribeMessage', res);
-						let data = {
-							id: this.based_id,
-							token: this.token
-						};
-						console.log('不需要答案解析下载', res);
-						this.fasong(1);
-					}
-				});
+        // #ifdef MP-WEIXIN        uni.requestSubscribeMessage({
+        	tmplIds: arrTpmid,
+        	complete: (res) => {
+        		console.log('requestSubscribeMessage', res);
+        		let data = {
+        			id: this.based_id,
+        			token: this.token
+        		};
+        		console.log('不需要答案解析下载', res);
+        		this.fasong(1);
+        	}
+        });        // #endif         // #ifdef APP-PLUS        console.log('requestSubscribeMessage', res);
+        let data = {
+        	id: this.based_id,
+        	token: this.token
+        };
+        console.log('不需要答案解析下载', res);
+        this.fasong(1);
+                // #endif
+				
 			},
 			answerClick() {
 				this.$refs.botpopup.close();
@@ -484,18 +492,24 @@
 					arrTpmid = this.tpmid.teacher_paper;
 				}
 				console.log('arrTpmid', arrTpmid);
-				uni.requestSubscribeMessage({
-					tmplIds: arrTpmid,
-					complete: (res) => {
-						console.log('requestSubscribeMessage', res);
-						let data = {
-							id: this.based_id,
-							token: this.token
-						};
-						console.log('答案解析下载', res);
-						this.fasong(2);
-					}
-				});
+        // #ifdef MP-WEIXIN        uni.requestSubscribeMessage({
+        	tmplIds: arrTpmid,
+        	complete: (res) => {
+        		console.log('requestSubscribeMessage', res);
+        		let data = {
+        			id: this.based_id,
+        			token: this.token
+        		};
+        		console.log('答案解析下载', res);
+        		this.fasong(2);
+        	}
+        });        // #endif         // #ifdef APP-PLUS        console.log('requestSubscribeMessage', res);
+        let data = {
+        	id: this.based_id,
+        	token: this.token
+        };
+        console.log('答案解析下载', res);
+        this.fasong(2);        // #endif
 			},
 			get_teacher_info() {
 				let _this = this
