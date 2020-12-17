@@ -14,7 +14,7 @@
 				</view>
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" mode=""></image>
 			</picker>
-			<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event, 3)">确认加入</button>
+			<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event)">确认加入</button>
 			<uni-popup ref="popup" type="center">
 				<view class="bindphone">
 					<view class="">需要授权获取手机号</view>
@@ -73,25 +73,38 @@
 			this.class_id = options.class_id;
 			this.teacher_name = options.teacher_name;
 			this.team_id = options.team_id;
-			this.get_get_team_location();
-			this.get_team_subject();
-			this.get_teacher_login();
+      this.get_get_team_location();
+      this.get_team_subject();
 		},
+    onShow() {
+      this.get_wechat_login_tip()
+    },
 		methods: {
 			...mapMutations(['login', 'set_type']),
+      get_wechat_login_tip() {
+        uni.login({
+          success: (res) => {
+            this.code = res.code
+            this.$api.get_wechat_login({
+              code: res.code,
+            }).then(res => {
+              this.openid = res.data.openid
+              uni.setStorage({
+                key: "openid",
+                data: this.openid
+              })
+            })
+          }
+        })
+      },
 			getphone(e) {
 				this.$refs.popup.close();
 				console.log('getphone', e);
 				this.$api
 					.get_mobile({
-						code: this.code,
 						iv: e.detail.iv,
 						encryptedData: e.detail.encryptedData,
-						sessionkey: this.sessionkey,
 						openid: this.openid,
-						user_name: this.user_info.nickName,
-						avatar: this.user_info.avatarUrl,
-						gender: this.user_info.gender
 					})
 					.then(res => {
 						console.log(res);
@@ -144,12 +157,15 @@
 						}
 					});
 			},
-			bindgetuserinfo(e, i) {
-				this.user_info = e.detail.userInfo;
+			bindgetuserinfo(e) {
 				uni.setStorage({
 					key: 'type',
-					data: i
+					data: 3
 				});
+        this.userInfo = e.detail
+        this.userInfo['openid'] = this.openid
+        uni.setStorageSync('info', e.detail.userInfo) //头像  姓名
+        console.log(this.userInfo)
 				if (!this.true_name) {
 					uni.showToast({
 						title: '请输入真实姓名',
@@ -164,29 +180,17 @@
 					});
 					return;
 				}
-				if (this.disable) {
-					this.joinTeam();
-				} else {
-					this.$refs.popup.open();
-				}
+        
+        this.get_teacher_login()
+        
+				
 			},
 			get_teacher_login() {
 				uni.login({
 					success: res => {
 						this.code = res.code;
 						this.$api
-							.teacher_login({
-								code: this.code,
-								openId: this.user_info.openId,
-								user_name: this.user_info.nickName,
-								gender: this.user_info.gender,
-								city: this.user_info.city,
-								province: this.user_info.province,
-								country: this.user_info.country,
-								avatar: this.user_info.avatarUrl,
-								unionId: this.user_info.unionId,
-								watermark: this.user_info.watermark
-							})
+							.teacher_login(this.userInfo)
 							.then(res => {
 								console.log('get_teacher_login', res);
 								this.sessionkey = res.data.session_key;
@@ -198,9 +202,9 @@
 									this.true_name = res.data.true_name;
 									this.subject_id = res.data.subject_id;
 									this.subject_title = res.data.subject_title;
-									this.disable = true;
+                  this.joinTeam();
 								} else {
-									this.disable = false;
+                  this.$refs.popup.open();
 								}
 							});
 					}

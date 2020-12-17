@@ -66,10 +66,10 @@
 			this.school = options.school;
 			this.teacher_name = options.teacher_name;
 			console.log('this.school', this.school);
+      this.get_get_team_location();
 		},
     onShow() {
       this.get_wx_login()
-      this.get_get_team_location();
     },
 		methods: {
 			...mapMutations(['login', 'set_type']),
