@@ -36,7 +36,8 @@ module.exports = {
   bind_info: data => request(ApiUrl + 'user/bind_info/', data), //绑定信息
   get_settings: md => request(ApiUrl + 'main/get_settings/', md), //获取配置信息
   //首页
-  student_login: data => request(ApiUrl + 'user/wx_student_login/', data), //登录
+  student_login: data => request(ApiUrl + 'user/wx_login/', data), //登录
+  mobile_login: data => request(ApiUrl + 'user/mobile_login/', data), //新登录
   
   student_index: data => request(ApiUrl + 'user/index/', data), //学生端首页信息	
   newest_paper: data => request(ApiUrl + 'user/newest_paper/', data), //名校资源
@@ -98,7 +99,8 @@ module.exports = {
   get_teacher_verify_code: data => request(ApiUrl + 'teacher/get_verify_code/', data), //发送验证码
   //bind_mobile: data => request(ApiUrl+'teacher/check_teacher_mobile/',data),
   teacher_index: data => request(ApiUrl + 'teacher/index/', data), //教师首页信息
-  teacher_login: data => request(ApiUrl + 'teacher/wx_teacher_login/', data), //登录
+  teacher_login: data => request(ApiUrl + 'teacher/wx_login/', data), //登录
+  teacher_mobile_login: data => request(ApiUrl + 'teacher/mobile_login/', data), //登录新
   get_teacher_info: data => request(ApiUrl + 'teacher/get_teacher_info/', data), //获取用户信息
   wei_teacher_error_book_list: data => request(ApiUrl + 'teacher/my_not_created_error_book/', data), //未生成错题本列表
   school_test_paper: data => request(ApiUrl + 'teacher/school_test_paper/', data), //校本试卷
@@ -157,4 +159,5 @@ module.exports = {
   get_team_subject: data => request(ApiUrl + 'main/get_team_subject/', data), //邀请老师的学科下拉列表
   get_team_location: data => request(ApiUrl + "main/get_team_location/", data),
   get_agreement : data => request(ApiUrl + 'main/get_agreement/', data),// 注册协议
+  get_wechat_login : data => request(ApiUrl + 'wechat/login/', data),// 默认执行登录
 }

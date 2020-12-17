@@ -52,8 +52,8 @@
           请选择您的身份
         </view>
         <view class="weixin">
-          <button open-type="getPhoneNumber" @getphonenumber="bindgetuserinfo($event,4)">我是学生(家长)</button>
-          <button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,3)">我是老师</button>
+          <button @click="bindgetuserinfos">我是学生(家长)</button>
+          <button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event)">我是老师</button>
         </view>
         <!-- #endif -->
       </view>
@@ -100,8 +100,27 @@
       this.loginmode = 4
       this.type = 4
     },
+    onShow() {
+      this.get_wechat_login_tip()
+    },
     methods: {
       ...mapMutations(['login', 'set_type']),
+      get_wechat_login_tip() {
+        uni.login({
+          success: (res) => {
+            this.code = res.code
+            this.$api.get_wechat_login({
+              code: res.code,
+            }).then(res => {
+              this.openid = res.data.openid
+              uni.setStorage({
+                key: "openid",
+                data: this.openid
+              })
+            })
+          }
+        })
+      },
       passChange(bool) {
         this.pass_show = bool
       },
@@ -114,163 +133,122 @@
           data: i
         })
       },
-      bindgetuserinfo(e, i) {
-        uni.login({
-          success: (res) => {
-            this.code = res.code
-            console.log(this.code)
-            uni.setStorage({
-              key: 'type',
-              data: i,
-            })
-            console.log('bindgetuserinfo', e)
-            this.userInfo = e.detail.userInfo
-            uni.setStorageSync('info', e.detail.userInfo) //头像  姓名
-            if (i == 3) {
-              console.log(this.userInfo)
-              this.$api.teacher_login({
-                  code: this.code,
-                })
-                .then(res => {
-                  this.sessionkey = res.data?.session_key
-                  this.openid = res.data.openid
-
-                  uni.setStorage({
-                    key: "unionid",
-                    data: res.data.unionid
-                  })
-                  uni.setStorage({
-                    key: "openid",
-                    data: this.openid
-                  })
-                  console.log('res.data.data ', res.data)
-                  if (res.code == 200) {
-                    this.login(res.data)
-                    uni.setStorage({ //缓存用户登陆状态
-                      key: 'userInfo',
-                      data: res.data
-                    })
-                    uni.setStorage({
-                      key: "type",
-                      data: 3
-                    })
-                    uni.reLaunch({
-                      url: '/pages/index/index'
-                    })
-                    // this.user_id=res.data.user_id 
-                  } else {
-                    uni.setStorage({
-                      key: 'openid',
-                      data: res.data.openid
-                    })
-                    this.$refs.popup.open()
-                  }
-                })
-            } else {
-              console.log('学生登录', this.userInfo, this.code);
-              this.$api.student_login({
-                  code: this.code
-                })
-                .then(res => {
-                  this.sessionkey = res.data?.session_key
-                  this.openid = res.data.openid
-                  uni.setStorage({
-                    key: "unionid",
-                    data: res.data.unionid
-                  })
-                  uni.setStorage({
-                    key: "openid",
-                    data: this.openid
-                  })
-                  console.log('res', res)
-                  if (res.code == 200) {
-                    uni.setStorage({
-                      key: 'is_vip',
-                      data: res.data.is_vip
-                    })
-                    uni.setStorage({ //缓存用户登陆状态
-                      key: 'userInfo',
-                      data: res.data
-                    })
-                    uni.setStorage({
-                      key: "type",
-                      data: 4
-                    })
-                    let data = {
-                      code: this.code,
-                      iv: e.detail.iv,
-                      encryptedData: e.detail.encryptedData,
-                      sessionkey: this.sessionkey,
-                      openid: this.openid
-                    }
-                    this.$api.get_mobile(data)
-                      .then(res => {
-                        if (res.code == 200) {
-                          this.login(res.data)
-                          uni.reLaunch({
-                            url: '/pages/index/index'
-                          })
-                        } else if (res.code == 300) {
-                          uni.setStorageSync('mobile', res.data.mobile)
-                          uni.reLaunch({
-                            url: '/pages/login/bindinfo'
-                          })
-                        } else {
-                          uni.showToast({
-                            title: res.msg,
-                            icon: 'none'
-                          })
-                        }
-                        console.log(res)
-                      })
-                  } else if (res.code == 300) {
-                    uni.showToast({
-                      title: res.msg,
-                      icon: 'none'
-                    });
-                  } else {
-                    uni.navigateTo({
-                      url: '/pages/login/bindinfo'
-                    })
-                  }
-                })
-            }
-          }
+      bindgetuserinfos() {
+        uni.setStorage({
+          key: 'type',
+          data: 4,
         })
-      },
-      getphone(e) {
-
-        console.log(e)
-        let data = {
-          code: this.code,
-          iv: e.detail.iv,
-          encryptedData: e.detail.encryptedData,
-          sessionkey: this.sessionkey,
-          openid: this.openid,
-          user_name: this.userInfo.nickName,
-          avatar: this.userInfo.avatarUrl,
-          gender: this.userInfo.gender,
-        }
-        this.$api.get_mobile(data)
+        this.type = 4
+        this.$api.student_login({
+            openid: this.openid
+          })
           .then(res => {
             if (res.code == 200) {
               this.login(res.data)
+              if (res.data.is_bind == 0) {
+                uni.navigateTo({
+                  url: '/pages/login/bindinfo'
+                })
+              } else {
+                uni.reLaunch({
+                  url: '/pages/index/index'
+                })
+              }
+            } else if (res.code == 500) {
+              this.$refs.popup.open()
+            }
+          })
+      },
+      bindgetuserinfo(e) {
+        uni.setStorage({
+          key: 'type',
+          data: 3,
+        })
+        this.type = 3
+        console.log('bindgetuserinfo', e)
+        this.userInfo = e.detail
+        this.userInfo['openid'] = this.openid
+        uni.setStorageSync('info', e.detail.userInfo) //头像  姓名
+        console.log(this.userInfo)
+        this.$api.teacher_login(this.userInfo)
+          .then(res => {
+            if (res.code == 200) {
+              this.login(res.data)
+              uni.setStorage({ //缓存用户登陆状态
+                key: 'userInfo',
+                data: res.data
+              })
+              uni.setStorage({
+                key: "type",
+                data: 3
+              })
               uni.reLaunch({
                 url: '/pages/index/index'
               })
-            } else if (res.code == 300) {
-              uni.setStorageSync('mobile', res.data.mobile)
-              uni.reLaunch({
-                url: '/pages/login/bindinfo'
-              })
             } else {
-              uni.showToast({
-                title: res.msg,
-                icon: 'none'
+              uni.setStorage({
+                key: 'openid',
+                data: res.data.openid
               })
+              this.$refs.popup.open()
             }
-            console.log(res)
           })
+      },
+      getphone(e) {
+        if (this.type == 3) {
+          let data = {
+            iv: e.detail.iv,
+            encryptedData: e.detail.encryptedData,
+            openid: this.openid,
+          }
+          this.$api.teacher_mobile_login(data)
+            .then(res => {
+              if (res.code == 200) {
+                this.login(res.data)
+                uni.reLaunch({
+                  url: '/pages/index/index'
+                })
+              } else if (res.code == 300) {
+                uni.setStorageSync('mobile', res.data.mobile)
+                uni.reLaunch({
+                  url: '/pages/login/bindinfo'
+                })
+              } else {
+                uni.showToast({
+                  title: res.msg,
+                  icon: 'none'
+                })
+              }
+              console.log(res)
+            })
+        } else {
+          let data = {
+            iv: e.detail.iv,
+            encryptedData: e.detail.encryptedData,
+            openid: this.openid
+          }
+          this.$api.mobile_login(data)
+            .then(res => {
+              if (res.code == 200) {
+                this.login(res.data)
+                if (res.data.is_bind == 0) {
+                  uni.navigateTo({
+                    url: '/pages/login/bindinfo'
+                  })
+                } else {
+                  uni.reLaunch({
+                    url: '/pages/index/index'
+                  })
+                }
+              } else {
+                uni.showToast({
+                  title: res.msg,
+                  icon: 'none'
+                })
+              }
+            })
+        }
+
       },
       login2() {
         var user_type = this.loginmode
