@@ -61,15 +61,6 @@
         }
       },
       getCodeClick: function() {
-        let num = 60
-        let OutTimeinval = setInterval(() => {
-          if (num == 0) {
-            this.getText = '发送验证码'
-            clearInterval(OutTimeinval)
-          } else {
-            this.getText = --num
-          }
-        }, 1000)
         let reg =
           /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/
         if (!reg.test(this.phone)) {
@@ -79,6 +70,15 @@
           })
           return
         }
+        let num = 60
+        let OutTimeinval = setInterval(() => {
+          if (num == 0) {
+            this.getText = '发送验证码'
+            clearInterval(OutTimeinval)
+          } else {
+            this.getText = --num
+          }
+        }, 1000)
         var data = {
           mobile: this.phone,
           type: 'register'
@@ -241,7 +241,7 @@
         font-family: PingFang SC;
         font-weight: 500;
         color: #E50304;
-
+        z-index: 11;
       }
     }
 
