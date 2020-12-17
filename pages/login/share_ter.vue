@@ -108,7 +108,6 @@
 					})
 					.then(res => {
 						console.log(res);
-						this.mobile = res.data.mobile;
 						if (res.code == 200) {
 							console.log(res.data);
 							this.login(res.data);
@@ -131,12 +130,6 @@
 						school_id: this.school,
 						subject_id: this.subject_id,
 						true_name: this.true_name,
-						mobile: this.mobile,
-						openid: this.openid,
-						nickName: this.user_info.nickName,
-						avatar: this.user_info.avatarUrl,
-						gender: this.user_info.gender,
-						unionid: this.unionid
 					})
 					.then(res => {
 						console.log(res);
@@ -180,35 +173,20 @@
 					});
 					return;
 				}
-        
         this.get_teacher_login()
-        
-				
 			},
 			get_teacher_login() {
-				uni.login({
-					success: res => {
-						this.code = res.code;
-						this.$api
-							.teacher_login(this.userInfo)
-							.then(res => {
-								console.log('get_teacher_login', res);
-								this.sessionkey = res.data.session_key;
-								this.openid = res.data.openid;
-								this.unionId = res.data.unionId
-								if (res.code == 200) {
-									this.login(res.data);
-									this.mobile = res.data.mobile;
-									this.true_name = res.data.true_name;
-									this.subject_id = res.data.subject_id;
-									this.subject_title = res.data.subject_title;
-                  this.joinTeam();
-								} else {
-                  this.$refs.popup.open();
-								}
-							});
-					}
-				});
+				this.$api
+					.teacher_login(this.userInfo)
+					.then(res => {
+						console.log('get_teacher_login', res);
+						if (res.code == 200) {
+							this.login(res.data);
+				      this.joinTeam();
+						} else {
+				      this.$refs.popup.open();
+						}
+					});
 			},
 			joinTeam() {
 				this.$api
