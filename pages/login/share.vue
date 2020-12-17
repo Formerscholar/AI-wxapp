@@ -7,8 +7,14 @@
 			</view>
 			<view class="sf">邀请您加入{{ school }}{{ name }}</view>
 			<view class="input"><input type="text" v-model="true_name" placeholder="请输入你的姓名" placeholder-class="p-c" /></view>
-			<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event, 4)">确认加入</button>
+			<button @click="bindgetuserinfo">确认加入</button>
 		</view>
+    <uni-popup ref="popup" type="center">
+    	<view class="bindphone">
+    		<view class="">需要授权获取手机号</view>
+    		<button open-type="getPhoneNumber" @getphonenumber="getphone">授权</button>
+    	</view>
+    </uni-popup>
 	</view>
 </template>
 
@@ -17,7 +23,11 @@
 		mapState,
 		mapMutations
 	} from 'vuex';
+  import uniPopup from '@/components/uni-popup/uni-popup.vue';
 	export default {
+    components: {
+    	uniPopup
+    },
 		data() {
 			return {
 				user_info: {
@@ -56,10 +66,40 @@
 			this.school = options.school;
 			this.teacher_name = options.teacher_name;
 			console.log('this.school', this.school);
-			this.get_wx_login();
 		},
+    onShow() {
+      this.get_wx_login()
+      this.get_get_team_location();
+    },
 		methods: {
 			...mapMutations(['login', 'set_type']),
+      getphone(e) {
+        let data = {
+          iv: e.detail.iv,
+          encryptedData: e.detail.encryptedData,
+          openid: this.openid
+        }
+        this.$api.mobile_login(data)
+          .then(res => {
+            if (res.code == 200) {
+              this.login(res.data)
+              if (res.data.is_bind == 0) {
+                uni.navigateTo({
+                  url: '/pages/login/bindinfo'
+                })
+              } else {
+                uni.reLaunch({
+                  url: '/pages/index/index'
+                })
+              }
+            } else {
+              uni.showToast({
+                title: res.msg,
+                icon: 'none'
+              })
+            }
+          })
+      },
 			get_get_team_location() {
 				this.$api
 					.get_team_location({
@@ -80,8 +120,15 @@
 				uni.login({
 					success: res => {
 						this.code = res.code;
-						this.get_get_team_location();
-						this.get_student_login();
+            this.$api.get_wechat_login({
+              code: res.code,
+            }).then(res => {
+              this.openid = res.data.openid
+              uni.setStorage({
+                key: "openid",
+                data: this.openid
+              })
+            })
 					}
 				});
 			},
@@ -130,7 +177,7 @@
 			get_student_login() {
 				this.$api
 					.student_login({
-						code: this.code
+						openid: this.openid
 					})
 					.then(res => {
 						this.openid_tmp = res.data.openid;
@@ -148,22 +195,25 @@
 								data: res.data.token
 							});
 							uni.setStorage({
-								key: 'userInfo',
-								data: res.data
-							});
-							uni.setStorage({
-								key: 'is_vip',
-								data: res.data.is_vip
-							});
-							uni.setStorage({
 								key: 'type',
 								data: 4
 							});
 							this.login(res.data);
-						}
+              if (res.data.is_bind == 0) {
+                uni.navigateTo({
+                  url: '/pages/login/bindinfo'
+                })
+              } else {
+                uni.reLaunch({
+                  url: '/pages/index/index'
+                })
+              }
+						}else if (res.code == 500) {
+              this.$refs.popup.open()
+            }
 					});
 			},
-			bindgetuserinfo(e, i) {
+			bindgetuserinfo() {
 				if (!this.true_name) {
 					uni.showToast({
 						title: '请输入真实姓名',
@@ -171,15 +221,11 @@
 					});
 					return;
 				}
-				if (e.detail.hasOwnProperty('userInfo')) {
-					uni.setStorage({
-						key: 'type',
-						data: i
-					});
-					console.log('bindgetuserinfo', e);
-					this.userInfo = e.detail.userInfo;
-					this.get_bind_info();
-				}
+				uni.setStorage({
+					key: 'type',
+					data: 4
+				});
+        this.get_student_login();
 			}
 		}
 	};
