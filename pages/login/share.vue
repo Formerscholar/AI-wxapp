@@ -7,13 +7,13 @@
 			</view>
 			<view class="sf">邀请您加入{{ school }}{{ name }}</view>
 			<view class="input"><input type="text" v-model="true_name" placeholder="请输入你的姓名" placeholder-class="p-c" /></view>
-			<button @click="bindgetuserinfo">确认加入</button>
+			<button @click="bindgetuserinfo($event, 4)">确认加入</button>
 		</view>
     <uni-popup ref="popup" type="center">
-    	<view class="bindphone">
-    		<view class="">需要授权获取手机号</view>
-    		<button open-type="getPhoneNumber" @getphonenumber="getphone">授权</button>
-    	</view>
+      <view class="bindphone">
+        <view class="">需要授权获取手机号</view>
+        <button open-type="getPhoneNumber" @getphonenumber="getphone">授权</button>
+      </view>
     </uni-popup>
 	</view>
 </template>
@@ -23,11 +23,7 @@
 		mapState,
 		mapMutations
 	} from 'vuex';
-  import uniPopup from '@/components/uni-popup/uni-popup.vue';
 	export default {
-    components: {
-    	uniPopup
-    },
 		data() {
 			return {
 				user_info: {
@@ -52,7 +48,8 @@
 				userInfo: {},
 				code: '',
 				openid: '',
-				unionid:''
+				unionid:'',
+        is_mobile_show:false
 			};
 		},
 		onLoad(options) {
@@ -66,37 +63,10 @@
 			this.school = options.school;
 			this.teacher_name = options.teacher_name;
 			console.log('this.school', this.school);
-      this.get_get_team_location();
+			this.get_wx_login();
 		},
-    onShow() {
-      this.get_wx_login()
-    },
 		methods: {
 			...mapMutations(['login', 'set_type']),
-      getphone(e) {
-        let data = {
-          iv: e.detail.iv,
-          encryptedData: e.detail.encryptedData,
-          openid: this.openid
-        }
-        this.$api.mobile_login(data)
-          .then(res => {
-            if (res.code == 200) {
-              this.login(res.data)
-              if (res.data.is_bind == 0) {
-                uni.navigateTo({
-                  url: '/pages/login/bindinfo'
-                })
-              } 
-            } else {
-              uni.showToast({
-                title: res.msg,
-                icon: 'none'
-              })
-            }
-            this.$refs.popup.close()
-          })
-      },
 			get_get_team_location() {
 				this.$api
 					.get_team_location({
@@ -117,29 +87,22 @@
 				uni.login({
 					success: res => {
 						this.code = res.code;
-            this.$api.get_wechat_login({
-              code: res.code,
-            }).then(res => {
-              this.openid = res.data.openid
-              uni.setStorage({
-                key: "openid",
-                data: this.openid
-              })
-              this.get_student_login();
-            })
+						this.get_get_team_location();
+						this.get_student_login();
 					}
 				});
 			},
-			get_bind_info() {
+			get_bind_info(token) {
 				this.$api
 					.bind_info({
+            token,
 						school_id: this.school_id,
 						province_id: this.province_id,
 						city_id: this.city_id,
 						area_id: this.area_id,
 						grade_ids: this.grade_ids,
 						team_id: this.team_ids,
-						true_name: this.true_name,
+						true_name: this.true_name
 					})
 					.then(reslove => {
 						console.log('bind_info', reslove);
@@ -148,19 +111,6 @@
 							icon: 'none'
 						});
 						if (reslove.code == 200) {
-							this.login(reslove.data);
-							uni.setStorage({
-								key: 'userinfo_tmp',
-								data: reslove.data
-							});
-							uni.setStorage({
-								key: 'token',
-								data: reslove.data.token
-							});
-							uni.setStorage({
-								key: 'userInfo',
-								data: reslove.data
-							});
 							uni.reLaunch({
 								url: '/pages/index/index'
 							});
@@ -169,8 +119,8 @@
 			},
 			get_student_login() {
 				this.$api
-					.student_login({
-						openid: this.openid
+					.wx_student_login({
+						code: this.code
 					})
 					.then(res => {
 						this.openid_tmp = res.data.openid;
@@ -179,26 +129,34 @@
 							this.user_id = res.data.user_id;
 							this.true_name = res.data.true_name;
 							this.unionid = res.data.unionid
-							uni.setStorageSync({
+							uni.setStorage({
 								key: 'userinfo_tmp',
 								data: res.data
 							});
-							uni.setStorageSync({
+							uni.setStorage({
 								key: 'token',
 								data: res.data.token
 							});
-							uni.setStorageSync({
+							uni.setStorage({
+								key: 'userInfo',
+								data: res.data
+							});
+							uni.setStorage({
+								key: 'is_vip',
+								data: res.data.is_vip
+							});
+							uni.setStorage({
 								key: 'type',
 								data: 4
 							});
 							this.login(res.data);
-						}
-            if (res.data.mobile == '') {
-              this.$refs.popup.open()
+              this.is_mobile_show = false
+						}else {
+              this.is_mobile_show = true
             }
 					});
 			},
-			bindgetuserinfo() {
+			bindgetuserinfo(e, i) {
 				if (!this.true_name) {
 					uni.showToast({
 						title: '请输入真实姓名',
@@ -208,10 +166,31 @@
 				}
 				uni.setStorage({
 					key: 'type',
-					data: 4
+					data: i
 				});
-        this.get_bind_info()
-			}
+        if (this.is_mobile_show) {
+          this.$refs.popup.open()
+        } else{
+          this.get_bind_info();
+        }
+			},
+      getphone(e){
+        console.log('bindgetuserinfo', e);
+        this.userInfo = e.detail;
+        this.userInfo["openid"] = this.openid_tmp
+        this.$api.mobile_login(this.userInfo).then(res=>{
+          if (res.code == 200) {
+            this.login(res.data)
+            this.get_bind_info(res.data.token);
+          } else{
+            uni.showToast({
+              title:res.msg,
+              icon:'none'
+            })
+          }
+        })
+        this.$refs.popup.close()
+      }
 		}
 	};
 </script>
@@ -384,7 +363,6 @@
 		font-family: PingFang SC;
 		color: #808080;
 	}
-  
   .bindphone {
     background: #fff;
     width: 550rpx;

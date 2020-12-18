@@ -214,25 +214,25 @@
             encryptedData: e.detail.encryptedData,
             openid: this.openid,
           }
-          this.$api.get_mobile(data)
+          this.$api.teacher_mobile_login(data)
             .then(res => {
               if (res.code == 200) {
                 this.login(res.data)
-                uni.reLaunch({
-                  url: '/pages/index/index'
-                })
-              } else if (res.code == 300) {
-                uni.setStorageSync('mobile', res.data.mobile)
-                uni.reLaunch({
-                  url: '/pages/login/bindinfo'
-                })
+                if (res.data.is_bind == 0) {
+                  uni.navigateTo({
+                    url: '/pages/login/bindinfo'
+                  })
+                } else {
+                  uni.reLaunch({
+                    url: '/pages/index/index'
+                  })
+                }
               } else {
                 uni.showToast({
                   title: res.msg,
                   icon: 'none'
                 })
               }
-              console.log(res)
             })
         } else {
           let data = {

@@ -111,11 +111,11 @@
       },
       get_teacher_bind_info() {
         this.$api
-          .teacher_bind_info({
+          .teacher_bind_info_old({
             province_id: this.province_id,
             city_id: this.city_id,
             area_id: this.area_id,
-            school_id: this.school,
+            school_id: this.school_id,
             subject_id: this.subject_id,
             true_name: this.true_name,
             mobile: this.mobile,
