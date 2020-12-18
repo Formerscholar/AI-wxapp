@@ -214,7 +214,7 @@
                   } else {
                     uni.showToast({
                       title: '下载失败',
-                      icon: 'error'
+                      icon: 'none'
                     })
                   }
               }).start();
@@ -249,7 +249,7 @@
 																fail: () => {
 																	uni.showToast({
 																		title: '文件打开失败',
-																		icon: 'error'
+																		icon: 'none'
 																	});
 																},
 															})
@@ -262,7 +262,7 @@
 									fail: () => {
 										uni.showToast({
 											title: '下载失败',
-											icon: 'error'
+											icon: 'none'
 										})
 									},
 								})
@@ -293,7 +293,7 @@
 									fail: () => {
 										uni.showToast({
 											title: '下载失败',
-											icon: 'error'
+											icon: 'none'
 										})
 									},
 								})
@@ -341,7 +341,7 @@
                 	} else {
                 		uni.showToast({
                 			title: '下载失败',
-                			icon: 'error'
+                			icon: 'none'
                 		})
                 	}
                 }).start();
@@ -389,7 +389,7 @@
 										fail: () => {
 											uni.showToast({
 												title: '下载失败',
-												icon: 'error'
+												icon: 'none'
 											})
 										},
 									})
@@ -420,7 +420,7 @@
 										fail: () => {
 											uni.showToast({
 												title: '下载失败',
-												icon: 'error'
+												icon: 'none'
 											})
 										},
 									})

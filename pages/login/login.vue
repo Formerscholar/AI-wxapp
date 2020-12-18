@@ -177,7 +177,7 @@
         this.userInfo['openid'] = this.openid
         uni.setStorageSync('info', e.detail.userInfo) //头像  姓名
         console.log(this.userInfo)
-        this.$api.teacher_login(this.userInfo)
+        this.$api.teacher_logins(this.userInfo)
           .then(res => {
             if (res.code == 200) {
               this.login(res.data)

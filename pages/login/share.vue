@@ -87,17 +87,14 @@
                 uni.navigateTo({
                   url: '/pages/login/bindinfo'
                 })
-              } else {
-                uni.reLaunch({
-                  url: '/pages/index/index'
-                })
-              }
+              } 
             } else {
               uni.showToast({
                 title: res.msg,
                 icon: 'none'
               })
             }
+            this.$refs.popup.close()
           })
       },
 			get_get_team_location() {
@@ -128,20 +125,20 @@
                 key: "openid",
                 data: this.openid
               })
+              this.get_student_login();
             })
 					}
 				});
 			},
-			get_bind_info(token) {
+			get_bind_info() {
 				this.$api
 					.bind_info({
-            token,
 						school_id: this.school_id,
 						province_id: this.province_id,
 						city_id: this.city_id,
 						area_id: this.area_id,
 						grade_ids: this.grade_ids,
-						team_ids: this.team_ids,
+						team_id: this.team_ids,
 						true_name: this.true_name,
 					})
 					.then(reslove => {
@@ -195,8 +192,8 @@
 								data: 4
 							});
 							this.login(res.data);
-              this.get_bind_info(res.data.token)
-						}else if (res.code == 500) {
+						}
+            if (res.data.mobile == '') {
               this.$refs.popup.open()
             }
 					});
@@ -213,7 +210,7 @@
 					key: 'type',
 					data: 4
 				});
-        this.get_student_login();
+        this.get_bind_info()
 			}
 		}
 	};
@@ -387,4 +384,30 @@
 		font-family: PingFang SC;
 		color: #808080;
 	}
+  
+  .bindphone {
+    background: #fff;
+    width: 550rpx;
+    height: 600rpx;
+    border-radius: 20rpx;
+  
+    view {
+      font-size: 35rpx;
+      color: #888;
+      text-align: center;
+      height: 300rpx;
+      line-height: 300rpx;
+    }
+  
+    button {
+      width: 60%;
+      height: 100rpx;
+      margin: 0rpx auto;
+      line-height: 100rpx;
+      color: #fff;
+      font-size: 32rpx;
+      border-radius: 20rpx;
+      background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
+    }
+  }
 </style>
