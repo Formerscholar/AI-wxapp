@@ -55,25 +55,27 @@
 				<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 		</view>
-		<view class="center youxiang" @click="changeEmail" :class="type == 3 ? 'teacherEmial' : ''">
-			<text>邮箱</text>
-			<text v-if="!user_info.email"></text>
-			<text v-else="user_info.email">{{ user_info.email }}</text>
-			<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
-		</view>
-    <!-- ifdef endif -->
-    <!-- #ifdef APP-PLUS -->
-    <view class="center youxiang apppass"  @click="pageToChangePass">
-    	<text>修改密码</text>
-    	<text class="infoCon"></text>
-    	<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+    <view class="youxiang_warp">
+      <view class="center youxiang" @click="changeEmail" :class="type == 3 ? 'teacherEmial' : ''">
+        <text>邮箱</text>
+        <text v-if="!user_info.email"></text>
+        <text v-else="user_info.email">{{ user_info.email }}</text>
+        <image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+      </view>
+      <view class="center youxiang "  @click="touser('/pages/setting/setphone')">
+        <text>手机号</text>
+        <text class="infoCon">{{ user_info.display_list.mobile }}</text>
+        <image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+      </view>
+       <!-- #ifdef APP-PLUS -->
+      <view class="center youxiang"  @click="pageToChangePass">
+        <text>修改密码</text>
+        <text class="infoCon"></text>
+        <image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
+      </view>
+      <!-- #endif -->
     </view>
-    <!-- #endif -->
-		<view class="center youxiang phone"  @click="touser('/pages/setting/setphone')">
-			<text>手机号</text>
-			<text class="infoCon">{{ user_info.display_list.mobile }}</text>
-			<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
-		</view>
+    
     
 		<!-- 修改姓名 -->
 		<uniPopup ref="botpopup" type="center">
@@ -545,38 +547,38 @@
 			transform: translateY(-50%);
 		}
 	}
-
-	.youxiang.center {
-		background: #fff;
-		border-radius: 20rpx 20rpx 0 0;
-		padding: 0 30rpx;
-
-		text {
-			margin-right: 30rpx;
-		}
-
-		image {
-			right: 30rpx;
-		}
-	}
-
+  
+  .youxiang_warp{
+    .center.youxiang {
+    	background: #fff;
+    	padding: 0 30rpx;
+      
+    	text {
+    		margin-right: 30rpx;
+    	}
+    	image {
+    		right: 30rpx;
+    	}
+      
+    }
+    >.youxiang:first-child {
+      border-radius: 20rpx 20rpx 0 0;
+    }
+    >.youxiang:last-child {
+      border-radius:  0 0 20rpx 20rpx;
+    }
+  }
+  
+  
+  
+	
 	.teacherEmial {
 		border-bottom: none !important;
 		margin-bottom: 0 !important;
 		border-radius: 20rpx 20rpx 0 0 !important;
 	}
 
-	.youxiang.center.phone {
-		border-top: none;
-		margin-top: 0;
-		border-radius: 0 0 20rpx 20rpx;
-	}
-  
-  .youxiang.center.apppass {
-  	border-top: none;
-  	margin-top: 0;
-  	border-radius: 0 ;
-  }
+	
   
 
 	.picker {

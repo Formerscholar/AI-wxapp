@@ -194,27 +194,9 @@
 						console.log(res);
 						this.login(res.data);
 						if (res.code == 200) {
-							this.login(res.data);
-							uni.setStorage({
-								key: 'is_vip',
-								data: res.data.is_vip
+							uni.reLaunch({
+								url: '/pages/index/index'
 							});
-							uni.setStorage({
-								//缓存用户登陆状态
-								key: 'userInfo',
-								data: res.data
-							});
-							uni.setStorage({
-								key: 'type',
-								data: 4
-							});
-							setTimeout(() => {
-								if (res.data.token) {
-									uni.reLaunch({
-										url: '/pages/index/index'
-									});
-								}
-							}, 1000);
 						} else {
 							uni.showToast({
 								title: res.msg,

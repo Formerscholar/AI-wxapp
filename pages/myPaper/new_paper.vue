@@ -277,7 +277,7 @@
 									success: (res) => {
 										uni.showToast({
 											title: '已下载,正在打开',
-											icon: 'success'
+											icon: 'none'
 										});
 										uni.openDocument({
 											filePath: filePath,
@@ -429,7 +429,7 @@
               } else {
 								uni.showToast({
 									title: res.msg,
-									icon: 'error'
+									icon: 'none'
 								})
 							}
 						});
