@@ -62,12 +62,12 @@
 			</view> -->
     <!-- </view> -->
     <view class="qiun-charts" v-if="analysisList.length && analysisList.length != 0">
-      <view class="item_box" v-for="(item, index) in analysisList" :key="item.data" @click="toseeDetail({
+      <view class="item_box" v-for="(item, index) in analysisList"  @click="toseeDetail({
         id:item.id,
         name:item.name,
         data:item.data
       })">
-        <view class="top_box">
+        <view class="top_box" :key="index">
           <view class="left_text">
             {{ item.name }}
             <text>{{ item.percentage }}%</text>

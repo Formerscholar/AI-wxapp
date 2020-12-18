@@ -90,35 +90,57 @@ export default {
 		tj() {
 			let arrTpmid = this.tpmid.feedback_notice;
 			console.log(arrTpmid)
-			uni.requestSubscribeMessage({
-				tmplIds: arrTpmid,
-				complete: res => {
-					if (uni.getStorageSync('type') == 3) {
-						var req = this.$api.teacher_feedback({ token: this.token, content: this.str, pics: this.imgSrc ,contact:this.phone });
-					} else {
-						var req = this.$api.feedback({ token: this.token, content: this.str, pics: this.imgSrc,contact:this.phone });
-					}
-					req.then(res => {
-						console.log(res);
-						if (res.code == 200) {
-							uni.showToast({
-								title: '提交成功!'
-							});
-							setTimeout(() => {
-								uni.navigateBack();
-							}, 1000);
-							
-						} else {
-							uni.showToast({
-								title: res.msg,
-								icon: 'none'
-							});
-						}
-					});
-				},
-				success: function(res) {},
-				fail: function(res) {}
-			});
+      // #ifdef MP-WEIXIN        uni.requestSubscribeMessage({
+        	tmplIds: arrTpmid,
+        	complete: res => {
+        		if (uni.getStorageSync('type') == 3) {
+        			var req = this.$api.teacher_feedback({ token: this.token, content: this.str, pics: this.imgSrc ,contact:this.phone });
+        		} else {
+        			var req = this.$api.feedback({ token: this.token, content: this.str, pics: this.imgSrc,contact:this.phone });
+        		}
+        		req.then(res => {
+        			console.log(res);
+        			if (res.code == 200) {
+        				uni.showToast({
+        					title: '提交成功!'
+        				});
+        				setTimeout(() => {
+        					uni.navigateBack();
+        				}, 1000);
+        				
+        			} else {
+        				uni.showToast({
+        					title: res.msg,
+        					icon: 'none'
+        				});
+        			}
+        		});
+        	},
+        	success: function(res) {},
+        	fail: function(res) {}
+        });        // #endif         // #ifdef APP-PLUS        if (uni.getStorageSync('type') == 3) {
+        	var req = this.$api.teacher_feedback({ token: this.token, content: this.str, pics: this.imgSrc ,contact:this.phone });
+        } else {
+        	var req = this.$api.feedback({ token: this.token, content: this.str, pics: this.imgSrc,contact:this.phone });
+        }
+        req.then(res => {
+        	console.log(res);
+        	if (res.code == 200) {
+        		uni.showToast({
+        			title: '提交成功!'
+        		});
+        		setTimeout(() => {
+        			uni.navigateBack();
+        		}, 1000);
+        		
+        	} else {
+        		uni.showToast({
+        			title: res.msg,
+        			icon: 'none'
+        		});
+        	}
+        });        // #endif
+			
 		},
 		sub(e) {
 			this.num = 300 - e.detail.value.length;

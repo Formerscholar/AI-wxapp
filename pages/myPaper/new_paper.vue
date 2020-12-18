@@ -201,20 +201,31 @@
               			title: '文件打开中',
               			icon: 'error'
               		})
-              		uni.openDocument({
-              			filePath: d.filename,
-              			showMenu: true,
-              			fail: () => {
-              				uni.showToast({
-              					title: '文件打开失败',
-              					icon: 'error'
-              				});
-              			},
-              		})
+                  uni.showModal({
+                  	title: '温馨提示',
+                  	content: '如无法打开,请使用邮箱下载!',
+                  	cancelColor: '#eeeeee',
+                  	confirmColor: '#FF0000',
+                  	showCancel: false,
+                  	success(res2) {
+                  		if (res2.confirm) {
+                  			uni.openDocument({
+                  				filePath: d.filename,
+                  				showMenu: true,
+                  				fail: () => {
+                  					uni.showToast({
+                  						title: '文件打开失败',
+                  						icon: 'error'
+                  					});
+                  				},
+                  			})
+                  		}
+                  	}
+                  });
                   } else {
                     uni.showToast({
                       title: '下载失败',
-                      icon: 'error'
+                      icon: 'none'
                     })
                   }
               }).start();
@@ -249,7 +260,7 @@
 																fail: () => {
 																	uni.showToast({
 																		title: '文件打开失败',
-																		icon: 'error'
+																		icon: 'none'
 																	});
 																},
 															})
@@ -262,7 +273,7 @@
 									fail: () => {
 										uni.showToast({
 											title: '下载失败',
-											icon: 'error'
+											icon: 'none'
 										})
 									},
 								})
@@ -277,7 +288,7 @@
 									success: (res) => {
 										uni.showToast({
 											title: '已下载,正在打开',
-											icon: 'success'
+											icon: 'none'
 										});
 										uni.openDocument({
 											filePath: filePath,
@@ -293,7 +304,7 @@
 									fail: () => {
 										uni.showToast({
 											title: '下载失败',
-											icon: 'error'
+											icon: 'none'
 										})
 									},
 								})
@@ -303,7 +314,7 @@
             } else {
 							uni.showToast({
 								title: res.msg,
-								icon: 'error'
+								icon: 'none'
 							})
 						}
 					});
@@ -328,20 +339,32 @@
                 			title: '文件打开中',
                 			icon: 'error'
                 		})
-                		uni.openDocument({
-                			filePath: d.filename,
-                			showMenu: true,
-                			fail: () => {
-                				uni.showToast({
-                					title: '文件打开失败',
-                					icon: 'error'
-                				});
-                			},
-                		})
+                    uni.showModal({
+                    	title: '温馨提示',
+                    	content: '如无法打开,请使用邮箱下载!',
+                    	cancelColor: '#eeeeee',
+                    	confirmColor: '#FF0000',
+                    	showCancel: false,
+                    	success(res2) {
+                    		if (res2.confirm) {
+                    			uni.openDocument({
+                    				filePath: d.filename,
+                    				showMenu: true,
+                    				fail: () => {
+                    					uni.showToast({
+                    						title: '文件打开失败',
+                    						icon: 'error'
+                    					});
+                    				},
+                    			})
+                    		}
+                    	}
+                    });
+                		
                 	} else {
                 		uni.showToast({
                 			title: '下载失败',
-                			icon: 'error'
+                			icon: 'none'
                 		})
                 	}
                 }).start();
@@ -389,7 +412,7 @@
 										fail: () => {
 											uni.showToast({
 												title: '下载失败',
-												icon: 'error'
+												icon: 'none'
 											})
 										},
 									})
@@ -420,7 +443,7 @@
 										fail: () => {
 											uni.showToast({
 												title: '下载失败',
-												icon: 'error'
+												icon: 'none'
 											})
 										},
 									})
@@ -429,7 +452,7 @@
               } else {
 								uni.showToast({
 									title: res.msg,
-									icon: 'error'
+									icon: 'none'
 								})
 							}
 						});
@@ -461,18 +484,24 @@
 					arrTpmid = this.tpmid.teacher_paper;
 				}
 				console.log('arrTpmid', arrTpmid);
-				uni.requestSubscribeMessage({
-					tmplIds: arrTpmid,
-					complete: (res) => {
-						console.log('requestSubscribeMessage', res);
-						let data = {
-							id: this.based_id,
-							token: this.token
-						};
-						console.log('不需要答案解析下载', res);
-						this.fasong(1);
-					}
-				});
+        // #ifdef MP-WEIXIN        uni.requestSubscribeMessage({
+        	tmplIds: arrTpmid,
+        	complete: (res) => {
+        		console.log('requestSubscribeMessage', res);
+        		let data = {
+        			id: this.based_id,
+        			token: this.token
+        		};
+        		console.log('不需要答案解析下载', res);
+        		this.fasong(1);
+        	}
+        });        // #endif         // #ifdef APP-PLUS        let data = {
+        	id: this.based_id,
+        	token: this.token
+        };
+        this.fasong(1);
+        // #endif
+				
 			},
 			answerClick() {
 				this.$refs.botpopup.close();
@@ -484,18 +513,22 @@
 					arrTpmid = this.tpmid.teacher_paper;
 				}
 				console.log('arrTpmid', arrTpmid);
-				uni.requestSubscribeMessage({
-					tmplIds: arrTpmid,
-					complete: (res) => {
-						console.log('requestSubscribeMessage', res);
-						let data = {
-							id: this.based_id,
-							token: this.token
-						};
-						console.log('答案解析下载', res);
-						this.fasong(2);
-					}
-				});
+        // #ifdef MP-WEIXIN        uni.requestSubscribeMessage({
+        	tmplIds: arrTpmid,
+        	complete: (res) => {
+        		console.log('requestSubscribeMessage', res);
+        		let data = {
+        			id: this.based_id,
+        			token: this.token
+        		};
+        		console.log('答案解析下载', res);
+        		this.fasong(2);
+        	}
+        });        // #endif         // #ifdef APP-PLUS        let data = {
+        	id: this.based_id,
+        	token: this.token
+        };
+        this.fasong(2);        // #endif
 			},
 			get_teacher_info() {
 				let _this = this
@@ -550,12 +583,13 @@
 								title: res.msg,
 								icon: 'none'
 							});
-						} else {
-							/* uni.showToast({
-										title:res.msg,
-										icon:'none'
-									}) */
-							this.$refs.popup2.open();
+						} else if(res.code == 300){
+              this.$refs.popup2.open();
+            } else {
+							uni.showToast({
+                title:res.msg,
+                icon:'none'
+							})
 						}
 					});
 				} else {
@@ -569,11 +603,10 @@
 								icon: 'none'
 							});
 						} else {
-							/* uni.showToast({
-										title:res.msg,
-										icon:'none'
-									}) */
-							this.$refs.popup2.open();
+							uni.showToast({
+                title:res.msg,
+                icon:'none'
+							})
 						}
 					});
 				}

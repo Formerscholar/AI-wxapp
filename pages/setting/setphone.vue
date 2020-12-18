@@ -116,7 +116,7 @@ export default {
           this.getText = '发送验证码'
           clearInterval(OutTimeinval)
         } else {
-          this.getText = --num
+          this.getText = `${--num}秒后重试`
         }
       }, 1000)
 			if(this.type == 4){

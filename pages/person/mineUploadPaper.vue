@@ -184,29 +184,44 @@
 					});
 					return;
 				}
-				uni.requestSubscribeMessage({
-					tmplIds: _this.tpmid.audit_notice,
-					complete: res => {
-						_this.$api.teacher_add_point({
-							token: _this.token,
-							remark: _this.value2,
-							title: _this.value1,
-							pics: _this.imgSrc
-						}).then(res => {
-							uni.showToast({
-								title: res.msg,
-								icon: 'none'
-							});
-							if (res.code == 200) {
-								_this.value2 = '';
-								_this.value1 = '';
-								_this.imgSrc = [];
-							}
-						});
-					},
-					success: function(res) {},
-					fail: function(res) {}
-				});
+        // #ifdef MP-WEIXIN        uni.requestSubscribeMessage({
+        	tmplIds: _this.tpmid.audit_notice,
+        	complete: res => {
+        		_this.$api.teacher_add_point({
+        			token: _this.token,
+        			remark: _this.value2,
+        			title: _this.value1,
+        			pics: _this.imgSrc
+        		}).then(res => {
+        			uni.showToast({
+        				title: res.msg,
+        				icon: 'none'
+        			});
+        			if (res.code == 200) {
+        				_this.value2 = '';
+        				_this.value1 = '';
+        				_this.imgSrc = [];
+        			}
+        		});
+        	},
+        	success: function(res) {},
+        	fail: function(res) {}
+        });        // #endif         // #ifdef APP-PLUS        _this.$api.teacher_add_point({
+        	token: _this.token,
+        	remark: _this.value2,
+        	title: _this.value1,
+        	pics: _this.imgSrc
+        }).then(res => {
+        	uni.showToast({
+        		title: res.msg,
+        		icon: 'none'
+        	});
+        	if (res.code == 200) {
+        		_this.value2 = '';
+        		_this.value1 = '';
+        		_this.imgSrc = [];
+        	}
+        });        // #endif
 			}
 		}
 	};

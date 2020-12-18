@@ -33,10 +33,12 @@ module.exports = {
   update_userinfo: data => request(ApiUrl + 'wechat/update/', data), //
   //----------------------------- 学生
   //登录注册
-  bind_info: data => request(ApiUrl + 'user/bind_info/', data), //绑定信息
+  bind_info: data => request(ApiUrl + 'user/bindinfo/', data), //绑定信息
   get_settings: md => request(ApiUrl + 'main/get_settings/', md), //获取配置信息
   //首页
-  student_login: data => request(ApiUrl + 'user/wx_student_login/', data), //登录
+  student_login: data => request(ApiUrl + 'user/wx_login/', data), //登录
+  wx_student_login: data => request(ApiUrl + 'user/wx_student_login/', data), //登录
+  mobile_login: data => request(ApiUrl + 'user/mobile_login/', data), //新登录
   
   student_index: data => request(ApiUrl + 'user/index/', data), //学生端首页信息	
   newest_paper: data => request(ApiUrl + 'user/newest_paper/', data), //名校资源
@@ -99,6 +101,8 @@ module.exports = {
   //bind_mobile: data => request(ApiUrl+'teacher/check_teacher_mobile/',data),
   teacher_index: data => request(ApiUrl + 'teacher/index/', data), //教师首页信息
   teacher_login: data => request(ApiUrl + 'teacher/wx_teacher_login/', data), //登录
+  teacher_logins: data => request(ApiUrl + 'teacher/wx_login/', data), //登录
+  teacher_mobile_login: data => request(ApiUrl + 'teacher/mobile_login/', data), //登录新
   get_teacher_info: data => request(ApiUrl + 'teacher/get_teacher_info/', data), //获取用户信息
   wei_teacher_error_book_list: data => request(ApiUrl + 'teacher/my_not_created_error_book/', data), //未生成错题本列表
   school_test_paper: data => request(ApiUrl + 'teacher/school_test_paper/', data), //校本试卷
@@ -124,7 +128,8 @@ module.exports = {
   teacher_exercise_type: data => request(ApiUrl + 'teacher/exercises_type/', data), //题型  
   teacher_same_type: data => request(ApiUrl + 'teacher/same_type_exercises/', data), //章节课时习题 同类型题目 
   change_teacher_info: data => request(ApiUrl + 'teacher/change_teacher_info/', data), //修改个人信息 
-  teacher_bind_info: data => request(ApiUrl + 'teacher/bind_info/', data), //绑定信息
+  teacher_bind_info: data => request(ApiUrl + 'teacher/bindinfo/', data), //绑定信息
+  teacher_bind_info_old: data => request(ApiUrl + 'teacher/bind_info/', data), //绑定信息
   teacher_feedback: data => request(ApiUrl + 'teacher/feedback/', data), //意见反馈
   teacher_newest_paper: data => request(ApiUrl + 'teacher/newest_paper/', data), //最新试卷
   teacher_add_class: data => request(ApiUrl + 'teacher/add_class/', data), //添加班级
@@ -139,6 +144,8 @@ module.exports = {
   ter_share_login: data => request(ApiUrl + 'teacher/wx_share_login/', data), //登录
   get_paper: data => request(ApiUrl + 'teacher/get_paper/', data), //老师获取最新试卷
   get_app_teacher_edit_password: data => request(ApiUrl + 'teacher/edit_password/', data), //老师修改密码
+  techer_search_team: data => request(ApiUrl + 'teacher/search_team/', data), //搜索班级
+  teacher_join_team: data => request(ApiUrl + 'teacher/join_team/', data), //邀请学生加入班级
 
 
   //通用
@@ -157,4 +164,5 @@ module.exports = {
   get_team_subject: data => request(ApiUrl + 'main/get_team_subject/', data), //邀请老师的学科下拉列表
   get_team_location: data => request(ApiUrl + "main/get_team_location/", data),
   get_agreement : data => request(ApiUrl + 'main/get_agreement/', data),// 注册协议
+  get_wechat_login : data => request(ApiUrl + 'wechat/login/', data),// 默认执行登录
 }

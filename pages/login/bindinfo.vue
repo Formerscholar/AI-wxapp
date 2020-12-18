@@ -140,13 +140,6 @@
 						school_id: this.school[this.s_num].id,
 						subject_id: this.subject[this.s_num1].id,
 						true_name: this.name,
-						mobile: uni.getStorageSync('mobile'),
-						openid: uni.getStorageSync('openid'),
-						nickName: this.userInfo.nickName,
-						avatar: this.userInfo.avatarUrl,
-						gender: this.userInfo.gender,
-						token: this.token,
-						unionid: unionid
 					};
 					this.$api.teacher_bind_info(data).then(res => {
 						console.log(res);
@@ -195,38 +188,15 @@
 						grade_ids: this.grade[this.g_num].grade_id,
 						school_id: this.school[this.s_num].id,
 						true_name: this.name,
-						openid: uni.getStorageSync('openid'),
-						user_name: this.userInfo.nickName,
-						avatar: this.userInfo.avatarUrl,
-						gender: this.userInfo.gender,
-						unionid: unionid
 					};
 					console.log(data);
 					this.$api.bind_info(data).then(res => {
 						console.log(res);
 						this.login(res.data);
 						if (res.code == 200) {
-							this.login(res.data);
-							uni.setStorage({
-								key: 'is_vip',
-								data: res.data.is_vip
+							uni.reLaunch({
+								url: '/pages/index/index'
 							});
-							uni.setStorage({
-								//缓存用户登陆状态
-								key: 'userInfo',
-								data: res.data
-							});
-							uni.setStorage({
-								key: 'type',
-								data: 4
-							});
-							setTimeout(() => {
-								if (res.data.token) {
-									uni.reLaunch({
-										url: '/pages/index/index'
-									});
-								}
-							}, 1000);
 						} else {
 							uni.showToast({
 								title: res.msg,

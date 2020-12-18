@@ -7,8 +7,14 @@
 			</view>
 			<view class="sf">邀请您加入{{ school }}{{ name }}</view>
 			<view class="input"><input type="text" v-model="true_name" placeholder="请输入你的姓名" placeholder-class="p-c" /></view>
-			<button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event, 4)">确认加入</button>
+			<button @click="bindgetuserinfo($event, 4)">确认加入</button>
 		</view>
+    <uni-popup ref="popup" type="center">
+      <view class="bindphone">
+        <view class="">需要授权获取手机号</view>
+        <button open-type="getPhoneNumber" @getphonenumber="getphone">授权</button>
+      </view>
+    </uni-popup>
 	</view>
 </template>
 
@@ -42,7 +48,8 @@
 				userInfo: {},
 				code: '',
 				openid: '',
-				unionid:''
+				unionid:'',
+        is_mobile_show:false
 			};
 		},
 		onLoad(options) {
@@ -85,21 +92,17 @@
 					}
 				});
 			},
-			get_bind_info() {
+			get_bind_info(token) {
 				this.$api
 					.bind_info({
+            token,
 						school_id: this.school_id,
 						province_id: this.province_id,
 						city_id: this.city_id,
 						area_id: this.area_id,
 						grade_ids: this.grade_ids,
-						team_ids: this.team_ids,
-						true_name: this.true_name,
-						user_name: this.userInfo?.nickName || '',
-						avatar: this.userInfo?.avatarUrl || '',
-						gender: this.userInfo?.gender || '',
-						openid: this.openid_tmp,
-						unionid: this.unionid
+						team_id: this.team_ids,
+						true_name: this.true_name
 					})
 					.then(reslove => {
 						console.log('bind_info', reslove);
@@ -108,19 +111,6 @@
 							icon: 'none'
 						});
 						if (reslove.code == 200) {
-							this.login(reslove.data);
-							uni.setStorage({
-								key: 'userinfo_tmp',
-								data: reslove.data
-							});
-							uni.setStorage({
-								key: 'token',
-								data: reslove.data.token
-							});
-							uni.setStorage({
-								key: 'userInfo',
-								data: reslove.data
-							});
 							uni.reLaunch({
 								url: '/pages/index/index'
 							});
@@ -129,7 +119,7 @@
 			},
 			get_student_login() {
 				this.$api
-					.student_login({
+					.wx_student_login({
 						code: this.code
 					})
 					.then(res => {
@@ -160,7 +150,10 @@
 								data: 4
 							});
 							this.login(res.data);
-						}
+              this.is_mobile_show = false
+						}else {
+              this.is_mobile_show = true
+            }
 					});
 			},
 			bindgetuserinfo(e, i) {
@@ -171,16 +164,33 @@
 					});
 					return;
 				}
-				if (e.detail.hasOwnProperty('userInfo')) {
-					uni.setStorage({
-						key: 'type',
-						data: i
-					});
-					console.log('bindgetuserinfo', e);
-					this.userInfo = e.detail.userInfo;
-					this.get_bind_info();
-				}
-			}
+				uni.setStorage({
+					key: 'type',
+					data: i
+				});
+        if (this.is_mobile_show) {
+          this.$refs.popup.open()
+        } else{
+          this.get_bind_info();
+        }
+			},
+      getphone(e){
+        console.log('bindgetuserinfo', e);
+        this.userInfo = e.detail;
+        this.userInfo["openid"] = this.openid_tmp
+        this.$api.mobile_login(this.userInfo).then(res=>{
+          if (res.code == 200) {
+            this.login(res.data)
+            this.get_bind_info(res.data.token);
+          } else{
+            uni.showToast({
+              title:res.msg,
+              icon:'none'
+            })
+          }
+        })
+        this.$refs.popup.close()
+      }
 		}
 	};
 </script>
@@ -353,4 +363,29 @@
 		font-family: PingFang SC;
 		color: #808080;
 	}
+  .bindphone {
+    background: #fff;
+    width: 550rpx;
+    height: 600rpx;
+    border-radius: 20rpx;
+  
+    view {
+      font-size: 35rpx;
+      color: #888;
+      text-align: center;
+      height: 300rpx;
+      line-height: 300rpx;
+    }
+  
+    button {
+      width: 60%;
+      height: 100rpx;
+      margin: 0rpx auto;
+      line-height: 100rpx;
+      color: #fff;
+      font-size: 32rpx;
+      border-radius: 20rpx;
+      background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
+    }
+  }
 </style>

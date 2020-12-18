@@ -386,16 +386,27 @@
 										title: '文件打开中',
 										icon: 'error'
 									})
-									uni.openDocument({
-										filePath: d.filename,
-										showMenu: true,
-										fail: () => {
-											uni.showToast({
-												title: '文件打开失败',
-												icon: 'error'
-											});
-										},
-									})
+                  uni.showModal({
+                  	title: '温馨提示',
+                  	content: '如无法打开,请使用邮箱下载!',
+                  	cancelColor: '#eeeeee',
+                  	confirmColor: '#FF0000',
+                  	showCancel: false,
+                  	success(res2) {
+                  		if (res2.confirm) {
+                  			uni.openDocument({
+                  				filePath: d.filename,
+                  				showMenu: true,
+                  				fail: () => {
+                  					uni.showToast({
+                  						title: '文件打开失败',
+                  						icon: 'error'
+                  					});
+                  				},
+                  			})
+                  		}
+                  	}
+                  });
 							    } else {
                     uni.showToast({
                       title: '下载失败',
@@ -509,16 +520,27 @@
 										title: '文件打开中',
 										icon: 'error'
 									})
-									uni.openDocument({
-										filePath: d.filename,
-										showMenu: true,
-										fail: () => {
-											uni.showToast({
-												title: '文件打开失败',
-												icon: 'error'
-											});
-										},
-									})
+                  uni.showModal({
+                  	title: '温馨提示',
+                  	content: '如无法打开,请使用邮箱下载!',
+                  	cancelColor: '#eeeeee',
+                  	confirmColor: '#FF0000',
+                  	showCancel: false,
+                  	success(res2) {
+                  		if (res2.confirm) {
+                  			uni.openDocument({
+                  				filePath: d.filename,
+                  				showMenu: true,
+                  				fail: () => {
+                  					uni.showToast({
+                  						title: '文件打开失败',
+                  						icon: 'error'
+                  					});
+                  				},
+                  			})
+                  		}
+                  	}
+                  });
 								} else {
 									uni.showToast({
 										title: '下载失败',
@@ -668,6 +690,7 @@
 					arrTpmid = this.tpmid.teacher_paper;
 				}
 				console.log(arrTpmid);
+        // #ifdef MP-WEIXIN
 				uni.requestSubscribeMessage({
 					tmplIds: arrTpmid,
 					complete: res => {
@@ -677,6 +700,10 @@
 					success: function(res) {},
 					fail: function(res) {}
 				});
+        // #endif 
+        // #ifdef APP-PLUS
+        this.fasong(1);
+        // #endif
 			},
 			answerClick() {
 				this.$refs.botpopup.close();
@@ -695,15 +722,21 @@
 					arrTpmid = this.tpmid.teacher_paper;
 				}
 				console.log(arrTpmid);
-				uni.requestSubscribeMessage({
-					tmplIds: arrTpmid,
-					complete: res => {
-						console.log('答案解析下载', res);
-						this.fasong(2);
-					},
-					success: function(res) {},
-					fail: function(res) {}
-				});
+				
+        // #ifdef MP-WEIXIN
+        uni.requestSubscribeMessage({
+        	tmplIds: arrTpmid,
+        	complete: res => {
+        		console.log('答案解析下载', res);
+        		this.fasong(2);
+        	},
+        	success: function(res) {},
+        	fail: function(res) {}
+        });
+        // #endif 
+        // #ifdef APP-PLUS
+        this.fasong(2);
+        // #endif
 			},
 			//点击邮箱下载
 			generated(id, title) {
@@ -850,15 +883,15 @@
 								title: res.msg,
 								icon: 'none'
 							});
-						} else {
-							/* uni.showToast({
+						} else if(res.code == 300){
+              this.$refs.popup2.open();
+            }  else {
+							uni.showToast({
 									title:res.msg,
 									icon:'none'
-								}) */
+							})
 						}
-						if (res.code == 300) {
-							this.$refs.popup2.open();
-						}
+						
 					});
 				} else {
 					this.$api.get_text(data).then(res => {
@@ -870,15 +903,14 @@
 								title: res.msg,
 								icon: 'none'
 							});
-						} else {
+						} else if (res.code == 300) {
+              this.$refs.popup2.open()
+            } else {
 							uni.showToast({
                 title:res.msg,
                 icon:'none'
 							})
-               this.is_show = true
-						}
-						if (res.code == 300) {
-							this.$refs.popup2.open();
+              this.is_show = true
 						}
 					});
 				}

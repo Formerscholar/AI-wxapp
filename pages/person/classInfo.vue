@@ -39,7 +39,15 @@
 				</view>
 			</view>
 		</view>
-		<view class="btn" @click="touser('/pages/person/addClass')">创建新的班级</view>
+    <!-- #ifdef MP-WEIXIN -->
+    <view class="btn" @click="touser('/pages/person/addClass')">创建新的班级</view>
+    <!-- #endif -->
+    <!-- #ifdef APP-PLUS -->
+    <view class="btns_warp">
+      <view class="btn_item" @click="touser('/pages/person/addClass')">创建新的班级</view>
+      <view class="btn_item" @click="touser('/pages/person/bindClassID')">加入新的班级</view>
+    </view>
+    <!-- #endif -->
     <uniPopup ref="uniPopupShare" type="share">
       <uniPopupShare title="分享到" @select="selectShare"></uniPopupShare>
     </uniPopup>
@@ -269,6 +277,24 @@ page {
 		}
 	}
 }
+.btns_warp{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .btn_item{
+    border: 1rpx solid #fff;
+    font-size: 30rpx;
+    text-align: center;
+    height: 80rpx;
+    line-height: 80rpx;
+    padding: 0 20rpx;
+    color: #fff;
+    background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
+    margin: 50rpx auto 20rpx;
+    border-radius: 20rpx;
+  }
+}
+  
 .btn {
 	border: 1rpx solid #fff;
 	width: 400rpx;
