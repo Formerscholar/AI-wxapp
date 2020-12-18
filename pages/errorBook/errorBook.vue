@@ -861,15 +861,15 @@
 								title: res.msg,
 								icon: 'none'
 							});
-						} else {
-							/* uni.showToast({
+						} else if(res.code == 300){
+              this.$refs.popup2.open();
+            }  else {
+							uni.showToast({
 									title:res.msg,
 									icon:'none'
-								}) */
+							})
 						}
-						if (res.code == 300) {
-							this.$refs.popup2.open();
-						}
+						
 					});
 				} else {
 					this.$api.get_text(data).then(res => {
@@ -886,10 +886,7 @@
                 title:res.msg,
                 icon:'none'
 							})
-               this.is_show = true
-						}
-						if (res.code == 300) {
-							this.$refs.popup2.open();
+              this.is_show = true
 						}
 					});
 				}

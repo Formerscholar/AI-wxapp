@@ -13,7 +13,14 @@
         <view class="flex">
           <view class="up" @click="add(item)">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/grade.png" />
-            <view class="upCon">{{ item.team_name }}</view>
+            <view class="upCon">
+              <view class="upCon_text">
+                {{ item.school_name }}
+              </view>
+              <view class="upCon_tip">
+                {{ item.team_name }}
+              </view>
+            </view>
           </view>
           <view class="up">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/invent.png" />
@@ -265,6 +272,29 @@
           display: inline-block;
           border-radius: 0 20rpx 0 0;
           background: #fff;
+          .upCon_text{
+            font-size: 22rpx;
+            font-family: 'PingFang SC';
+            font-weight: 500;
+            color: #333333;
+            height: 22rpx;
+            margin-bottom: 13rpx;
+            margin-top: -15rpx;
+          }
+          .upCon_tip{
+            font-size: 20rpx;
+            font-family: 'PingFang SC';
+            font-weight: 500;
+            color: #999999;
+            height: 20rpx;
+          }
+          
+         
+
+          
+
+          
+          
         }
       }
 

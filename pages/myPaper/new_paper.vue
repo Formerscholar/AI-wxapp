@@ -564,12 +564,13 @@
 								title: res.msg,
 								icon: 'none'
 							});
-						} else {
-							/* uni.showToast({
+						} else if(res.code == 300){
+              this.$refs.popup2.open();
+            } else {
+							uni.showToast({
 										title:res.msg,
 										icon:'none'
-									}) */
-							this.$refs.popup2.open();
+							})
 						}
 					});
 				} else {
@@ -583,11 +584,10 @@
 								icon: 'none'
 							});
 						} else {
-							/* uni.showToast({
+							uni.showToast({
 										title:res.msg,
 										icon:'none'
-									}) */
-							this.$refs.popup2.open();
+							})
 						}
 					});
 				}

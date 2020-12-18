@@ -144,13 +144,18 @@
 		</view>
 
 		<view class="vip_totul" v-if="is_totul" @click="closeTotul">
-			<image class="home_vip_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_icon.png" mode="widthFix"
-			 @click="closeTotul"></image>
-			<image class="home_vip_image" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_image.png" mode="widthFix"
+        <view class="image_warp">
+          <image class="home_vip_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_icon.png" mode="widthFix"
+           @click="closeTotul"></image>
+        </view>
+       <view class="centent_box">
+         <div class="tit_text">您的会员将于{{setTimeType(vip_time * 1000) || 0}}到期</div>
+       </view>
+			<!-- <image class="home_vip_image" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_image.png" mode="widthFix"
 			 @click="pageToVip"></image>
 			<image class="home_vip_btn" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_btn.png" mode="widthFix"
 			 @click="pageToVip"></image>
-			 <div class="tit_text">您的会员将于{{setTimeType(vip_time * 1000) || 0}}到期</div>
+			 <div class="tit_text">您的会员将于{{setTimeType(vip_time * 1000) || 0}}到期</div> -->
 		</view>
 
 	</view>
@@ -430,40 +435,39 @@
 		right: 0;
 		bottom: 0;
 		background-color: rgba($color: #000000, $alpha: .5);
-		.tit_text{
-			position: absolute;
-			top: 43%;
-			left: 49%;
-			transform: translate(-50%,-50%);
-			font-size: 26rpx;
-			font-family: 'PingFang SC';
-			font-weight: 500;
-			color: #FFEC95;
-		}
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+		.image_warp{
+      width: 593rpx;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      .home_vip_icon {
+      	width: 67rpx;
+      	height: 67rpx;
+      }
+    }
+		
+    .centent_box{
+      width: 593rpx;
+      height: 672rpx;
+      background: url(https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/new_home_vip_image.png) no-repeat;
+      background-size: 100% 100%;
+      position: relative;
+      .tit_text{
+        position: absolute;
+        top: 43%;
+        left: 22%;
+      	font-size: 26rpx;
+      	font-family: 'PingFang SC';
+      	font-weight: 500;
+      	color: #FFEC95;
+      }
+    }
 
-		.home_vip_icon {
-			position: absolute;
-			left: 604rpx;
-			top: 190rpx;
-			width: 67rpx;
-			height: 67rpx;
-		}
-
-		.home_vip_image {
-			position: absolute;
-			left: 69rpx;
-			top: 258rpx;
-			width: 593rpx;
-			height: 519rpx;
-		}
-
-		.home_vip_btn {
-			position: absolute;
-			left: 163rpx;
-			top: 830rpx;
-			width: 424rpx;
-			height: 101rpx;
-		}
+		
 	}
 
 	.clear {
