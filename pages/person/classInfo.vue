@@ -25,7 +25,7 @@
 					<button class="downCon" open-type="share" :data-name="item.team_name" :data-class_id="item.classid" data-it="stu">邀请学生</button>
           <!-- #endif -->
           <!-- #ifdef APP-PLUS -->
-					<button class="downCon" @click="InviteStudent(item)">邀请学生</button>
+					<button class="downCon" @click="InviteStudent(item,4)">邀请学生</button>
           <!-- #endif -->
 				</view>
 				<view class="down">
@@ -34,7 +34,7 @@
 					<button class="downCon" open-type="share" :data-team_id="item.team_id" :data-name="item.team_name" :data-class_id="item.classid" data-it="ter">邀请老师</button>
           <!-- #endif -->
           <!-- #ifdef APP-PLUS -->
-					<button class="downCon" @click="InviteStudent(item)">邀请老师</button>
+					<button class="downCon" @click="InviteStudent(item,3)">邀请老师</button>
           <!-- #endif -->
 				</view>
 			</view>
@@ -69,7 +69,8 @@ export default {
 			list: [],
 			team_name: '',
 			user_id:'',
-      shareItem:''
+      shareItem:'',
+      sharePath:''
 		};
 	},
 	onShareAppMessage(e) {
@@ -109,21 +110,39 @@ export default {
       console.log('selectShare', item, index ,this.shareItem)
       switch (index) {
         case 0:
-          uni.share({
-            provider: "weixin",
-            scene: "WXSceneSession",
+        uni.share({
+          provider: 'weixin',
+          scene: "WXSceneSession",
+          type: 5,
+          imageUrl: 'https://aictb.oss-cn-shanghai.aliyuncs.com/App/share_icon.png',
+          title: `${uni.getStorageSync('userInfo').true_name}老师邀请您加入${this.shareItem.team_name}`,
+          miniProgram: {
+            id: 'gh_762f64585df2',
+            path: this.sharePath,
             type: 0,
-            href: `https://www.aictb.com/app/invite/?team_id=${this.shareItem.team_id}`,
-            title: `${uni.getStorageSync('userInfo').true_name}老师邀请您加入${this.shareItem.team_name}`,
-            summary: `打开AI错题宝,输入班级ID（${this.shareItem.classid}）,加入我的班级吧~`,
-            imageUrl: "https://aictb.oss-cn-shanghai.aliyuncs.com/App/share_icon.png",
-            success: function (res) {
-                console.log("success:" + JSON.stringify(res));
-            },
-            fail: function (err) {
-                console.log("fail:" + JSON.stringify(err));
-            }
-          });
+            webUrl: 'http://m.aictb.com/'
+          },
+          success: ret => {
+            console.log(JSON.stringify(ret));
+          },fail: function(err) {
+            console.log("fail:" + JSON.stringify(err));
+          }
+        });
+          // uni.share({
+          //   provider: "weixin",
+          //   scene: "WXSceneSession",
+          //   type: 0,
+          //   href: `https://www.aictb.com/app/invite/?team_id=${this.shareItem.team_id}`,
+          //   title: `${uni.getStorageSync('userInfo').true_name}老师邀请您加入${this.shareItem.team_name}`,
+          //   summary: `打开AI错题宝,输入班级ID（${this.shareItem.classid}）,加入我的班级吧~`,
+          //   imageUrl: "https://aictb.oss-cn-shanghai.aliyuncs.com/App/share_icon.png",
+          //   success: function (res) {
+          //       console.log("success:" + JSON.stringify(res));
+          //   },
+          //   fail: function (err) {
+          //       console.log("fail:" + JSON.stringify(err));
+          //   }
+          // });
           break;
         case 1:
           uni.share({
@@ -146,8 +165,13 @@ export default {
       }
       this.$refs.uniPopupShare.close()
     },
-    InviteStudent(item){
-      console.log('InviteStudent',item)
+    InviteStudent(item,index){
+      if (index == 3) {
+        this.sharePath = `pages/login/share_ter?id=${item.teacher_id}&name=${item.team_name}&class_id=${item.classid}&school=${uni.getStorageSync('userInfo').school.name}&teacher_name=${uni.getStorageSync('userInfo').true_name}&team_id=${item.team_id}`
+      } else{
+        this.sharePath = `pages/login/share?id=${item.teacher_id}&name=${item.team_name}&class_id=${item.classid}&school=${uni.getStorageSync('userInfo').school.name}&teacher_name=${uni.getStorageSync('userInfo').true_name}`
+      }
+      console.log('InviteStudent',item,this.sharePath)
       this.shareItem = item
       this.$refs.uniPopupShare.open()
     },
