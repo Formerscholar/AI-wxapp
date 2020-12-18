@@ -386,16 +386,27 @@
 										title: '文件打开中',
 										icon: 'error'
 									})
-									uni.openDocument({
-										filePath: d.filename,
-										showMenu: true,
-										fail: () => {
-											uni.showToast({
-												title: '文件打开失败',
-												icon: 'error'
-											});
-										},
-									})
+                  uni.showModal({
+                  	title: '温馨提示',
+                  	content: '如无法打开,请使用邮箱下载!',
+                  	cancelColor: '#eeeeee',
+                  	confirmColor: '#FF0000',
+                  	showCancel: false,
+                  	success(res2) {
+                  		if (res2.confirm) {
+                  			uni.openDocument({
+                  				filePath: d.filename,
+                  				showMenu: true,
+                  				fail: () => {
+                  					uni.showToast({
+                  						title: '文件打开失败',
+                  						icon: 'error'
+                  					});
+                  				},
+                  			})
+                  		}
+                  	}
+                  });
 							    } else {
                     uni.showToast({
                       title: '下载失败',
@@ -509,16 +520,27 @@
 										title: '文件打开中',
 										icon: 'error'
 									})
-									uni.openDocument({
-										filePath: d.filename,
-										showMenu: true,
-										fail: () => {
-											uni.showToast({
-												title: '文件打开失败',
-												icon: 'error'
-											});
-										},
-									})
+                  uni.showModal({
+                  	title: '温馨提示',
+                  	content: '如无法打开,请使用邮箱下载!',
+                  	cancelColor: '#eeeeee',
+                  	confirmColor: '#FF0000',
+                  	showCancel: false,
+                  	success(res2) {
+                  		if (res2.confirm) {
+                  			uni.openDocument({
+                  				filePath: d.filename,
+                  				showMenu: true,
+                  				fail: () => {
+                  					uni.showToast({
+                  						title: '文件打开失败',
+                  						icon: 'error'
+                  					});
+                  				},
+                  			})
+                  		}
+                  	}
+                  });
 								} else {
 									uni.showToast({
 										title: '下载失败',
@@ -881,7 +903,9 @@
 								title: res.msg,
 								icon: 'none'
 							});
-						} else {
+						} else if (res.code == 300) {
+              this.$refs.popup2.open()
+            } else {
 							uni.showToast({
                 title:res.msg,
                 icon:'none'

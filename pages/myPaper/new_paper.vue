@@ -201,16 +201,27 @@
               			title: '文件打开中',
               			icon: 'error'
               		})
-              		uni.openDocument({
-              			filePath: d.filename,
-              			showMenu: true,
-              			fail: () => {
-              				uni.showToast({
-              					title: '文件打开失败',
-              					icon: 'error'
-              				});
-              			},
-              		})
+                  uni.showModal({
+                  	title: '温馨提示',
+                  	content: '如无法打开,请使用邮箱下载!',
+                  	cancelColor: '#eeeeee',
+                  	confirmColor: '#FF0000',
+                  	showCancel: false,
+                  	success(res2) {
+                  		if (res2.confirm) {
+                  			uni.openDocument({
+                  				filePath: d.filename,
+                  				showMenu: true,
+                  				fail: () => {
+                  					uni.showToast({
+                  						title: '文件打开失败',
+                  						icon: 'error'
+                  					});
+                  				},
+                  			})
+                  		}
+                  	}
+                  });
                   } else {
                     uni.showToast({
                       title: '下载失败',
@@ -328,16 +339,28 @@
                 			title: '文件打开中',
                 			icon: 'error'
                 		})
-                		uni.openDocument({
-                			filePath: d.filename,
-                			showMenu: true,
-                			fail: () => {
-                				uni.showToast({
-                					title: '文件打开失败',
-                					icon: 'error'
-                				});
-                			},
-                		})
+                    uni.showModal({
+                    	title: '温馨提示',
+                    	content: '如无法打开,请使用邮箱下载!',
+                    	cancelColor: '#eeeeee',
+                    	confirmColor: '#FF0000',
+                    	showCancel: false,
+                    	success(res2) {
+                    		if (res2.confirm) {
+                    			uni.openDocument({
+                    				filePath: d.filename,
+                    				showMenu: true,
+                    				fail: () => {
+                    					uni.showToast({
+                    						title: '文件打开失败',
+                    						icon: 'error'
+                    					});
+                    				},
+                    			})
+                    		}
+                    	}
+                    });
+                		
                 	} else {
                 		uni.showToast({
                 			title: '下载失败',
@@ -472,14 +495,12 @@
         		console.log('不需要答案解析下载', res);
         		this.fasong(1);
         	}
-        });        // #endif         // #ifdef APP-PLUS        console.log('requestSubscribeMessage', res);
-        let data = {
+        });        // #endif         // #ifdef APP-PLUS        let data = {
         	id: this.based_id,
         	token: this.token
         };
-        console.log('不需要答案解析下载', res);
         this.fasong(1);
-                // #endif
+        // #endif
 				
 			},
 			answerClick() {
@@ -503,12 +524,10 @@
         		console.log('答案解析下载', res);
         		this.fasong(2);
         	}
-        });        // #endif         // #ifdef APP-PLUS        console.log('requestSubscribeMessage', res);
-        let data = {
+        });        // #endif         // #ifdef APP-PLUS        let data = {
         	id: this.based_id,
         	token: this.token
         };
-        console.log('答案解析下载', res);
         this.fasong(2);        // #endif
 			},
 			get_teacher_info() {
@@ -568,8 +587,8 @@
               this.$refs.popup2.open();
             } else {
 							uni.showToast({
-										title:res.msg,
-										icon:'none'
+                title:res.msg,
+                icon:'none'
 							})
 						}
 					});
@@ -585,8 +604,8 @@
 							});
 						} else {
 							uni.showToast({
-										title:res.msg,
-										icon:'none'
+                title:res.msg,
+                icon:'none'
 							})
 						}
 					});
