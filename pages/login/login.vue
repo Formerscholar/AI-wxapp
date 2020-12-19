@@ -325,7 +325,7 @@
         }
       },
       wx_login() {
-        uni.setStorage({
+        uni.setStorageSync({
           key: 'type',
           data: this.loginmode
         })
