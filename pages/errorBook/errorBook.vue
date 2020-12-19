@@ -294,33 +294,33 @@
 			}
 		},
 		onLoad() {
-			this.email_arr = app.globalData.email;
-			this.token = uni.getStorageSync('token');
-			this.tpmid = app.globalData.settings.tmpid;
-			console.log('this.tpmid', this.tpmid);
-      this.is_vip = uni.getStorageSync('is_vip')
-      this.type = uni.getStorageSync('type');
-			if (this.type == 3) {
-				this.subject_id = -1;
-				this.wei_error_book();
-				this.generated_error_book();
-				uni.setNavigationBarTitle({
-					title: '我的试卷'
-				});
-				uni.setTabBarItem({
-					index: 1,
-					text: '我的试卷',
-					iconPath: '/static/imgs/icon/myPaper1.png',
-					selectedIconPath: '/static/imgs/icon/myPaper.png'
-				});
-			} else {
-				this.page = 1;
-				this.subject_fenlei();
-			}
-			this.all = true; //取消全选
+			
 		},
 		onShow() {
+      this.email_arr = app.globalData.email;
+      this.token = uni.getStorageSync('token');
+      this.tpmid = app.globalData.settings.tmpid;
+      console.log('this.tpmid', this.tpmid);
+      this.is_vip = uni.getStorageSync('is_vip')
       this.type = uni.getStorageSync('type');
+      if (this.type == 3) {
+      	this.subject_id = -1;
+      	this.wei_error_book();
+      	this.generated_error_book();
+      	uni.setNavigationBarTitle({
+      		title: '我的试卷'
+      	});
+      	uni.setTabBarItem({
+      		index: 1,
+      		text: '我的试卷',
+      		iconPath: '/static/imgs/icon/myPaper1.png',
+      		selectedIconPath: '/static/imgs/icon/myPaper.png'
+      	});
+      } else {
+      	this.page = 1;
+      	this.subject_fenlei();
+      }
+      this.all = true; //取消全选
 			if (this.type == 3) {
 				this.subject_id = -1;
 				this.generated_error_book();
