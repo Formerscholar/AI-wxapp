@@ -298,8 +298,8 @@
 			this.token = uni.getStorageSync('token');
 			this.tpmid = app.globalData.settings.tmpid;
 			console.log('this.tpmid', this.tpmid);
-			this.type = uni.getStorageSync('type');
       this.is_vip = uni.getStorageSync('is_vip')
+      this.type = uni.getStorageSync('type');
 			if (this.type == 3) {
 				this.subject_id = -1;
 				this.wei_error_book();
@@ -320,6 +320,7 @@
 			this.all = true; //取消全选
 		},
 		onShow() {
+      this.type = uni.getStorageSync('type');
 			if (this.type == 3) {
 				this.subject_id = -1;
 				this.generated_error_book();
