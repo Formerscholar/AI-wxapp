@@ -522,7 +522,7 @@
         this.exercises_id = id;
         let data = {
           token: this.token,
-          //know_point:this.know_point_list[this.num_z].know_point_id,
+          know_point:this.know_point_list[this.num_z].know_point_id,
           type: this.question_id,
           subject_id: this.subject_id,
           exercises_id: id,
