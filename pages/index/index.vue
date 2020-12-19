@@ -148,7 +148,7 @@
           <image class="home_vip_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_icon.png" mode="widthFix"
            @click="closeTotul"></image>
         </view>
-       <view class="centent_box">
+       <view class="centent_box" @click="pageToVip">
          <div class="tit_text">您的会员将于{{setTimeType(vip_time * 1000) || 0}}到期</div>
        </view>
 			<!-- <image class="home_vip_image" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/home_vip_image.png" mode="widthFix"
