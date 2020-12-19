@@ -96,11 +96,14 @@
         pass_show: false
       };
     },
+    onLoad() {
+      this.loginmode = 4
+      this.type = 4
+    },
     onShow() {
       // #ifdef MP-WEIXIN
       this.get_wechat_login_tip()
       // #endif
-     this.setlogin(4)
     },
     methods: {
       ...mapMutations(['login', 'set_type']),
@@ -144,7 +147,7 @@
           .then(res => {
             if (res.code == 200) {
               this.login(res.data)
-              
+
               if (res.data.is_bind == 0) {
                 uni.navigateTo({
                   url: '/pages/login/bindinfo'
@@ -152,7 +155,7 @@
               } else {
                 if (res.data.mobile == '') {
                   this.$refs.popup.open()
-                } else{
+                } else {
                   uni.reLaunch({
                     url: '/pages/index/index'
                   })
@@ -322,7 +325,10 @@
         }
       },
       wx_login() {
-        uni.setStorageSync('type', this.loginmode)
+        uni.setStorage({
+          key: 'type',
+          data: this.loginmode
+        })
         console.log("App微信拉起授权")
         let _this = this;
         var weixinService = null;
