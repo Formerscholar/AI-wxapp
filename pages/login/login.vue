@@ -325,10 +325,7 @@
         }
       },
       wx_login() {
-        uni.setStorageSync({
-          key: 'type',
-          data: this.loginmode
-        })
+        uni.setStorageSync('type', this.loginmode)
         console.log("App微信拉起授权")
         let _this = this;
         var weixinService = null;
