@@ -225,6 +225,7 @@
 			if (this.token && this.type == 4) {
 				this.get_student();
 			}
+			// #ifdef MP-WEIXIN
 			let _this = this;
 			// 查看是否授权
 			uni.getSetting({
@@ -251,6 +252,7 @@
 					}
 				}
 			})
+			// #endif
 		},
 		onShareAppMessage() {
 			return {
