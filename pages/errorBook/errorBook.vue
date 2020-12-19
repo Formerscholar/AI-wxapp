@@ -303,24 +303,6 @@
       console.log('this.tpmid', this.tpmid);
       this.is_vip = uni.getStorageSync('is_vip')
       this.type = uni.getStorageSync('type');
-      if (this.type == 3) {
-      	this.subject_id = -1;
-      	this.wei_error_book();
-      	this.generated_error_book();
-      	uni.setNavigationBarTitle({
-      		title: '我的试卷'
-      	});
-      	uni.setTabBarItem({
-      		index: 1,
-      		text: '我的试卷',
-      		iconPath: '/static/imgs/icon/myPaper1.png',
-      		selectedIconPath: '/static/imgs/icon/myPaper.png'
-      	});
-      } else {
-      	this.page = 1;
-      	this.subject_fenlei();
-      }
-      this.all = true; //取消全选
 			if (this.type == 3) {
 				this.subject_id = -1;
 				this.generated_error_book();
@@ -334,7 +316,16 @@
 					selectedIconPath: '/static/imgs/icon/myPaper.png'
 				});
 			} else {
-				this.is_vip = uni.getStorageSync('is_vip');
+        uni.setNavigationBarTitle({
+        	title: '错题本'
+        });
+        uni.setTabBarItem({
+        	index: 1,
+        	text: '错题本',
+        	iconPath: '/static/imgs/icon/cuotiben1.png',
+        	selectedIconPath: '/static/imgs/icon/cuotiben.png'
+        });
+        this.subject_fenlei();
 				this.page = 1;
 			}
 			this.wei_error_book();

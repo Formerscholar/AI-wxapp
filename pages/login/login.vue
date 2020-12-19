@@ -96,14 +96,11 @@
         pass_show: false
       };
     },
-    onLoad() {
-      this.loginmode = 4
-      this.type = 4
-    },
     onShow() {
       // #ifdef MP-WEIXIN
       this.get_wechat_login_tip()
       // #endif
+     this.setlogin(4)
     },
     methods: {
       ...mapMutations(['login', 'set_type']),
