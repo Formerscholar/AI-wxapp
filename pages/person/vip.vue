@@ -39,7 +39,6 @@
       <text>学情报告统计错题数据</text>
       <text>总结学习过程，方便提优补差</text>
     </view>
-    <!-- # ifdef endif -->
     <!-- #ifdef APP-PLUS -->
     <view class="redio_warp" v-if="platform != 'ios'">
       <text class="redio_title">
@@ -274,7 +273,10 @@
   }
 
   .redio_warp {
-    padding: 0 55rpx;
+    margin: 0 55rpx;
+    margin-top: 62rpx;
+    padding-top: 50rpx;
+    border-top: 1px solid #e5e5e5;
     .redio_title{
       font-size: 26rpx;
       font-family: PingFang SC;
@@ -387,6 +389,7 @@
       color: #cdcdcd;
     }
   }
+  
 
   .b-t {
     text-align: center;
