@@ -250,7 +250,7 @@
       //知识点
       get_konw() {
         if (this.subject_id == 1) return false;
-        if (uni.getStorageSync('type') == 3) {
+        if (this.type  == 3) {
           var req = this.$api.teacher_know_point({
             token: this.token
           });
@@ -306,7 +306,7 @@
       exercise_selection() {
         console.log('123', this.know_point_list);
         console.log('this.know_point_list[this.num_z]', this.know_point_list[this.num_z]?.id);
-        if (uni.getStorageSync('type') == 3) {
+        if (this.type == 3) {
           let data = {
             token: this.token,
             // version_id:this.version_list[this.num_b].version_id,
@@ -353,7 +353,7 @@
       },
       //加入错题
       join_error(i, id) {
-        if (uni.getStorageSync('type') == 3) {
+        if (this.type == 3) {
           var req = this.$api.teacher_join_error({
             token: this.token,
             exercises_id: id,
@@ -395,7 +395,7 @@
         });
       },
       join_error2(i, id) {
-        if (uni.getStorageSync('type') == 3) {
+        if (this.type == 3) {
           var req = this.$api.teacher_join_error({
             token: this.token,
             exercises_id: id
@@ -530,7 +530,13 @@
           size: this.size_change
         };
         //consle.log('data2',this.know_point_list[this.num_z].know_point_id)
-        this.$api.same_type(data).then(res => {
+        let datas 
+        if (this.type == 3) {
+          datas = this.$api.teacher_same_type(data)
+        } else{
+          datas = this.$api.same_type(data)
+        }
+        datas.then(res => {
           console.log(res);
           if (res.code == 200) {
             this.same_type = res.data.exercises_list;
