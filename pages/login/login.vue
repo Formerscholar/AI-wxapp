@@ -52,13 +52,11 @@
           请选择您的身份
         </view>
         <view class="weixin">
-          <button @click="bindgetuserinfos">我是学生(家长)</button>
-          <button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event)">我是老师</button>
+          <button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,4)">我是学生(家长)</button>
+          <button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,3)">我是老师</button>
         </view>
         <!-- #endif -->
       </view>
-
-
 
       <uni-popup ref="popup" type="center">
         <view class="bindphone">
@@ -68,6 +66,17 @@
           <button open-type="getPhoneNumber" @getphonenumber="getphone">授权</button>
         </view>
       </uni-popup>
+      <!-- privacyPolicy -->
+      <!-- <uni-popup ref="privacytip" type="center">
+        <view class="privacyPolicytip">
+          <view class="privacyTitle">
+            注册协议与隐私协议
+          </view>
+          <view class="privacyText">
+            在此特别提醒您，在您注册成为AI错题宝用户的过程中，您需要完成我们的注册流程并通过点击同意的形式在线签署一下协议，请您务必仔细阅读、充分理解协议中的条款内容后再点击同意：《AI错题宝用户注册协议》《AI错题宝隐私权政策》，点击同意及标书您已阅读并同意《AI错题宝用户注册协议》与《AI错题宝隐私权政策》，【请您注意】如果您不同意上述协议或其中任何条款约定，请您停止注册。如您对以上协议的内容有任何疑问，您可随时与AI错题宝客服联系!
+          </view>
+        </view>
+      </uni-popup> -->
   </view>
 </template>
 
@@ -99,6 +108,7 @@
     onLoad() {
       this.loginmode = 4
       this.type = 4
+      // this.$refs.privacytip.open()
     },
     onShow() {
       // #ifdef MP-WEIXIN
@@ -135,50 +145,42 @@
           data: i
         })
       },
-      bindgetuserinfos() {
+      bindgetuserinfo(e, i) {
         uni.setStorage({
           key: 'type',
-          data: 4,
+          data: i,
         })
-        this.type = 4
-        this.$api.student_login({
-            openid: this.openid
-          })
-          .then(res => {
-            if (res.code == 200) {
-              this.login(res.data)
-
-              if (res.data.is_bind == 0) {
-                uni.navigateTo({
-                  url: '/pages/login/bindinfo'
-                })
-              } else {
-                if (res.data.mobile == '') {
-                  this.$refs.popup.open()
-                } else {
-                  uni.reLaunch({
-                    url: '/pages/index/index'
-                  })
-                }
-              }
-            } else if (res.code == 500) {
-              this.$refs.popup.open()
-            }
-          })
-      },
-      bindgetuserinfo(e) {
-        uni.setStorage({
-          key: 'type',
-          data: 3,
-        })
-        this.type = 3
+        this.type = i
         console.log('bindgetuserinfo', e)
         this.userInfo = e.detail
         this.userInfo['openid'] = this.openid
         uni.setStorageSync('info', e.detail.userInfo) //头像  姓名
         console.log(this.userInfo)
-        this.$api.teacher_logins(this.userInfo)
-          .then(res => {
+        if (i == 4) {
+          this.$api.student_login(this.userInfo)
+            .then(res => {
+              if (res.code == 200) {
+                this.login(res.data)
+
+                if (res.data.is_bind == 0) {
+                  uni.navigateTo({
+                    url: '/pages/login/bindinfo'
+                  })
+                } else {
+                  if (res.data.mobile == '') {
+                    this.$refs.popup.open()
+                  } else {
+                    uni.reLaunch({
+                      url: '/pages/index/index'
+                    })
+                  }
+                }
+              } else if (res.code == 500) {
+                this.$refs.popup.open()
+              }
+            })
+        } else {
+          this.$api.teacher_logins(this.userInfo).then(res => {
             if (res.code == 200) {
               this.login(res.data)
               uni.setStorage({ //缓存用户登陆状态
@@ -206,6 +208,7 @@
               this.$refs.popup.open()
             }
           })
+        }
       },
       getphone(e) {
         if (this.type == 3) {
@@ -311,6 +314,10 @@
         uni.navigateTo({
           url: '/pages/login/register?type=' + this.type
         })
+      },
+      privacyPolicy() {
+        // 弹窗 this.toReg()
+        this.$refs.privacytip.open()
       },
       topassword() {
         uni.navigateTo({
@@ -613,6 +620,19 @@
       font-size: 32rpx;
       border-radius: 20rpx;
       background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
+    }
+  }
+  .privacyPolicytip{
+    background: #fff;
+    height: 600rpx;
+    border-radius: 20rpx;
+    margin: 0 20rpx;
+    padding: 15rpx;
+    .privacyTitle{
+      text-align: center;
+    }
+    .privacyText{
+      margin-top: 15rpx;
     }
   }
 
