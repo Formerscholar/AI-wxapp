@@ -19,7 +19,7 @@
       <checkbox-group @change="radioChange">
         <label class="radio_warp">
           <checkbox :value="true" :checked="isCheck" color="#E50304" />
-          <view class="text"> 注册即视为同意<text class="pageTo" @click.stop="pagetoAbout">《注册协议》</text></view>
+          <view class="text"> 注册即视为同意<text class="pageTo" @click.stop="pagetoAbout(0)">《服务协议》</text><text class="pageTo" @click.stop="pagetoAbout(1)">《隐私政策》</text></view>
         </label>
       </checkbox-group>
     </view>
@@ -157,10 +157,16 @@
           }
         })
       },
-      pagetoAbout: function() {
-        uni.navigateTo({
-          url: "/pages/login/agreement?type=register"
-        });
+      pagetoAbout: function(idx) {
+       if (idx) {
+         uni.navigateTo({
+           url: "/pages/login/agreement?type=income"
+         });
+       } else{
+         uni.navigateTo({
+           url: "/pages/login/agreement?type=register"
+         });
+       }
       }
     }
   };

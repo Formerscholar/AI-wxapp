@@ -14,6 +14,15 @@
       const {type} = options
       console.log('options',options)
       this.type = type
+      if (type == 'income') {
+        uni.setNavigationBarTitle({
+        	title: '隐私政策'
+        });
+      } else if(type == 'register'){
+        uni.setNavigationBarTitle({
+        	title: '服务协议'
+        });
+      }
     },
     onShow() {
       this.get_agreements()
