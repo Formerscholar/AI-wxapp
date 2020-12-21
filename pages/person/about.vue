@@ -28,12 +28,14 @@
 				<text class="infoCon">{{ email }}</text>
 			</view>
     </view>
+	<!-- #ifdef APP-PLUS -->
     <view class="center_text">
       <view class="protocol">
         <view class="privacy" @click="pageTopro(0)">服务协议</view>|<view class="privacy" @click="pageTopro(1)">隐私政策</view>
       </view>
     	<text class="info">扬州骐骥信息科技有限公司</text>
     </view>
+	<!-- #endif -->
 	</view>
 </template>
 
