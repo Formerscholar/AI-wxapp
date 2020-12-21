@@ -33,7 +33,7 @@
         </view>
         <view class="login-btn" @click="login2">登 录</view>
         <view class="text">
-          <text @click="toReg()">立即注册</text>
+          <text @click="privacyPolicy()">立即注册</text>
           <text @click="topassword()">忘记密码?</text>
         </view>
         <view class="wx_box">
@@ -67,7 +67,7 @@
         </view>
       </uni-popup>
       <!-- privacyPolicy -->
-      <!-- <uni-popup ref="privacytip" type="center">
+      <uni-popup ref="privacytip" type="center">
         <view class="privacyPolicytip">
           <view class="privacyTitle">
             注册协议与隐私协议
@@ -75,8 +75,12 @@
           <view class="privacyText">
             在此特别提醒您，在您注册成为AI错题宝用户的过程中，您需要完成我们的注册流程并通过点击同意的形式在线签署一下协议，请您务必仔细阅读、充分理解协议中的条款内容后再点击同意：《AI错题宝用户注册协议》《AI错题宝隐私权政策》，点击同意及标书您已阅读并同意《AI错题宝用户注册协议》与《AI错题宝隐私权政策》，【请您注意】如果您不同意上述协议或其中任何条款约定，请您停止注册。如您对以上协议的内容有任何疑问，您可随时与AI错题宝客服联系!
           </view>
+          <view class="btns">
+            <view class="btn agreebtn" @click="toReg">同意</view>
+            <view class="btn noagreebtn" @click="showpriTip">不同意</view>
+          </view>
         </view>
-      </uni-popup> -->
+      </uni-popup>
   </view>
 </template>
 
@@ -108,7 +112,6 @@
     onLoad() {
       this.loginmode = 4
       this.type = 4
-      // this.$refs.privacytip.open()
     },
     onShow() {
       // #ifdef MP-WEIXIN
@@ -316,8 +319,13 @@
         })
       },
       privacyPolicy() {
-        // 弹窗 this.toReg()
         this.$refs.privacytip.open()
+      },
+      showpriTip(){
+        uni.showToast({
+          title:'请阅读协议,并同意!',
+          icon:'none'
+        })
       },
       topassword() {
         uni.navigateTo({
@@ -624,15 +632,45 @@
   }
   .privacyPolicytip{
     background: #fff;
-    height: 600rpx;
     border-radius: 20rpx;
     margin: 0 20rpx;
-    padding: 15rpx;
+    padding-top: 20rpx;
+    overflow: hidden;
     .privacyTitle{
       text-align: center;
+      font-size: 36rpx;
+      font-family: 'PingFang SC';
+      font-weight: 500;
+      color: #333333;
     }
     .privacyText{
       margin-top: 15rpx;
+      font-size: 30rpx;
+      padding: 30rpx;
+      font-family: 'PingFang SC';
+      font-weight: 500;
+      color: #333333;
+    }
+    .btns{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 15rpx;
+      .btn{
+        flex: 1;
+        height: 80rpx;
+        border-radius: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .agreebtn{
+        background: linear-gradient(86deg, #E50304, #F74300);
+        color: #fff;
+      }
+      .noagreebtn{
+        background-color: #e0e0e0;
+      }
     }
   }
 
