@@ -149,7 +149,6 @@
             .then(res => {
               if (res.code == 200) {
                 this.login(res.data)
-
                 if (res.data.is_bind == 0) {
                   uni.navigateTo({
                     url: '/pages/login/bindinfo'

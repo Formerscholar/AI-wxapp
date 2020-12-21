@@ -5,7 +5,7 @@
       <view class="teacherName">
         <text>{{ teacher_name }}老师</text>
       </view>
-      <view class="sf">邀请您加入{{ school }}{{ name }}</view>
+      <view class="sf">邀请您加入{{ school_name }}{{ name }}</view>
       <view class="input"><input type="text" v-model="true_name" placeholder="请输入你的姓名" placeholder-class="p-c" /></view>
       <button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event, 4)">确认加入</button>
     </view>
@@ -35,7 +35,7 @@
         id: '',
         true_name: '',
         name: '',
-        school: '',
+        school_name: '',
         class_id: '',
         school_id: '',
         province_id: '',
@@ -57,12 +57,12 @@
       if (uni.getStorageSync('userInfo').token) {
         this.token = uni.getStorageSync('userInfo').token;
       }
-      this.id = options.id;
-      this.name = options.name;
+      // this.id = options.id;
+      // this.name = options.name;
       this.class_id = options.class_id;
-      this.school = options.school;
-      this.teacher_name = options.teacher_name;
-      console.log('this.school', this.school);
+      // this.school = options.school;
+      // this.teacher_name = options.teacher_name;
+      // console.log('this.school', this.school);
       this.get_wx_login();
     },
     methods: {
@@ -74,12 +74,15 @@
           })
           .then(res => {
             console.log('get_team_location', res);
-            this.school_id = res.data?.school_id || 0;
-            this.province_id = res.data?.area?.province_id || 0;
-            this.city_id = res.data?.area?.city_id || 0;
-            this.area_id = res.data?.area?.area_id || 0;
-            this.grade_ids = res.data?.grade_id || 0;
-            this.team_ids = res.data?.id || 0;
+            this.school_id = res.data.school_id;
+            this.province_id = res.data.province_id;
+            this.city_id = res.data.city_id;
+            this.area_id = res.data.area_id;
+            this.grade_ids = res.data.grade_id;
+            this.team_ids = res.data.id;
+            this.school_name = res.data.school_name;
+            this.teacher_name = res.data.teacher_name;
+            this.name = res.data.grade_name+res.data.name;
             console.log('if (!res.data.isbind)', this.school_id);
           });
       },
@@ -123,8 +126,7 @@
             code: this.code
           })
           .then(res => {
-            this.openid_tmp = res.data.openid;
-            console.log(this.openid_tmp);
+            this.openid = res.data.openid;
             if (res.code == 200) {
               this.user_id = res.data.user_id;
               this.true_name = res.data.true_name;
@@ -168,7 +170,9 @@
           key: 'type',
           data: i
         });
-        this.$api.wx_login(e.detail).then(res => {
+		let data = e.detail;
+		data.openid = this.openid;
+        this.$api.update_userinfo(data).then(res => {
           if (this.is_mobile_show) {
             this.$refs.popup.open()
           } else {
@@ -180,7 +184,7 @@
       getphone(e) {
         console.log('bindgetuserinfo', e);
         this.userInfo = e.detail;
-        this.userInfo["openid"] = this.openid_tmp
+        this.userInfo["openid"] = this.openid
         this.$api.mobile_login(this.userInfo).then(res => {
           if (res.code == 200) {
             this.login(res.data)

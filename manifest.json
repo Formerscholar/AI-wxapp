@@ -2,11 +2,21 @@
     "name" : "AI错题宝",
     "appid" : "__UNI__B8F1D43",
     "description" : "",
-    "versionName" : "1.0.2",
-    "versionCode" : 102,
+    "versionName" : "1.0.10",
+    "versionCode" : 1010,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
+        "privacy" : {
+            "prompt" : "template",
+            "template" : {
+                //prompt取值为template时有效，用于配置模板提示框上显示的内容
+                "title" : "服务协议和隐私政策",
+                "message" : "　　尊敬的用户，欢迎您注册成为本应用用户，在注册前请您仔细阅读<a href='https://www.aictb.com/agreement/'>《用户协议》</a>及<a href='https://www.aictb.com/privacy_policy/'>《隐私政策》</a>，了解我们对您使用我们APP制定的规则，您个人信息的处理以及申请权限的目的和使用范围。<br/>　　经您确认后，本用户协议和隐私权政策即在您和本应用之间产生法律效力。请您务必在注册之前认真阅读全部服务协议内容，如有任何疑问，可向本应用客服咨询。",
+                "buttonAccept" : "我知道了", //继续下一步
+                "buttonRefuse" : "暂不使用" //退出下载
+            }
+        },
         "usingComponents" : true,
         "nvueCompiler" : "uni-app",
         "compilerVersion" : 3,
