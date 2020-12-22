@@ -8,19 +8,21 @@
 		onLaunch: function() {
 			// #ifdef APP-PLUS
 			uni.request({  
-				url: "http://api.aictb.com/v3/update/",  
+				url: "https://api.aictb.com/v3/update/",  
 				data: {  
 					"appid": plus.runtime.appid,  
 					"version": plus.runtime.version  
 				},  
 				success: (res) => {  
+					console.log(res)
+					let data = res.data;
 					if (res.statusCode == 200 && res.data.status === 1) {  
 						uni.showModal({ //提醒用户更新  
 							title: "更新提示",   
-							content: res.data.note,  
+							content: data.note,  
 							success: (res) => {  
 								if (res.confirm) {  
-									plus.runtime.openURL(res.data.url);  
+									plus.runtime.openURL(data.url);  
 								}  
 							}  
 						})  
@@ -29,7 +31,7 @@
 			});
 			plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) {  
 				uni.request({  
-					url: 'http://api.aictb.com/v3/update/wgt/',  
+					url: 'https://api.aictb.com/v3/update/wgt/',  
 					data: {  
 						version: widgetInfo.version,  
 						name: widgetInfo.name  
