@@ -11,26 +11,26 @@
     <view class="cardCon" v-if="classList">
       <view v-for="(item, i) of classList" :key="i" class="card">
         <view class="flex">
-          <view class="up" @click="add(item)">
+          <view class="up" >
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/grade.png" />
             <view class="upCon">
               <view class="upCon_text">
-                {{ item.school_name }}
+                {{ item.get_school.name }}
               </view>
               <view class="upCon_tip">
-                {{ item.team_name }}
+                {{ item.get_grade.name + item.name }}
               </view>
             </view>
           </view>
           <view class="up">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/invent.png" />
-            <button class="upCon" @click="join(item.classid,item.id)">加入班级</button>
+            <button class="upCon" @click="join(item.id)">加入班级</button>
           </view>
         </view>
         <view class="flex">
-          <view class="down" @click="add(item)">班级ID:&nbsp;{{ item.classid }}</view>
-          <view v-if="type == 4" class="down" @click="add(item)">学生人数:&nbsp;{{ item.team_student_count }}人</view>
-          <view v-else class="down" @click="add(item)">老师人数:&nbsp;{{ item.team_teacher_count }}人</view>
+          <view class="down" >班级ID:&nbsp;{{ item.classid }}</view>
+          <view v-if="type == 4" class="down" >学生人数:&nbsp;{{ item.get_user_count }}人</view>
+          <view v-else class="down" >老师人数:&nbsp;{{ item.team_teacher_count }}人</view>
         </view>
       </view>
     </view>
@@ -76,13 +76,13 @@
         } else {
           result = this.$api.search_team({
             token: this.token,
-            key: this.num
+            keyword: this.num
           })
         }
         result.then(res => {
           console.log(res);
           if (res.code == 200) {
-            this.classList = res.data;
+            this.classList = res.data.team;
           } else {
             uni.showToast({
               title: res.msg,
@@ -91,7 +91,7 @@
           }
         });
       },
-      join(classid, id) {
+      join( id) {
         let result
         if (this.type == 3) {
           result = this.$api.teacher_join_team({
@@ -101,7 +101,7 @@
         } else {
           result = this.$api.join_team({
             token: this.token,
-            classid: classid
+            team_id: id
           })
         }
         result.then(res => {

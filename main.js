@@ -1,19 +1,27 @@
 import Vue from 'vue'
 import store from './store'
 import App from './App'
-
-//封装的请求
-//封装的请求
+import {
+  setTimer
+} from './utils'
+import filters from './utils/filters'
 import api from './common/api.js'
+
 
 Vue.config.productionTip = false
 
-Vue.prototype.$api=api
+
+Object.keys(filters).map(v => {
+  Vue.filter(v, filters[v])
+})
+
+Vue.prototype.$api = api
 Vue.prototype.$store = store
+Vue.prototype.$setTimer = setTimer
 
 App.mpType = 'app'
 
 const app = new Vue({
-    ...App
+  ...App
 })
 app.$mount()

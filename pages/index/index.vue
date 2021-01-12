@@ -3,7 +3,7 @@
     <view class="bg"></view>
     <swiper class="top" circular="true" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000"
       indicator-color="white" indicator-active-color="#e50304">
-      <swiper-item v-for="(item, i) of banner_list" :key="i" v-if="item.type == type">
+      <swiper-item v-for="(item, i) of banner_list" :key="i" >
         <image :src="item.img" mode=""></image>
       </swiper-item>
     </swiper>
@@ -97,7 +97,7 @@
           <view class="title">
             <text>我的教辅</text>
             <view>
-              <text class="remark_red">{{ student_info.textbook_count ? student_info.textbook_count : 0 }}</text>
+              <text class="remark_red">{{ student_info.userTextbookCount || 0 }}</text>
               本
             </view>
           </view>
@@ -108,7 +108,7 @@
           <view class="title">
             <text>校本试卷</text>
             <view>
-              <text class="remark_red">{{ student_info.paper_total ? student_info.paper_total : 0 }}</text>
+              <text class="remark_red">{{ student_info.schoolResourcesCount || 0 }}</text>
               份
             </view>
           </view>
@@ -121,7 +121,7 @@
           <view class="title">
             <text>名校资源</text>
             <view>
-              <text class="remark_red">{{ student_info.recent_paper ? student_info.recent_paper : 0 }}</text>
+              <text class="remark_red">{{ student_info.examsSchoolCount || 0 }}</text>
               份
             </view>
           </view>
@@ -132,7 +132,7 @@
           <view class="title">
             <text>学情报告</text>
             <view>
-              <text class="remark_red">{{ student_info.error_exercises_total ? student_info.error_exercises_total : 0 }}</text>
+              <text class="remark_red">{{ student_info.userExercisesCount || 0 }}</text>
               道错题
               <!-- 知识分布为：<text v-for="(item,i) of student_info.analysis_detail" :key='i'>{{item.name+" "}}</text> -->
             </view>
@@ -348,25 +348,24 @@
         let _this = this;
         let istol = uni.getStorageSync('istol')
         let istolbool = uni.getStorageSync('istolbool')
-        _this.$api.student_index({
-          token: _this.token
-        }).then(res => {
-          console.log(res);
+        _this.$api.student_index().then(res => {
+          console.log(res.data);
+          _this.banner_list = res.data.banner;
           _this.student_info = res.data;
-          _this.is_vip = res.data.is_vip;
-          _this.vip_time = res.data.vip_time;
-          _this.invest = res.data.invest;
-          _this.renew = res.data.renew;
-          if (res.data.renew && istol === new Date().getDate() && istolbool) {
-            _this.is_totul = true
-            uni.setStorageSync('istolbool', false)
-          } else {
-            _this.is_totul = false
-          }
-          uni.setStorage({
-            key: 'is_vip',
-            data: this.is_vip
-          });
+          // _this.is_vip = res.data.is_vip;
+          // _this.vip_time = res.data.vip_time;
+          // _this.invest = res.data.invest;
+          // _this.renew = res.data.renew;
+          // if (res.data.renew && istol === new Date().getDate() && istolbool) {
+          //   _this.is_totul = true
+          //   uni.setStorageSync('istolbool', false)
+          // } else {
+          //   _this.is_totul = false
+          // }
+          // uni.setStorage({
+          //   key: 'is_vip',
+          //   data: this.is_vip
+          // });
         });
       },
       //获取老师信息

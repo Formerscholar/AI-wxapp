@@ -63,16 +63,16 @@ export default {
 					success: res => {
 						for (let i = 0; i < res.tempFilePaths.length; i++) {
 							uni.uploadFile({
-								url: _this.$api.url + 'main/upload_pic',
+								url: _this.$api.url + 'applets/getUploadImage',
 								filePath: res.tempFilePaths[i],
-								name: 'file',
+								name: 'img_url',
 								formData: {
 									token: this.token,
-									path: 'feedback'
+									file_path: 'wx_xcx/feedback/'
 								},
 								success: res => {
-									_this.picData = res.data;
-									console.log('_this.picData', _this.picData);
+									_this.picData = JSON.parse(res.data).data.img;
+									console.log('_this.picData', _this.picData );
 									_this.imgSrc.push(_this.picData);
 									console.log('_this.imgSrc', _this.imgSrc);
 								}

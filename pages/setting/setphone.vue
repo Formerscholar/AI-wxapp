@@ -66,7 +66,6 @@ export default {
 				return;
 			}
 			let data = {
-				old_mobile: this.old_mobile,
 				new_mobile: this.new_mobile,
 				verify_code: this.code2
 			};

@@ -2,8 +2,8 @@ import {
   request
 } from './util.js'
 
-const ApiUrl = 'https://api.aictb.com/v3/' //生产环境
-
+const ApiUrl = 'http://test.aictb.com/' //新生产环境
+// const ApiUrl = 'https://api.aictb.com/v3/' //生产环境
 const appApiUrl = 'https://api.aictb.com/app/' //生产环境
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
   // student
   app_login: data => request(appApiUrl + 'user/login/', data), //学生登录
   app_wx_login: data => request(appApiUrl + 'user/wx_login/', data), //
-  get_app_verify_code: data => request(appApiUrl + 'user/get_verify_code/', data), //学生获取验证码
+  get_app_verify_code: data => request(appApiUrl + 'applets/sendMobileCode/', data), //学生获取验证码
   get_app_user_register: data => request(appApiUrl + 'user/register/', data), //学生注册
   get_app_user_bind: data => request(appApiUrl + 'user/bind_info/', data), //学生绑定信息
   get_app_user_search_password: data => request(appApiUrl + 'user/search_password/', data), //学生忘记密码
@@ -40,7 +40,7 @@ module.exports = {
   wx_student_login: data => request(ApiUrl + 'user/wx_student_login/', data), //登录
   mobile_login: data => request(ApiUrl + 'user/mobile_login/', data), //新登录
   
-  student_index: data => request(ApiUrl + 'user/index/', data), //学生端首页信息	
+  student_index: data => request(ApiUrl + 'applets/studentIndex/', data), //学生端首页信息	
   newest_paper: data => request(ApiUrl + 'user/newest_paper/', data), //名校资源
   my_study_analysis: data => request(ApiUrl + 'user/my_study_analysis/', data), //学情报告
   my_study_analysis_exercise: data => request(ApiUrl + 'user/my_study_analysis_exercise/', data), //学情报告知识点详情
@@ -65,14 +65,15 @@ module.exports = {
   join_error: data => request(ApiUrl + 'user/join_error_exercises/', data), //加入/取消错题
   same_type: data => request(ApiUrl + 'user/same_type_exercises/', data), //章节课时习题 同类型题目
   //个人信息	
-  get_user_info: data => request(ApiUrl + 'user/get_user_info/', data), //获取用户信息
-  save_email: data => request(ApiUrl + 'user/save_email/', data), //绑定邮箱
-  feedback: data => request(ApiUrl + 'user/feedback/', data), //意见反馈
-  change_mobile: data => request(ApiUrl + 'user/change_mobile/', data), //修改手机号
+  get_user_info: data => request(ApiUrl + 'applets/getPerson/', data), //获取用户信息
+  save_email: data => request(ApiUrl + 'applets/editPersonEmail/', data), //绑定邮箱
+  feedback: data => request(ApiUrl + 'applets/feedback/', data), //意见反馈
+  change_mobile: data => request(ApiUrl + 'applets/editPersonMobile/', data), //修改手机号
   change_grade: data => request(ApiUrl + 'user/change_grade/', data), //修改手机号
   vip_info: data => request(ApiUrl + 'user/vip/', data), //vip信息
-  change_user_info: data => request(ApiUrl + 'user/change_user_info/', data), //修改个人信息
-  join_team: data => request(ApiUrl + 'user/join_team/', data), //邀请学生加入班级
+  change_user_info: data => request(ApiUrl + 'applets/editPersonGender/', data), //修改个人信息
+  change_user_name:data => request(ApiUrl + 'applets/editPersonName/', data), //修改个人信息
+  join_team: data => request(ApiUrl + 'applets/joinTeam/', data), //邀请学生加入班级
   send_msg: data => request(ApiUrl + 'user/send_msg/', data),
   get_download: data => request(ApiUrl + 'user/download_based/', data),
   orc_one: data => request(ApiUrl + 'user/orc_one/', data),
@@ -153,16 +154,15 @@ module.exports = {
   banner: data => request(ApiUrl + 'main/banner/', data), //首页海报图
   subject: data => request(ApiUrl + 'main/subject/', data), //学科分类
   get_grade: data => request(ApiUrl + 'main/grade/', data), //班级
-  get_agreement: data => request(ApiUrl + 'main/get_agreement/', data), //协议说明
+  get_agreement: data => request(ApiUrl + 'applets/aboutWe/', data), //协议说明
   get_school: data => request(ApiUrl + 'main/_get_school_list_by_area/', data), //学校
   level: data => request(ApiUrl + 'main/exercises_level/', data), //习题难度
   exercise_type: data => request(ApiUrl + 'main/exercises_type/', data), //题型
   version: data => request(ApiUrl + 'question/version/', data), //教辅版本
   get_semester: data => request(ApiUrl + 'main/get_semester/', data), //学期
   get_exercise_analysis: data => request(ApiUrl + 'exercises/get_exercise_analysis/', data), //查看解析
-  search_team: data => request(ApiUrl + 'main/search_team/', data), //搜索班级
+  search_team: data => request(ApiUrl + 'applets/searchTeam/', data), //搜索班级
   get_team_subject: data => request(ApiUrl + 'main/get_team_subject/', data), //邀请老师的学科下拉列表
   get_team_location: data => request(ApiUrl + "main/get_team_location/", data),
-  get_agreement : data => request(ApiUrl + 'main/get_agreement/', data),// 注册协议
   get_wechat_login : data => request(ApiUrl + 'wechat/login/', data),// 默认执行登录
 }

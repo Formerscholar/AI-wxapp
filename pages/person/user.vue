@@ -18,15 +18,15 @@
 			<view class="center">
 				<text>性别</text>
 				<picker mode="selector" :range="sex" range-key="name" @change="bindChange2" class="infoCon">
-					<view class="picker">{{ user_info.gender == 0 ? '女' : '男' }}</view>
+					<view class="picker">{{ user_info.gender == 1 ? '男' : '女' }}</view>
 				</picker>
 				<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 				<!-- <text>{{user_info.school_list.gender==1?'男':'女'}}</text> -->
 			</view>
 			<view class="center">
 				<text>地区</text>
-				<text class="infoCon" v-if="user_info.school_list">
-					{{ user_info.school_list.province_name + ' ' + user_info.school_list.city_name + ' ' + user_info.school_list.area_name }}
+				<text class="infoCon" v-if="user_info.get_province">
+					{{ user_info.get_province.name + ' ' + user_info.get_city.name + ' ' + user_info.get_area.name }}
 				</text>
 				<!-- <picker mode="region" :range="location"  @change="bindChange" class='infoCon'>
 					<view class="picker">{{user_info.school_list.province_name+' '+user_info.school_list.city_name+' '+user_info.school_list.area_name}}</view>
@@ -35,7 +35,7 @@
 			</view>
 			<view class="center">
 				<text>学校</text>
-				<text class="infoCon">{{ user_info.school_list.school_name ? user_info.school_list.school_name : '' }}</text>
+				<text class="infoCon">{{ user_info.get_school.name || '' }}</text>
 				<!-- <picker mode="selector" :range="school" range-key="name"  @change="changesc" class='infoCon'>
 					<view class="picker">{{user_info.school_list.school_name}}</view>
 				</picker> -->
@@ -43,15 +43,15 @@
 			</view>
 			<view class="center" v-if="type == 4">
 				<text>年级</text>
-				<picker mode="selector" :range="grade" range-key="name" @change="changeGrade" class="infoCon" v-if="!user_info.school_list.team_name">
-					<view class="picker">{{ user_info.school_list.grade_names ? user_info.school_list.grade_names : '' }}</view>
+				<picker mode="selector" :range="grade" range-key="name" @change="changeGrade" class="infoCon" v-if="!user_info.get_grade.name">
+					<view class="picker">{{ user_info.get_grade.name ||'' }}</view>
 				</picker>
-				<text class="infoCon" v-else>{{ user_info.school_list.grade_names ? user_info.school_list.grade_names : '' }}</text>
+				<text class="infoCon" v-else>{{ user_info.get_grade.name ||''  }}</text>
 				<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 			<view class="center" v-if="type == 4" @click="touser('/pages/person/bindClassID')">
 				<text>(班级)绑定</text>
-				<text class="infoCon">{{ user_info.school_list.team_name ? user_info.school_list.team_name : '' }}</text>
+				<text class="infoCon">{{ user_info.get_team.name || '' }}</text>
 				<image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
 			</view>
 		</view>
@@ -64,7 +64,7 @@
       </view>
       <view class="center youxiang "  @click="touser('/pages/setting/setphone')">
         <text>手机号</text>
-        <text class="infoCon">{{ user_info.display_list.mobile }}</text>
+        <text class="infoCon">{{ user_info.mobile }}</text>
         <image class="right_icon" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"></image>
       </view>
        <!-- #ifdef APP-PLUS -->
@@ -125,7 +125,7 @@
 					id: 1
 				}, {
 					name: '女',
-					id: 0
+					id: 2
 				}],
 				update: true,
 				grade: [],
@@ -146,7 +146,7 @@
 			this.get_location_list();
 		},
 		onShow() {
-			if (this.update) {
+			if (!this.update) {
 				this.getuserinfo();
 			} else {
 				this.update = true;
@@ -217,12 +217,12 @@
 					return;
 				}
 				var data = {
-					true_name: this.newName,
+					name: this.newName,
 					token: this.token
 				};
         var res
         if(this.type == 4){
-           res = this.$api.change_user_info(data)
+           res = this.$api.change_user_name(data)
         }else{
           res = this.$api.change_teacher_info(data)
         }
@@ -272,19 +272,22 @@
 						_this.img = res.tempFilePaths[0];
 						let url = '';
 						if (_this.type == 4) {
-							url = _this.$api.url + 'user/update_avatar/';
+							url = _this.$api.url + 'applets/editPersonAvatarFile';
 						} else {
 							url = _this.$api.url + 'teacher/update_avatar/';
 						}
 						uni.uploadFile({
 							url: url,
 							filePath: _this.img,
-							name: 'file',
+							name: 'avatar_file',
 							formData: {
 								token: _this.token
 							},
 							success: res => {
 								console.log('返回', res.data);
+                setTimeout(() => {
+                	this.getuserinfo();
+                }, 1000);
 							}
 						});
 					}
@@ -339,25 +342,21 @@
 			//获取用户信息
 			getuserinfo() {
 				if (uni.getStorageSync('type') == 4) {
-					this.$api.get_user_info({
-						token: this.token
-					}).then(res => {
+					this.$api.get_user_info().then(res => {
 						console.log(res);
-						this.user_info = res.data;
-						this.img = res.data.avatar;
-            this.newName = res.data.true_name
-            this.newEmail = res.data.email
+						this.user_info = res.data.user;
+						this.img = res.data.user.avatar_file;
+            this.newName = res.data.user.true_name
+            this.newEmail = res.data.user.email
 						// this.getschool();
 					});
 				} else {
-					this.$api.get_teacher_info({
-						token: this.token
-					}).then(res => {
+					this.$api.get_teacher_info().then(res => {
 						console.log(res);
-						this.user_info = res.data;
-						this.img = res.data.avatar;
-            this.newName = res.data.true_name
-            this.newEmail = res.data.email
+						this.user_info = res.data.user;
+						this.img = res.data.user.avatar_file;
+            this.newName = res.data.user.true_name
+            this.newEmail = res.data.user.email
 						// this.getschool();
 					});
 				}
@@ -435,12 +434,12 @@
 				if (uni.getStorageSync('type') == 4) {
 					var req = this.$api.change_user_info({
 						token: this.token,
-						gender: id
+						sex: id
 					});
 				} else {
 					var req = this.$api.change_teacher_info({
 						token: this.token,
-						gender: id
+						sex: id
 					});
 				}
 				req.then(res => {

@@ -5,27 +5,27 @@
 			<view class="center">
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/wechat.png"></image>
 				<text>微信公众号</text>
-				<text class="infoCon">{{ official_account }}</text>
+				<text class="infoCon">{{ list.official_account }}</text>
 			</view>
 			<view class="center">
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/weibo.png"></image>
 				<text>官方微博</text>
-				<text class="infoCon">{{ weibo }}</text>
+				<text class="infoCon">{{ list.weibo }}</text>
 			</view>
 			<view class="center">
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/website.png"></image>
 				<text>官方网站</text>
-				<text class="infoCon">{{ website }}</text>
+				<text class="infoCon">{{ list.website }}</text>
 			</view>
 			<view class="center">
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/phone.png"></image>
 				<text>客服电话</text>
-				<text class="infoCon">{{ customer_service }}</text>
+				<text class="infoCon">{{ list.customer_service }}</text>
 			</view>
 			<view class="center">
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/emial.png"></image>
 				<text>公司邮箱</text>
-				<text class="infoCon">{{ email }}</text>
+				<text class="infoCon">{{ list.email }}</text>
 			</view>
     </view>
 	<!-- #ifdef APP-PLUS -->
@@ -44,35 +44,17 @@ let app = getApp();
 export default {
 	data() {
 		return {
-			list: [],
-			type: 'about',
-			official_account: '',
-			weibo: '',
-			website: '',
-			customer_service: '',
-			email: ''
+			list: {},
 		};
 	},
 	onLoad(options) {
-		this.official_account = app.globalData.settings.official_account;
-		this.weibo = app.globalData.settings.weibo;
-		this.website = app.globalData.settings.website;
-		this.customer_service = app.globalData.settings.customer_service;
-		this.email = app.globalData.settings.email;
-
-		if (options.title == 'zhuce') {
-			uni.setNavigationBarTitle({
-				title: '注册协议'
-			});
-			this.type = 'register';
-		}
 		this.get_list();
 	},
 	methods: {
 		get_list() {
-			this.$api.get_agreement({ type: this.type }).then(res => {
-				console.log(res.data.info);
-				this.list = res.data.info;
+			this.$api.get_agreement().then(res => {
+				console.log(res.data);
+				this.list = res.data.aboutWe;
 			});
 		},
     pageTopro(idx){

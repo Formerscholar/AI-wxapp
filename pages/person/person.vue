@@ -3,7 +3,7 @@
     <view class="top" :class="type == 3 ? 'teacher' : ''">
       <view class="mineInfo" @click="touser('/pages/person/user')">
         <view class="tou">
-          <image :src="user_info.avatar"></image>
+          <image :src="user_info.avatar_file"></image>
         </view>
         <view class="info">
           <view class="nick" v-if="user_info.true_name">{{ user_info.true_name }}</view>
@@ -21,7 +21,7 @@
       <view class="vip" v-if="user_info.is_vip == 1 && type == 4" @click="pageToVip">
         <view class="endTimeInfo">
           <view>我的VIP会员</view>
-          <view>VIP到期时间: {{ user_info.vip_time }}</view>
+          <view>VIP到期时间: {{ user_info.vip_time * 1000 | timer }}</view>
         </view>
         <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime.png" v-if="platform == 'ios'"></image>
         <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime1.png" v-else></image>
@@ -144,11 +144,14 @@
     },
     onLoad() {
       this.platform = app.globalData.systemInfo.platform
+      this.user_info = uni.getStorageSync('userInfo');
+      this.grade_names = this.user_info?.get_grade?.name  + this.user_info?.get_team.name|| '未绑定班级';
+      this.school = this.user_info?.get_school?.name || '';
+      this.is_vip = this.user_info?.is_vip
     },
     onShow() {
       this.token = uni.getStorageSync('token');
       this.type = uni.getStorageSync('type');
-      this.getuserinfo();
     },
     computed: {
       ...mapState(['hasLogin', 'userInfo'])
@@ -252,29 +255,6 @@
           // 	data: this.is_vip
           // });
         });
-      },
-      //获取用户信息
-      getuserinfo() {
-        console.log(this.token, this.type, 'getuserinfo');
-        if (this.type == 4) {
-          this.$api.get_user_info({
-            token: this.token
-          }).then(res => {
-            console.log(res);
-            this.user_info = res.data;
-            this.grade_names = res.data?.school_list?.grade_name || '未绑定班级';
-            this.school = res.data?.school_list?.school_name || '';
-            this.is_vip = res.data?.is_vip
-            // this.get_vip_info();
-          });
-        } else {
-          this.$api.get_teacher_info({
-            token: this.token
-          }).then(res => {
-            console.log('jiaoshi', res);
-            this.user_info = res.data;
-          });
-        }
       },
       touser(url) {
         console.log(url);
