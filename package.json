@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@vant/weapp": "^1.5.0",
-    "iny-bus": "^2.0.0",
-    "wxministore": "^1.2.9"
-  }
-}

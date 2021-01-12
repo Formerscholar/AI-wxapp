@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "绑定个人信息",
-  "usingComponents": {
-    "van-field": "@vant/weapp/field/index"
-  }
-}

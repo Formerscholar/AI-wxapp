@@ -1,8 +1,0 @@
-<view class="search_pic">
-  <image class="image_pic" src="{{pic_data}}" mode="widthFix" />
-
-  <div class="wrapper"></div>
-  <view class="bottom">
-    <view class="btn" bind:tap="closeClick">重新拍摄</view>
-  </view>
-</view>

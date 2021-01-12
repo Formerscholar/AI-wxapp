@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "教辅内容",
-  "usingComponents": {
-    "ctb-popup":"/components/ctb_popup/ctb_popup"
-  }
-}

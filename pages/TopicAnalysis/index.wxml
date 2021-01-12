@@ -1,8 +1,0 @@
-<view class="TopicAnalysis">
-  <view class="content_details">
-    <view class="title">{{TitleDetails.subject_title}} · {{TitleDetails.grade_name}}</view>
-    <view class="top_html">
-      <rich-text nodes="{{TitleDetails.content}}"></rich-text>
-    </view>
-  </view>
-</view>
