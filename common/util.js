@@ -49,7 +49,6 @@ function request(url, data = {}, method = "post") {
 								uni.showToast({
 									title: '您未登录或登录过期',
 									icon: 'none',
-									duration: 1500
 								})
 								setTimeout(() => {
 									uni.hideToast();

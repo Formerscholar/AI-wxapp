@@ -52,13 +52,11 @@
           请选择您的身份
         </view>
         <view class="weixin">
-          <button @click="bindgetuserinfos">我是学生(家长)</button>
-          <button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event)">我是老师</button>
+          <button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,4)">我是学生(家长)</button>
+          <button open-type="getUserInfo" @getuserinfo="bindgetuserinfo($event,3)">我是老师</button>
         </view>
         <!-- #endif -->
       </view>
-
-
 
       <uni-popup ref="popup" type="center">
         <view class="bindphone">
@@ -135,50 +133,41 @@
           data: i
         })
       },
-      bindgetuserinfos() {
+      bindgetuserinfo(e, i) {
         uni.setStorage({
           key: 'type',
-          data: 4,
+          data: i,
         })
-        this.type = 4
-        this.$api.student_login({
-            openid: this.openid
-          })
-          .then(res => {
-            if (res.code == 200) {
-              this.login(res.data)
-              
-              if (res.data.is_bind == 0) {
-                uni.navigateTo({
-                  url: '/pages/login/bindinfo'
-                })
-              } else {
-                if (res.data.mobile == '') {
-                  this.$refs.popup.open()
-                } else{
-                  uni.reLaunch({
-                    url: '/pages/index/index'
-                  })
-                }
-              }
-            } else if (res.code == 500) {
-              this.$refs.popup.open()
-            }
-          })
-      },
-      bindgetuserinfo(e) {
-        uni.setStorage({
-          key: 'type',
-          data: 3,
-        })
-        this.type = 3
+        this.type = i
         console.log('bindgetuserinfo', e)
         this.userInfo = e.detail
         this.userInfo['openid'] = this.openid
         uni.setStorageSync('info', e.detail.userInfo) //头像  姓名
         console.log(this.userInfo)
-        this.$api.teacher_logins(this.userInfo)
-          .then(res => {
+        if (i == 4) {
+          this.$api.student_login(this.userInfo)
+            .then(res => {
+              if (res.code == 200) {
+                this.login(res.data)
+                if (res.data.is_bind == 0) {
+                  uni.navigateTo({
+                    url: '/pages/login/bindinfo'
+                  })
+                } else {
+                  if (res.data.mobile == '') {
+                    this.$refs.popup.open()
+                  } else {
+                    uni.reLaunch({
+                      url: '/pages/index/index'
+                    })
+                  }
+                }
+              } else if (res.code == 500) {
+                this.$refs.popup.open()
+              }
+            })
+        } else {
+          this.$api.teacher_logins(this.userInfo).then(res => {
             if (res.code == 200) {
               this.login(res.data)
               uni.setStorage({ //缓存用户登陆状态
@@ -206,6 +195,7 @@
               this.$refs.popup.open()
             }
           })
+        }
       },
       getphone(e) {
         if (this.type == 3) {
@@ -310,6 +300,12 @@
       toReg() {
         uni.navigateTo({
           url: '/pages/login/register?type=' + this.type
+        })
+      },
+      showpriTip(){
+        uni.showToast({
+          title:'请阅读协议,并同意!',
+          icon:'none'
         })
       },
       topassword() {
@@ -613,6 +609,49 @@
       font-size: 32rpx;
       border-radius: 20rpx;
       background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
+    }
+  }
+  .privacyPolicytip{
+    background: #fff;
+    border-radius: 20rpx;
+    margin: 0 20rpx;
+    padding-top: 20rpx;
+    overflow: hidden;
+    .privacyTitle{
+      text-align: center;
+      font-size: 36rpx;
+      font-family: 'PingFang SC';
+      font-weight: 500;
+      color: #333333;
+    }
+    .privacyText{
+      margin-top: 15rpx;
+      font-size: 30rpx;
+      padding: 30rpx;
+      font-family: 'PingFang SC';
+      font-weight: 500;
+      color: #333333;
+    }
+    .btns{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 15rpx;
+      .btn{
+        flex: 1;
+        height: 80rpx;
+        border-radius: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .agreebtn{
+        background: linear-gradient(86deg, #E50304, #F74300);
+        color: #fff;
+      }
+      .noagreebtn{
+        background-color: #e0e0e0;
+      }
     }
   }
 

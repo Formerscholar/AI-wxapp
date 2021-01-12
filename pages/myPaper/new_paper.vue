@@ -655,7 +655,12 @@
 									title: '下载成功，已发送邮箱！',
 									icon: 'none'
 								});
-							}
+							}else {
+                uni.showToast({
+                	title: res.msg,
+                	icon: 'none'
+                });
+              }
 							this.$refs.popup2.close();
 						});
 				}

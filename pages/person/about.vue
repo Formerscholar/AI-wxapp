@@ -28,9 +28,14 @@
 				<text class="infoCon">{{ email }}</text>
 			</view>
     </view>
+	<!-- #ifdef APP-PLUS -->
     <view class="center_text">
+      <view class="protocol">
+        <view class="privacy" @click="pageTopro(0)">服务协议</view>|<view class="privacy" @click="pageTopro(1)">隐私政策</view>
+      </view>
     	<text class="info">扬州骐骥信息科技有限公司</text>
     </view>
+	<!-- #endif -->
 	</view>
 </template>
 
@@ -69,7 +74,18 @@ export default {
 				console.log(res.data.info);
 				this.list = res.data.info;
 			});
-		}
+		},
+    pageTopro(idx){
+      if (idx) {
+        uni.navigateTo({
+          url: "/pages/login/agreement?type=income"
+        });
+      } else{
+        uni.navigateTo({
+          url: "/pages/login/agreement?type=register"
+        });
+      }
+    }
 	}
 };
 </script>
@@ -130,10 +146,28 @@ page {
 	border-bottom: none;
 }
 .center_text{
+  position: absolute;
+  bottom: 40rpx;
+  left: 0;
+  right: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 40rpx;
-  font-size: 12px;
+  font-size: 16px;
+  .protocol{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12rpx;
+    .privacy{
+      color: #0984e3;
+      margin-right: 10rpx;
+      &:last-child{
+        margin-right: 0;
+        margin-left: 10rpx;
+      }
+    }
+  }
 }
 </style>
