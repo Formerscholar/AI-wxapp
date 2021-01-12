@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "错题本",
+  "usingComponents": {
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "ai-vip-end-tip": "/components/ai_vip_end_tip/ai_vip_end_tip"
+  }
+}
