@@ -14,11 +14,11 @@
 		</view>
 
 		<view class="card" @click="toTeachingPhoto(textbook_list[i], subject_name)" v-for="(item, i) of textbook_list" :key="i" v-if="textbook_list.length != 0">
-			<image :src="item.icon"  class="subject"></image>
+			<image :src="item.get_textbook.icon"  class="subject"></image>
 			<view class="title">
-				<view>{{ item.textbook_name }}</view>
-				<view class="term">{{ item.semester }}学期</view>
-				<view class="version">{{ item.version_title }}</view>
+				<view>{{ item.get_textbook.title }}</view>
+				<view class="term">{{ item.get_textbook.semester }}学期</view>
+				<view class="version">{{ item.get_textbook.get_version.title }}</view>
 			</view>
 			<view class="phone_icons">
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/phone_icons.png" mode="" class="detail"></image>
@@ -100,7 +100,7 @@ export default {
 				if (res.code == 200) {
 					this.is_more = res.is_more;
 					if (this.page == 1) {
-						this.textbook_list = res.data;
+						this.textbook_list = res.data.userTextbookList.data;
 					} else {
 						this.textbook_list = [...this.textbook_list, ...res.data];
 					}

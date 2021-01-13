@@ -7,7 +7,7 @@
       </view>
 
       <view class="rich-text-box" @click.stop="jiexi(item.exercises_id)">
-        <rich-text class="rich-text-content" :nodes="changeStyle(item.content)"></rich-text>
+        <rich-text class="rich-text-content" :nodes="changeStyle(item.get_exercises.content_all)"></rich-text>
         <!-- <uParse :content="item.content"/> -->
       </view>
       <view class="bottom">
@@ -44,7 +44,7 @@
         <scroll-view scroll-y="true">
           <view class="list" v-for="(item, i) of same_type" :key="i" v-if="same_type.length != 0">
             <view class="">
-              <rich-text :nodes="changeStyle(item.content)"></rich-text>
+              <rich-text :nodes="changeStyle(item.get_exercises.content_all)"></rich-text>
               <!-- <uParse :content="item.content"/> -->
             </view>
             <view class="btnCon">
@@ -225,7 +225,7 @@
           //校本试卷详情（学生）/名校资源详情(学生)
           req = this.$api.user_test_paper_detail({
             token: this.token,
-            based_id: this.based_id,
+            exams_id: this.based_id,
             page: this.page
           });
         }
@@ -239,9 +239,9 @@
             	}) */
           }
           if (this.page == 1) {
-            this.list = res.data.exercises_list;
+            this.list = res.data.examsExercisesList;
           } else {
-            this.list = [...this.list, ...res.data.exercises_list];
+            this.list = [...this.list, ...res.data.examsExercisesList];
           }
         });
       },

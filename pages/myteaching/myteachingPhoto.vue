@@ -14,11 +14,11 @@
 		<view class="list" v-if="from == 1">
 			<view class="teachingCon" v-if="textbook_list.length != 0">
 				<view class="card" @click="chooseTeaching(i)" v-for="(item, i) of textbook_list" :key="i">
-					<image :src="item.icon" mode="" class="subject"></image>
+					<image :src="item.get_textbook.icon" mode="" class="subject"></image>
 					<view class="title">
-						<view>{{ item.textbook_name }}</view>
-						<view class="term">{{ item.semester }}学期</view>
-						<view class="version">{{ item.version_title }}</view>
+						<view>{{ item.get_textbook.title }}</view>
+						<view class="term">{{ item.get_textbook.semester }}学期</view>
+						<view class="version">{{ item.get_textbook.get_version.title }}</view>
 					</view>
 					<image :src="item.status ? '//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/gou.png' : '//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/default_red.png'"
 					 mode="" class="detail"></image>
@@ -143,7 +143,7 @@ import { pathToBase64, base64ToPath } from '../../js_sdk/gsq-image-tools/image-t
 						_this.tpage = elem.tpage;
 						_this.fpage = elem.fpage;
 						_this.textbook_id = elem.textbook_id;
-						_this.title = elem.textbook_name;
+						_this.title = elem.get_textbook.title;
 						_this.textbook_list[i].status = true;
 					}
 				});
@@ -201,7 +201,7 @@ import { pathToBase64, base64ToPath } from '../../js_sdk/gsq-image-tools/image-t
 					if (res.code == 200) {
 						this.is_more = res.is_more;
 						if (this.page == 1) {
-							this.textbook_list = res.data;
+							this.textbook_list = res.data.userTextbookList.data;
 						} else {
 							this.textbook_list = [...this.textbook_list, ...res.data];
 						}

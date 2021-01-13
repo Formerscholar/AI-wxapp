@@ -12,12 +12,12 @@
 					<text :class="{ 'c-c': item.status }">{{ item.title }}</text>
 				</view>
 			</view>
-			<view class="l-item" v-for="(item, i) of student_list" :key="i" @click="chakan(item.paper_id, item.title, item.subject_id, item.subject_name)">
+			<view class="l-item" v-for="(item, i) of student_list" :key="i" @click="chakan(item.based_id, item.get_base.title)">
 				<view class="num">
-					<image :src="item.icon"></image>
+					<image :src="subject_icon"></image>
 					<view>
-						<view class="paperTitle">{{ item.title }}</view>
-						<view class="time">{{ item.add_time }}</view>
+						<view class="paperTitle">{{ item.get_base.title }}</view>
+						<view class="time">{{ item.get_base.add_time * 1000 | timer }}</view>
 					</view>
 				</view>
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" class="right"></image>
@@ -26,7 +26,7 @@
 		</view>
 		<!-- 老师（校本试卷） -->
 		<view class="list" v-show="type == 3">
-			<view class="l-item" v-for="(item, i) of xb_list" :key="i" @click="chakan(item.based_id, item.title, item.subject_id, item.subject_name)">
+			<view class="l-item" v-for="(item, i) of xb_list" :key="i" @click="chakan(item.based_id, item.title)">
 				<view class="num">
 					<image :src="item.icon"></image>
 					<view>
@@ -63,7 +63,9 @@ export default {
 			student_list: [],
 			is_more2: 1, //学生
 			subject_list: [],
-			subject_id: ''
+			subject_id: '',
+      subject_name:'',
+      subject_icon:''
 		};
 	},
 	onReachBottom() {
@@ -113,6 +115,8 @@ export default {
 				if (i == j) {
 					e.status = true;
 					this.subject_id = e.id;
+          this.subject_name = e.title
+          this.subject_icon = e.icon1
 					this.get_my_test_paper();
 				} else {
 					e.status = false;
@@ -131,9 +135,9 @@ export default {
 				}
 				this.is_more2 = res.is_more;
 				if (this.page == 1) {
-					this.student_list = res.data.paper_list;
+					this.student_list = res.data.schoolExamsList.data;
 				} else {
-					this.student_list = [...this.student_list, ...res.data.paper_list];
+					this.student_list = [...this.student_list, ...res.data.schoolExamsList.data];
 				}
 			});
 		},
@@ -155,9 +159,9 @@ export default {
 				}
 			});
 		},
-		chakan(id, title, subject, subject_name) {
+		chakan(id, title) {
 			uni.navigateTo({
-				url: '/pages/myPaper/seePapers?based_id=' + id + '&title=' + title + '&subject=' + subject + '&subject_name=' + subject_name + '&source=2' 
+				url: '/pages/myPaper/seePapers?based_id=' + id + '&title=' + title + '&subject=' + this.subject_id + '&subject_name=' + this.subject_name + '&source=2' 
 			});
 		}
 	}

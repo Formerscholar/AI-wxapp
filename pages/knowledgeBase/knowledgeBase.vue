@@ -32,16 +32,16 @@
     <!-- start -->
     <view class="list" style="padding: 70rpx 0 0;">
       <view class="item" v-for="(item, i) of exercises_list" :key="i">
-        <view class="" @click="jiexi(item.exercises_id)">
-          <rich-text :nodes="changeStyle(item.content)"></rich-text>
+        <view class="" @click="jiexi(item.id)">
+          <rich-text :nodes="changeStyle(item.content_all)"></rich-text>
           <!-- <uParse :content="item.content"/> -->
         </view>
-        <view class="bottom" @click="open(item.exercises_id, 0)">
+        <view class="bottom" @click="open(item.id, 0)">
           <view class="select">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
             同类型题目
           </view>
-          <view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click.stop="join_error(i, item.exercises_id)">
+          <view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click.stop="join_error(i, item.id)">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
             {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
@@ -68,15 +68,15 @@
         <scroll-view scroll-y="true">
           <view class="list" v-for="(item, i) of same_type" :key="i">
             <view class="">
-              <rich-text :nodes="changeStyle(item.content)"></rich-text>
+              <rich-text :nodes="changeStyle(item.content_all)"></rich-text>
               <!-- <uParse :content="item.content"/> -->
             </view>
             <view class="btnCon">
-              <view @click="jiexi(item.exercises_id)">
+              <view @click="jiexi(item.id)">
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
                 查看解析
               </view>
-              <view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.exercises_id)">
+              <view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.id)">
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
                 {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
@@ -164,8 +164,9 @@
       }
       this.subject_fenlei();
       // this.exercise_type()
-      this.get_level();
+      // this.get_level();
       // this.get_grade();
+      this.level_list = this.$store.state.level
     },
     onShow() {
       this.type = uni.getStorageSync('type');
@@ -250,7 +251,7 @@
       //知识点
       get_konw() {
         if (this.subject_id == 1) return false;
-        if (this.type  == 3) {
+        if (this.type == 3) {
           var req = this.$api.teacher_know_point({
             token: this.token
           });
@@ -274,7 +275,7 @@
             this.know_point_list = [{
               title: '知识点',
               id: 0
-            }, ...res.data.know_point_list];
+            }, ...res.data.knowledgeList];
             console.log('this.know_point_list3433', this.know_point_list);
           }
           this.exercise_selection();
@@ -295,11 +296,11 @@
         this.$api.exercise_type({
           subject_id: this.subject_id
         }).then(res => {
-          console.log('题型列表1', res);
+          console.log('题型列表1', Object.values(res.data));
           this.question_type = [{
             title: '题型',
             id: 0
-          }, ...res.data];
+          }, ...Object.values(res.data)];
         });
       },
       //筛选习题
@@ -342,10 +343,10 @@
             });
           } else {
             if (this.page == 1) {
-              this.exercises_list = res.data.exercises_list;
+              this.exercises_list = res.data.exerciseList.data;
               console.log('000', this.exercises_list);
             } else {
-              this.exercises_list = [...this.exercises_list, ...res.data.exercises_list];
+              this.exercises_list = [...this.exercises_list, ...res.data.exerciseList.data];
               console.log('789', this.exercises_list);
             }
           }
@@ -408,7 +409,7 @@
           var req = this.$api.join_error({
             token: this.token,
             exercises_id: id,
-            source:5,
+            source: 5,
             // subject_id:this.subject_id,
             // know_point:this.know_point_list[this.num_z].know_point_id,
             // type:this.question_id,
@@ -525,21 +526,21 @@
           // know_point:this.know_point_list[this.num_z].know_point_id,
           type: this.question_id,
           subject_id: this.subject_id,
-          exercises_id: id,
+          id: id,
           page: this.page_change,
           size: this.size_change
         };
         //consle.log('data2',this.know_point_list[this.num_z].know_point_id)
-        let datas 
+        let datas
         if (this.type == 3) {
           datas = this.$api.teacher_same_type(data)
-        } else{
+        } else {
           datas = this.$api.same_type(data)
         }
         datas.then(res => {
           console.log(res);
           if (res.code == 200) {
-            this.same_type = res.data.exercises_list;
+            this.same_type = res.data.exerciseList.data;
             this.$refs.popup.open();
           } else {
             uni.showToast({

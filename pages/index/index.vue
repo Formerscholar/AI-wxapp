@@ -223,7 +223,6 @@
           selectedIconPath: '/static/imgs/icon/cuotiben.png'
         });
       }
-      this.get_banner();
       if (this.token && this.type == 3) {
         this.get_teacher();
         this.get_teacher_info()
@@ -375,14 +374,6 @@
         }).then(res => {
           console.log(res);
           this.teacher_info = res.data;
-        });
-      },
-      get_banner() {
-        this.$api.banner({
-          type: this.type
-        }).then(res => {
-          console.log(res);
-          this.banner_list = res.data.banner_list;
         });
       },
       todetail(i) {

@@ -41,13 +41,13 @@ module.exports = {
   mobile_login: data => request(ApiUrl + 'user/mobile_login/', data), //新登录
   
   student_index: data => request(ApiUrl + 'applets/studentIndex/', data), //学生端首页信息	
-  newest_paper: data => request(ApiUrl + 'user/newest_paper/', data), //名校资源
-  my_study_analysis: data => request(ApiUrl + 'user/my_study_analysis/', data), //学情报告
-  my_study_analysis_exercise: data => request(ApiUrl + 'user/my_study_analysis_exercise/', data), //学情报告知识点详情
-  textbook: data => request(ApiUrl + 'user/textbook/', data), //教辅名称
-  add_my_textbook: data => request(ApiUrl + 'user/add_my_textbook/', data), //添加我的教辅
-  my_textbook_list: data => request(ApiUrl + 'user/my_textbook_list/', data), //我的教辅列表
-  search_exercises: data => request(ApiUrl + 'user/search_exercises/', data), //教辅拍照识题
+  newest_paper: data => request(ApiUrl + 'applets/studentSchoolResourcesList/', data), //名校资源
+  my_study_analysis: data => request(ApiUrl + 'applets/studentAcademicReport/', data), //学情报告
+  my_study_analysis_exercise: data => request(ApiUrl + 'applets/studentAcademicReportExercises/', data), //学情报告知识点详情
+  textbook: data => request(ApiUrl + 'applets/getStudentTextbookAdd/', data), //教辅名称
+  add_my_textbook: data => request(ApiUrl + 'applets/studentTextbookAdd/', data), //添加我的教辅
+  my_textbook_list: data => request(ApiUrl + 'applets/studentTextbookList/', data), //我的教辅列表
+  search_exercises: data => request(ApiUrl + 'applets/indexPhotoSearch/', data), //教辅拍照识题
   //错题本
   wei_error_book_list: data => request(ApiUrl + 'user/my_not_created_error_book/', data), //未生成错题本列表
   generated_error_book: data => request(ApiUrl + 'user/my_created_error_book/', data), //已生成错题本
@@ -56,14 +56,14 @@ module.exports = {
   get_errorbook_exercises: data => request(ApiUrl + 'user/get_errorbook_exercises/', data), //查看错题本
   delete_errorbook: data => request(ApiUrl + 'user/delete_errorbook/', data), //删除错题本
   get_text: data => request(ApiUrl + 'user/get_text/', data), //绑定邮箱发送错题本
-  my_test_paper: data => request(ApiUrl + 'user/my_test_paper/', data), //我的试卷
-  user_test_paper_detail: data => request(ApiUrl + 'user/school_test_paper_detail/', data), //我的试卷详情
+  my_test_paper: data => request(ApiUrl + 'applets/studentSchoolExamsList/', data), //我的试卷
+  user_test_paper_detail: data => request(ApiUrl + 'applets/studentSchoolExamsExercisesList/', data), //我的试卷详情
   add_exercises_to_errorbook_user: data => request(ApiUrl + 'user/add_exercises_to_errorbook/', data), //习题加入已生成的试卷
   //题库	
-  know_point: data => request(ApiUrl + 'user/know_point/', data), //知识点
-  textbook_exercises: data => request(ApiUrl + 'user/exercises_list/', data), //知识库 习题筛选
+  know_point: data => request(ApiUrl + 'applets/getKnowledge/', data), //知识点
+  textbook_exercises: data => request(ApiUrl + 'applets/studentKnowledgeBaseList/', data), //知识库 习题筛选
   join_error: data => request(ApiUrl + 'user/join_error_exercises/', data), //加入/取消错题
-  same_type: data => request(ApiUrl + 'user/same_type_exercises/', data), //章节课时习题 同类型题目
+  same_type: data => request(ApiUrl + 'applets/studentSameTypeExercises/', data), //章节课时习题 同类型题目
   //个人信息	
   get_user_info: data => request(ApiUrl + 'applets/getPerson/', data), //获取用户信息
   save_email: data => request(ApiUrl + 'applets/editPersonEmail/', data), //绑定邮箱
@@ -76,7 +76,7 @@ module.exports = {
   join_team: data => request(ApiUrl + 'applets/joinTeam/', data), //邀请学生加入班级
   send_msg: data => request(ApiUrl + 'user/send_msg/', data),
   get_download: data => request(ApiUrl + 'user/download_based/', data),
-  orc_one: data => request(ApiUrl + 'user/orc_one/', data),
+  orc_one: data => request(ApiUrl + 'applets/studentTextbookPhotoSearch/', data),
   // orc_one: data => request(ApiUrl + 'user/orc_one_l/', data),
   // v3/user/delete_errorbook_exercises   数据 errorbook_id    exercises_ids
   delete_exercises: data => request(ApiUrl + 'user/delete_errorbook_exercises/', data),
@@ -151,16 +151,15 @@ module.exports = {
 
   //通用
   get_location_list: data => request(ApiUrl + 'main/get_location_list/', data), //省市区
-  banner: data => request(ApiUrl + 'main/banner/', data), //首页海报图
-  subject: data => request(ApiUrl + 'main/subject/', data), //学科分类
+  subject: data => request(ApiUrl + 'applets/getSubjects/', data,'GET'), //学科分类
   get_grade: data => request(ApiUrl + 'main/grade/', data), //班级
   get_agreement: data => request(ApiUrl + 'applets/aboutWe/', data), //协议说明
   get_school: data => request(ApiUrl + 'main/_get_school_list_by_area/', data), //学校
   level: data => request(ApiUrl + 'main/exercises_level/', data), //习题难度
-  exercise_type: data => request(ApiUrl + 'main/exercises_type/', data), //题型
+  exercise_type: data => request(ApiUrl + 'applets/getSubjectQuestionCategory/', data,"GET"), //题型
   version: data => request(ApiUrl + 'question/version/', data), //教辅版本
   get_semester: data => request(ApiUrl + 'main/get_semester/', data), //学期
-  get_exercise_analysis: data => request(ApiUrl + 'exercises/get_exercise_analysis/', data), //查看解析
+  get_exercise_analysis: data => request(ApiUrl + 'applets/studentKnowledgeBaseExerciseDetail/', data), //查看解析
   search_team: data => request(ApiUrl + 'applets/searchTeam/', data), //搜索班级
   get_team_subject: data => request(ApiUrl + 'main/get_team_subject/', data), //邀请老师的学科下拉列表
   get_team_location: data => request(ApiUrl + "main/get_team_location/", data),

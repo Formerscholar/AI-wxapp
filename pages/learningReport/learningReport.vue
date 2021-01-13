@@ -64,17 +64,17 @@
     <view class="qiun-charts" v-if="analysisList.length && analysisList.length != 0">
       <view class="item_box" v-for="(item, index) in analysisList"  @click="toseeDetail({
         id:item.id,
-        name:item.name,
-        data:item.data
+        name:item.title,
+        data:item.count
       })">
         <view class="top_box" :key="index">
           <view class="left_text">
-            {{ item.name }}
-            <text>{{ item.percentage }}%</text>
+            {{ item.title }}
+            <text>{{ item.proportion }}%</text>
           </view>
-          <view class="right_text">{{ item.data }}道错题</view>
+          <view class="right_text">{{ item.count }}道错题</view>
         </view>
-        <view class="bot_box" :style="{ width: item.percentage + '%', backgroundColor: colorList[index.toString()[index.toString().length - 1]] }"></view>
+        <view class="bot_box" :style="{ width: item.proportion + '%', backgroundColor: colorList[index.toString()[index.toString().length - 1]] }"></view>
       </view>
     </view>
     <view class="qiun-charts noData" v-else>{{ msg }}</view>
@@ -140,7 +140,6 @@
         this.isvip = uni.getStorageSync('is_vip')
       }
       _self = this;
-      this.class_name = uni.getStorageSync('userInfo').school.grade_name + uni.getStorageSync('userInfo').true_name;
       this.selectDate(0);
     },
     onShow() {
@@ -192,10 +191,10 @@
             end_time: this.time2
           })
           .then(res => {
-            if (res.data.length !== undefined) {
-              this.analysisList = res.data;
-              this.Pie.series = res.data;
-              this.pieData = res.data.count_list;
+            if (res.data.knowPointExercises.length !== undefined) {
+              this.analysisList = res.data.knowPointExercises;
+              this.Pie.series = res.data.knowPointExercises;
+              this.pieData = res.data.knowPointExercises.count_list;
             } else {
               this.Pie.series = [];
               this.pieData = [];

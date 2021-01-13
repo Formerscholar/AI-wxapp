@@ -11,8 +11,8 @@
         </div>
       </view>
 
-      <view class="rich-text-box" @click.stop="jiexi(item.id,6)">
-        <rich-text class="rich-text-content" :nodes="changeStyle(item.content_all)"></rich-text>
+      <view class="rich-text-box" @click.stop="jiexi(item.exercises_id,6)">
+        <rich-text class="rich-text-content" :nodes="changeStyle(item.get_exercises.content_all)"></rich-text>
         <!-- <uParse :content="item.content"/> -->
       </view>
       <view class="bottom">
@@ -20,7 +20,7 @@
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
           同类型题目
         </view>
-        <view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click.stop="join_error(i, item.id)">
+        <view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click.stop="join_error(i, item.exercises_id)">
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
           {{ item.is_error ? '取消加入'  : '加入错题' }}
@@ -206,9 +206,9 @@
           page: this.page
         }).then(res => {
           if (this.page == 1) {
-            this.list = res.data;
+            this.list = res.data.knowPointExercises;
           } else {
-            this.list = [...this.list, ...res.data];
+            this.list = [...this.list, ...res.data.knowPointExercises];
           }
         });
       },

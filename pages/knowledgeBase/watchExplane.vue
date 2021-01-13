@@ -1,9 +1,9 @@
 <template>
   <view>
-    <view class="subtitle" v-if="jiexiList.subject_title && jiexiList.grade_name">{{ jiexiList.subject_title }} · {{ jiexiList.grade_name }}</view>
+    <view class="subtitle" v-if="jiexiList.get_subject && jiexiList.get_grade">{{ jiexiList.get_subject.title }} · {{ jiexiList.get_grade.name }}</view>
     <view class="con">
       <view class="content">
-        <rich-text :nodes="changeStyle(jiexiList.content ? jiexiList.content : '')"></rich-text>
+        <rich-text :nodes="changeStyle(jiexiList.content_all ? jiexiList.content_all : '')"></rich-text>
         <view class="bottom" @click="open(jiexiList.id, 0)">
           <view class="select">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
@@ -41,16 +41,16 @@
           <rich-text :nodes="changeStyle(jiexiList.analysis ? jiexiList.analysis : '')"></rich-text>
         </view>
       </view>
-      <view v-if="jiexiList.know_point_info  && is_vip == 1 && type == 4" class="knowPoint">
+      <view v-if="jiexiList.know_point_name  && is_vip == 1 && type == 4" class="knowPoint">
         <view class="tag">知识点</view>
         <view class="context">
-          <rich-text :nodes="changeStyle(jiexiList.know_point_info ? jiexiList.know_point_info : '')"></rich-text>
+          <rich-text :nodes="changeStyle(jiexiList.know_point_name ? jiexiList.know_point_name : '')"></rich-text>
         </view>
       </view>
-      <view v-if="jiexiList.know_point_info  && type == 3" class="knowPoint">
+      <view v-if="jiexiList.know_point_name  && type == 3" class="knowPoint">
         <view class="tag">知识点</view>
         <view class="context">
-          <rich-text :nodes="changeStyle(jiexiList.know_point_info ? jiexiList.know_point_info : '')"></rich-text>
+          <rich-text :nodes="changeStyle(jiexiList.know_point_name ? jiexiList.know_point_name : '')"></rich-text>
         </view>
       </view>
     </view>
@@ -269,8 +269,8 @@
           user_type: uni.getStorageSync('type')
         }).then(res => {
           if (res.code == 200) {
-            this.jiexiList = res.data;
-            console.log('watchExplane', res.data);
+            this.jiexiList = res.data.exercises;
+            console.log('watchExplane', res.data.exercises);
           }
         });
       }
