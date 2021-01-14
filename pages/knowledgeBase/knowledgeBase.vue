@@ -356,13 +356,11 @@
       join_error(i, id) {
         if (this.type == 3) {
           var req = this.$api.teacher_join_error({
-            token: this.token,
             exercises_id: id,
             is_vip: 1
           });
         } else {
           var req = this.$api.join_error({
-            token: this.token,
             exercises_id: id,
             is_vip: 1,
             source: 4
@@ -398,7 +396,6 @@
       join_error2(i, id) {
         if (this.type == 3) {
           var req = this.$api.teacher_join_error({
-            token: this.token,
             exercises_id: id
             // subject_id:this.subject_id,
             // know_point:this.know_point_list[this.num_z].know_point_id,
@@ -407,7 +404,6 @@
           });
         } else {
           var req = this.$api.join_error({
-            token: this.token,
             exercises_id: id,
             source: 5,
             // subject_id:this.subject_id,

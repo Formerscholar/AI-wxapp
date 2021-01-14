@@ -49,20 +49,20 @@ module.exports = {
   my_textbook_list: data => request(ApiUrl + 'applets/studentTextbookList/', data), //我的教辅列表
   search_exercises: data => request(ApiUrl + 'applets/indexPhotoSearch/', data), //教辅拍照识题
   //错题本
-  wei_error_book_list: data => request(ApiUrl + 'user/my_not_created_error_book/', data), //未生成错题本列表
-  generated_error_book: data => request(ApiUrl + 'user/my_created_error_book/', data), //已生成错题本
-  delete_error_exercises: data => request(ApiUrl + 'user/delete_error_exercises/', data), //我的错题本-删除已加入错题本的习题
-  create_error_book: data => request(ApiUrl + 'user/create_error_book/', data), //我的错题本---生成错题本
-  get_errorbook_exercises: data => request(ApiUrl + 'user/get_errorbook_exercises/', data), //查看错题本
-  delete_errorbook: data => request(ApiUrl + 'user/delete_errorbook/', data), //删除错题本
+  wei_error_book_list: data => request(ApiUrl + 'applets/studentExercises/', data), //未生成错题本列表
+  generated_error_book: data => request(ApiUrl + 'applets/studentErrorbookList/', data), //已生成错题本
+  delete_error_exercises: data => request(ApiUrl + 'applets/delStudentExercises/', data), //我的错题本-删除已加入错题本的习题
+  create_error_book: data => request(ApiUrl + 'applets/studentErrorbookAdd/', data), //我的错题本---生成错题本
+  get_errorbook_exercises: data => request(ApiUrl + 'applets/studentErrorbookExercisesList/', data), //查看错题本
+  delete_errorbook: data => request(ApiUrl + 'applets/delStudentErrorbook/', data), //删除错题本
   get_text: data => request(ApiUrl + 'user/get_text/', data), //绑定邮箱发送错题本
   my_test_paper: data => request(ApiUrl + 'applets/studentSchoolExamsList/', data), //我的试卷
   user_test_paper_detail: data => request(ApiUrl + 'applets/studentSchoolExamsExercisesList/', data), //我的试卷详情
-  add_exercises_to_errorbook_user: data => request(ApiUrl + 'user/add_exercises_to_errorbook/', data), //习题加入已生成的试卷
+  add_exercises_to_errorbook_user: data => request(ApiUrl + 'applets/studentErrorbookAddExercises/', data), //习题加入已生成的试卷
   //题库	
   know_point: data => request(ApiUrl + 'applets/getKnowledge/', data), //知识点
   textbook_exercises: data => request(ApiUrl + 'applets/studentKnowledgeBaseList/', data), //知识库 习题筛选
-  join_error: data => request(ApiUrl + 'user/join_error_exercises/', data), //加入/取消错题
+  join_error: data => request(ApiUrl + 'applets/addStudentExercises/', data), //加入/取消错题
   same_type: data => request(ApiUrl + 'applets/studentSameTypeExercises/', data), //章节课时习题 同类型题目
   //个人信息	
   get_user_info: data => request(ApiUrl + 'applets/getPerson/', data), //获取用户信息
@@ -79,7 +79,7 @@ module.exports = {
   orc_one: data => request(ApiUrl + 'applets/studentTextbookPhotoSearch/', data),
   // orc_one: data => request(ApiUrl + 'user/orc_one_l/', data),
   // v3/user/delete_errorbook_exercises   数据 errorbook_id    exercises_ids
-  delete_exercises: data => request(ApiUrl + 'user/delete_errorbook_exercises/', data),
+  delete_exercises: data => request(ApiUrl + 'applets/delStudentExercises/', data),
   // register : data => request(ApiUrl+'user/user_register/',data),//注册
   //search_password : data => request(ApiUrl+'user/search_password/',data),//找回密码
   catalogue: data => request(ApiUrl + 'question/catalogue/', data), //教辅目录

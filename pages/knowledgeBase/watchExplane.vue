@@ -150,7 +150,6 @@
           });
         } else {
           var req = this.$api.join_error({
-            token: this.token,
             exercises_id: id,
             source: 5
             // subject_id:this.subject_id,
@@ -190,7 +189,6 @@
           });
         } else {
           var req = this.$api.join_error({
-            token: this.token,
             exercises_id: id,
             is_vip: 1,
             source: this.source

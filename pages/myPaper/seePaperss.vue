@@ -7,7 +7,7 @@
       </view>
 
       <view class="rich-text-box" @click.stop="jiexi(item.exercises_id,7)">
-        <rich-text class="rich-text-content" :nodes="changeStyle(item.content)"></rich-text>
+        <rich-text class="rich-text-content" :nodes="changeStyle(item.get_exercises.content_all)"></rich-text>
         <!-- <uParse :content="item.content"/> -->
       </view>
       <view class="bottom">
@@ -21,7 +21,7 @@
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
             {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
           </view>
-          <view v-else @click.stop="deleteExercises(item.exercises_id)">
+          <view v-else @click.stop="deleteExercises(item.id)">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" mode="" />删除错题
           </view>
         </view>
@@ -128,6 +128,7 @@
       this.subject_name = options.subject_name;
       this.status = options.status;
       this.is = options.is;
+      this.subject_id = options.subject_id;
       if (options.based_id) {
         this.based_id = options.based_id;
       }
@@ -165,10 +166,10 @@
       			delta: 2  
       		});
       	}, */
-      deleteExercises(exercises_ids) {
+      deleteExercises(id) {
         this.$api.delete_exercises({
-          errorbook_id: this.based_id,
-          exercises_ids
+          subject_id:this.subject_id,
+          id
         }).then(res => {
           uni.showToast({
             title: res.msg,
@@ -216,16 +217,16 @@
           var req = this.$api.get_errorbook_exercises({
             token: this.token,
             page: this.page,
-            errorbook_id: this.based_id
+            id: this.based_id
           });
         }
         req.then(res => {
           this.is_more = res.is_more;
           console.log(res);
           if (this.page == 1) {
-            this.list = res.data.exercises_list;
+            this.list = res.data.userExercises.data;
           } else {
-            this.list = [...this.list, ...res.data.exercises_list];
+            this.list = [...this.list, ...res.data.userExercises.data];
           }
         });
       },
@@ -314,12 +315,10 @@
 
         if (uni.getStorageSync('type') == 4) {
           var req = this.$api.join_error({
-            token: this.token,
             exercises_id: id
           });
         } else {
           var req = this.$api.teacher_join_error({
-            token: this.token,
             exercises_id: id,
             source:this.source
           });
@@ -357,13 +356,11 @@
         this.update = true;
         if (uni.getStorageSync('type') == 4) {
           var req = this.$api.join_error({
-            token: this.token,
             exercises_id: id,
             is_type: 1
           });
         } else {
           var req = this.$api.teacher_join_error({
-            token: this.token,
             exercises_id: id,
             is_type: 1,
             source: 5

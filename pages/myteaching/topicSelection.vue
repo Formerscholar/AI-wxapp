@@ -171,7 +171,7 @@ export default {
 			}
 			this.update = false;
 			this.update = true;
-			this.$api.join_error({ token: this.token, exercises_id: id }).then(res => {
+			this.$api.join_error({ exercises_id: id }).then(res => {
 				this.open(item);
 				console.log(res);
 				// if(res.msg=='取消成功！'){
@@ -201,7 +201,7 @@ export default {
 			}
 			this.update = false;
 			this.update = true;
-			this.$api.join_error({ token: this.token, exercises_id: id, is_type: 1 }).then(res => {
+			this.$api.join_error({ exercises_id: id, is_type: 1 }).then(res => {
 				console.log(res);
 				if (res.code == 200) {
 					if (this.same_type[i].is_error) {

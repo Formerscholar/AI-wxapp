@@ -260,13 +260,11 @@
 
         if (uni.getStorageSync('type') == 4) {
           var req = this.$api.join_error({
-            token: this.token,
             exercises_id: id,
             source: 6
           });
         } else {
           var req = this.$api.teacher_join_error({
-            token: this.token,
             exercises_id: id
           });
         }
@@ -303,14 +301,12 @@
         this.update = true;
         if (uni.getStorageSync('type') == 4) {
           var req = this.$api.join_error({
-            token: this.token,
             exercises_id: id,
             is_type: 1,
             source: 5
           });
         } else {
           var req = this.$api.teacher_join_error({
-            token: this.token,
             exercises_id: id,
             is_type: 1
           });

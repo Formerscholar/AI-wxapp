@@ -24,7 +24,7 @@
 					<view class="item2" v-for="(item, i) of exercises_list" :key="i" @click="selected_topic(i)">
 						<view v-if="update" :class="{ 'b-n': item.select }" class="b-default"></view>
 						<view class="">
-							<rich-text :nodes="changeStyle(item.content)"></rich-text>
+							<rich-text :nodes="changeStyle(item.get_exercises.content_all)"></rich-text>
 						</view>
 					</view>
 					<view v-if="is_more == 0 && exercises_list.length != 0" class="is_more">没有更多错题了</view>
@@ -52,18 +52,18 @@
 
 			<!-- 已生成试卷 -->
 			<view class="list" v-else>
-				<view class="l-item" v-for="(item, i) of errorbook_list" :key="i" @click="seepaper(item.errorbook_id, item.title, subject_name, 'is_student')">
+				<view class="l-item" v-for="(item, i) of errorbook_list" :key="i" @click="seepaper(item.id, item.title, subject_name, 'is_student')">
 					<view class="num">
-						<image :src="item.subject_icon" mode="" />
+						<image :src="subject_icon" mode="" />
 						<view class="titleCon">
 							<text>{{ item.title }}</text>
-							<view class="time">{{ item.add_time }}</view>
+							<view class="time">{{ item.add_time * 1000 | timer}}</view>
 						</view>
 					</view>
 					<view class="btnCons">
 						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" @click.stop="delete_errorbook(i)" />
 						<view class="line"></view>
-						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download.png" @click.stop="generated(item.errorbook_id ,item.title)" />
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download.png" @click.stop="generated(item.id ,item.title)" />
 					</view>
 				</view>
 				<view v-if="is_more2 == 0 && errorbook_list.length != 0" class="is_more">没有更多错题本了</view>
@@ -89,7 +89,7 @@
 				<view class="item2" v-for="(item, i) of exercises_list" :key="i" @click="selected_topic(i)">
 					<view v-if="update" :class="{ 'b-n': item.select }" class="b-default"></view>
 					<view class="">
-						<rich-text :nodes="changeStyle(item.content)"></rich-text>
+						<rich-text :nodes="changeStyle(item.get_exercises.content_all)"></rich-text>
 					</view>
 				</view>
 				<view v-if="is_more == 0 && exercises_list.length != 0" class="is_more">没有更多试题了</view>
@@ -117,7 +117,7 @@
 			<view class="list" v-else>
 				<view class="l-item" v-for="(item, i) of errorbook_list" :key="i" @click="seepaper(item.errorbook_id, item.title, item.subject_name, 'is_teacher')">
 					<view class="num">
-						<image :src="item.subject_icon" mode="" />
+						<image :src="subject_icon" mode="" />
 						<view class="titleCon">
 							<text>{{ item.title }}</text>
 							<view class="time">{{ item.add_time }}</view>
@@ -280,7 +280,8 @@
 				arrYi: [],
 				str: '',
 				str1: '',
-        is_show:false
+        is_show:false,
+        subject_icon:''
 			};
 		},
 		onReachBottom() {
@@ -778,7 +779,7 @@
 				});
 				this.errorbook_list.forEach((elem, i, arr1) => {
 					if (elem.status) {
-						this.arrYi.push(elem.errorbook_id);
+						this.arrYi.push(elem.id);
 					}
 				});
 				this.str = ''
@@ -789,8 +790,8 @@
 				if (this.type == 4) {
 					req = this.$api.add_exercises_to_errorbook_user({
 						token: this.token,
-						exercises_ids: this.str,
-						error_book_ids: this.str1
+						id: this.str,
+						user_errorbook_id: this.str1
 					});
 				} else {
 					req = this.$api.add_exercises_to_errorbook({
@@ -921,7 +922,7 @@
 				}
 				req.then(res => {
 					this.is_more = res.is_more;
-					if (!res.data?.exercises_list) {
+					if (!res.data?.userExercises) {
 						/* uni.showToast({
 								title:res.msg,
 								icon:'none'
@@ -932,9 +933,9 @@
 						this.btndisabled = false;
 						//console.log('res.data.exercises_list.length',res.data.exercises_list);
 						if (this.page == 1) {
-							this.exercises_list = res.data.exercises_list;
+							this.exercises_list = res.data.userExercises.data;
 						} else {
-							this.exercises_list = [...this.exercises_list, ...res.data.exercises_list];
+							this.exercises_list = [...this.exercises_list, ...res.data.userExercises.data];
 						}
 					}
 				});
@@ -981,7 +982,7 @@
 					token: this.token,
 					subject_id: this.subject_id,
 					exercises_ids: n_arr.toString(),
-					title: this.title
+					name: this.title
 				};
 				if (this.type == 3) {
 					var req = this.$api.create_teacher_error_book(data);
@@ -1023,9 +1024,9 @@
 						}
 						this.is_more2 = res.is_more;
 						if (this.page == 1) {
-							this.errorbook_list = res.data.errorbook_list;
+							this.errorbook_list = res.data.userErrorbook.data;
 						} else {
-							this.errorbook_list = [...this.errorbook_list, ...res.data.errorbook_list];
+							this.errorbook_list = [...this.errorbook_list, ...res.data.userErrorbook.data];
 						}
 					});
 				} else {
@@ -1063,7 +1064,7 @@
 						if (res.confirm) {
 							let data = {
 								token: this.token,
-								errorbook_id: this.errorbook_list[i].errorbook_id
+								id: this.errorbook_list[i].id
 							};
 							if (this.type == 3) {
 								var req = this.$api.teacher_delete_errorbook(data);
@@ -1098,13 +1099,14 @@
 				var n_arr = [];
 				this.exercises_list.forEach((elem, i, arr) => {
 					if (elem.select) {
-						n_arr.push(elem.exercises_id);
+						n_arr.push(elem.id);
 					}
 				});
 				console.log(n_arr);
 				var data = {
 					token: this.token,
-					exercises_ids: n_arr.toString()
+          subject_id:this.subject_id,
+					id: n_arr.toString()
 				};
 				if (this.type == 3) {
 					var req = this.$api.teacher_delete_error_exercises(data);
@@ -1135,7 +1137,8 @@
 			seepaper(id, title, subject_name, is) {
 				uni.navigateTo({
 					url: '/pages/myPaper/seePaperss?based_id=' + id + '&st=1' + '&title=' + title + '&subject_name=' + subject_name +
-						'&is=' + is
+						'&is=' + is +
+						'&subject_id=' + this.subject_id
 				});
 			},
 			change(i) {
@@ -1156,6 +1159,8 @@
 				this.subject_id = this.subject_list[i].id;
 				this.subject_list.forEach((e, j, arr) => {
 					if (i == j) {
+            console.log(e)
+            this.subject_icon = e.icon1
 						e.status = true;
 					} else {
 						e.status = false;

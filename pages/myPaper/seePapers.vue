@@ -124,6 +124,7 @@
       this.title = options.title;
       this.subject_name = options.subject_name;
       this.status = options.status;
+      this.subject_id = options.subject;
       this.is = options.is;
       if (options.based_id) {
         this.based_id = options.based_id;
@@ -297,13 +298,11 @@
 
         if (uni.getStorageSync('type') == 4) {
           var req = this.$api.join_error({
-            token: this.token,
             exercises_id: id,
             source: this.source
           });
         } else {
           var req = this.$api.teacher_join_error({
-            token: this.token,
             exercises_id: id
           });
         }
@@ -340,14 +339,12 @@
         this.update = true;
         if (uni.getStorageSync('type') == 4) {
           var req = this.$api.join_error({
-            token: this.token,
             exercises_id: id,
             is_type: 1,
             source:5
           });
         } else {
           var req = this.$api.teacher_join_error({
-            token: this.token,
             exercises_id: id,
             is_type: 1
           });

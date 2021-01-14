@@ -418,7 +418,7 @@ export default {
 		},
 		//加入错题
 		join_error(i, id) {
-			var req = this.$api.teacher_join_error({ token: this.token, exercises_id: id, is_vip: 1 });
+			var req = this.$api.teacher_join_error({  exercises_id: id, is_vip: 1 });
 			req.then(res => {
 				if (res.code == 200) {
 					if (this.exercises_list[i].is_error) {
@@ -439,7 +439,6 @@ export default {
 		},
 		join_error2(i, id) {
 			var req = this.$api.teacher_join_error({
-				token: this.token,
 				exercises_id: id
 				//is_vip:1
 			});
