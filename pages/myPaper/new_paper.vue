@@ -28,15 +28,15 @@
 		</view>
 		<!-- 名校资源（老师） -->
 		<view class="list" v-show="type == 3">
-			<view class="l-item" v-for="(item, i) of xb_list" :key="i" @click="chakan(item.based_id, item.title, item.subject_id, item.subject_name)">
+			<view class="l-item" v-for="(item, i) of xb_list" :key="i" @click="chakan(item.id, item.title)">
 				<view class="num">
-					<image :src="item.icon"></image>
+					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/subject2.png"></image>
 					<view>
 						<view class="paperTitle">{{ item.title }}</view>
-						<view class="time">{{ item.add_time }}</view>
+						<view class="time">{{ item.add_time*1000 | timer}}</view>
 					</view>
 				</view>
-				<view class="right" @click.stop="generated(item.based_id,item.title,1)">
+				<view class="right" @click.stop="generated(item.id,item.title,1)">
 					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png" class="download"></image>
 				</view>
 				<!-- <image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png' class='right'></image> -->
@@ -723,7 +723,6 @@
 			//名校资源（老师）
 			school_test_paper() {
 				this.$api.teacher_newest_paper({
-					token: this.token,
 					page: this.page,
 					page_size: 10
 				}).then(res => {
@@ -736,9 +735,9 @@
 							}) */
 					}
 					if (this.page == 1) {
-						this.xb_list = res.data.school_based_list;
+						this.xb_list = res.data.exams.data;
 					} else {
-						this.xb_list = [...this.xb_list, ...res.data.school_based_list];
+						this.xb_list = [...this.xb_list, ...res.data.exams.data];
 					}
 				});
 			},

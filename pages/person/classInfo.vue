@@ -4,7 +4,7 @@
 			<view class="flex">
 				<view @click="add(item)" class="up">
 					<view class="className">
-						{{ item.team_name }}
+						{{ item.name }}
 						<image class='guan' v-if="user_id == item.teacher_id" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/admin.png" mode="widthFix"></image>
 					</view>
 					<view class="num">ID:{{ item.classid }}</view>
@@ -182,7 +182,7 @@ export default {
 		get_class_list() {
 			this.$api.my_team_ids_list({ token: this.token }).then(res => {
 				console.log(res);
-				this.list = res.data;
+				this.list = res.data.teamList;
 			});
 		},
 		add(item) {

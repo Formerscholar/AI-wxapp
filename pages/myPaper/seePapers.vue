@@ -218,14 +218,12 @@
         if (uni.getStorageSync('type') == 3) {
           //校本试卷详情(老师)/名校资源详情（老师）
           req = this.$api.school_test_paper_detail({
-            token: this.token,
-            based_id: this.based_id,
+            exams_id: this.based_id,
             page: this.page
           });
         } else {
           //校本试卷详情（学生）/名校资源详情(学生)
           req = this.$api.user_test_paper_detail({
-            token: this.token,
             exams_id: this.based_id,
             page: this.page
           });

@@ -276,6 +276,7 @@
         })
       },
       tobead() {
+        this.todetail(7)
         if (this.teacher_infos.cert == 1) {
           this.todetail(7)
         } else {

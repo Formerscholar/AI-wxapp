@@ -143,7 +143,7 @@ export default {
 		},
 		//校本试卷（老师）
 		school_test_paper() {
-			this.$api.school_test_paper({ token: this.token, page: this.page }).then(res => {
+			this.$api.school_test_paper({page: this.page }).then(res => {
 				console.log(res);
 				this.is_more = res.is_more;
 				if (res.code != 200) {
@@ -153,9 +153,9 @@ export default {
 						}) */
 				}
 				if (this.page == 1) {
-					this.xb_list = res.data.school_based_list;
+					this.xb_list = res.data.schoolExamsList.data;
 				} else {
-					this.xb_list = [...this.xb_list, ...res.data.school_based_list];
+					this.xb_list = [...this.xb_list, ...res.data.schoolExamsList.data];
 				}
 			});
 		},
