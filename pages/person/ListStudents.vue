@@ -6,9 +6,9 @@
 				<view class="item">
 					<view class="left" v-for="(item, i) in teacher" :key="i">
 						<view class="content">
-							<image :src="item.avatar"></image>
+							<image :src="item.avatar_file"></image>
 							<view>{{ item.true_name }}</view>
-							<view class="subjectName">{{ item.subject_title }}</view>
+							<view class="subjectName">{{ item.get_subject.title }}</view>
 						</view>
 						<view class="deleteteacherwarp">
 							<image v-if="userid == teacher_id &&  item.id != teacher_id && is_active == 0" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="deleteteacher" @click.stop="deItemTeacher(item.id)" />
@@ -21,17 +21,17 @@
 			<view class="name">学生</view>
 			<view class="list">
 				<view class="item">
-					<view class="left" v-for="(item, i) in student" :key="i" @click="report_detail(team_name, item.student_name, item.user_id)">
+					<view class="left" v-for="(item, i) in student" :key="i" @click="report_detail(team_name, item.true_name, item.id)">
 						<view class="content">
-							<image :src="item.avatar" v-if="item.avatar"></image>
-							<view v-if="item.student_name">
-								{{ item.student_name }}
+							<image :src="item.avatar_file" v-if="item.avatar_file"></image>
+							<view v-if="item.true_name">
+								{{ item.true_name }}
 								<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon.png" v-if="item.is_vip == 1"></image>
 							</view>
 						</view>
 						<view>
-							<view class="cuo_tag">已收集{{ item.err_cnt }}道错题</view>
-							<image v-if="userid == teacher_id && is_active == 0" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="delete" @click.stop="deItem(item.user_id)"></image>
+							<view class="cuo_tag">已收集{{ item.errorCount }}道错题</view>
+							<image v-if="userid == teacher_id && is_active == 0" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" class="delete" @click.stop="deItem(item.id)"></image>
 						</view>
 					</view>
 				</view>
@@ -78,12 +78,12 @@ export default {
 	computed: {},
 	methods: {
 		get_student_list() {
-			this.$api.team_student_list({ token: this.token, team_id: this.team_id }).then(res => {
+			this.$api.team_student_list({ team_id: this.team_id }).then(res => {
 				console.log(res);
 				if (res.code == 200) {
 					console.log(res.data);
-					this.student = res.data.student;
-					this.teacher = res.data.teacher;
+					this.student = res.data.teamStudent;
+					this.teacher = res.data.teamTeacher;
 					this.is_active = res.data.team.is_active;
 					this.teacher_id = res.data.team.teacher_id;
 				}
@@ -95,7 +95,6 @@ export default {
 				success: res => {
 					if (res.confirm) {
 						this.$api.remove_teacher({
-							token: this.token,
 							teacher_id: id,
 							team_id: this.team_id,
 						}).then(res => {
@@ -121,8 +120,8 @@ export default {
 				success: res => {
 					if (res.confirm) {
 						let data = {
-							token: this.token,
-							user_id: id
+							student_id: id,
+              team_id: this.team_id,
 						};
 						console.log(data);
 						this.$api.remove_student(data).then(res => {
@@ -147,7 +146,7 @@ export default {
 				title: '确定删除吗？',
 				success: res => {
 					if (res.confirm) {
-						this.$api.remove_team({ token: this.token, team_id: this.team_id }).then(res => {
+						this.$api.remove_team({team_id: this.team_id }).then(res => {
 							console.log(res);
 							if (res.code == 200) {
 								uni.showToast({

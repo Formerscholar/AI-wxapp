@@ -4,18 +4,18 @@
 			<view class="flex">
 				<view @click="add(item)" class="up">
 					<view class="className">
-						{{ item.name }}
+						{{ item.get_grade.name+item.name }}
 						<image class='guan' v-if="user_id == item.teacher_id" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/admin.png" mode="widthFix"></image>
 					</view>
 					<view class="num">ID:{{ item.classid }}</view>
 				</view>
 				<view class="up" @click="add(item)">
 					学生
-					<view class="num">{{ item.team_student_count }}</view>
+					<view class="num">{{ item.get_user_count }}</view>
 				</view>
 				<view class="up" @click="add(item)">
 					老师
-					<view class="num">{{ item.team_teacher_count }}</view>
+					<view class="num">{{ item.teacherCount }}</view>
 				</view>
 			</view>
 			<view class="flex">
@@ -188,7 +188,7 @@ export default {
 		add(item) {
 			console.log(item);
 			uni.navigateTo({
-				url: '/pages/person/ListStudents?team_name=' + item.team_name + '&team_id=' + item.team_id
+				url: '/pages/person/ListStudents?team_name=' + item.get_grade.name+item.name + '&team_id=' + item.id
 			});
 		},
 		touser(url) {

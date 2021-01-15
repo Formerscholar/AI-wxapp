@@ -57,7 +57,7 @@
 		<view class="list">
 			<view class="item" v-for="(item, i) of exercises_list" :key="i">
 				<view class="" @click="jiexi(item.exercises_id)">
-					<rich-text :nodes="changeStyle(item.content)"></rich-text>
+					<rich-text :nodes="changeStyle(item.get_exercises.content_all)"></rich-text>
 					<!-- <uParse :content="item.content"/> -->
 				</view>
 				<view class="bottom" @click="open(item.exercises_id, 0)">
@@ -158,7 +158,6 @@ export default {
 	onReachBottom() {
 		if (this.is_more) {
 			this.page++;
-			this.get_hot_title();
 		}
 	},
 	onLoad() {
@@ -168,7 +167,6 @@ export default {
 		}
 
 		this.selectDate(0);
-		this.get_class();
 		this.get_hot_title();
 	},
 	methods: {
@@ -231,10 +229,9 @@ export default {
 				}
 			});
 
-			this.get_baogao();
 			this.page = 1;
 			this.exercises_list = [];
-			this.get_hot_title();
+			// this.get_hot_title();
 		},
 		select_class(i) {
 			this.class_list.forEach((elem, j, arr) => {
@@ -245,7 +242,6 @@ export default {
 				}
 			});
 			this.team_id = this.class_list[i].team_id;
-			this.get_baogao();
 			this.page = 1;
 			this.exercises_list = [];
 			this.get_hot_title();
@@ -369,7 +365,6 @@ export default {
 			let _this = this;
 			_this.$api
 				.hot_error_exercises({
-					token: _this.token,
 					team_id: _this.team_id,
 					start_time: _this.time,
 					end_time: _this.time2,
@@ -381,10 +376,21 @@ export default {
 						console.log('res', res);
 						_this.is_more = res.is_more;
 						if (_this.page == 1) {
-							_this.exercises_list = res.data;
+							_this.exercises_list = res.data.userExercises.data;
 						} else {
-							_this.exercises_list = [..._this.exercises_list, ...res.data];
+							_this.exercises_list = [..._this.exercises_list, ...res.data.userExercises.data];
 						}
+            _this.pieData = res.data.knowPointExercises.length;
+            if (_this.pieData !== 0) {
+            	_this.analysisList = res.data;
+            	_this.Pie.series = res.data;
+            	_this.pieData = res.data.count_list;
+            } else {
+            	_this.Pie.series = [];
+            	_this.pieData = [];
+            	_this.analysisList = [];
+            }
+            _this.showPie('canvasPie', _this.Pie);
 					} else {
 					}
 				});

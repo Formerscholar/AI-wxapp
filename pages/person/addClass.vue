@@ -58,9 +58,8 @@ export default {
 			}
 
 			let data = {
-				grade_id: this.grade[this.g_num].grade_id,
-				class_name: this.class_name[this.s_num],
-				token: this.token
+				grade_id: this.grade[this.g_num].id,
+				name: this.class_name[this.s_num],
 			};
 			this.$api.teacher_add_class(data).then(res => {
 				console.log(res);
@@ -85,9 +84,9 @@ export default {
 
 		//获取年级
 		get_grade() {
-			this.$api.get_grade({ token: this.token }).then(res => {
+			this.$api.get_grade().then(res => {
 				console.log(res);
-				this.grade = [{ name: '请选择年级' }, ...res.data.grade_list];
+				this.grade = [{ name: '请选择年级' }, ...res.data.grades];
 			});
 		},
 		//获取年级
