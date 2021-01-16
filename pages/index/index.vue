@@ -14,19 +14,19 @@
         <view class="tb">
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/subject.png" mode=""></image>
           <text>学科</text>
-          <text>{{ teacher_info.subject_name.title }}</text>
+          <text>{{ teacher_info.teacher.get_subject.title }}</text>
         </view>
 
         <view class="tb" @click="toclassinfo()">
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/class.png" mode=""></image>
           <text>班级</text>
-          <text>{{ teacher_info.team_count }}</text>
+          <text>{{ teacher_info.teacher.teamCount }}</text>
         </view>
 
         <view class="tb" @click="toclassinfo()">
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/classmate.png" mode=""></image>
           <text>学生</text>
-          <text>{{ teacher_info.student_count ? teacher_info.student_count : 0 }}</text>
+          <text>{{ teacher_info.teacher.studentCount || 0 }}</text>
         </view>
       </view>
       <view class="upload" @click="uploadPaper()">
@@ -36,9 +36,9 @@
         <view class="title">
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/report.png" mode="" class="report"></image>
           <text>学情报告</text>
-          <text class="showDe" v-for="(item, i) of teacher_info.analysis" :key="i" v-if="teacher_info.analysis">
-            {{ item.grade_name }}{{ item.team_name }},
-            <text class="remark_red">{{ item.cnt ? item.cnt : 0 }}</text>
+          <text class="showDe" v-for="(item, i) of teacher_info.team" :key="i" v-if="teacher_info.team">
+            {{ item.get_grade.name }}{{ item.name }},
+            <text class="remark_red">{{ item.userExercisesCount || 0 }}</text>
             道错题
           </text>
         </view>
@@ -49,7 +49,7 @@
           <view class="title">
             <text>校本试卷</text>
             <view>
-              <text class="remark_red">{{ teacher_info.recent_paper ? teacher_info.recent_paper : 0 }}</text>
+              <text class="remark_red">{{ teacher_info.examsSchoolCount || 0 }}</text>
               份
             </view>
           </view>
@@ -59,7 +59,7 @@
           <view class="title">
             <text>名校资源</text>
             <view>
-              <text class="remark_red">{{ teacher_info.recent_school_based ? teacher_info.recent_school_based : 0 }}</text>
+              <text class="remark_red">{{ teacher_info.schoolResourcesCount || 0 }}</text>
               份
             </view>
           </view>
@@ -370,11 +370,10 @@
       },
       //获取老师信息
       get_teacher() {
-        this.$api.teacher_index({
-          token: this.token
-        }).then(res => {
+        this.$api.teacher_index().then(res => {
           console.log(res);
           this.teacher_info = res.data;
+          this.banner_list = res.data.banner;
         });
       },
       todetail(i) {

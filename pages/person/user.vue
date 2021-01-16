@@ -180,8 +180,7 @@
           return;
         }
         var data = {
-        	email: this.newEmail,
-        	token: this.token
+        	email: this.newEmail
         };
         var res
         if(this.type == 4){
@@ -218,13 +217,12 @@
 				}
 				var data = {
 					name: this.newName,
-					token: this.token
 				};
         var res
         if(this.type == 4){
            res = this.$api.change_user_name(data)
         }else{
-          res = this.$api.change_teacher_info(data)
+          res = this.$api.change_teacher_name(data)
         }
 				res.then(res => {
 					console.log(res);
@@ -274,7 +272,7 @@
 						if (_this.type == 4) {
 							url = _this.$api.url + 'applets/editPersonAvatarFile';
 						} else {
-							url = _this.$api.url + 'teacher/update_avatar/';
+							url = _this.$api.url + 'applets/editAvatarFile/';
 						}
 						uni.uploadFile({
 							url: url,
@@ -353,10 +351,10 @@
 				} else {
 					this.$api.get_teacher_info().then(res => {
 						console.log(res);
-						this.user_info = res.data.user;
-						this.img = res.data.user.avatar_file;
-            this.newName = res.data.user.true_name
-            this.newEmail = res.data.user.email
+						this.user_info = res.data.teacher;
+						this.img = res.data.teacher.avatar_file;
+            this.newName = res.data.teacher.true_name
+            this.newEmail = res.data.teacher.email
 						// this.getschool();
 					});
 				}
@@ -365,12 +363,10 @@
 			changeGrade(e) {
 				if (uni.getStorageSync('type') == 4) {
 					var req = this.$api.change_grade({
-						token: this.token,
 						grade_ids: this.grade[e.detail.value].grade_id
 					});
 				} else {
 					var req = this.$api.change_teacher_info({
-						token: this.token,
 						grade_ids: this.grade[e.detail.value].grade_id
 					});
 				}
@@ -389,12 +385,10 @@
 			changesc(e) {
 				if (uni.getStorageSync('type') == 4) {
 					var req = this.$api.change_user_info({
-						token: this.token,
 						school_id: this.school[e.detail.value].id
 					});
 				} else {
 					var req = this.$api.change_teacher_info({
-						token: this.token,
 						school_id: this.school[e.detail.value].id
 					});
 				}
@@ -414,12 +408,10 @@
 				var code = e.detail.code;
 				if (uni.getStorageSync('type') == 4) {
 					var req = this.$api.change_user_info({
-						token: this.token,
 						region: code.toString()
 					});
 				} else {
 					var req = this.$api.change_teacher_info({
-						token: this.token,
 						region: code.toString()
 					});
 				}
@@ -433,12 +425,10 @@
 				var id = this.sex[e.detail.value].id;
 				if (uni.getStorageSync('type') == 4) {
 					var req = this.$api.change_user_info({
-						token: this.token,
 						sex: id
 					});
 				} else {
 					var req = this.$api.change_teacher_info({
-						token: this.token,
 						sex: id
 					});
 				}

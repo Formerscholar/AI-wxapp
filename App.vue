@@ -118,7 +118,9 @@
         } else {
           this.$api.get_teacher_info().then(res => {
             console.log('jiaoshi', res);
-            uni.setStorageSync('userInfo', res.data.user);
+            uni.setStorageSync('userInfo', res.data.teacher);
+            uni.setStorageSync('examCount', res.data.examCount);
+            uni.setStorageSync('examBasketCount', res.data.examBasketCount);
           });
         }
       },

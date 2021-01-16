@@ -7,7 +7,8 @@
       </view>
 
       <view class="rich-text-box" @click.stop="jiexi(item.exercises_id,7)">
-        <rich-text class="rich-text-content" :nodes="changeStyle(item.get_exercises.content_all)"></rich-text>
+
+        <rich-text class="rich-text-content" :nodes="changeStyle(item.get_exercises.content_all  )"></rich-text>
         <!-- <uParse :content="item.content"/> -->
       </view>
       <view class="bottom">
@@ -168,7 +169,7 @@
       	}, */
       deleteExercises(id) {
         this.$api.delete_exercises({
-          subject_id:this.subject_id,
+          subject_id: this.subject_id,
           id
         }).then(res => {
           uni.showToast({
@@ -200,35 +201,46 @@
       jiexi(id, source) {
         uni.navigateTo({
           // url:'/pages/person/ListStudents?name='+item.team_name+'&team_id='+item.team_id
-          url: '/pages/knowledgeBase/watchExplane?id=' + id 
+          url: '/pages/knowledgeBase/watchExplane?id=' + id
         });
       },
       //试卷内容列表
       get_errorbook_exercises() {
         if (uni.getStorageSync('type') == 3) {
           //生成的错题本查看（老师）
-          var req = this.$api.get_teacher_errorbook_exercises({
-            token: this.token,
+          this.$api.get_teacher_errorbook_exercises({
             page: this.page,
-            errorbook_id: this.based_id
-          });
+            exam_id: this.based_id
+          }).then(res => {
+            console.log(res);
+            this.is_more = res.is_more;
+            if (this.page == 1) {
+              console.log('res', res)
+              this.list = res.data.examExercises;
+              console.log(this.list)
+              res.data.examExercises.map(item => {
+                item['get_exercises'] = item.get_one_exercises
+              })
+
+            } else {
+              this.list = [...this.list, ...res.data.examExercises];
+            }
+          })
         } else {
           //生成的错题本查看（学生）
-          var req = this.$api.get_errorbook_exercises({
-            token: this.token,
+          this.$api.get_errorbook_exercises({
             page: this.page,
             id: this.based_id
-          });
+          }).then(res => {
+            this.is_more = res.is_more;
+            console.log(res);
+            if (this.page == 1) {
+              this.list = res.data.userExercises.data;
+            } else {
+              this.list = [...this.list, ...res.data.userExercises.data];
+            }
+          })
         }
-        req.then(res => {
-          this.is_more = res.is_more;
-          console.log(res);
-          if (this.page == 1) {
-            this.list = res.data.userExercises.data;
-          } else {
-            this.list = [...this.list, ...res.data.userExercises.data];
-          }
-        });
       },
       get_list() {
         let req = '';
@@ -320,7 +332,7 @@
         } else {
           var req = this.$api.teacher_join_error({
             exercises_id: id,
-            source:this.source
+            source: this.source
           });
         }
         req.then(res => {

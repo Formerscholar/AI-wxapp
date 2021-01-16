@@ -51,7 +51,7 @@ export default {
 	methods: {
 		getRecordList() {
 			let _this = this;
-			_this.$api.teacher_pointlog({ token: _this.token, page: _this.page, page_size: 10 }).then(res => {
+			_this.$api.teacher_pointlog({  page: _this.page, page_size: 10 }).then(res => {
 				console.log(res);
 				if (res.code != 200) {
 					/* uni.showToast({
@@ -60,14 +60,14 @@ export default {
 						}) */
 				} else {
 					console.log(res.data);
-					_this.total = res.total;
+					_this.total = res.pointLog.total;
 
 					// _this.dataList = res.data
 					_this.is_more = res.is_more;
 					if (_this.page == 1) {
-						_this.dataList = res.data;
+						_this.dataList = res.data.pointLog.data;
 					} else {
-						_this.dataList = [..._this.dataList, ...res.data];
+						_this.dataList = [..._this.dataList, ...res.data.pointLog.data];
 					}
 				}
 			});

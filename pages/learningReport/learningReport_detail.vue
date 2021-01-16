@@ -24,15 +24,15 @@
 
 		<view class="fenbu"><text>错题知识点分布</text></view>
 		<view class="qiun-charts" v-if="analysisList.length && analysisList.length != 0">
-			<view class="item_box" v-for="(item,index) in analysisList" :key="item.data">
+			<view class="item_box" v-for="(item,index) in analysisList" :key="item.id">
 				<view class="top_box">
 					<view class="left_text">
-						{{ item.name }}
-						<text>{{ item.percentage }}</text>
+						{{ item.title }}
+						<text>{{ item.proportion }} %</text>
 					</view>
-					<view class="right_text">{{ item.data }}道错题</view>
+					<view class="right_text">{{ item.count }}道错题</view>
 				</view>
-				<view class="bot_box" :style="{ width: item.percentage, backgroundColor: colorList[index.toString()[index.toString().length - 1]] }"></view>
+				<view class="bot_box" :style="{ width: item.proportion, backgroundColor: colorList[index.toString()[index.toString().length - 1]] }"></view>
 			</view>
 		</view>
 		<view class="qiun-charts noData" v-else>{{ msg }}</view>
@@ -52,7 +52,7 @@
 		<view class="list">
 			<view class="item" v-for="(item, i) of exercises_list" :key="i">
 				<view class="" @click="jiexi(item.exercises_id)">
-					<rich-text :nodes="changeStyle(item.content)"></rich-text>
+					<rich-text :nodes="changeStyle(item.get_exercises.content_all)"></rich-text>
 					<!-- <uParse :content="item.content"/> -->
 				</view>
 				<view class="bottom" @click="open(item.exercises_id, 0)">
@@ -155,7 +155,7 @@ export default {
 	onReachBottom() {
 		if (this.is_more) {
 			this.page++;
-			this.get_hot_title();
+			this.get_baogao();
 		}
 	},
 	onLoad(options) {
@@ -174,7 +174,6 @@ export default {
 
 		this.selectDate(0);
 		this.get_baogao();
-		this.get_hot_title();
 	},
 	methods: {
 		changeStyle(item) {
@@ -235,31 +234,35 @@ export default {
 					e.dateStaus = false;
 				}
 			});
-			this.get_baogao();
 			this.page = 1;
 			this.exercises_list = [];
-			this.get_hot_title();
+			this.get_baogao();
 		},
 		get_baogao() {
 			let _this = this;
 			_this.$api
 				.analysis_detail({
-					token: _this.token,
-					user_id: _this.user_id,
+					student_id: _this.user_id,
 					start_time: _this.time,
 					end_time: _this.time2
 				})
 				.then(res => {
-					this.pieData = res.data.count_list;
+					_this.pieData = res.data.count_list;
 					if (res.data.length !== undefined) {
-						this.analysisList = res.data;
-						this.Pie.series = res.data;
+						_this.analysisList = res.data.knowPointExercises;
+						_this.Pie.series = res.data;
+            _this.is_more = res.is_more;
+            if (_this.page == 1) {
+            	_this.exercises_list = res.data.userExercises.data;
+            } else {
+            	_this.exercises_list = [..._this.exercises_list, ...res.data.userExercises.data];
+            }
 					} else {
-						this.Pie.series = [];
-						this.pieData = [];
-						this.analysisList = [];
+						_this.Pie.series = [];
+						_this.pieData = [];
+						_this.analysisList = [];
 					}
-					this.showPie('canvasPie', this.Pie);
+					_this.showPie('canvasPie', _this.Pie);
 				});
 		},
 		showPie(canvasId, chartData) {
@@ -295,19 +298,17 @@ export default {
 			// console.log('picker发送选择改变，携带值为', e.detail.value)
 			console.log(e);
 			this.time = e.detail.value;
-			this.get_baogao();
 			this.page = 1;
 			this.exercises_list = [];
-			this.get_hot_title();
+			this.get_baogao();
 		},
 		bindMultiPickerChange2: function(e) {
 			// console.log('picker发送选择改变，携带值为', e.detail.value)
 			console.log(e);
 			this.time2 = e.detail.value;
-			this.get_baogao();
 			this.page = 1;
 			this.exercises_list = [];
-			this.get_hot_title();
+			this.get_baogao();
 		},
 
 		//换一批
@@ -321,31 +322,6 @@ export default {
 				// url:'/pages/person/ListStudents?name='+item.team_name+'&team_id='+item.team_id
 				url: '/pages/knowledgeBase/watchExplane?id=' + id
 			});
-		},
-		//获取热门易错题型
-		get_hot_title() {
-			let _this = this;
-			_this.$api
-				.hot_error_exercises({
-					token: _this.token,
-					user_id: _this.user_id,
-					start_time: _this.time,
-					end_time: _this.time2,
-					page: _this.page,
-					page_size: 5
-				})
-				.then(res => {
-					if (res.code == 200) {
-						console.log('res', res);
-						_this.is_more = res.is_more;
-						if (_this.page == 1) {
-							_this.exercises_list = res.data;
-						} else {
-							_this.exercises_list = [..._this.exercises_list, ...res.data];
-						}
-					} else {
-					}
-				});
 		},
 		open(id) {
 			this.exercises_id = id;

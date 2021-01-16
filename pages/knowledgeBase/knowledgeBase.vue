@@ -252,13 +252,10 @@
       get_konw() {
         if (this.subject_id == 1) return false;
         if (this.type == 3) {
-          var req = this.$api.teacher_know_point({
-            token: this.token
-          });
+          var req = this.$api.teacher_know_point();
         } else {
           var req = this.$api.know_point({
-            subject_id: this.subject_id,
-            token: this.token
+            subject_id: this.subject_id
           });
         }
         req.then(res => {
@@ -309,7 +306,6 @@
         console.log('this.know_point_list[this.num_z]', this.know_point_list[this.num_z]?.id);
         if (this.type == 3) {
           let data = {
-            token: this.token,
             // version_id:this.version_list[this.num_b].version_id,
             type: this.question_id,
             level: this.level_id,
@@ -518,7 +514,6 @@
       open(id, status) {
         this.exercises_id = id;
         let data = {
-          token: this.token,
           // know_point:this.know_point_list[this.num_z].know_point_id,
           type: this.question_id,
           subject_id: this.subject_id,

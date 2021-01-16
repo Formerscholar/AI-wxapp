@@ -38,13 +38,15 @@ export default {
 			phone: '',
 			imgSrc: [],
 			picData: '',
-			tpmid:''
+			tpmid:'',
+      type:''
 		};
 	},
 	onLoad() {
 		if (uni.getStorageSync('token')) {
 			this.token = uni.getStorageSync('token');
 		}
+    this.type = uni.getStorageSync('type')
 		this.tpmid = app.globalData.settings.tmpid;
 	},
 	methods: {
@@ -62,8 +64,9 @@ export default {
 					sourceType: ['album', 'camera'], //从相册选择
 					success: res => {
 						for (let i = 0; i < res.tempFilePaths.length; i++) {
+              let url  = _this.type == 3 ? 'applets/getTeacherUploadImage':'applets/getUploadImage'
 							uni.uploadFile({
-								url: _this.$api.url + 'applets/getUploadImage',
+								url: _this.$api.url + url,
 								filePath: res.tempFilePaths[i],
 								name: 'img_url',
 								formData: {
@@ -94,9 +97,9 @@ export default {
         	tmplIds: arrTpmid,
         	complete: res => {
         		if (uni.getStorageSync('type') == 3) {
-        			var req = this.$api.teacher_feedback({ token: this.token, content: this.str, pics: this.imgSrc ,contact:this.phone });
+        			var req = this.$api.teacher_feedback({ content: this.str, pics: this.imgSrc ,contact:this.phone });
         		} else {
-        			var req = this.$api.feedback({ token: this.token, content: this.str, pics: this.imgSrc,contact:this.phone });
+        			var req = this.$api.feedback({  content: this.str, pics: this.imgSrc,contact:this.phone });
         		}
         		req.then(res => {
         			console.log(res);

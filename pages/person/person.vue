@@ -36,9 +36,9 @@
           <text>我的试卷</text>
           <view class="paperInfo">
             已生成试卷
-            <text>{{ user_info.created ? user_info.created : 0 }}</text>
+            <text>{{ examCount || 0 }}</text>
             份,未生成试卷
-            <text>{{ user_info.uncreate ? user_info.uncreate : 0 }}</text>
+            <text>{{ examBasketCount || 0 }}</text>
             题
           </view>
         </view>
@@ -139,7 +139,9 @@
         flag: false,
         grade_names: '',
         is_vip: 0,
-        platform: ''
+        platform: '',
+        examCount:'',
+        examBasketCount:'',
       };
     },
     onLoad() {
@@ -152,6 +154,8 @@
     onShow() {
       this.token = uni.getStorageSync('token');
       this.type = uni.getStorageSync('type');
+      this.examCount = uni.getStorageSync('examCount');
+      this.examBasketCount = uni.getStorageSync('examBasketCount');
     },
     computed: {
       ...mapState(['hasLogin', 'userInfo'])

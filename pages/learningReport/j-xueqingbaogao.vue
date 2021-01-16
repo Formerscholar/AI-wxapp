@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="class">
-			<view :class="{ 'b-b': item.team_id == team_id }" v-for="(item, i) of class_list" :key="i" @click="select_class(i)">{{ item.team_name }}</view>
+			<view :class="{ 'b-b': item.id == team_id }" v-for="(item, i) of class_list" :key="i" @click="select_class(i)">{{ item.name }}</view>
 		</view>
 
 		<view class="flex">
@@ -34,12 +34,12 @@
 			<view class="item_box" v-for="(item,index) in analysisList" :key="item.data">
 				<view class="top_box">
 					<view class="left_text">
-						{{ item.name }}
-						<text>{{ item.percentage }}</text>
+						{{ item.title }}
+						<text>{{ item.proportion }} %</text>
 					</view>
-					<view class="right_text">{{ item.data }}道错题</view>
+					<view class="right_text">{{ item.count }}道错题</view>
 				</view>
-				<view class="bot_box" :style="{ width: item.percentage, backgroundColor: colorList[index.toString()[index.toString().length - 1]] }"></view>
+				<view class="bot_box" :style="{ width: item.proportion, backgroundColor: colorList[index.toString()[index.toString().length - 1]] }"></view>
 			</view>
 		</view>
 		<view class="qiun-charts noData" v-else>{{ msg }}</view>
@@ -241,7 +241,7 @@ export default {
 					this.class_list[i].status = false;
 				}
 			});
-			this.team_id = this.class_list[i].team_id;
+			this.team_id = this.class_list[i].id;
 			this.page = 1;
 			this.exercises_list = [];
 			this.get_hot_title();
@@ -375,22 +375,25 @@ export default {
 					if (res.code == 200) {
 						console.log('res', res);
 						_this.is_more = res.is_more;
+            _this.analysisList = res.data.knowPointExercises
+            _this.class_list = res.teams;
+            _this.team_id = _this.teams[0].grade_id;
 						if (_this.page == 1) {
 							_this.exercises_list = res.data.userExercises.data;
 						} else {
 							_this.exercises_list = [..._this.exercises_list, ...res.data.userExercises.data];
 						}
-            _this.pieData = res.data.knowPointExercises.length;
-            if (_this.pieData !== 0) {
-            	_this.analysisList = res.data;
-            	_this.Pie.series = res.data;
-            	_this.pieData = res.data.count_list;
-            } else {
-            	_this.Pie.series = [];
-            	_this.pieData = [];
-            	_this.analysisList = [];
-            }
-            _this.showPie('canvasPie', _this.Pie);
+            // _this.pieData = res.data.knowPointExercises.length;
+            // if (_this.pieData !== 0) {
+            // 	_this.analysisList = res.data;
+            // 	_this.Pie.series = res.data;
+            // 	_this.pieData = res.data.count_list;
+            // } else {
+            // 	_this.Pie.series = [];
+            // 	_this.pieData = [];
+            // 	_this.analysisList = [];
+            // }
+            // _this.showPie('canvasPie', _this.Pie);
 					} else {
 					}
 				});

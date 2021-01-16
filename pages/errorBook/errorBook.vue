@@ -115,12 +115,12 @@
 
 			<!-- 已生成试卷 -->
 			<view class="list" v-else>
-				<view class="l-item" v-for="(item, i) of errorbook_list" :key="i" @click="seepaper(item.errorbook_id, item.title, item.subject_name, 'is_teacher')">
+				<view class="l-item" v-for="(item, i) of errorbook_list" :key="i" @click="seepaper(item.id, item.title, item.subject_name, 'is_teacher')">
 					<view class="num">
 						<image :src="subject_icon" mode="" />
 						<view class="titleCon">
 							<text>{{ item.title }}</text>
-							<view class="time">{{ item.add_time }}</view>
+							<view class="time">{{ item.add_time * 1000 | timer }}</view>
 						</view>
 					</view>
 					<view class="btnCons">
@@ -789,15 +789,13 @@
 				let req = '';
 				if (this.type == 4) {
 					req = this.$api.add_exercises_to_errorbook_user({
-						token: this.token,
 						id: this.str,
 						user_errorbook_id: this.str1
 					});
 				} else {
 					req = this.$api.add_exercises_to_errorbook({
-						token: this.token,
-						exercises_ids: this.str,
-						error_book_ids: this.str1
+						exercises_id: this.str,
+						exam_id: this.str1
 					});
 				}
 				req.then(res => {
@@ -922,7 +920,7 @@
 				}
 				req.then(res => {
 					this.is_more = res.is_more;
-					if (!res.data?.userExercises) {
+					if (!res.data) {
 						/* uni.showToast({
 								title:res.msg,
 								icon:'none'
@@ -932,11 +930,20 @@
 					} else {
 						this.btndisabled = false;
 						//console.log('res.data.exercises_list.length',res.data.exercises_list);
-						if (this.page == 1) {
-							this.exercises_list = res.data.userExercises.data;
-						} else {
-							this.exercises_list = [...this.exercises_list, ...res.data.userExercises.data];
-						}
+            if (this.type == 3) {
+            	if (this.page == 1) {
+            		this.exercises_list = res.data.basketExercise;
+            	} else {
+            		this.exercises_list = [...this.exercises_list, ...res.data.basketExercise];
+            	}
+            } else {
+            	if (this.page == 1) {
+            		this.exercises_list = res.data.userExercises.data;
+            	} else {
+            		this.exercises_list = [...this.exercises_list, ...res.data.userExercises.data];
+            	}
+            }
+						
 					}
 				});
 			},
@@ -979,7 +986,6 @@
 					});
 				}
 				let data = {
-					token: this.token,
 					subject_id: this.subject_id,
 					exercises_ids: n_arr.toString(),
 					name: this.title
@@ -1008,7 +1014,6 @@
 				if (this.type == 4) {
 					this.$api.generated_error_book({
 						subject_id: this.subject_id,
-						token: this.token,
 						page: this.page
 					}).then(res => {
 						console.log(res);
@@ -1032,7 +1037,6 @@
 				} else {
 					this.$api.generated_teacher_error_book({
 						subject_id: this.subject_id,
-						token: this.token,
 						page: this.page
 					}).then(res => {
 						console.log(res);
@@ -1049,9 +1053,9 @@
 						}
 						this.is_more2 = res.is_more;
 						if (this.page == 1) {
-							this.errorbook_list = res.data.errorbook_list;
+							this.errorbook_list = res.data.examList.data;
 						} else {
-							this.errorbook_list = [...this.errorbook_list, ...res.data.errorbook_list];
+							this.errorbook_list = [...this.errorbook_list, ...res.data.examList.data];
 						}
 					});
 				}
@@ -1063,7 +1067,6 @@
 					success: res => {
 						if (res.confirm) {
 							let data = {
-								token: this.token,
 								id: this.errorbook_list[i].id
 							};
 							if (this.type == 3) {
@@ -1099,12 +1102,11 @@
 				var n_arr = [];
 				this.exercises_list.forEach((elem, i, arr) => {
 					if (elem.select) {
-						n_arr.push(elem.id);
+						n_arr.push(elem.exercises_id);
 					}
 				});
 				console.log(n_arr);
 				var data = {
-					token: this.token,
           subject_id:this.subject_id,
 					id: n_arr.toString()
 				};

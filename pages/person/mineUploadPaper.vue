@@ -117,7 +117,6 @@
 			getRecordList: function() {
 				let _this = this;
 				_this.$api.my_upload_list({
-					token: _this.token,
 					page: _this.page,
 					page_size: 10
 				}).then(res => {
@@ -126,9 +125,9 @@
 					_this.is_more = res.is_more;
 					// _this.recordList=res.data
 					if (_this.page == 1) {
-						_this.recordList = res.data;
+						_this.recordList = res.data.teacherUploadList.data;
 					} else {
-						_this.recordList = [..._this.recordList, ...res.data];
+						_this.recordList = [..._this.recordList, ...res.data.teacherUploadList.data];
 					}
 					console.log('recordList', _this.recordList);
 				});
@@ -144,16 +143,16 @@
 						success: res => {
 							for (let i = 0; i < res.tempFilePaths.length; i++) {
 								uni.uploadFile({
-									url: _this.$api.url + 'main/upload_pic',
+									url: _this.$api.url + 'applets/getTeacherUploadImage',
 									filePath: res.tempFilePaths[i],
-									name: 'file',
+									name: 'img_url',
 									formData: {
 										token: this.token,
-										path: 'paper'
+										file_path: 'paper'
 									},
 									success: res => {
-										_this.picData = res.data;
-										console.log('_this.picData', _this.picData);
+										_this.picData = JSON.parse(res.data).data.img;
+										console.log('_this.picData', _this.picData );
 										_this.imgSrc.push(_this.picData);
 										console.log('_this.imgSrc', _this.imgSrc);
 									}
@@ -188,10 +187,9 @@
         	tmplIds: _this.tpmid.audit_notice,
         	complete: res => {
         		_this.$api.teacher_add_point({
-        			token: _this.token,
         			remark: _this.value2,
         			title: _this.value1,
-        			pics: _this.imgSrc
+        			image_urls: _this.imgSrc
         		}).then(res => {
         			uni.showToast({
         				title: res.msg,

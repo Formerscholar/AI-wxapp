@@ -66,8 +66,8 @@ export default {
 				return;
 			}
 			let data = {
-				new_mobile: this.new_mobile,
-				verify_code: this.code2
+				mobile: this.new_mobile,
+				code: this.code2
 			};
       var res
       if(this.type == 4){

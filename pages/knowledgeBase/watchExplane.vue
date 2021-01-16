@@ -16,7 +16,8 @@
           </view>
         </view>
       </view>
-       <image class="viptip" v-if="is_vip == 0 && type == 4" @click="toVipPage" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/viptip.png" mode="widthFix"></image>
+      <image class="viptip" v-if="is_vip == 0 && type == 4" @click="toVipPage" src="https://aictb.oss-cn-shanghai.aliyuncs.com/App/viptip.png"
+        mode="widthFix"></image>
       <view v-if="jiexiList.answer && is_vip == 1 && type == 4" class="daAn">
         <view class="tag">答案</view>
         <view class="context">
@@ -120,11 +121,11 @@
       this.source = options.source
     },
     onShow() {
-      this.get_exercise_analysis();
       if (uni.getStorageSync('is_vip')) {
         this.is_vip = uni.getStorageSync('is_vip');
       }
       this.type = uni.getStorageSync('type');
+      this.get_exercise_analysis();
     },
     methods: {
       toVipPage() {
@@ -237,6 +238,7 @@
           size: this.size_change
         };
         //consle.log('data2',this.know_point_list[this.num_z].know_point_id)
+        console.log(this.type)
         if (this.type == 3) {
           var req = this.$api.teacher_same_type(data);
         } else {
@@ -262,10 +264,18 @@
         return item;
       },
       get_exercise_analysis() {
-        this.$api.get_exercise_analysis({
-          id: this.id,
-          user_type: uni.getStorageSync('type')
-        }).then(res => {
+        
+        var req = null
+        if (this.type == 3) {
+          req = this.$api.get_teacher_exercise_analysis({
+            id: this.id,
+          })
+        } else {
+          req = this.$api.get_exercise_analysis({
+            id: this.id,
+          })
+        }
+        req.then(res => {
           if (res.code == 200) {
             this.jiexiList = res.data.exercises;
             console.log('watchExplane', res.data.exercises);
