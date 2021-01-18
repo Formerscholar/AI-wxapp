@@ -3,13 +3,13 @@
     <view class="top" :class="type == 3 ? 'teacher' : ''">
       <view class="mineInfo" @click="touser('/pages/person/user')">
         <view class="tou">
-          <image :src="user_info.avatar_file"></image>
+          <image :src="user_info.avatar || user_info.avatar_file"></image>
         </view>
         <view class="info">
           <view class="nick" v-if="user_info.true_name">{{ user_info.true_name }}</view>
           <view class="schoolName" v-if="type == 4">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/schoolIcon.png"></image>
-            <text>{{ school }}</text>
+            <text>{{ user_info.school.school_name || school }}</text>
           </view>
           <view class="schoolName" v-if="type == 3">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/jifen.png"></image>

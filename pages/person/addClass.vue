@@ -59,7 +59,7 @@ export default {
 
 			let data = {
 				grade_id: this.grade[this.g_num].id,
-				name: this.class_name[this.s_num],
+				name: this.s_num,
 			};
 			this.$api.teacher_add_class(data).then(res => {
 				console.log(res);

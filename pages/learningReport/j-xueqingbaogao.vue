@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="class">
-			<view :class="{ 'b-b': item.id == team_id }" v-for="(item, i) of class_list" :key="i" @click="select_class(i)">{{ item.name }}</view>
+			<view :class="{ 'b-b': item.id == team_id }" v-for="(item, i) of class_list" :key="i" @click="select_class(i)">{{ item.get_grade.name + item.name }}</view>
 		</view>
 
 		<view class="flex">
@@ -159,13 +159,13 @@ export default {
 		if (this.is_more) {
 			this.page++;
 		}
+    this.get_hot_title();
 	},
 	onLoad() {
 		_self = this;
 		if (uni.getStorageSync('token')) {
 			this.token = uni.getStorageSync('token');
 		}
-
 		this.selectDate(0);
 		this.get_hot_title();
 	},
@@ -231,7 +231,7 @@ export default {
 
 			this.page = 1;
 			this.exercises_list = [];
-			// this.get_hot_title();
+			this.get_hot_title();
 		},
 		select_class(i) {
 			this.class_list.forEach((elem, j, arr) => {
@@ -256,7 +256,7 @@ export default {
 						}) */
 				}
 				this.class_list = res.data;
-				this.team_id = this.class_list[0].team_id;
+				this.team_id = this.class_list[0].id;
 				this.get_baogao();
 				this.page = 1;
 				this.exercises_list = [];
@@ -376,8 +376,10 @@ export default {
 						console.log('res', res);
 						_this.is_more = res.is_more;
             _this.analysisList = res.data.knowPointExercises
-            _this.class_list = res.teams;
-            _this.team_id = _this.teams[0].grade_id;
+            _this.class_list = res.data.teams;
+            if(!_this.team_id){
+              _this.team_id = res.data.teams[0].id;
+            }
 						if (_this.page == 1) {
 							_this.exercises_list = res.data.userExercises.data;
 						} else {

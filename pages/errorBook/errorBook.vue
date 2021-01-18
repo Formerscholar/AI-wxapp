@@ -1100,20 +1100,26 @@
 			//删除错题
 			delete_error_exercises() {
 				var n_arr = [];
-				this.exercises_list.forEach((elem, i, arr) => {
-					if (elem.select) {
-						n_arr.push(elem.exercises_id);
-					}
-				});
-				console.log(n_arr);
-				var data = {
-          subject_id:this.subject_id,
-					id: n_arr.toString()
-				};
 				if (this.type == 3) {
-					var req = this.$api.teacher_delete_error_exercises(data);
+          this.exercises_list.forEach((elem, i, arr) => {
+          	if (elem.select) {
+          		n_arr.push(elem.exercises_id);
+          	}
+          });
+					var req = this.$api.teacher_delete_error_exercises({
+            subject_id:this.subject_id,
+          	id: n_arr.toString()
+          });
 				} else {
-					var req = this.$api.delete_error_exercises(data);
+          this.exercises_list.forEach((elem, i, arr) => {
+          	if (elem.select) {
+          		n_arr.push(elem.id);
+          	}
+          });
+					var req = this.$api.delete_error_exercises({
+            subject_id:this.subject_id,
+          	id: n_arr.toString()
+          });
 				}
 				req.then(res => {
 					console.log(res);
