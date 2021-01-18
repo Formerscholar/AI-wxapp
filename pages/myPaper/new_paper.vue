@@ -139,6 +139,7 @@
 			}
 		},
 		onLoad() {
+      this.$store.commit('set_tip_mx')
 			this.email_arr = app.globalData.email;
 			this.tpmid = app.globalData.settings.tmpid;
 			console.log('this.tpmid', this.tpmid);

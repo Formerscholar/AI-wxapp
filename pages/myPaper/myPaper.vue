@@ -79,6 +79,7 @@ export default {
 		}
 	},
 	onLoad() {
+    this.$store.commit('set_tip_xb')
 		if (uni.getStorageSync('token')) {
 			this.token = uni.getStorageSync('token');
 		}

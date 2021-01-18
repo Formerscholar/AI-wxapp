@@ -3,7 +3,7 @@
     <view class="bg"></view>
     <swiper class="top" circular="true" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000"
       indicator-color="white" indicator-active-color="#e50304">
-      <swiper-item v-for="(item, i) of banner_list" :key="i" >
+      <swiper-item v-for="(item, i) of banner_list" :key="i">
         <image :src="item.img" mode=""></image>
       </swiper-item>
     </swiper>
@@ -102,9 +102,8 @@
             </view>
           </view>
         </view>
-
         <view class="item itemSpec" @click="todetail(2)">
-          <div class="tip_box">+10</div>
+          <div class="tip_box" v-if="is_tip_xb && student_info.schoolResourcesNewCount != 0">+{{ student_info.schoolResourcesNewCount }}</div>
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mine_shijuan.png" mode=""></image>
           <view class="title">
             <text>校本试卷</text>
@@ -118,7 +117,7 @@
 
       <view class="flex">
         <view class="item itemSpec0" @click="todetail(9)">
-          <div class="tip_box">+10</div>
+          <div class="tip_box" v-if="is_tip_mx && student_info.examsSchoolNewCount != 0">+{{ student_info.examsSchoolNewCount }}</div>
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mingxiao.png" mode=""></image>
           <view class="title">
             <text>名校资源</text>
@@ -195,6 +194,10 @@
         platform: ""
       };
     },
+    computed: mapState([
+      'is_tip_xb',
+      'is_tip_mx',
+    ]),
     onLoad() {
       this.token = uni.getStorageSync('token');
       if (this.token == '') {
@@ -682,7 +685,8 @@
       margin: 0 25rpx 25rpx 25rpx;
       overflow: hidden;
       position: relative;
-      .tip_box{
+
+      .tip_box {
         position: absolute;
         top: 0;
         left: 0;
@@ -703,7 +707,8 @@
       margin: 0 25rpx 25rpx 0;
       overflow: hidden;
       position: relative;
-      .tip_box{
+
+      .tip_box {
         position: absolute;
         top: 0;
         left: 0;

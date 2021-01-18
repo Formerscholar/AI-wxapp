@@ -5,6 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    is_tip_xb:true,
+    is_tip_mx:true,
     type: 3,
     hasLogin: false,
     userInfo: {}, //用户信息,
@@ -29,6 +31,12 @@ const store = new Vuex.Store({
     }]
   },
   mutations: {
+    set_tip_xb(state, provider){
+      state.is_tip_xb = false
+    },
+    set_tip_mx(state, provider){
+      state.is_tip_mx = false
+    },
     set_type(state, provider) {
       state.type = provider
       uni.setStorage({
