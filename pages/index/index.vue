@@ -104,6 +104,7 @@
         </view>
 
         <view class="item itemSpec" @click="todetail(2)">
+          <div class="tip_box">+10</div>
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mine_shijuan.png" mode=""></image>
           <view class="title">
             <text>校本试卷</text>
@@ -117,6 +118,7 @@
 
       <view class="flex">
         <view class="item itemSpec0" @click="todetail(9)">
+          <div class="tip_box">+10</div>
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mingxiao.png" mode=""></image>
           <view class="title">
             <text>名校资源</text>
@@ -678,12 +680,42 @@
       flex: 1;
       height: 180rpx;
       margin: 0 25rpx 25rpx 25rpx;
+      overflow: hidden;
+      position: relative;
+      .tip_box{
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #FFFFFF;
+        background-color: #E50304;
+        width: 65rpx;
+        border-bottom-right-radius: 20rpx;
+        font-size: 24rpx;
+        text-align: center;
+        height: 40rpx;
+        line-height: 40rpx;
+      }
     }
 
     .item.itemSpec {
       flex: 1;
       height: 180rpx;
       margin: 0 25rpx 25rpx 0;
+      overflow: hidden;
+      position: relative;
+      .tip_box{
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #FFFFFF;
+        background-color: #E50304;
+        width: 65rpx;
+        border-bottom-right-radius: 20rpx;
+        font-size: 24rpx;
+        text-align: center;
+        height: 40rpx;
+        line-height: 40rpx;
+      }
     }
 
     .item.itemPhoto {
