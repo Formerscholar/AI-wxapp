@@ -1062,6 +1062,7 @@
 						// 		icon:'none'
 						// 	})
 						// }
+            this.subject_icon = res.data.subjectIcon
 						console.log(res.code != 200);
 						if (res.code != 200) {
 							this.errorbook_list = [];

@@ -13,8 +13,8 @@
     </view>
     <view class="content">
       <uni-collapse v-for="item in knowPointExercises" :key="item.user_id">
-        <uni-collapse-item title="默认开启">
-          <view class="collapse_warp"> 折叠内容主体，可自定义内容及样式 </view>
+        <uni-collapse-item :thumb="item.user_info.avatar_file" :title="item.user_info.true_name" :is_vip="item.user_info.is_vip == 1 ? true : false" :count="item.exercise_count">
+          <rich-text class="collapse_warp" v-for="item1 in item.exercises" :key="item1.id" :nodes="changeStyle(item1.content_all)"></rich-text>
         </uni-collapse-item>
       </uni-collapse>
     </view>
@@ -50,6 +50,11 @@
       this.getDataDetail()
     },
     methods: {
+      changeStyle(item) {
+        item = item.replace(new RegExp('<p', 'gi'), '<p style="color: #000;position:relative"');
+        item = item.replace(new RegExp('<img', 'gi'), '<img style="max-width:95%;vertical-align: middle;width:auto;"');
+        return item;
+      },
       getDataDetail() {
         this.$api.teacher_AcademicReport_KnowledgeDetail({
           start_time: this.start_time,
@@ -114,8 +119,15 @@
     .content {
       padding: 24rpx;
       box-sizing: border-box;
+      height: 100vh;
 
-      .collapse_warp {}
+      .collapse_warp {
+        margin-top: 30rpx;
+        &:first-child{
+          border-top: 1px solid #E5E5E5;
+          padding-top: 30rpx;
+        }
+      }
     }
   }
 </style>

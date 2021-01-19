@@ -82,7 +82,7 @@
             this.team_ids = res.data.id;
             this.school_name = res.data.school_name;
             this.teacher_name = res.data.teacher_name;
-            this.name = res.data.grade_name+res.data.name;
+            this.name = res.data.grade_name + res.data.name;
             console.log('if (!res.data.isbind)', this.school_id);
           });
       },
@@ -98,7 +98,6 @@
       get_bind_info(token) {
         this.$api
           .bind_info({
-            token,
             school_id: this.school_id,
             province_id: this.province_id,
             city_id: this.city_id,
@@ -153,6 +152,9 @@
               });
               this.login(res.data);
               this.is_mobile_show = false
+              if (!res.data.mobile) {
+                this.is_mobile_show = true
+              }
             } else {
               this.is_mobile_show = true
             }
@@ -170,8 +172,8 @@
           key: 'type',
           data: i
         });
-		let data = e.detail;
-		data.openid = this.openid;
+        let data = e.detail;
+        data.openid = this.openid;
         this.$api.update_userinfo(data).then(res => {
           if (this.is_mobile_show) {
             this.$refs.popup.open()
