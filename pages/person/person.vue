@@ -18,17 +18,17 @@
         </view>
         <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/rightWhite.png" class="detail"></image>
       </view>
-      <view class="vip" v-if="user_info.is_vip == 1 && type == 4" @click="pageToVip">
+      <view class="vip" v-if="user_info.is_vip == 1 && type == 4" >
         <view class="endTimeInfo">
           <view>我的VIP会员</view>
           <view>VIP到期时间: {{ user_info.vip_time }}</view>
         </view>
-        <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime.png" v-if="platform == 'ios'"></image>
-        <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vipEndTime1.png" v-else></image>
+        <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/nobtn.png" v-if="platform == 'ios'"></image>
+        <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/nobtn.png" v-else></image>
       </view>
-      <view class="vip" v-if="!user_info.is_vip == 1 && type == 4" @click="pageToVip">
-        <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip.png" v-if="platform == 'ios'"></image>
-        <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/vip1.png" v-else></image>
+      <view class="vip" v-if="!user_info.is_vip == 1 && type == 4" >
+        <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/nobtntext.png" v-if="platform == 'ios'"></image>
+        <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/nobtntext.png" v-else></image>
       </view>
       <view class="minePaper" @click="tocuoti()" v-if="type == 3">
         <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/minePaper.png" mode=""></image>
