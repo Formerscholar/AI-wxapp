@@ -84,7 +84,7 @@
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
                 查看解析
               </view>
-              <view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.exercises_id)">
+              <view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.id)">
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
                 {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
@@ -142,21 +142,11 @@
       join_error2(i, id) {
         if (uni.getStorageSync('type') == 3) {
           var req = this.$api.teacher_join_error({
-            token: this.token,
             exercises_id: id
-            // subject_id:this.subject_id,
-            // know_point:this.know_point_list[this.num_z].know_point_id,
-            // type:this.question_id,
-            //is_vip:1
           });
         } else {
           var req = this.$api.join_error({
             exercises_id: id,
-            source: 5
-            // subject_id:this.subject_id,
-            // know_point:this.know_point_list[this.num_z].know_point_id,
-            // type:this.question_id,
-            // is_vip: 1
           });
         }
 
@@ -184,15 +174,11 @@
       join_error(i, id) {
         if (uni.getStorageSync('type') == 3) {
           var req = this.$api.teacher_join_error({
-            token: this.token,
             exercises_id: id,
-            is_vip: 1
           });
         } else {
           var req = this.$api.join_error({
             exercises_id: id,
-            is_vip: 1,
-            source: this.source
           });
         }
         req.then(res => {

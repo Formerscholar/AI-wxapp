@@ -86,7 +86,7 @@ export default {
 		get_grade() {
 			this.$api.get_grade().then(res => {
 				console.log(res);
-				this.grade = [{ name: '请选择年级' }, ...res.data.grades];
+				this.grade = [{ name: '请选择年级' }, ...res.data];
 			});
 		},
 		//获取年级

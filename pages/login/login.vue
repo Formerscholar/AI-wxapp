@@ -356,7 +356,7 @@
               req.then(res => {
                 console.log(res)
                 if (res.code == 200) {
-                  _this.login(res.data)
+                  // _this.login(res.data)
                   uni.showToast({
                     title: '登录成功'
                   })

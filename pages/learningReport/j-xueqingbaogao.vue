@@ -66,7 +66,7 @@
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
             同类型题目
           </view>
-          <view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click.stop="join_error(i, item.exercises_id)">
+          <view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click.stop="join_error(i, item.id)">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
             {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
@@ -100,7 +100,7 @@
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
                 查看解析
               </view>
-              <view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.exercises_id)">
+              <view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.id)">
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
                 {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
@@ -458,7 +458,6 @@
       join_error(i, id) {
         var req = this.$api.teacher_join_error({
           exercises_id: id,
-          is_vip: 1
         });
         req.then(res => {
           if (res.code == 200) {
@@ -481,7 +480,6 @@
       join_error2(i, id) {
         var req = this.$api.teacher_join_error({
           exercises_id: id
-          //is_vip:1
         });
         req.then(res => {
           if (res.code == 200) {

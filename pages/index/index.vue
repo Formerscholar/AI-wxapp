@@ -271,6 +271,7 @@
       };
     },
     methods: {
+       ...mapMutations(['login', 'set_type']),
       get_teacher_info(): void {
         let _this = this
         this.$api.get_teacher_info({
@@ -357,6 +358,7 @@
           console.log(res.data);
           _this.banner_list = res.data.banner;
           _this.student_info = res.data;
+          _this.login(res.data.user)
           // _this.is_vip = res.data.is_vip;
           // _this.vip_time = res.data.vip_time;
           // _this.invest = res.data.invest;

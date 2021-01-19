@@ -270,7 +270,7 @@
 						_this.img = res.tempFilePaths[0];
 						let url = '';
 						if (_this.type == 4) {
-							url = _this.$api.url + 'applets/editPersonAvatarFile';
+							url = _this.$api.url + 'applets/editPersonAvatarFile/';
 						} else {
 							url = _this.$api.url + 'applets/editAvatarFile/';
 						}

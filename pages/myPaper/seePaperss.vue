@@ -17,7 +17,7 @@
           同类型题目
         </view>
         <view class="btn" :class="{ 's-b': item.is_error }" v-if="update">
-          <view v-if="type == 3" @click.stop="join_error(i, item.exercises_id)">
+          <view v-if="type == 3" @click.stop="join_error(i, item.id)">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
             {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
@@ -59,7 +59,7 @@
                 查看解析
               </view>
               <view></view>
-              <view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.exercises_id)">
+              <view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.id)">
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
                 {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
@@ -292,7 +292,7 @@
           know_point: this.know_point,
           type: this.type,
           subject_id: this.subject_id,
-          exercises_id: this.exercises_id,
+          id: this.exercises_id,
           page: this.page_change,
           size: this.size_change
         };
@@ -332,7 +332,6 @@
         } else {
           var req = this.$api.teacher_join_error({
             exercises_id: id,
-            source: this.source
           });
         }
         req.then(res => {
@@ -369,13 +368,10 @@
         if (uni.getStorageSync('type') == 4) {
           var req = this.$api.join_error({
             exercises_id: id,
-            is_type: 1
           });
         } else {
           var req = this.$api.teacher_join_error({
             exercises_id: id,
-            is_type: 1,
-            source: 5
           });
         }
         req.then(res => {

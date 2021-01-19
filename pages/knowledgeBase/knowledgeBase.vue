@@ -162,7 +162,6 @@
       if (uni.getStorageSync('token')) {
         this.token = uni.getStorageSync('token');
       }
-      this.subject_fenlei();
       // this.exercise_type()
       // this.get_level();
       // this.get_grade();
@@ -174,7 +173,7 @@
       if (uni.getStorageSync('is_vip')) {
         this.is_vip = uni.getStorageSync('is_vip');
       }
-      // this.get_konw();
+      this.subject_fenlei();
     },
     methods: {
       changeStyle(item) {

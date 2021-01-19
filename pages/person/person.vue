@@ -3,13 +3,13 @@
     <view class="top" :class="type == 3 ? 'teacher' : ''">
       <view class="mineInfo" @click="touser('/pages/person/user')">
         <view class="tou">
-          <image :src="user_info.avatar || user_info.avatar_file"></image>
+          <image :src="user_info.avatar_file"></image>
         </view>
         <view class="info">
           <view class="nick" v-if="user_info.true_name">{{ user_info.true_name }}</view>
           <view class="schoolName" v-if="type == 4">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/schoolIcon.png"></image>
-            <text>{{ user_info.school.school_name || school }}</text>
+            <text>{{ school }}</text>
           </view>
           <view class="schoolName" v-if="type == 3">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/jifen.png"></image>
@@ -147,9 +147,6 @@
     onLoad() {
       this.platform = app.globalData.systemInfo.platform
       this.user_info = uni.getStorageSync('userInfo');
-      this.grade_names = this.user_info?.get_grade?.name  + this.user_info?.get_team.name|| '未绑定班级';
-      this.school = this.user_info?.get_school?.name || this.user_info.school.grade_name;
-      this.is_vip = this.user_info?.is_vip
     },
     onShow() {
       this.token = uni.getStorageSync('token');
@@ -220,10 +217,16 @@
           this.$api.get_user_info().then(res => {
             console.log(res.data.user);
             this.user_info = res.data.user
+            this.grade_names = this.user_info.get_grade.name + this.user_info.get_team?.name  || '未绑定班级';
+            this.school = this.user_info.get_school?.name;
+            this.is_vip = this.user_info.is_vip
           });
         } else {
           this.$api.get_teacher_info().then(res => {
             this.user_info = res.data.teacher
+            this.grade_names = this.user_info.get_team?.name  || '未绑定班级';
+            this.school = this.user_info.get_school?.name;
+            this.is_vip = this.user_info.is_vip
           });
         }
       },
