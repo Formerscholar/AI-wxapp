@@ -188,7 +188,7 @@
         	complete: res => {
         		_this.$api.teacher_add_point({
         			remark: _this.value2,
-        			title: _this.value1,
+        			paper_name: _this.value1,
         			image_urls: _this.imgSrc
         		}).then(res => {
         			uni.showToast({

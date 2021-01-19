@@ -283,9 +283,7 @@
 							},
 							success: res => {
 								console.log('返回', res.data);
-                setTimeout(() => {
-                	this.getuserinfo();
-                }, 1000);
+               this.getuserinfo();
 							}
 						});
 					}

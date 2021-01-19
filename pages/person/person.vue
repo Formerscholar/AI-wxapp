@@ -36,9 +36,9 @@
           <text>我的试卷</text>
           <view class="paperInfo">
             已生成试卷
-            <text>{{ examCount || 0 }}</text>
+            <text>{{ examCount || 0}}</text>
             份,未生成试卷
-            <text>{{ examBasketCount || 0 }}</text>
+            <text>{{ examBasketCount  || 0}}</text>
             题
           </view>
         </view>
@@ -151,8 +151,6 @@
     onShow() {
       this.token = uni.getStorageSync('token');
       this.type = uni.getStorageSync('type');
-      this.examCount = uni.getStorageSync('examCount');
-      this.examBasketCount = uni.getStorageSync('examBasketCount');
       this.getuserinfo()
     },
     computed: {
@@ -226,7 +224,8 @@
             this.user_info = res.data.teacher
             this.grade_names = this.user_info.get_team?.name  || '未绑定班级';
             this.school = this.user_info.get_school?.name;
-            this.is_vip = this.user_info.is_vip
+            this.examBasketCount = res.data.examBasketCount
+            this.examCount = res.data.examCount
           });
         }
       },

@@ -26,12 +26,12 @@
 		</view>
 		<!-- 老师（校本试卷） -->
 		<view class="list" v-show="type == 3">
-			<view class="l-item" v-for="(item, i) of xb_list" :key="i" @click="chakan(item.based_id, item.title)">
+			<view class="l-item" v-for="(item, i) of xb_list" :key="i" @click="chakan(item.based_id, item.get_base.title)">
 				<view class="num">
-					<image :src="item.icon"></image>
+					<image :src="subject_icon"></image>
 					<view>
-						<view class="paperTitle">{{ item.title }}</view>
-						<view class="time">{{ item.add_time }}</view>
+						<view class="paperTitle">{{ item.get_base.title }}</view>
+						<view class="time">{{ item.get_base.add_time * 1000 | timer }}</view>
 					</view>
 				</view>
 				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" class="right"></image>
@@ -92,6 +92,7 @@ export default {
 		} else {
 			this.subject_fenlei();
 			// this.get_my_test_paper()
+      
 		}
 	},
 	methods: {
@@ -147,6 +148,7 @@ export default {
 			this.$api.school_test_paper({page: this.page }).then(res => {
 				console.log(res);
 				this.is_more = res.is_more;
+        this.subject_icon = res.data.subjectIcon
 				if (res.code != 200) {
 					/* uni.showToast({
 							title:res.msg,

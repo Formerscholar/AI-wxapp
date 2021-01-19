@@ -115,7 +115,7 @@
 
 			<!-- 已生成试卷 -->
 			<view class="list" v-else>
-				<view class="l-item" v-for="(item, i) of errorbook_list" :key="i" @click="seepaper(item.id, item.title, item.subject_name, 'is_teacher')">
+				<view class="l-item" v-for="(item, i) of errorbook_list" :key="i" @click="seepaper(item.id, item.title, subject_name, 'is_teacher')">
 					<view class="num">
 						<image :src="subject_icon" mode="" />
 						<view class="titleCon">
@@ -285,6 +285,7 @@
 			};
 		},
 		onReachBottom() {
+      console.log('this.is_more',this.is_more)
 			if (this.is_more) {
 				this.page++;
 				this.wei_error_book();
@@ -771,28 +772,41 @@
 			//点击加入试卷确认按钮
 			add_exercises_to_errorbook() {
 				this.$refs.popupJoin.close();
-				this.arrWei=[]
-				this.exercises_list.forEach((elem, i, arr1) => {
-					if (elem.select) {
-						this.arrWei.push(elem.id);
-					}
-				});
-				this.errorbook_list.forEach((elem, i, arr1) => {
-					if (elem.status) {
-						this.arrYi.push(elem.id);
-					}
-				});
-				this.str = ''
-				this.str = this.arrWei.toString();
-				this.str1 = ''
-				this.str1 = this.arrYi.toString();
 				let req = '';
 				if (this.type == 4) {
+          this.exercises_list.forEach((elem, i, arr1) => {
+          	if (elem.select) {
+          		this.arrWei.push(elem.id);
+          	}
+          });
+          this.errorbook_list.forEach((elem, i, arr1) => {
+          	if (elem.status) {
+          		this.arrYi.push(elem.id);
+          	}
+          });
+          this.str = ''
+          this.str = this.arrWei.toString();
+          this.str1 = ''
+          this.str1 = this.arrYi.toString();
 					req = this.$api.add_exercises_to_errorbook_user({
 						id: this.str,
 						user_errorbook_id: this.str1
 					});
 				} else {
+          this.exercises_list.forEach((elem, i, arr1) => {
+          	if (elem.select) {
+          		this.arrWei.push(elem.exercises_id);
+          	}
+          });
+          this.errorbook_list.forEach((elem, i, arr1) => {
+          	if (elem.status) {
+          		this.arrYi.push(elem.id);
+          	}
+          });
+          this.str = ''
+          this.str = this.arrWei.toString();
+          this.str1 = ''
+          this.str1 = this.arrYi.toString();
 					req = this.$api.add_exercises_to_errorbook({
 						exercises_id: this.str,
 						exam_id: this.str1
@@ -820,6 +834,8 @@
 							elem.status = false
 						});
 					}
+          this.str = ''
+          this.str1 = ''
 				});
 			},
 			cancelEmial() {

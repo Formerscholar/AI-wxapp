@@ -49,11 +49,11 @@
         <scroll-view scroll-y="true">
           <view class="list" v-for="(item, i) of same_type" :key="i" v-if="same_type.length != 0">
             <view class="">
-              <rich-text :nodes="changeStyle(item.content)"></rich-text>
+              <rich-text :nodes="changeStyle(item.content_all)"></rich-text>
               <!-- <uParse :content="item.content"/> -->
             </view>
             <view class="btnCon">
-              <view @click="jiexi(item.exercises_id,5)">
+              <view @click="jiexi(item.id,5)">
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
                 查看解析
               </view>
@@ -215,7 +215,7 @@
       //打开同类型题目
       open(item, status) {
         if (item) {
-          this.exercises_id = item.id;
+          this.exercises_id = item.exercises_id;
         }
         if (status != undefined) {
           this.exercises_id = this.list[status].id;
@@ -225,9 +225,8 @@
           know_point: this.konw_id,
           type: this.type,
           subject_id: this.based_id,
-          exercises_id: this.exercises_id,
+          id: this.exercises_id,
           page: this.page_change,
-          size: this.size_change
         };
         if (uni.getStorageSync('type') == 4) {
           var req = this.$api.same_type(data);
@@ -237,7 +236,7 @@
         req.then(res => {
           console.log(res);
           if (res.code == 200) {
-            this.same_type = res.data.exercises_list;
+            this.same_type = res.data.exerciseList.data;
             this.$refs.popup.open();
           } else {
             uni.showToast({

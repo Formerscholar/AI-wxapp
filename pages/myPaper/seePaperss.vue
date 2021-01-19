@@ -17,12 +17,12 @@
           同类型题目
         </view>
         <view class="btn" :class="{ 's-b': item.is_error }" v-if="update">
-          <view v-if="type == 3" @click.stop="join_error(i, item.id)">
+          <view v-if="type == 3" @click.stop="join_error(i, item.exercises_id)">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
             {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
           </view>
-          <view v-else @click.stop="deleteExercises(item.id)">
+          <view v-else @click.stop="deleteExercises(item.exercises_id)">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" mode="" />删除错题
           </view>
         </view>
@@ -50,11 +50,11 @@
         <scroll-view scroll-y="true">
           <view class="list" v-for="(item, i) of same_type" :key="i" v-if="same_type.length != 0">
             <view class="">
-              <rich-text :nodes="changeStyle(item.content)"></rich-text>
+              <rich-text :nodes="changeStyle(item.content_all)"></rich-text>
               <!-- <uParse :content="item.content"/> -->
             </view>
             <view class="btnCon">
-              <view @click="jiexi(item.exercises_id,5)">
+              <view @click="jiexi(item.id,5)">
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
                 查看解析
               </view>
@@ -130,6 +130,9 @@
       this.status = options.status;
       this.is = options.is;
       this.subject_id = options.subject_id;
+      if(!this.subject_name){
+        this.subject_name = uni.getStorageSync('userInfo').subject_title
+      }
       if (options.based_id) {
         this.based_id = options.based_id;
       }
@@ -304,7 +307,7 @@
         req.then(res => {
           console.log(res);
           if (res.code == 200) {
-            this.same_type = res.data.exercises_list;
+            this.same_type = res.data.exerciseList.data;
             this.$refs.popup.open();
           } else {
             uni.showToast({
@@ -337,6 +340,7 @@
         req.then(res => {
           console.log(res);
           if (res.code == 200) {
+            this.get_errorbook_exercises()
             if (this.list[i].is_error) {
               this.list[i].is_error = 0;
             } else {

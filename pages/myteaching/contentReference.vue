@@ -174,7 +174,7 @@ export default {
 			
 			// #ifdef MP-WEIXIN
 			uni.navigateTo({
-				url: '/pages/myteaching/customPhoto?textbook_id=' + obj.textbook_id + '&title=' + obj.textbook_name + '&subject_name=' + subject_name,
+				url: '/pages/myteaching/customPhoto?textbook_id=' + obj.textbook_id + '&title=' + obj.get_textbook.title + '&subject_name=' + subject_name,
 				success: () => {
 					console.log('toTeachingPhoto', obj.textbook_id, obj.textbook_name, subject_name);
 				}

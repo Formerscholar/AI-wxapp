@@ -76,11 +76,11 @@
         <scroll-view scroll-y="true">
           <view class="list" v-for="(item, i) of same_type" :key="i">
             <view class="">
-              <rich-text :nodes="changeStyle(item.content)"></rich-text>
+              <rich-text :nodes="changeStyle(item.content_all)"></rich-text>
               <!-- <uParse :content="item.content"/> -->
             </view>
             <view class="btnCon">
-              <view @click="jiexi(item.exercises_id)">
+              <view @click="jiexi(item.id)">
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
                 查看解析
               </view>
@@ -112,7 +112,8 @@
         type: '',
         update: true,
         same_type: '',
-        source: ''
+        source: '',
+        page_change: 1
       };
     },
     onLoad(options) {
@@ -215,13 +216,11 @@
       open(id, status) {
         this.exercises_id = id;
         let data = {
-          token: this.token,
           //know_point:this.know_point_list[this.num_z].know_point_id,
           type: this.question_id,
           subject_id: this.subject_id,
-          exercises_id: id,
+          id: id,
           page: this.page_change,
-          size: this.size_change
         };
         //consle.log('data2',this.know_point_list[this.num_z].know_point_id)
         console.log(this.type)
@@ -233,7 +232,7 @@
         req.then(res => {
           console.log(res);
           if (res.code == 200) {
-            this.same_type = res.data.exercises_list;
+            this.same_type = res.data.exerciseList.data;
             this.$refs.popup.open();
           } else {
             uni.showToast({

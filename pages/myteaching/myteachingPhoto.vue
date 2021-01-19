@@ -109,9 +109,8 @@ import { pathToBase64, base64ToPath } from '../../js_sdk/gsq-image-tools/image-t
 				this.subject_fenlei();
 				this.subtitle = '教辅';
 				let _this = this;
-				setTimeout(function() {
-					_this.chooseTeaching(0);
-				}, 618);
+        console.log('设置页码')
+				this.chooseTeaching(0);
 			} else if (this.from == 2) {
 				//我的教辅详情
 				this.subtitle = '当前教辅';
@@ -138,15 +137,17 @@ import { pathToBase64, base64ToPath } from '../../js_sdk/gsq-image-tools/image-t
 				_this.tpage = 1;
 				_this.index = 0;
 				_this.textbook_list.forEach((elem, j, arr) => {
+          console.log(elem)
 					elem.status = false;
 					if (i == j) {
-						_this.tpage = elem.tpage;
-						_this.fpage = elem.fpage;
+						_this.tpage = elem.get_textbook.cpage;
+						_this.fpage = elem.get_textbook.fpage;
 						_this.textbook_id = elem.textbook_id;
 						_this.title = elem.get_textbook.title;
 						_this.textbook_list[i].status = true;
 					}
 				});
+        console.log('_this.fpage, _this.cpage',_this.fpage, _this.tpage)
 				_this.sumPage(_this.fpage, _this.tpage);
 			},
 			//页码总页数
@@ -225,7 +226,8 @@ import { pathToBase64, base64ToPath } from '../../js_sdk/gsq-image-tools/image-t
 			select_l(e) {
 				console.log('e.detail.value', e.detail.value);
 				this.index = e.detail.value;
-				this.choosePage = this.numArr[this.index];
+				this.choosePage = e.detail.value + 1;
+        
 			},
 			//上传图片
 			checkimg(num) {

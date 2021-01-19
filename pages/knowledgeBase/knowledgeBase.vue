@@ -308,8 +308,6 @@
             // version_id:this.version_list[this.num_b].version_id,
             type: this.question_id,
             level: this.level_id,
-            //   this.grade is not an object
-            grade_id: this.grade[this.num_g]?.grade_id,
             know_point: this.know_point_list[this.num_z]?.id,
             page: this.page
           };
@@ -328,7 +326,7 @@
           var req = this.$api.textbook_exercises(data);
         }
         req.then(res => {
-          this.is_more = res.is_more;
+          this.is_more = res.data.exerciseList.last_page > res.data.exerciseList.current_page ;
           if (res.code != 200) {
             this.exercises_list = [];
             uni.showToast({

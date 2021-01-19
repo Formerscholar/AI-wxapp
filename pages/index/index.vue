@@ -103,12 +103,12 @@
           </view>
         </view>
         <view class="item itemSpec" @click="todetail(2)">
-          <div class="tip_box" v-if="is_tip_xb && student_info.schoolResourcesNewCount != 0">+{{ student_info.schoolResourcesNewCount }}</div>
+          <div class="tip_box" v-if="is_tip_xb && student_info.examsSchoolNewCount != 0">+{{ student_info.examsSchoolNewCount }}</div>
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mine_shijuan.png" mode=""></image>
           <view class="title">
             <text>校本试卷</text>
             <view>
-              <text class="remark_red">{{ student_info.schoolResourcesCount || 0 }}</text>
+              <text class="remark_red">{{ student_info.examsSchoolCount || 0 }}</text>
               份
             </view>
           </view>
@@ -117,12 +117,12 @@
 
       <view class="flex">
         <view class="item itemSpec0" @click="todetail(9)">
-          <div class="tip_box" v-if="is_tip_mx && student_info.examsSchoolNewCount != 0">+{{ student_info.examsSchoolNewCount }}</div>
+          <div class="tip_box" v-if="is_tip_mx && student_info.schoolResourcesNewCount != 0">+{{ student_info.schoolResourcesNewCount }}</div>
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mingxiao.png" mode=""></image>
           <view class="title">
             <text>名校资源</text>
             <view>
-              <text class="remark_red">{{ student_info.examsSchoolCount || 0 }}</text>
+              <text class="remark_red">{{ student_info.schoolResourcesCount || 0 }}</text>
               份
             </view>
           </view>

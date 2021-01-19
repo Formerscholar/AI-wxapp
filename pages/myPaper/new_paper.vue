@@ -30,7 +30,7 @@
 		<view class="list" v-show="type == 3">
 			<view class="l-item" v-for="(item, i) of xb_list" :key="i" @click="chakan(item.id, item.title)">
 				<view class="num">
-					<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/subject2.png"></image>
+					<image :src="subject_icon"></image>
 					<view>
 						<view class="paperTitle">{{ item.title }}</view>
 						<view class="time">{{ item.add_time*1000 | timer}}</view>
@@ -735,6 +735,9 @@
 								icon:'none'
 							}) */
 					}
+          
+          this.subject_icon = res.data.subjectIcon
+          console.log('school_test_paper',this.subject_icon)
 					if (this.page == 1) {
 						this.xb_list = res.data.exams.data;
 					} else {

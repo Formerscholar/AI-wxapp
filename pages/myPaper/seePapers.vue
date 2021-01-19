@@ -7,7 +7,7 @@
       </view>
 
       <view class="rich-text-box" @click.stop="jiexi(item.exercises_id)">
-        <rich-text class="rich-text-content" :nodes="changeStyle(item.get_exercises.content_all)"></rich-text>
+        <rich-text class="rich-text-content" :nodes="changeStyle(item.content_all || item.get_exercises.content_all)"></rich-text>
         <!-- <uParse :content="item.content"/> -->
       </view>
       <view class="bottom">
@@ -44,16 +44,16 @@
         <scroll-view scroll-y="true">
           <view class="list" v-for="(item, i) of same_type" :key="i" v-if="same_type.length != 0">
             <view class="">
-              <rich-text :nodes="changeStyle(item.get_exercises.content_all)"></rich-text>
+              <rich-text :nodes="changeStyle(item.content_all)"></rich-text>
               <!-- <uParse :content="item.content"/> -->
             </view>
             <view class="btnCon">
-              <view @click="jiexi(item.exercises_id,5)">
+              <view @click="jiexi(item.id,5)">
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
                 查看解析
               </view>
               <view></view>
-              <view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.exercises_id)">
+              <view :class="{ 's-b': item.is_error }" v-if="update" @click="join_error2(i, item.id)">
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
                 {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
@@ -231,6 +231,7 @@
         req.then(res => {
           console.log(res);
           this.is_more = res.is_more;
+          this.subject_name = res.data.subjectName
           if (res.code != 200) {
             /* uni.showToast({
             		title:res.msg,
@@ -261,7 +262,7 @@
           know_point: this.know_point,
           type: this.type,
           subject_id: this.subject_id,
-          exercises_id: this.exercises_id,
+          id: this.exercises_id,
           page: this.page_change,
           size: this.size_change
         };
@@ -273,7 +274,7 @@
         req.then(res => {
           console.log(res);
           if (res.code == 200) {
-            this.same_type = res.data.exercises_list;
+            this.same_type = res.data.exerciseList.data;
             this.$refs.popup.open();
           } else {
             uni.showToast({
