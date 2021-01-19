@@ -126,7 +126,7 @@
 					<view class="btnCons">
 						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" @click.stop="delete_errorbook(i)" />
 						<view class="line"></view>
-						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download.png" @click.stop="generated(item.errorbook_id,item.title)" />
+						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download.png" @click.stop="generated(item.id,item.title)" />
 					</view>
 				</view>
 				<view v-if="is_more2 == 0 && errorbook_list.length != 0" class="is_more">没有更多试卷了</view>
