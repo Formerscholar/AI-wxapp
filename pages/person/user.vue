@@ -330,9 +330,7 @@
 			},
 			//获取年级
 			get_grade() {
-				this.$api.get_grade({
-					token: this.token
-				}).then(res => {
+				this.$api.get_grade().then(res => {
 					console.log(res);
 					this.grade = res.data.grade_list;
 				});

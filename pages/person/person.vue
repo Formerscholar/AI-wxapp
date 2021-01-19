@@ -148,7 +148,7 @@
       this.platform = app.globalData.systemInfo.platform
       this.user_info = uni.getStorageSync('userInfo');
       this.grade_names = this.user_info?.get_grade?.name  + this.user_info?.get_team.name|| '未绑定班级';
-      this.school = this.user_info?.get_school?.name || '';
+      this.school = this.user_info?.get_school?.name || this.user_info.school.grade_name;
       this.is_vip = this.user_info?.is_vip
     },
     onShow() {
@@ -156,6 +156,7 @@
       this.type = uni.getStorageSync('type');
       this.examCount = uni.getStorageSync('examCount');
       this.examBasketCount = uni.getStorageSync('examBasketCount');
+      this.getuserinfo()
     },
     computed: {
       ...mapState(['hasLogin', 'userInfo'])
@@ -213,6 +214,18 @@
             break;
         }
         this.$refs.uniPopupShare.close()
+      },
+      getuserinfo() {
+        if (uni.getStorageSync('type') == 4) {
+          this.$api.get_user_info().then(res => {
+            console.log(res.data.user);
+            this.user_info = res.data.user
+          });
+        } else {
+          this.$api.get_teacher_info().then(res => {
+            this.user_info = res.data.teacher
+          });
+        }
       },
       AppShareClick() {
         this.$refs.uniPopupShare.open()

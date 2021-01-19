@@ -191,7 +191,7 @@
       handleAnalysClick(data) {
         console.log('跳转新页面 pages/learningReport/studentAnalys', this.user_Info.get_subject.title, data,this.team_id,this.time,this.time2)
         uni.navigateTo({
-          url:`/pages/learningReport/studentAnalys?subject=${this.user_Info.get_subject.title}&itemData=${JSON.stringify(data)}&team_id=${this.team_id}&start_time=${this.time}&end_time=${this.time2}`
+          url:`/pages/learningReport/studentAnalys?subject=${this.user_Info.get_subject.title || this.user_Info.subject_title}&itemData=${JSON.stringify(data)}&team_id=${this.team_id}&start_time=${this.time}&end_time=${this.time2}`
         })
       },
       changeStyle(item) {

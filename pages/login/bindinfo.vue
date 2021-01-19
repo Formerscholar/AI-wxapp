@@ -185,7 +185,7 @@
 						province_id: this.Province[this.index].value,
 						city_id: this.city[this.index1].value,
 						area_id: this.area[this.index2].value,
-						grade_ids: this.grade[this.g_num].grade_id,
+						grade_ids: this.grade[this.g_num].id,
 						school_id: this.school[this.s_num].id,
 						true_name: this.name,
 					};
@@ -230,13 +230,11 @@
 			//获取班级
 			get_grade() {
 				if (uni.getStorageSync('type') == 4) {
-					this.$api.get_grade({
-						token: this.token
-					}).then(res => {
+					this.$api.get_grade().then(res => {
 						console.log(res);
 						this.grade = [{
 							name: '请选择年级'
-						}, ...res.data.grade_list];
+						}, ...res.data];
 					});
 				}
 			},

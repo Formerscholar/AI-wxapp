@@ -45,7 +45,7 @@ function request(url, data = {}, method = "post") {
 						// console.log(res)
 						if (res.statusCode == 200) {
 							// 令牌失效 跳转登录页 认证过期或者未登录
-							if (res.data.code == 100 || res.data.code == 777) {
+							if (res.data.code == 100) {
 								uni.showToast({
 									title: '您未登录或登录过期',
 									icon: 'none',

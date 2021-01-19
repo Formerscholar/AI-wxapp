@@ -59,7 +59,6 @@
 				});  
 			});  
 			// #endif
-      this.getuserinfo()
 			this.$api.get_settings('Get').then(res => {
 				this.globalData.settings = res.data;
 			});
@@ -109,21 +108,7 @@
 			});
 		},
     methods:{
-      getuserinfo() {
-        if (uni.getStorageSync('type') == 4) {
-          this.$api.get_user_info().then(res => {
-            console.log(res.data.user);
-             uni.setStorageSync('userInfo', res.data.user);
-          });
-        } else {
-          this.$api.get_teacher_info().then(res => {
-            console.log('jiaoshi', res);
-            uni.setStorageSync('userInfo', res.data.teacher);
-            uni.setStorageSync('examCount', res.data.examCount);
-            uni.setStorageSync('examBasketCount', res.data.examBasketCount);
-          });
-        }
-      },
+      
     }
 	};
 </script>

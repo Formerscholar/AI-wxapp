@@ -774,7 +774,7 @@
 				this.arrWei=[]
 				this.exercises_list.forEach((elem, i, arr1) => {
 					if (elem.select) {
-						this.arrWei.push(elem.exercises_id);
+						this.arrWei.push(elem.id);
 					}
 				});
 				this.errorbook_list.forEach((elem, i, arr1) => {
@@ -1100,16 +1100,18 @@
 			//删除错题
 			delete_error_exercises() {
 				var n_arr = [];
+				
 				if (this.type == 3) {
           this.exercises_list.forEach((elem, i, arr) => {
           	if (elem.select) {
           		n_arr.push(elem.exercises_id);
           	}
           });
-					var req = this.$api.teacher_delete_error_exercises({
+          var data = {
             subject_id:this.subject_id,
           	id: n_arr.toString()
-          });
+          };
+					var req = this.$api.teacher_delete_error_exercises(data);
 				} else {
           this.exercises_list.forEach((elem, i, arr) => {
           	if (elem.select) {

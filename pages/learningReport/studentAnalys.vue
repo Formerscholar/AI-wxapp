@@ -1,31 +1,42 @@
 <template>
-  <div id="idstudentAnalys">
-    <div class="top_box">
-      <div class="lf_box">
-        <div class="subject">
-          【数学】
-        </div>
-        <div class="analys">
-          不等式的解与解集
-        </div>
-      </div>
-      <div class="rf_box">8道错题</div>
-    </div>
-    <div class="content">
-      content
-    </div>
-  </div>
+  <view id="idstudentAnalys">
+    <view class="top_box">
+      <view class="lf_box">
+        <view class="subject">
+          【{{subject}}】
+        </view>
+        <view class="analys">
+          {{itemData.title}}
+        </view>
+      </view>
+      <view class="rf_box">{{itemData.count}}道错题</view>
+    </view>
+    <view class="content">
+      <uni-collapse v-for="item in knowPointExercises" :key="item.user_id">
+        <uni-collapse-item title="默认开启">
+          <view class="collapse_warp"> 折叠内容主体，可自定义内容及样式 </view>
+        </uni-collapse-item>
+      </uni-collapse>
+    </view>
+  </view>
 </template>
 
 <script>
+  import uniCollapse from '@/components/uni-collapse/uni-collapse.vue'
+  import uniCollapseItem from '@/components/uni-collapse-item/uni-collapse-item.vue'
   export default {
+    components: {
+      uniCollapse,
+      uniCollapseItem
+    },
     data() {
       return {
         itemData: {},
         subject: '',
         team_id: '',
         start_time: '',
-        end_time: ''
+        end_time: '',
+        knowPointExercises: []
       }
     },
     onLoad(options) {
@@ -36,16 +47,27 @@
       this.team_id = options.team_id
       this.start_time = options.start_time
       this.end_time = options.end_time
+      this.getDataDetail()
     },
     methods: {
-
+      getDataDetail() {
+        this.$api.teacher_AcademicReport_KnowledgeDetail({
+          start_time: this.start_time,
+          end_time: this.end_time,
+          team_id: this.team_id,
+          knowledge_id: this.itemData.id
+        }).then(res => {
+          console.log(res.data)
+          this.knowPointExercises = res.data.knowPointExercises
+        })
+      }
     }
   }
 </script>
 
 <style lang="scss" scoped>
   #idstudentAnalys {
-  background-color: #F8F8F8;
+    background-color: #F8F8F8;
 
     .top_box {
       width: 100%;
@@ -88,8 +110,12 @@
 
       }
     }
-    .content{
-      
+
+    .content {
+      padding: 24rpx;
+      box-sizing: border-box;
+
+      .collapse_warp {}
     }
   }
 </style>

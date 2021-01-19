@@ -111,6 +111,7 @@ module.exports = {
   my_team_ids: data => request(ApiUrlold + 'teacher/my_team_ids_list/', data), //老师的班级
   get_teacher_text: data => request(ApiUrlold + 'teacher/get_text/', data), //绑定邮箱发送
   teacher_study_analysis: data => request(ApiUrl + 'applets/teacherAcademicReport/', data), //老师学情报告、
+  teacher_AcademicReport_KnowledgeDetail: data => request(ApiUrl + 'applets/teacherAcademicReportKnowledgeDetail/', data), //老师学情报告、
   analysis_detail: data => request(ApiUrl + 'applets/teamStudentAcademicReport/', data), //查看学生的学情报告
   my_team_ids_list: data => request(ApiUrl + 'applets/getTeamList/', data), //我的班级列表
   team_student_list: data => request(ApiUrl + 'applets/getTeamDetail/', data), //班级学员列表
@@ -153,7 +154,7 @@ module.exports = {
   //通用
   get_location_list: data => request(ApiUrlold + 'main/get_location_list/', data), //省市区
   subject: data => request(ApiUrl + 'applets/getSubjects/', data,'GET'), //学科分类
-  get_grade: data => request(ApiUrl + 'applets/getAddTeam/', data), //班级
+  get_grade: data => request(ApiUrl + 'applets/getGrades/', data,'GET'), //班级
   get_agreement: data => request(ApiUrl + 'applets/aboutWe/', data), //协议说明
   get_school: data => request(ApiUrlold + 'main/_get_school_list_by_area/', data), //学校
   level: data => request(ApiUrlold + 'main/exercises_level/', data), //习题难度
