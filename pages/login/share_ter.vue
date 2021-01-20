@@ -67,11 +67,7 @@
     },
     onLoad(options) {
       console.log('options', options);
-      this.id = options.id;
-      this.name = options.name;
-      this.school = options.school;
       this.class_id = options.class_id;
-      this.teacher_name = options.teacher_name;
       this.team_id = options.team_id;
       this.get_get_team_location();
       this.get_team_subject();
@@ -242,6 +238,9 @@
             this.province_id = res.data.area.province_id;
             this.city_id = res.data.area.city_id;
             this.area_id = res.data.area.area_id;
+            this.name = res.data.grade_name + res.data.name;
+            this.school = res.data.school_name;
+            this.teacher_name = res.data.teacher_name;
           });
       },
       get_team_subject(e) {
