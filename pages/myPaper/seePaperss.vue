@@ -22,7 +22,7 @@
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
             {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
           </view>
-          <view v-else @click.stop="deleteExercises(item.exercises_id)">
+          <view v-else @click.stop="deleteExercises(item.id)">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/delete.png" mode="" />删除错题
           </view>
         </view>

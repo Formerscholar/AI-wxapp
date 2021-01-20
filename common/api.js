@@ -3,7 +3,7 @@ import {
 } from './util.js'
 
 const ApiUrl = 'https://api2.aictb.com/' //新生产环境
-// const ApiUrl = 'http://test.aictb.com/' //新生产环境
+// const ApiUrl = 'http://test.aictb.com/' //新开发环境
 const ApiUrlold = 'https://api.aictb.com/v3/' //生产环境
 const appApiUrl = 'https://api.aictb.com/app/' //生产环境
 
