@@ -951,9 +951,9 @@
             	}
             } else {
             	if (this.page == 1) {
-            		this.exercises_list = res.data.userExercises.data;
+            		this.exercises_list = res.data.userExercises?.data;
             	} else {
-            		this.exercises_list = [...this.exercises_list, ...res.data.userExercises.data];
+            		this.exercises_list = [...this.exercises_list, ...res.data.userExercises?.data];
             	}
             }
 						
