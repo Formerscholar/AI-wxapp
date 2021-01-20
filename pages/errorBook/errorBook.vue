@@ -295,9 +295,6 @@
 				this.generated_error_book();
 			}
 		},
-		onLoad() {
-			
-		},
 		onShow() {
       this.email_arr = app.globalData.email;
       this.token = uni.getStorageSync('token');

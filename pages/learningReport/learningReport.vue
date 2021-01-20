@@ -1,10 +1,7 @@
 <template>
   <view>
-    <!-- <view class="t-title">
-			{{class_name}}同学
-		</view> -->
     <view class="tabar">
-      <view class="item" @click="selection(i)" v-for="(item, i) of subject_list" :key="i" v-if="subject_list.length != 1">
+      <view class="item" @click="selection(i)" v-for="(item, i) of subject_list" :key="i" v-if="subject_list.length != 0">
         <image :src="item.status ? item.icon1 : item.icon2"></image>
         <text :class="{ 'c-c': item.status }">{{ item.title }}</text>
       </view>
@@ -15,9 +12,6 @@
     </view>
 
     <view class="flex">
-      <!-- <view class="top">
-				学科
-			</view> -->
       <view class="timeTabCon">
         <view class="timeTab" @click="selectDate(i)" :class="{ tabActive: item.dateStaus }" v-for="(item, i) of dateList"
           :key="i">{{ item.time }}</view>
@@ -34,33 +28,12 @@
           <view class="picker">{{ time2 }}</view>
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/down.png" class="down"></image>
         </picker>
-        <!-- <view class="btn" @click="get_baogao()">
-					查询
-				</view> -->
       </view>
     </view>
 
-    <!-- <view class="c-title">
-			<text>错题数量：</text><text>你有{{error_count}}道错题</text>
-		</view> -->
     <view class="fenbu">
-      <!-- <view class="blank"></view> -->
       <text>错题知识点分布</text>
     </view>
-    <!--<view class="pie_chart">
-			<piechart  v-if='update' :key='key'  ref="pieChart0" :dataAs="pieData" canvasId="index_pie_1" />
-		</view> -->
-
-    <!-- <view class="qiun-charts" v-if="Pie.series && Pie.series.length != 0"> -->
-    <!-- <view class="" v-for="item in analysisList" :key="item.data">
-				{{item.name}}
-			</view> -->
-    <!-- <canvas canvas-id="canvasPie" id="canvasPie" class="charts" @touchstart="touchPie"></canvas> -->
-    <!-- <view class="fenlei" v-for="(item,i) of pieData" :key='i'>
-				<text></text>
-				<text>{{item.name}}</text>
-			</view> -->
-    <!-- </view> -->
     <view class="qiun-charts" v-if="analysisList.length && analysisList.length != 0">
       <view class="item_box" v-for="(item, index) in analysisList"  @click="toseeDetail({
         id:item.id,
@@ -74,7 +47,7 @@
           </view>
           <view class="right_text">{{ item.count }}道错题</view>
         </view>
-        <view class="bot_box" :style="{ width: item.proportion + '%', backgroundColor: colorList[index.toString()[index.toString().length - 1]] }"></view>
+        <view class="bot_box" :style="{ width: item.proportion + '%', backgroundColor: colorList[index] }"></view>
       </view>
     </view>
     <view class="qiun-charts noData" v-else>{{ msg }}</view>
@@ -159,9 +132,6 @@
           this.is_show = true
         }
       },
-      Randomcolor() {
-        return '#' + Math.floor(Math.random() * (2 << 23)).toString(16);
-      },
       changeStyle(item) {
         item = item.replace(new RegExp('<p', 'gi'), '<p style="color: #000;position:relative"');
         item = item.replace(new RegExp('<img', 'gi'), '<img style="max-width:95%;vertical-align: middle;width:auto;"');
@@ -191,16 +161,7 @@
             end_time: this.time2
           })
           .then(res => {
-            if (res.data.knowPointExercises.length !== undefined) {
-              this.analysisList = res.data.knowPointExercises;
-              this.Pie.series = res.data.knowPointExercises;
-              this.pieData = res.data.knowPointExercises.count_list;
-            } else {
-              this.Pie.series = [];
-              this.pieData = [];
-              this.analysisList = [];
-            }
-            this.showPie('canvasPie', this.Pie);
+            this.analysisList = res.data.knowPointExercises;
           });
       },
       getDateRange(dateNow, intervalDays, bolPastTime) {
@@ -269,36 +230,6 @@
           }
         });
         _this.get_baogao();
-      },
-      showPie(canvasId, chartData) {
-        canvaPie = new uCharts({
-          $this: _self,
-          canvasId: canvasId,
-          type: 'pie',
-          fontSize: 11,
-          legend: {
-            show: true
-          },
-          background: '#FFFFFF',
-          pixelRatio: _self.pixelRatio,
-          series: chartData.series,
-          animation: true,
-          width: _self.cWidth * _self.pixelRatio - uni.upx2px(200) * _self.pixelRatio,
-          height: _self.cHeight * _self.pixelRatio,
-          dataLabel: true,
-          extra: {
-            pie: {
-              lableWidth: 15
-            }
-          }
-        });
-      },
-      touchPie(e) {
-        canvaPie.showToolTip(e, {
-          format: function(item) {
-            return item.name + ':' + item.data;
-          }
-        });
       },
       bindMultiPickerChange: function(e) {
         this.time = e.detail.value;
