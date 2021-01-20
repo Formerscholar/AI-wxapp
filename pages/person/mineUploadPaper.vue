@@ -105,8 +105,8 @@
       this.tpmid = app.globalData.settings.tmpid;
     },
     methods: {
-      timerconfirm: function(timer) {
-        this.timer_upload = timer
+      timerconfirm: function(time) {
+        this.timer_upload = time.selectRes
       },
       upPaper: function() {
         this.flag = true;
