@@ -138,8 +138,7 @@
         "uniStatistics" : {
             "enable" : true
         },
-        "nvueLaunchMode" : "",
-        "renderer" : "native"
+        "nvueLaunchMode" : ""
     },
     /* 快应用特有相关 */
     "quickapp" : {},
