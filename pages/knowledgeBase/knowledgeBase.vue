@@ -150,12 +150,9 @@
       };
     },
     onReachBottom() {
-      console.log(this.is_more);
-      if (this.is_more) {
-        this.page++;
-        if (this.page != 1) {
-          this.exercise_selection();
-        }
+      this.page++;
+      if (this.page != 1) {
+        this.exercise_selection();
       }
     },
     onLoad() {

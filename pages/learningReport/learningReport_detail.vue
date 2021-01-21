@@ -153,10 +153,8 @@ export default {
 		};
 	},
 	onReachBottom() {
-		if (this.is_more) {
 			this.page++;
 			this.get_baogao();
-		}
 	},
 	onLoad(options) {
 		_self = this;

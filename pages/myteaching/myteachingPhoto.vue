@@ -91,11 +91,8 @@ import { pathToBase64, base64ToPath } from '../../js_sdk/gsq-image-tools/image-t
 			};
 		},
 		onReachBottom() {
-			if (this.is_more) {
 				this.page++;
-				console.log('my_textbook_list1');
 				this.my_textbook_list();
-			}
 		},
 		onShow() {},
 		onLoad(option) {

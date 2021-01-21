@@ -173,9 +173,7 @@
       };
     },
     onReachBottom() {
-      if (this.is_more) {
         this.page++;
-      }
       this.get_hot_title();
     },
     onLoad() {

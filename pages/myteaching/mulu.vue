@@ -30,15 +30,9 @@ export default {
 		};
 	},
 	onReachBottom() {
-		if (this.is_more) {
 			this.page++;
 			this.get_list();
-		} else {
-			uni.showToast({
-				title: '没更多数据了！',
-				icon: 'none'
-			});
-		}
+		
 	},
 	onLoad(options) {
 		this.textbook_id = options.textbook_id;

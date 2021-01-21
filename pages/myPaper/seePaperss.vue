@@ -108,10 +108,10 @@
       };
     },
     onReachBottom() {
-      if (this.is_more && this.st == 1) {
+      if ( this.st == 1) {
         this.page++;
         this.get_errorbook_exercises();
-      } else if (this.is_more && this.st != 1 && this.status != 'photo') {
+      } else if ( this.st != 1 && this.status != 'photo') {
         this.page++;
         this.get_list();
       }

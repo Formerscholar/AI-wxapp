@@ -69,11 +69,11 @@
       };
     },
     onReachBottom() {
-      if (this.is_more && uni.getStorageSync('type') == 3) {
+      if (uni.getStorageSync('type') == 3) {
         this.page++;
         this.school_test_paper();
       }
-      if (this.is_more2 && uni.getStorageSync('type') == 4) {
+      if (uni.getStorageSync('type') == 4) {
         this.page++;
         this.get_my_test_paper();
       }

@@ -107,15 +107,9 @@ export default {
 		this.get_list();
 	},
 	onReachBottom() {
-		if (this.is_more) {
 			this.page++;
 			this.get_list();
-		} else {
-			uni.showToast({
-				title: '没有更多了！',
-				icon: 'none'
-			});
-		}
+		
 	},
 	methods: {
 		changeStyle(item) {

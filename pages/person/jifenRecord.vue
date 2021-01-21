@@ -37,10 +37,8 @@ export default {
 		};
 	},
 	onReachBottom() {
-		if (this.is_more) {
 			this.page++;
 			this.getRecordList();
-		}
 	},
 	onLoad(options) {
 		if (uni.getStorageSync('userInfo').token) {

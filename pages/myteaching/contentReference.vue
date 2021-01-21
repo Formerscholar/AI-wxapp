@@ -52,11 +52,8 @@ export default {
 		};
 	},
 	onReachBottom() {
-		if (this.is_more) {
 			this.page++;
-			console.log('my_textbook_list1');
 			this.my_textbook_list();
-		}
 	},
 	onShow() {
 		// this.subject_fenlei();
