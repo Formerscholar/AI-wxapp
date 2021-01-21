@@ -39,7 +39,7 @@
           </view>
         </view>
         <view class="right">
-          <image v-if="item.is_based_dir === 1" @click.stop="generated(item.id,item.title,0)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png"
+          <image v-if="item.is_based_dir === 1" @click.stop="generated(item.id,item.title,1)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png"
             class="download"></image>
           <image v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" style="width: 10rpx; height: 25rpx;"></image>
         </view>
