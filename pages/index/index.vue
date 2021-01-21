@@ -282,11 +282,9 @@
         })
       },
       tobead() {
-        this.todetail(7)
         if (this.teacher_infos.cert == 1) {
           this.todetail(7)
         } else {
-          console.log('tishi')
           uni.showToast({
             title: '您未认证无法查看校本试卷!',
             icon: 'none'
