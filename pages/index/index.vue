@@ -282,7 +282,7 @@
         })
       },
       tobead() {
-        if (this.teacher_infos.cert == 1) {
+        if (this.teacher_infos.teacher.cert == 1) {
           this.todetail(7)
         } else {
           uni.showToast({
