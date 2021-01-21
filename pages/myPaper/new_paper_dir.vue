@@ -2,16 +2,6 @@
   <view>
     <!-- 名校资源（学生） -->
     <view class="list stu" v-if="type == 4">
-      <view class="tabar" v-show="type == 4">
-        <view class="item" @click="selection(i)" v-for="(item, i) of subject_list" :key="i" v-if="subject_list.length != 1">
-          <image :src="item.status ? item.icon1 : item.icon2"></image>
-          <text :class="{ 'c-c': item.status }">{{ item.title }}</text>
-        </view>
-        <view class="item item_special" @click="selection(i)" v-for="(item, i) of subject_list" :key="i" v-else>
-          <image :src="item.status ? item.icon1 : item.icon2"></image>
-          <text :class="{ 'c-c': item.status }">{{ item.title }}</text>
-        </view>
-      </view>
       <view class="l-item" v-for="(item, i) of student_list" :key="i" @click="chakan(item.id, item.title,item.is_based_dir)">
         <view class="num">
           <image :src="subject_icon"></image>
@@ -20,7 +10,8 @@
             <view class="time">{{ item.add_time * 1000 | timer }}</view>
           </view>
         </view>
-        <view class="right">
+        <image v-if="is_mypaper" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" style="width: 14rpx; height: 26rpx; display: flex; margin: auto;"></image>
+        <view v-else class="right">
           <image v-if="item.is_based_dir === 1" @click.stop="generated(item.id,item.title,0)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png"
             class="download"></image>
           <image v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" style="width: 10rpx; height: 25rpx;"></image>
@@ -38,12 +29,12 @@
             <view class="time">{{ item.add_time*1000 | timer}}</view>
           </view>
         </view>
-        <view class="right">
+        <image v-if="is_mypaper" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" style="width: 14rpx; height: 26rpx; display: flex; margin: auto;"></image>
+        <view v-else class="right">
           <image v-if="item.is_based_dir === 1" @click.stop="generated(item.id,item.title,0)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png"
             class="download"></image>
           <image v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" style="width: 10rpx; height: 25rpx;"></image>
         </view>
-        <!-- <image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png' class='right'></image> -->
       </view>
       <view v-if="is_more == 0" class="is_more">没有更多试卷了</view>
     </view>
@@ -51,12 +42,12 @@
     <view class="kong" v-if="(student_list.length == 0 || !student_list) && type == 4">
       <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
       <view>空空如也~</view>
-      <view>您还没有名校资源哦!</view>
+      <view>文件夹没有试卷!</view>
     </view>
     <view class="kong" v-if="(xb_list.length == 0 || !xb_list) && type == 3">
       <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/noPaper.png" />
       <view>空空如也~</view>
-      <view>您还没有名校资源哦!</view>
+      <view>文件夹没有试卷!</view>
     </view>
     <!-- 绑定邮箱 -->
     <uni-popup ref="popup2" type="center">
@@ -129,20 +120,29 @@
         is_vip: false,
         errorbook_title: '',
         teacher_infos: {},
-        is_show: false
+        is_show: false,
+        base_id: '',
+        is_mypaper:false ,
       };
     },
     onReachBottom() {
       if (this.is_more && uni.getStorageSync('type') == 3) {
         this.page++;
-        this.school_test_paper();
+        this.get_teacherBasedDir();
       }
       if (this.is_more2 && uni.getStorageSync('type') == 4) {
         this.page++;
-        this.get_my_test_paper();
+        this.get_studentBasedDir();
       }
     },
-    onLoad() {
+    onLoad(options) {
+      console.log('options', options)
+      uni.setNavigationBarTitle({
+        title: options.title
+      })
+      this.base_id = options.based_id
+      this.subject_icon = options.subject_icon
+      this.is_mypaper = options.is_mypaper
       this.$store.commit('set_tip_mx')
       this.email_arr = app.globalData.email;
       this.tpmid = app.globalData.settings.tmpid;
@@ -153,9 +153,9 @@
       }
       this.type = uni.getStorageSync('type');
       if (this.type == 3) {
-        this.school_test_paper();
+        this.get_teacherBasedDir();
       } else {
-        this.subject_fenlei();
+        this.get_studentBasedDir()
       }
     },
     onShow() {
@@ -164,6 +164,22 @@
       }
     },
     methods: {
+      async get_teacherBasedDir() {
+        const {
+          data
+        } = await this.$api.get_teacherBasedDir({
+          parent_id: this.base_id
+        })
+        this.xb_list = data.exams
+      },
+      async get_studentBasedDir() {
+        const {
+          data
+        } = await this.$api.get_studentBasedDir({
+          parent_id: this.base_id
+        })
+        this.student_list = data.exams
+      },
       radioChange(evt) {
         const {
           value
@@ -720,12 +736,6 @@
           subject_id: this.subject_id
         }).then(res => {
           console.log(res);
-          if (res.code != 200) {
-            /* uni.showToast({
-            		title:res.msg,
-            		icon:'none'
-            	}) */
-          }
           this.is_more2 = res.is_more;
           if (this.page == 1) {
             this.student_list = res.data.exams.data;
@@ -742,13 +752,6 @@
         }).then(res => {
           console.log(res);
           this.is_more = res.is_more;
-          if (res.code != 200) {
-            /* uni.showToast({
-            		title:res.msg,
-            		icon:'none'
-            	}) */
-          }
-
           this.subject_icon = res.data.subjectIcon
           console.log('school_test_paper', this.subject_icon)
           if (this.page == 1) {
@@ -875,7 +878,6 @@
   }
 
   .list.stu {
-    padding-top: 150rpx;
 
     .tabar {
       height: 150rpx;

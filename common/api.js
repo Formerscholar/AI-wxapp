@@ -2,8 +2,8 @@ import {
   request
 } from './util.js'
 
-const ApiUrl = 'https://api2.aictb.com/' //新生产环境
-// const ApiUrl = 'http://test.aictb.com/' //新开发环境
+// const ApiUrl = 'https://api2.aictb.com/' //新生产环境
+const ApiUrl = 'http://test.aictb.com/' //新开发环境
 const ApiUrlold = 'https://api.aictb.com/v3/' //生产环境
 const appApiUrl = 'https://api.aictb.com/app/' //生产环境
 
@@ -62,6 +62,7 @@ module.exports = {
   add_exercises_to_errorbook_user: data => request(ApiUrl + 'applets/studentErrorbookAddExercises/', data), //习题加入已生成的试卷
   //题库	
   know_point: data => request(ApiUrl + 'applets/getKnowledge/', data), //知识点
+  get_studentBasedDir: data => request(ApiUrl + 'applets/studentBasedDir/', data), //文件夹获取试卷
   textbook_exercises: data => request(ApiUrl + 'applets/studentKnowledgeBaseList/', data), //知识库 习题筛选
   join_error: data => request(ApiUrl + 'applets/addStudentExercises/', data), //加入/取消错题
   same_type: data => request(ApiUrl + 'applets/studentSameTypeExercises/', data), //章节课时习题 同类型题目
@@ -99,6 +100,7 @@ module.exports = {
   get_mobile: data => request(ApiUrlold + 'teacher/get_mobile/', data), //注册获取手机号
   get_mobile_for_share: data => request(ApiUrlold + 'teacher/get_mobile_for_share/', data), //分享获取手机号
   teacher_change_mobile: data => request(ApiUrl + 'applets/editMobile/', data), //更换手机号
+  get_teacherBasedDir: data => request(ApiUrl + 'applets/teacherBasedDir/', data), //更换手机号
   get_teacher_verify_code: data => request(ApiUrl + 'applets/getCode/', data), //发送验证码
   //bind_mobile: data => request(ApiUrl+'teacher/check_teacher_mobile/',data),
   teacher_index: data => request(ApiUrl + 'applets/teacherIndex/', data), //教师首页信息
