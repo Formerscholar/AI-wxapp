@@ -357,20 +357,20 @@
           _this.banner_list = res.data.banner;
           _this.student_info = res.data;
           _this.login(res.data.user)
-          // _this.is_vip = res.data.is_vip;
-          // _this.vip_time = res.data.vip_time;
-          // _this.invest = res.data.invest;
-          // _this.renew = res.data.renew;
-          // if (res.data.renew && istol === new Date().getDate() && istolbool) {
-          //   _this.is_totul = true
-          //   uni.setStorageSync('istolbool', false)
-          // } else {
-          //   _this.is_totul = false
-          // }
-          // uni.setStorage({
-          //   key: 'is_vip',
-          //   data: this.is_vip
-          // });
+          _this.is_vip = res.data.user.is_vip;
+          _this.vip_time = res.data.user.vip_time;
+          _this.invest = res.data.invest;
+          _this.renew = res.data.renew;
+          if (res.data.renew && istol === new Date().getDate() && istolbool) {
+            _this.is_totul = true
+            uni.setStorageSync('istolbool', false)
+          } else {
+            _this.is_totul = false
+          }
+          uni.setStorage({
+            key: 'is_vip',
+            data: this.is_vip
+          });
         });
       },
       //获取老师信息

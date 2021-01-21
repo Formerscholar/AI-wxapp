@@ -98,7 +98,7 @@ export default {
 		my_textbook_list() {
 			this.$api.my_textbook_list({ token: this.token, type: this.type, subject_id: this.subject_id, page: this.page, page_size: 10 }).then(res => {
 				if (res.code == 200) {
-					this.is_more = res.is_more;
+					this.is_more = res.data.is_more;
 					if (this.page == 1) {
 						this.textbook_list = res.data.userTextbookList.data;
 					} else {

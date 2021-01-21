@@ -64,7 +64,7 @@ export default {
 						icon: 'none'
 					});
 				}
-				this.is_more = res.is_more;
+				this.is_more = res.data.is_more;
 				this.mulu_list = [...this.mulu_list, ...res.data.catalogue_list];
 			});
 		}

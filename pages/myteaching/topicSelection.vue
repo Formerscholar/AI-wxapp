@@ -148,7 +148,7 @@ export default {
 		get_list() {
 			this.$api.catalogue_exercises({ token: this.token, class_hour_id: this.class_hour_id, page: this.page }).then(res => {
 				console.log(res);
-				this.is_more = res.is_more;
+				this.is_more = res.data.is_more;
 				if (res.code == 200) {
 					this.exercises_list = [...this.exercises_list, ...res.data.exercises_list];
 				} else {

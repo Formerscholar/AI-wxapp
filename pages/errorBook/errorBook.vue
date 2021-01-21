@@ -932,7 +932,7 @@
 					var req = this.$api.wei_error_book_list(data);
 				}
 				req.then(res => {
-					this.is_more = res.is_more;
+					this.is_more = res.data.is_more;
 					if (!res.data) {
 						/* uni.showToast({
 								title:res.msg,
@@ -1040,7 +1040,7 @@
 							this.errorbook_list = [];
 							return;
 						}
-						this.is_more2 = res.is_more;
+						this.is_more2 = res.data.is_more;
 						if (this.page == 1) {
 							this.errorbook_list = res.data.userErrorbook.data;
 						} else {
@@ -1065,7 +1065,7 @@
 							this.errorbook_list = [];
 							return;
 						}
-						this.is_more2 = res.is_more;
+						this.is_more2 = res.data.is_more;
 						if (this.page == 1) {
 							this.errorbook_list = res.data.examList.data;
 						} else {

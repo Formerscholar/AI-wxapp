@@ -187,7 +187,7 @@
           });
         }
         req.then(res => {
-          this.is_more = res.is_more;
+          this.is_more = res.data.is_more;
           console.log(res);
           if (this.page == 1) {
             this.list = res.data.exercises_list;

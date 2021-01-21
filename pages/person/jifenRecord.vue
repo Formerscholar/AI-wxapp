@@ -63,7 +63,7 @@ export default {
 					_this.total = res.pointLog.total;
 
 					// _this.dataList = res.data
-					_this.is_more = res.is_more;
+					_this.is_more = res.data.is_more;
 					if (_this.page == 1) {
 						_this.dataList = res.data.pointLog.data;
 					} else {

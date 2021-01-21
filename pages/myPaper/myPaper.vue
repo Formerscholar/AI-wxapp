@@ -139,7 +139,7 @@
             // 	icon:'none'
             // })
           }
-          this.is_more2 = res.is_more;
+          this.is_more2 = res.data.is_more;
           if (this.page == 1) {
             this.student_list = res.data.schoolExamsList.data;
           } else {
@@ -153,7 +153,7 @@
           page: this.page
         }).then(res => {
           console.log(res);
-          this.is_more = res.is_more;
+          this.is_more = res.data.is_more;
           this.subject_icon = res.data.subjectIcon
           if (res.code != 200) {
             /* uni.showToast({
