@@ -362,23 +362,16 @@
               this.exercises_list[i].is_error = 0;
             } else {
               this.exercises_list[i].is_error = 1;
-            }
-            if (this.type == 4) {
-              if (res.msg == '取消成功！') {
-                // this.exercises_list[i].status=false
-                return true;
-              } else if (res.msg == '加入成功') {
-                // this.exercises_list[i].status=true
-                this.open(id, 1);
-              }
+                if (res.data.is_same_type) {
+                  this.open(id, 1);
+                } 
             }
           } else {
-            /* uni.showToast({
+            uni.showToast({
             		title:res.msg,
             		icon:'none'
-            	}) */
+            })
           }
-
           this.update = false;
           this.update = true;
         });
@@ -387,22 +380,14 @@
         if (this.type == 3) {
           var req = this.$api.teacher_join_error({
             exercises_id: id
-            // subject_id:this.subject_id,
-            // know_point:this.know_point_list[this.num_z].know_point_id,
-            // type:this.question_id,
-            //is_vip:1
           });
         } else {
           var req = this.$api.join_error({
             exercises_id: id,
             source: 5,
-            // subject_id:this.subject_id,
-            // know_point:this.know_point_list[this.num_z].know_point_id,
-            // type:this.question_id,
             is_vip: 1
           });
         }
-
         req.then(res => {
           if (res.code == 200) {
             if (this.same_type[i].is_error) {
@@ -526,7 +511,8 @@
           console.log(res);
           if (res.code == 200) {
             this.same_type = res.data.exerciseList.data;
-            if (!res.data.exerciseList.data) {
+            if (!res.data.exerciseList.data.length) {
+              this.$refs.popup.close();
               uni.showToast({
                 title: '未找到同类型题目',
                 icon: 'none'

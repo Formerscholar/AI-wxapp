@@ -77,9 +77,6 @@
         }, {
           name: "下学期",
           key:"下"
-        }, {
-          name: '全学期',
-          key:'全'
         }],
         semester: '',
         num_l: 0 //难度选择
@@ -174,7 +171,6 @@
             i = i - 1;
           }
         }
-        console.log('arr', arr);
         if (arr.length > 3) {
           uni.showToast({
             title: '最多可选择三本教辅',
@@ -184,7 +180,6 @@
         }
         if (arr.length > 0) {
           this.$api.add_my_textbook({
-            token: this.token,
             textbook_id: arr,
             subject_id: this.subject_id
           }).then(res => {

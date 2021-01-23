@@ -237,7 +237,15 @@
           console.log(res);
           if (res.code == 200) {
             this.same_type = res.data.exerciseList.data;
-            this.$refs.popup.open();
+            if (!res.data.exerciseList.data.length) {
+              this.$refs.popup.close();
+              uni.showToast({
+                title: '未找到同类型题目',
+                icon: 'none'
+              });
+            } else{
+              this.$refs.popup.open();
+            }
           } else {
             uni.showToast({
               title: res.msg,
@@ -273,18 +281,15 @@
               this.list[i].is_error = 0;
             } else {
               this.list[i].is_error = 1;
-            }
-            if (uni.getStorageSync('type') == 4) {
-              if (res.msg == '加入成功') {
-                // this.list
-                this.open(id, i);
-              }
+                if (res.data.is_same_type) {
+                  this.open(id, 1);
+                } 
             }
           } else {
-            /* uni.showToast({
-            		title:res.msg,
-            		icon:'none'
-            	}) */
+            uni.showToast({
+              title:res.msg,
+              icon:'none'
+            })
           }
         });
       },

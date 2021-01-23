@@ -69,11 +69,6 @@
         "navigationBarTitleText": "选择教辅"
       }
     }, {
-      "path": "pages/myteaching/topicSelection",
-      "style": {
-        "navigationBarTitleText": "题目选择"
-      }
-    }, {
       "path": "pages/myteaching/contentReference",
       "style": {
         "navigationBarTitleText": "我的教辅"
@@ -117,11 +112,6 @@
       "path": "pages/person/addClass",
       "style": {
         "navigationBarTitleText": "创建班级"
-      }
-    }, {
-      "path": "pages/myteaching/mulu",
-      "style": {
-        "navigationBarTitleText": "教辅目录"
       }
     }, {
       "path": "pages/j-shijuan/j-shijuan",

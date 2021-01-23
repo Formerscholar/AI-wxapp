@@ -189,21 +189,15 @@
               this.jiexiList.is_error = 0;
             } else {
               this.jiexiList.is_error = 1;
-            }
-            if (this.type == 4) {
-              if (res.msg == '取消成功！') {
-                // this.jiexiList.status=false
-                return true;
-              } else if (res.msg == '加入成功') {
-                // this.jiexiList.status=true
+              if (res.data.is_same_type) {
                 this.open(id, 1);
-              }
+              } 
             }
           } else {
-            /* uni.showToast({
-            		title:res.msg,
-            		icon:'none'
-            	}) */
+            uni.showToast({
+              title:res.msg,
+              icon:'none'
+            })
           }
 
           this.update = false;
@@ -233,7 +227,15 @@
           console.log(res);
           if (res.code == 200) {
             this.same_type = res.data.exerciseList.data;
-            this.$refs.popup.open();
+            if (!res.data.exerciseList.data.length) {
+              this.$refs.popup.close();
+              uni.showToast({
+                title: '未找到同类型题目',
+                icon: 'none'
+              });
+            } else{
+              this.$refs.popup.open();
+            }
           } else {
             uni.showToast({
               title: res.msg,

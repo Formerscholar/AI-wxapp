@@ -60,7 +60,7 @@
 						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
 						同类型题目
 					</view>
-					<view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click.stop="join_error(i, item.id)">
+					<view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click.stop="join_error(i, item.exercises_id)">
 						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
 						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
 						{{ item.is_error ? '取消加入' : '加入试卷' }}
@@ -77,7 +77,7 @@
 						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/sameType.png"></image>
 						同类型题目
 					</view>
-					<view class="change" @click="changeData()">
+					<view class="change" @click="changeData(exercises_id)">
 						<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/change.png"></image>
 						换一批
 					</view>
@@ -85,11 +85,11 @@
 				<scroll-view scroll-y="true">
 					<view class="list" v-for="(item, i) of same_type" :key="i">
 						<view class="">
-							<rich-text :nodes="changeStyle(item.content)"></rich-text>
+							<rich-text :nodes="changeStyle(item.content_all)"></rich-text>
 							<!-- <uParse :content="item.content"/> -->
 						</view>
 						<view class="btnCon">
-							<view @click="jiexi(item.exercises_id)">
+							<view @click="jiexi(item.id)">
 								<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
 								查看解析
 							</view>
@@ -169,9 +169,8 @@ export default {
 			this.token = uni.getStorageSync('token');
 		}
 		this.type = uni.getStorageSync('type');
-
-		this.selectDate(0);
-		this.get_baogao();
+    this.selectDate(0);
+    this.get_baogao();
 	},
 	methods: {
 		changeStyle(item) {
@@ -246,7 +245,7 @@ export default {
 				})
 				.then(res => {
 					_this.pieData = res.data.count_list;
-					if (res.data.length !== undefined) {
+					if (res.code == 200) {
 						_this.analysisList = res.data.knowPointExercises;
 						_this.Pie.series = res.data;
             _this.is_more = res.data.is_more;
@@ -260,7 +259,7 @@ export default {
 						_this.pieData = [];
 						_this.analysisList = [];
 					}
-					_this.showPie('canvasPie', _this.Pie);
+					// _this.showPie('canvasPie', _this.Pie);
 				});
 		},
 		showPie(canvasId, chartData) {
@@ -310,9 +309,9 @@ export default {
 		},
 
 		//换一批
-		changeData() {
+		changeData(id) {
 			this.page_change++;
-			this.open();
+			this.open(id);
 		},
 		//查看解析
 		jiexi(id) {
@@ -325,7 +324,7 @@ export default {
 			this.exercises_id = id;
 			let data = {
 				token: this.token,
-				exercises_id: id,
+				id: id,
 				page: this.page_change,
 				size: this.size_change
 			};
@@ -333,7 +332,7 @@ export default {
 			req.then(res => {
 				console.log(res);
 				if (res.code == 200) {
-					this.same_type = res.data.exercises_list;
+					this.same_type = res.data.exerciseList.data;
 					this.$refs.popup.open();
 				} else {
 					uni.showToast({
@@ -356,12 +355,15 @@ export default {
 						this.exercises_list[i].is_error = 0;
 					} else {
 						this.exercises_list[i].is_error = 1;
+            if (res.data.is_same_type) {
+              this.open(id, 1);
+            } 
 					}
 				} else {
-					/* uni.showToast({
-							title:res.msg,
-							icon:'none'
-						}) */
+					uni.showToast({
+            title:res.msg,
+            icon:'none'
+          })
 				}
 
 				this.update = false;
