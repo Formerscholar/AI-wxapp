@@ -147,6 +147,7 @@
     onLoad() {
       this.platform = app.globalData.systemInfo.platform
       this.user_info = uni.getStorageSync('userInfo');
+      console.log(this.user_info)
     },
     onShow() {
       this.token = uni.getStorageSync('token');

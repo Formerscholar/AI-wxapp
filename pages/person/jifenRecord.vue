@@ -43,6 +43,7 @@ export default {
 	onLoad(options) {
 		if (uni.getStorageSync('userInfo').token) {
 			this.token = uni.getStorageSync('userInfo').token;
+			this.total = uni.getStorageSync('userInfo').points;
 		}
 		this.getRecordList();
 	},
@@ -62,7 +63,6 @@ export default {
           res.data.pointLog.data.map(item=>{
             totalnum += item.point
           })
-					_this.total = totalnum;
 					_this.is_more = res.data.is_more;
 					if (_this.page == 1) {
 						_this.dataList = res.data.pointLog.data;

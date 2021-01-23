@@ -378,6 +378,7 @@
         this.$api.teacher_index().then(res => {
           console.log(res);
           this.teacher_info = res.data;
+          uni.setStorageSync('userInfo',res.data.teacher)
           this.banner_list = res.data.banner;
         });
       },
