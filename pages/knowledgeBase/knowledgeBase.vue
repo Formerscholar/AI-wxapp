@@ -526,7 +526,14 @@
           console.log(res);
           if (res.code == 200) {
             this.same_type = res.data.exerciseList.data;
-            this.$refs.popup.open();
+            if (!res.data.exerciseList.data) {
+              uni.showToast({
+                title: '未找到同类型题目',
+                icon: 'none'
+              });
+            } else{
+              this.$refs.popup.open();
+            }
           } else {
             uni.showToast({
               title: res.msg,

@@ -40,10 +40,8 @@
       }
     },
     onLoad(options) {
-      // subject=数学&itemData={"id":4133,"title":"一元二次方程的定义","count":3,"proportion":50}&team_id=226&start_time=2021-01-12&end_time=2021-01-18
-      console.log('options', options)
+      // itemData={"id":4133,"title":"一元二次方程的定义","count":3,"proportion":50}&team_id=226&start_time=2021-01-12&end_time=2021-01-18
       this.itemData = JSON.parse(options.itemData)
-      this.subject = options.subject
       this.team_id = options.team_id
       this.start_time = options.start_time
       this.end_time = options.end_time
@@ -62,7 +60,7 @@
           team_id: this.team_id,
           knowledge_id: this.itemData.id
         }).then(res => {
-          console.log(res.data)
+          this.subject = res.data.subject_name
           this.knowPointExercises = res.data.knowPointExercises
         })
       }

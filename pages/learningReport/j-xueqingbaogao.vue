@@ -173,7 +173,7 @@
       };
     },
     onReachBottom() {
-        this.page++;
+      this.page++;
       this.get_hot_title();
     },
     onLoad() {
@@ -187,8 +187,9 @@
     },
     methods: {
       handleAnalysClick(data) {
+        console.log(this.user_Info)
         uni.navigateTo({
-          url:`/pages/learningReport/studentAnalys?subject=${this.user_Info.subject_title}&itemData=${JSON.stringify(data)}&team_id=${this.team_id}&start_time=${this.time}&end_time=${this.time2}`
+          url:`/pages/learningReport/studentAnalys?itemData=${JSON.stringify(data)}&team_id=${this.team_id}&start_time=${this.time}&end_time=${this.time2}`
         })
       },
       changeStyle(item) {

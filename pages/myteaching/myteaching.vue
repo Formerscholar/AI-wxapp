@@ -86,8 +86,10 @@
       };
     },
     onReachBottom() {
-      // this.page++
-      // this.version()
+      if(this.is_more){
+        this.page++
+        this.open()
+      }
     },
     onShow() {
       this.semester = "上"
@@ -140,16 +142,20 @@
       },
       //获取教辅名称列表
       open() {
-        this.textbook_ids = [];
-        this.textbook_list = []
         this.$api.textbook({
           token: this.token,
           subject_id: this.subject_id,
-          semester: this.semester
+          semester: this.semester,
+          page: this.page
         }).then(res => {
           if (res.code == 200) {
-            
-            this.textbook_list = res.data.textbook.data;
+            this.is_more = res.data.is_more
+            this.num_l = res.data.is_semester
+            if (this.page == 1) {
+              this.textbook_list = res.data.textbook.data;
+            } else{
+              this.textbook_list = [...this.textbook_list,...res.data.textbook.data];
+            }
           }
         });
       },
