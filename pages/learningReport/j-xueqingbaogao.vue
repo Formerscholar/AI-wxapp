@@ -66,7 +66,7 @@
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/tongLei.png" mode="" />
             同类型题目
           </view>
-          <view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click.stop="join_error(i, item.id)">
+          <view class="btn" :class="{ 's-b': item.is_error }" v-if="update" @click.stop="join_error(i, item.exercises_id)">
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRuDefault.png" mode="" v-if="!item.is_error" />
             <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiaRu.png" mode="" v-else />
             {{ item.is_error ? '取消加入' : type == 3 ? '加入试卷' : '加入错题' }}
@@ -92,11 +92,11 @@
         <scroll-view scroll-y="true">
           <view class="list" v-for="(item, i) of same_type" :key="i">
             <view class="">
-              <rich-text :nodes="changeStyle(item.content)"></rich-text>
+              <rich-text :nodes="changeStyle(item.content_all)"></rich-text>
               <!-- <uParse :content="item.content"/> -->
             </view>
             <view class="btnCon">
-              <view @click="jiexi(item.exercises_id)">
+              <view @click="jiexi(item.id)">
                 <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/jiexi.png"></image>
                 查看解析
               </view>
@@ -363,14 +363,23 @@
       changeData() {
         let data = {
           token: this.token,
-          exercises_id: this.exercises_id,
+          id: this.exercises_id,
           page: this.page_change++,
           size: this.size_change
         };
         let req = this.$api.teacher_same_type(data);
         req.then(res => {
           if (res.code == 200) {
-            this.same_type = res.data.exercises_list;
+            this.same_type = res.data.exerciseList.data;
+            if (!res.data.exerciseList.data.length) {
+              this.$refs.popup.close();
+              uni.showToast({
+                title: '未找到同类型题目',
+                icon: 'none'
+              });
+            } else{
+              this.$refs.popup.open();
+            }
           } else {
             uni.showToast({
               title: '没有更多同类型题目',
@@ -430,7 +439,7 @@
         this.exercises_id = id;
         let data = {
           token: this.token,
-          exercises_id: id,
+          id: id,
           page: this.page_change,
           size: this.size_change
         };
@@ -438,8 +447,16 @@
         req.then(res => {
           console.log(res);
           if (res.code == 200) {
-            this.same_type = res.data.exercises_list;
-            this.$refs.popup.open();
+            this.same_type = res.data.exerciseList.data;
+            if (!res.data.exerciseList.data) {
+              this.$refs.popup.close();
+              uni.showToast({
+                title: '未找到同类型题目',
+                icon: 'none'
+              });
+            } else{
+              this.$refs.popup.open();
+            }
           } else {
             uni.showToast({
               title: res.msg,
@@ -463,9 +480,11 @@
               this.exercises_list[i].is_error = 0;
             } else {
               this.exercises_list[i].is_error = 1;
-                if (res.data.is_same_type) {
-                  this.open(id, 1);
-                } 
+                if(this.type == 4){
+                  if (res.data.is_same_type) {
+                    this.open(id, 1);
+                  } 
+                }
             }
           } else {
             uni.showToast({

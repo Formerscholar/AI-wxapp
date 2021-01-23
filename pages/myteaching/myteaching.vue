@@ -79,6 +79,7 @@
           key:"下"
         }],
         semester: '',
+        is_list: 0,
         num_l: 0 //难度选择
       };
     },
@@ -147,7 +148,10 @@
         }).then(res => {
           if (res.code == 200) {
             this.is_more = res.data.is_more
-            this.num_l = res.data.is_semester
+            if(this.is_list === 0){
+              this.num_l = res.data.is_semester
+              this.is_list++
+            }
             if (this.page == 1) {
               this.textbook_list = res.data.textbook.data;
             } else{

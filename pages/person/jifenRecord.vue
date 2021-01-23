@@ -9,7 +9,7 @@
 			<view class="item" v-for="(item, i) of dataList" :key="i" v-if="dataList.length != 0">
 				<view>
 					<view class="paperTitle">{{ item.remark }}</view>
-					<text class="time">{{ item.add_time }}</text>
+					<text class="time">{{ item.add_time * 1000 | timer}}</text>
 				</view>
 				<view class="jifen">
 					<text>{{ item.point }}</text>
@@ -58,9 +58,11 @@ export default {
 						}) */
 				} else {
 					console.log(res.data);
-					_this.total = res.pointLog.total;
-
-					// _this.dataList = res.data
+          let totalnum = 0
+          res.data.pointLog.data.map(item=>{
+            totalnum += item.point
+          })
+					_this.total = totalnum;
 					_this.is_more = res.data.is_more;
 					if (_this.page == 1) {
 						_this.dataList = res.data.pointLog.data;

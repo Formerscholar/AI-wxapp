@@ -106,15 +106,15 @@
         count: ''
       };
     },
-    onReachBottom() {
-      if (this.st == 1) {
-        this.page++;
-        this.get_errorbook_exercises();
-      } else if (this.st != 1 && this.status != 'photo') {
-        this.page++;
-        this.get_list();
-      }
-    },
+    // onReachBottom() {
+    //   if (this.is_more && this.st == 1) {
+    //     this.page++;
+    //     this.get_errorbook_exercises();
+    //   } else if (this.is_more && this.st != 1 && this.status != 'photo') {
+    //     this.page++;
+    //     this.get_list();
+    //   }
+    // },
     onshow() {
       this.page_change = 1;
     },
@@ -281,9 +281,11 @@
               this.list[i].is_error = 0;
             } else {
               this.list[i].is_error = 1;
-                if (res.data.is_same_type) {
-                  this.open(id, 1);
-                } 
+                if(this.type == 4){
+                  if (res.data.is_same_type) {
+                    this.open(id, 1);
+                  } 
+                }
             }
           } else {
             uni.showToast({

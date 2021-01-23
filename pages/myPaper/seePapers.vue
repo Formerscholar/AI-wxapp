@@ -319,9 +319,11 @@
               this.list[i].is_error = 0;
             } else {
               this.list[i].is_error = 1;
-                if (res.data.is_same_type) {
-                  this.open(id, 1);
-                } 
+               if(this.type == 4){
+                 if (res.data.is_same_type) {
+                   this.open(id, 1);
+                 } 
+               }
             }
           } else {
             uni.showToast({

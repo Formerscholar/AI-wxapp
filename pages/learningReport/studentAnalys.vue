@@ -121,10 +121,8 @@
 
       .collapse_warp {
         margin-top: 30rpx;
-        &:first-child{
-          border-top: 1px solid #E5E5E5;
-          padding-top: 30rpx;
-        }
+        border-top: 1px solid #E5E5E5;
+        padding-top: 30rpx;
       }
     }
   }

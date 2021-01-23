@@ -12,8 +12,8 @@
 				<text :class="{ 'c-c': item.status }">{{ item.title }}</text>
 			</view>
 		</view>
-
-		<view class="card" @click="toTeachingPhoto(textbook_list[i], subject_name)" v-for="(item, i) of textbook_list" :key="i" v-if="textbook_list.length != 0">
+    <!-- @click="toTeachingPhoto(textbook_list[i], subject_name)" -->
+		<view class="card"  v-for="(item, i) of textbook_list" :key="i" v-if="textbook_list.length != 0">
 			<image :src="item.get_textbook.icon"  class="subject"></image>
 			<view class="title">
 				<view>{{ item.get_textbook.title }}</view>
@@ -21,8 +21,8 @@
 				<view class="version">{{ item.get_textbook.get_version.title }}</view>
 			</view>
 			<view class="phone_icons">
-				<image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/phone_icons.png" mode="" class="detail"></image>
-				<text>单题拍照</text>
+				<!-- <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/phone_icons.png" mode="" class="detail"></image>
+				<text>单题拍照</text> -->
 			</view>
 		</view>
 		<view class="kong" v-if="textbook_list.length == 0">

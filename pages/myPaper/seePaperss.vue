@@ -308,7 +308,7 @@
           console.log(res);
           if (res.code == 200) {
             this.same_type = res.data.exerciseList.data;
-            if (!res.data.exerciseList.data) {
+            if (!res.data.exerciseList.data.length) {
               this.$refs.popup.close();
               uni.showToast({
                 title: '未找到同类型题目',
@@ -353,9 +353,11 @@
               this.list[i].is_error = 0;
             } else {
               this.list[i].is_error = 1;
+              if(this.type == 4){
                 if (res.data.is_same_type) {
                   this.open(id, 1);
                 } 
+              }
             }
           } else {
           uni.showToast({

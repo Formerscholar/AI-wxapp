@@ -33,7 +33,7 @@
         <view class="item" v-for="(item, i) of recordList" :key="i">
           <view>
             <view class="recordTitle">{{ item.paper_name }}</view>
-            <view class="recordTime">{{ item.add_time }}</view>
+            <view class="recordTime">{{ item.add_time * 1000 | timer }}</view>
           </view>
           <view class="status" v-if="item.status == 1">待审核</view>
           <view class="status" v-if="item.status == 2" style="color:green">通过</view>
