@@ -137,7 +137,7 @@
         }).then(res => {
           console.log(res);
 
-          _this.is_more = res.is_more;
+          _this.is_more = res.data.is_more;
           // _this.recordList=res.data
           if (_this.page == 1) {
             _this.recordList = res.data.teacherUploadList.data;

@@ -122,7 +122,7 @@
           page: this.page
         }).then(res => {
           console.log(res);
-          this.is_more = res.is_more;
+          this.is_more = res.data.is_more;
           if (this.page == 1) {
             this.version_list = res.data.version_list;
           } else {

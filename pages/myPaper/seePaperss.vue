@@ -216,7 +216,7 @@
             exam_id: this.based_id
           }).then(res => {
             console.log(res);
-            this.is_more = res.is_more;
+            this.is_more = res.data.is_more;
             if (this.page == 1) {
               console.log('res', res)
               this.list = res.data.examExercises;
@@ -235,7 +235,7 @@
             page: this.page,
             id: this.based_id
           }).then(res => {
-            this.is_more = res.is_more;
+            this.is_more = res.data.is_more;
             console.log(res);
             if (this.page == 1) {
               this.list = res.data.userExercises.data;
@@ -264,7 +264,7 @@
         }
         req.then(res => {
           console.log(res);
-          this.is_more = res.is_more;
+          this.is_more = res.data.is_more;
           if (res.code != 200) {
             /* uni.showToast({
             		title:res.msg,

@@ -912,6 +912,7 @@
                 icon: 'none'
               })
               this.is_show = true
+<<<<<<< HEAD
             }
           });
         }
@@ -940,6 +941,36 @@
           } else {
             this.btndisabled = false;
             //console.log('res.data.exercises_list.length',res.data.exercises_list);
+=======
+						}
+					});
+				}
+			},
+			//未生成错题本列表
+			wei_error_book() {
+				let data = {
+					token: this.token,
+					subject_id: this.subject_id,
+					page: this.page
+				};
+				if (this.type == 3) {
+					var req = this.$api.wei_teacher_error_book_list(data);
+				} else {
+					var req = this.$api.wei_error_book_list(data);
+				}
+				req.then(res => {
+					this.is_more = res.data.is_more;
+					if (!res.data) {
+						/* uni.showToast({
+								title:res.msg,
+								icon:'none'
+							}) */
+						this.btndisabled = true;
+						this.exercises_list = [];
+					} else {
+						this.btndisabled = false;
+						//console.log('res.data.exercises_list.length',res.data.exercises_list);
+>>>>>>> v2
             if (this.type == 3) {
               if (this.page == 1) {
                 this.exercises_list = res.data.basketExercise;
@@ -953,6 +984,7 @@
                 this.exercises_list = [...this.exercises_list, ...res.data.userExercises?.data];
               }
             }
+<<<<<<< HEAD
 
           }
         });
@@ -1100,6 +1132,168 @@
           });
           this.all = false;
         } else {
+=======
+						
+					}
+				});
+			},
+			//学科分类
+			subject_fenlei() {
+				this.$api.subject().then(res => {
+					console.log(res);
+					var list = res.data;
+					list.forEach(function(elem, i, arr) {
+						elem.status = false;
+					});
+					this.subject_list = list;
+					this.subject_id = list[0].id;
+					this.selection(0);
+					console.log(this.subject_list);
+				});
+			},
+			//生成错题本
+			cancel() {
+				this.$refs.popup.close();
+			},
+			create_error_book() {
+				var n_arr = [];
+				this.exercises_list.forEach((elem, i, arr) => {
+					if (elem.select) {
+						n_arr.push(elem.exercises_id);
+					}
+				});
+				if (n_arr.length == 0) {
+					uni.showToast({
+						title: '请选择要生成的错题!',
+						icon: 'none'
+					});
+					return;
+				}
+				if (!this.title) {
+					uni.showToast({
+						title: '请输入名称!',
+						icon: 'none'
+					});
+				}
+				let data = {
+					subject_id: this.subject_id,
+					exercises_ids: n_arr.toString(),
+					name: this.title
+				};
+				if (this.type == 3) {
+					var req = this.$api.create_teacher_error_book(data);
+				} else {
+					var req = this.$api.create_error_book(data);
+				}
+				req.then(res => {
+					console.log(res);
+					if (res.code == 200) {
+						this.$refs.popup.close();
+						this.page = 1;
+						this.title = '';
+						uni.showToast({
+							title: '生成成功'
+						});
+						this.wei_error_book();
+						this.generated_error_book();
+					}
+				});
+			},
+			// 已生成错题本列表
+			generated_error_book() {
+				if (this.type == 4) {
+					this.$api.generated_error_book({
+						subject_id: this.subject_id,
+						page: this.page
+					}).then(res => {
+						console.log(res);
+						// if(res.code!=200){
+						// 	uni.showToast({
+						// 		title:res.msg,
+						// 		icon:'none'
+						// 	})
+						// }
+						if (res.code != 200) {
+							this.errorbook_list = [];
+							return;
+						}
+						this.is_more2 = res.data.is_more;
+						if (this.page == 1) {
+							this.errorbook_list = res.data.userErrorbook.data;
+						} else {
+							this.errorbook_list = [...this.errorbook_list, ...res.data.userErrorbook.data];
+						}
+					});
+				} else {
+					this.$api.generated_teacher_error_book({
+						subject_id: this.subject_id,
+						page: this.page
+					}).then(res => {
+						console.log(res);
+						// if(res.code!=200){
+						// 	uni.showToast({
+						// 		title:res.msg,
+						// 		icon:'none'
+						// 	})
+						// }
+            this.subject_icon = res.data.subjectIcon
+						console.log(res.code != 200);
+						if (res.code != 200) {
+							this.errorbook_list = [];
+							return;
+						}
+						this.is_more2 = res.data.is_more;
+						if (this.page == 1) {
+							this.errorbook_list = res.data.examList.data;
+						} else {
+							this.errorbook_list = [...this.errorbook_list, ...res.data.examList.data];
+						}
+					});
+				}
+			},
+			//删除错题本
+			delete_errorbook(i) {
+				uni.showModal({
+					title: '确定要删除吗？',
+					success: res => {
+						if (res.confirm) {
+							let data = {
+								id: this.errorbook_list[i].id
+							};
+							if (this.type == 3) {
+								var req = this.$api.teacher_delete_errorbook(data);
+							} else {
+								var req = this.$api.delete_errorbook(data);
+							}
+							req.then(res => {
+								this.errorbook_list.splice(i, 1);
+								console.log(res);
+							});
+						}
+					}
+				});
+			},
+			selectAll() {
+				if (this.all) {
+					this.exercises_list.forEach((elem, i, arr) => {
+						elem.select = true;
+					});
+					this.all = false;
+				} else {
+					this.exercises_list.forEach((elem, i, arr) => {
+						elem.select = false;
+					});
+					this.all = true;
+				}
+				this.update = false;
+				this.update = true;
+			},
+			//删除错题
+			delete_error_exercises() {
+				var n_arr = [];
+				
+				if (this.type == 3) {
+>>>>>>> v2
           this.exercises_list.forEach((elem, i, arr) => {
             elem.select = false;
           });

@@ -726,7 +726,7 @@
             		icon:'none'
             	}) */
           }
-          this.is_more2 = res.is_more;
+          this.is_more2 = res.data.is_more;
           if (this.page == 1) {
             this.student_list = res.data.exams.data;
           } else {
@@ -741,14 +741,7 @@
           page_size: 10
         }).then(res => {
           console.log(res);
-          this.is_more = res.is_more;
-          if (res.code != 200) {
-            /* uni.showToast({
-            		title:res.msg,
-            		icon:'none'
-            	}) */
-          }
-
+          this.is_more = res.data.exams.current_page === res.data.exams.last_page ? 0 : 1;
           this.subject_icon = res.data.subjectIcon
           console.log('school_test_paper', this.subject_icon)
           if (this.page == 1) {

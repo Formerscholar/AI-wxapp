@@ -204,7 +204,7 @@
           });
         }
         req.then(res => {
-          this.is_more = res.is_more;
+          this.is_more = res.data.is_more;
           console.log(res);
           if (this.page == 1) {
             this.list = res.data.exercises_list;
@@ -230,7 +230,7 @@
         }
         req.then(res => {
           console.log(res);
-          this.is_more = res.is_more;
+          this.is_more = res.data.is_more;
           this.subject_name = res.data.subjectName
           if (res.code != 200) {
             /* uni.showToast({

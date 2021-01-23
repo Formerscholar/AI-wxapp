@@ -399,7 +399,7 @@
           .then(res => {
             if (res.code == 200) {
               console.log('res', res);
-              _this.is_more = res.is_more;
+              _this.is_more = res.data.is_more;
               _this.analysisList = res.data.knowPointExercises
               _this.class_list = res.data.teams;
               if (!_this.team_id) {
