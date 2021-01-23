@@ -12,22 +12,22 @@ module.exports = {
   url: ApiUrl,
   //   app
   // teacher
-  teacher_app_login: data => request(ApiUrlold + 'teacher/login/', data), //老师登录
-  teacher_app_wx_login: data => request(ApiUrlold + 'teacher/wx_login/', data), //
-  get_app_teacher_verify_code: data => request(ApiUrlold + 'teacher/get_verify_code/', data), //老师获取验证码
-  get_app_teacher_register: data => request(ApiUrlold + 'teacher/register/', data), //老师注册
-  get_app_teacher_bind: data => request(ApiUrlold + 'teacher/bind_info/', data), //老师绑定信息
-  get_app_teacher_search_password: data => request(ApiUrlold + 'teacher/search_password/', data), //老师忘记密码
-  get_teacher_bind_mobile: data => request(ApiUrlold + 'teacher/bind_mobile/', data), //学生绑定手机
+  teacher_app_login: data => request(appApiUrl + 'teacher/login/', data), //老师登录
+  teacher_app_wx_login: data => request(appApiUrl + 'teacher/wx_login/', data), //
+  get_app_teacher_verify_code: data => request(appApiUrl + 'teacher/get_verify_code/', data), //老师获取验证码
+  get_app_teacher_register: data => request(appApiUrl + 'teacher/register/', data), //老师注册
+  get_app_teacher_bind: data => request(appApiUrl + 'teacher/bind_info/', data), //老师绑定信息
+  get_app_teacher_search_password: data => request(appApiUrl + 'teacher/search_password/', data), //老师忘记密码
+  get_teacher_bind_mobile: data => request(appApiUrl + 'teacher/bind_mobile/', data), //学生绑定手机
   // student
-  app_login: data => request(ApiUrlold + 'user/login/', data), //学生登录
-  app_wx_login: data => request(ApiUrlold + 'user/wx_login/', data), //
-  get_app_verify_code: data => request(appApiUrl + 'applets/sendMobileCode/', data), //学生获取验证码
-  get_app_user_register: data => request(ApiUrlold + 'user/register/', data), //学生注册
-  get_app_user_bind: data => request(ApiUrlold + 'user/bind_info/', data), //学生绑定信息
-  get_app_user_search_password: data => request(ApiUrlold + 'user/search_password/', data), //学生忘记密码
-  get_app_pay: data => request(ApiUrlold + 'user/pay/', data), //支付
-  get_bind_mobile: data => request(ApiUrlold + 'user/bind_mobile/', data), //学生绑定手机
+  app_login: data => request(appApiUrl + 'user/login/', data), //学生登录
+  app_wx_login: data => request(appApiUrl + 'user/wx_login/', data), //
+  get_app_verify_code: data => request(ApiUrlold + 'applets/sendMobileCode/', data), //学生获取验证码
+  get_app_user_register: data => request(appApiUrl + 'user/register/', data), //学生注册
+  get_app_user_bind: data => request(appApiUrl + 'user/bind_info/', data), //学生绑定信息
+  get_app_user_search_password: data => request(appApiUrl + 'user/search_password/', data), //学生忘记密码
+  get_app_pay: data => request(appApiUrl + 'user/pay/', data), //支付
+  get_bind_mobile: data => request(appApiUrl + 'user/bind_mobile/', data), //学生绑定手机
   //   app
   
   wx_login: data => request(ApiUrlold + 'wechat/login/', data), //
