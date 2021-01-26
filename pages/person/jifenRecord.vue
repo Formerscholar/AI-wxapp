@@ -59,15 +59,11 @@ export default {
 						}) */
 				} else {
 					console.log(res.data);
-          let totalnum = 0
-          res.data.pointLog.data.map(item=>{
-            totalnum += item.point
-          })
 					_this.is_more = res.data.is_more;
 					if (_this.page == 1) {
-						_this.dataList = res.data.pointLog.data;
+						_this.dataList = res.data.data;
 					} else {
-						_this.dataList = [..._this.dataList, ...res.data.pointLog.data];
+						_this.dataList = [..._this.dataList, ...res.data.data];
 					}
 				}
 			});

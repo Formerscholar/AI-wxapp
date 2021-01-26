@@ -728,9 +728,9 @@
           }
           this.is_more2 = res.data.is_more;
           if (this.page == 1) {
-            this.student_list = res.data.exams.data;
+            this.student_list = res.data.data;
           } else {
-            this.student_list = [...this.student_list, ...res.data.exams.data];
+            this.student_list = [...this.student_list, ...res.data.data];
           }
         });
       },
@@ -741,13 +741,13 @@
           page_size: 10
         }).then(res => {
           console.log(res);
-          this.is_more = res.data.exams.current_page === res.data.exams.last_page ? 0 : 1;
+          this.is_more = res.data.current_page === res.data.last_page ? 0 : 1;
           this.subject_icon = res.data.subjectIcon
           console.log('school_test_paper', this.subject_icon)
           if (this.page == 1) {
-            this.xb_list = res.data.exams.data;
+            this.xb_list = res.data.data;
           } else {
-            this.xb_list = [...this.xb_list, ...res.data.exams.data];
+            this.xb_list = [...this.xb_list, ...res.data.data];
           }
         });
       },

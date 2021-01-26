@@ -268,7 +268,7 @@
             this.know_point_list = [{
               title: '知识点',
               id: 0
-            }, ...res.data.knowledgeList];
+            }, ...res.data];
             console.log('this.know_point_list3433', this.know_point_list);
           }
           this.exercise_selection();
@@ -323,7 +323,7 @@
           var req = this.$api.textbook_exercises(data);
         }
         req.then(res => {
-          this.is_more = res.data.exerciseList.last_page > res.data.exerciseList.current_page ;
+          this.is_more = res.data.last_page > res.data.current_page ;
           if (res.code != 200) {
             this.exercises_list = [];
             uni.showToast({
@@ -333,10 +333,10 @@
             });
           } else {
             if (this.page == 1) {
-              this.exercises_list = res.data.exerciseList.data;
+              this.exercises_list = res.data.data;
               console.log('000', this.exercises_list);
             } else {
-              this.exercises_list = [...this.exercises_list, ...res.data.exerciseList.data];
+              this.exercises_list = [...this.exercises_list, ...res.data.data];
               console.log('789', this.exercises_list);
             }
           }

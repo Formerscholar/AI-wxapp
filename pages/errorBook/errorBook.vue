@@ -951,9 +951,9 @@
             	}
             } else {
             	if (this.page == 1) {
-            		this.exercises_list = res.data.userExercises?.data;
+            		this.exercises_list = res.data.data;
             	} else {
-            		this.exercises_list = [...this.exercises_list, ...res.data.userExercises?.data];
+            		this.exercises_list = [...this.exercises_list, ...res.data.data];
             	}
             }
 						
@@ -1042,9 +1042,9 @@
 						}
 						this.is_more2 = res.data.is_more;
 						if (this.page == 1) {
-							this.errorbook_list = res.data.userErrorbook.data;
+							this.errorbook_list = res.data.data;
 						} else {
-							this.errorbook_list = [...this.errorbook_list, ...res.data.userErrorbook.data];
+							this.errorbook_list = [...this.errorbook_list, ...res.data.data];
 						}
 					});
 				} else {
@@ -1067,9 +1067,9 @@
 						}
 						this.is_more2 = res.data.is_more;
 						if (this.page == 1) {
-							this.errorbook_list = res.data.examList.data;
+							this.errorbook_list = res.data.data;
 						} else {
-							this.errorbook_list = [...this.errorbook_list, ...res.data.examList.data];
+							this.errorbook_list = [...this.errorbook_list, ...res.data.data];
 						}
 					});
 				}

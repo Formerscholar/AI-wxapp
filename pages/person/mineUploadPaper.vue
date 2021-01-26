@@ -140,9 +140,9 @@
           _this.is_more = res.data.is_more;
           // _this.recordList=res.data
           if (_this.page == 1) {
-            _this.recordList = res.data.teacherUploadList.data;
+            _this.recordList = res.data.data;
           } else {
-            _this.recordList = [..._this.recordList, ...res.data.teacherUploadList.data];
+            _this.recordList = [..._this.recordList, ...res.data.data];
           }
           console.log('recordList', _this.recordList);
         });

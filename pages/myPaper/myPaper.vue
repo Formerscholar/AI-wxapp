@@ -141,9 +141,9 @@
           }
           this.is_more2 = res.data.is_more;
           if (this.page == 1) {
-            this.student_list = res.data.schoolExamsList.data;
+            this.student_list = res.data.data;
           } else {
-            this.student_list = [...this.student_list, ...res.data.schoolExamsList.data];
+            this.student_list = [...this.student_list, ...res.data.data];
           }
         });
       },
@@ -162,9 +162,9 @@
             	}) */
           }
           if (this.page == 1) {
-            this.xb_list = res.data.schoolExamsList.data;
+            this.xb_list = res.data.data;
           } else {
-            this.xb_list = [...this.xb_list, ...res.data.schoolExamsList.data];
+            this.xb_list = [...this.xb_list, ...res.data.data];
           }
         });
       },

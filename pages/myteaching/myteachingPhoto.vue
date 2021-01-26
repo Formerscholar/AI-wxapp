@@ -199,9 +199,9 @@ import { pathToBase64, base64ToPath } from '../../js_sdk/gsq-image-tools/image-t
 					if (res.code == 200) {
 						this.is_more = res.data.is_more;
 						if (this.page == 1) {
-							this.textbook_list = res.data.userTextbookList.data;
+							this.textbook_list = res.data.data;
 						} else {
-							this.textbook_list = [...this.textbook_list, ...res.data];
+							this.textbook_list = [...this.textbook_list, ...res.data.data];
 						}
 						console.log('this.textbook_list', this.textbook_list);
 					} else {
