@@ -61,9 +61,9 @@ export default {
 					console.log(res.data);
 					_this.is_more = res.data.is_more;
 					if (_this.page == 1) {
-						_this.dataList = res.data.data;
+						_this.dataList = res.data?.data;
 					} else {
-						_this.dataList = [..._this.dataList, ...res.data.data];
+						_this.dataList = [..._this.dataList, ...res.data?.data];
 					}
 				}
 			});

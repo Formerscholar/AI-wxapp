@@ -153,9 +153,9 @@
               this.is_list++
             }
             if (this.page == 1) {
-              this.textbook_list = res.data.textbook.data;
+              this.textbook_list = res.data?.data;
             } else{
-              this.textbook_list = [...this.textbook_list,...res.data.textbook.data];
+              this.textbook_list = [...this.textbook_list,...res.data?.data];
             }
           }
         });

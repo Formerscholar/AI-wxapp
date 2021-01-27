@@ -333,10 +333,10 @@
             });
           } else {
             if (this.page == 1) {
-              this.exercises_list = res.data.data;
+              this.exercises_list = res.data?.data;
               console.log('000', this.exercises_list);
             } else {
-              this.exercises_list = [...this.exercises_list, ...res.data.data];
+              this.exercises_list = [...this.exercises_list, ...res.data?.data];
               console.log('789', this.exercises_list);
             }
           }
@@ -512,8 +512,8 @@
         datas.then(res => {
           console.log(res);
           if (res.code == 200) {
-            this.same_type = res.data.exerciseList.data;
-            if (!res.data.exerciseList.data.length) {
+            this.same_type = res.data?.data;
+            if (!res.data?.data) {
               this.$refs.popup.close();
               uni.showToast({
                 title: '未找到同类型题目',

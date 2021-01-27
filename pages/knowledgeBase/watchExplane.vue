@@ -228,8 +228,8 @@
         req.then(res => {
           console.log(res);
           if (res.code == 200) {
-            this.same_type = res.data.exerciseList.data;
-            if (!res.data.exerciseList.data.length) {
+            this.same_type = res.data?.data;
+            if (!res.data?.data) {
               this.$refs.popup.close();
               uni.showToast({
                 title: '未找到同类型题目',

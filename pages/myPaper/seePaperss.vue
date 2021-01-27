@@ -108,10 +108,10 @@
       };
     },
     onReachBottom() {
-      if ( this.st == 1) {
+      if (this.st == 1) {
         this.page++;
         this.get_errorbook_exercises();
-      } else if ( this.st != 1 && this.status != 'photo') {
+      } else if (this.st != 1 && this.status != 'photo') {
         this.page++;
         this.get_list();
       }
@@ -130,8 +130,8 @@
       this.status = options.status;
       this.is = options.is;
       this.subject_id = options.subject_id;
-      if(!this.subject_name){
-        this.subject_name = uni.getStorageSync('userInfo').subject_title
+      if (!this.subject_name) {
+        this.subject_name = uni.getStorageSync('userInfo').subject_title || uni.getStorageSync('userInfo').get_subject.title
       }
       if (options.based_id) {
         this.based_id = options.based_id;
@@ -238,9 +238,9 @@
             this.is_more = res.data.is_more;
             console.log(res);
             if (this.page == 1) {
-              this.list = res.data.userExercises.data;
+              this.list = res.data?.data;
             } else {
-              this.list = [...this.list, ...res.data.userExercises.data];
+              this.list = [...this.list, ...res.data?.data];
             }
           })
         }
@@ -307,14 +307,14 @@
         req.then(res => {
           console.log(res);
           if (res.code == 200) {
-            this.same_type = res.data.exerciseList.data;
-            if (!res.data.exerciseList.data.length) {
+            this.same_type = res.data?.data;
+            if (!res.data?.data) {
               this.$refs.popup.close();
               uni.showToast({
                 title: '未找到同类型题目',
                 icon: 'none'
               });
-            } else{
+            } else {
               this.$refs.popup.open();
             }
           } else {
@@ -353,16 +353,16 @@
               this.list[i].is_error = 0;
             } else {
               this.list[i].is_error = 1;
-              if(this.type == 4){
+              if (this.type == 4) {
                 if (res.data.is_same_type) {
                   this.open(id, 1);
-                } 
+                }
               }
             }
           } else {
-          uni.showToast({
-              title:res.msg,
-              icon:'none'
+            uni.showToast({
+              title: res.msg,
+              icon: 'none'
             })
           }
         });
