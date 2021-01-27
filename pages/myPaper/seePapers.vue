@@ -1,10 +1,10 @@
 <template>
-  <view>
+  <view class="seepapers">
+    <view class="subtitle">
+      <text>【{{ subject_name ? subject_name : '' }}】</text>
+      {{ title }}
+    </view>
     <view class="item" v-for="(item, i) of list" :key="i" v-if="list.length != 0">
-      <view class="subtitle">
-        <text>【{{ subject_name ? subject_name : '' }}】</text>
-        {{ title }}
-      </view>
 
       <view class="rich-text-box" @click.stop="jiexi(item.exercises_id)">
         <rich-text class="rich-text-content" :nodes="changeStyle(item.content_all || item.get_exercises.content_all)"></rich-text>
@@ -106,10 +106,11 @@
       if (this.st == 1) {
         this.page++;
         this.get_errorbook_exercises();
-      } else if (this.st != 1 && this.status != 'photo') {
-        this.page++;
-        this.get_list();
-      }
+      } 
+      // else if (this.st != 1 && this.status != 'photo') {
+        // this.page++;
+        // this.get_list();
+      // }
     },
     onshow() {
       this.page_change = 1;
@@ -397,6 +398,9 @@
     background: #eee;
     font-family: PingFang SC;
   }
+  .seepapers{
+    padding-top: 70rpx;
+  }
 
   .subtitle {
     height: 70rpx;
@@ -436,6 +440,10 @@
     border-radius: 20rpx;
     border: 1rpx solid #e7e7e7;
     overflow: hidden;
+    
+    img {
+      max-width: 100%;
+    }
 
     .rich-text-box {
       .rich-text-content {
