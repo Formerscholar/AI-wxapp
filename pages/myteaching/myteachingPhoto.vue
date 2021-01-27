@@ -223,7 +223,7 @@ import { pathToBase64, base64ToPath } from '../../js_sdk/gsq-image-tools/image-t
 			select_l(e) {
 				console.log('e.detail.value', e.detail.value);
 				this.index = e.detail.value;
-				this.choosePage = e.detail.value + 1;
+				this.choosePage = e.detail.value * 1 + 1;
         
 			},
 			//上传图片
@@ -347,8 +347,12 @@ import { pathToBase64, base64ToPath } from '../../js_sdk/gsq-image-tools/image-t
 			},
 			//获取题目数据
 			search_exercises(){
-					console.log(this.textbook_id)
-					this.$api.search_exercises({textbook_id:this.textbook_id,page:this.choosePage,pic:this.pic,token:this.token})
+        console.log('this.choosePage',this.choosePage)
+					this.$api.search_exercises({
+            textbook_id:this.textbook_id,
+            page:this.choosePage,
+            pic:this.pic,
+          })
 					.then(res=>{
 						console.log('res',res)
 						if (res.code == 200) {
