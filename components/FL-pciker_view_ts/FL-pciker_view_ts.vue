@@ -2,7 +2,7 @@
 	<view class="box" >
 		<view class="uni-padding-wrap" @click="change">
        <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/bg/time_icon.png" ></image>
-			<view class="uni-title" style="margin-left: 50rpx;color:#cdcdcd">{{year}}年{{month}}月{{day}}日{{hour}}时{{minute}}分</view>
+			<view class="uni-title" style="margin-left: 50rpx;color:#cdcdcd">开放时间：{{year}}年{{month}}月{{day}}日{{hour}}时{{minute}}分</view>
 		</view>
 		<view class="mask" :class="{'show':showPicker}" @tap="maskShow" @touchmove.stop.prevent catchtouchmove="true"></view>
 		<view class="popop" :class="{'show':showPicker}">

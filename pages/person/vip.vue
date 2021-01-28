@@ -64,6 +64,7 @@
     <!-- #endif -->
     <view class="xufei" @click="pay()" v-if="platform != 'ios'">
       <text>{{ userInfo.is_vip ? '立即续费' : '开通会员' }}</text>
+      <view class="tip">温馨提示：虚拟产品一经售出，概不退款，请谨慎购买。</view>
     </view>
     <view class="ios_tip" v-else>
       由于相关规范，IOS暂不可购买会员!
@@ -314,21 +315,30 @@
 
 
   .xufei {
-    width: 400rpx;
-    height: 80rpx;
-    line-height: 80rpx;
-    margin: 50rpx auto;
-    background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
-    border-radius: 16rpx;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    
 
-    text:first-child {
+    text {
+      width: 400rpx;
+      height: 80rpx;
+      line-height: 80rpx;
+      margin: 50rpx auto;
+      background-image: linear-gradient(left, #e50304 0%, #f74300 80%);
+      border-radius: 16rpx;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       font-size: 30rpx;
       font-weight: 800;
       color: rgba(255, 255, 255, 1);
+    }
+    .tip{
+      font-size: 20rpx;
+      font-family: PingFang SC;
+      font-weight: 500;
+      color: #999999;
+      width: 100%;
+      text-align: center;
     }
 
     // text:last-child{

@@ -70,18 +70,19 @@ export default {
 			team_name: '',
 			user_id:'',
       shareItem:'',
-      sharePath:''
+      sharePath:'',
+      school_name:''
 		};
 	},
 	onShareAppMessage(e) {
 		console.log(e.target.dataset.it);
 		let path = '';
 		if (e.target.dataset.it == 'stu') {
-			path = `/pages/login/share?id=${uni.getStorageSync('userInfo').user_id}&school=${uni.getStorageSync('userInfo').school.name}&name=${e.target.dataset.name}&teacher_name=${
+			path = `/pages/login/share?id=${uni.getStorageSync('userInfo').user_id}&school=${this.school_name}&name=${e.target.dataset.name}&teacher_name=${
 				uni.getStorageSync('userInfo').true_name
 			}&class_id=${e.target.dataset.class_id}`;
 		} else {
-			path = `/pages/login/share_ter?id=${uni.getStorageSync('userInfo').user_id}&school=${uni.getStorageSync('userInfo').school.name}&name=${e.target.dataset.name}&teacher_name=${
+			path = `/pages/login/share_ter?id=${uni.getStorageSync('userInfo').user_id}&school=${this.school_name}&name=${e.target.dataset.name}&teacher_name=${
 				uni.getStorageSync('userInfo').true_name
 			}&class_id=${e.target.dataset.class_id}&team_id=${e.target.dataset.team_id}`;
 		}
@@ -182,6 +183,7 @@ export default {
 		get_class_list() {
 			this.$api.my_team_ids_list({ token: this.token }).then(res => {
 				console.log(res);
+        this.school_name = res.data.shcoolName
 				this.list = res.data.teamList;
 			});
 		},
