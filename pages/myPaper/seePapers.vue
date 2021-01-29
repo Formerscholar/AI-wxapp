@@ -232,7 +232,9 @@
         req.then(res => {
           console.log(res);
           this.is_more = res.data.is_more;
-          this.subject_name = res.data.subjectName
+          if (res.data.subjectName){
+            this.subject_name = res.data.subjectName
+          }
           if (res.code != 200) {
             /* uni.showToast({
             		title:res.msg,
