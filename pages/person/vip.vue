@@ -26,7 +26,7 @@
     </view>
     <view class="b-title">
       <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/vipIcon4.png" />
-      <text>查看和下载名校资源</text>
+      <text>下载名校资源</text>
       <text>拓展训练，方便区域错位比较</text>
     </view>
     <view class="b-title">
