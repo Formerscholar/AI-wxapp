@@ -103,7 +103,7 @@
           </view>
         </view>
         <view class="item itemSpec" @click="todetail(2)">
-          <div class="tip_box" v-if="is_tip_xb && student_info.examsSchoolNewCount != 0">+{{ student_info.examsSchoolNewCount }}</div>
+          <div class="tip_box" v-if="is_tip_xb && examsSchoolNewCount != 0">+{{ examsSchoolNewCount }}</div>
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mine_shijuan.png" mode=""></image>
           <view class="title">
             <text>校本试卷</text>
@@ -117,7 +117,7 @@
 
       <view class="flex">
         <view class="item itemSpec0" @click="todetail(9)">
-          <div class="tip_box" v-if="is_tip_mx && student_info.schoolResourcesNewCount != 0">+{{ student_info.schoolResourcesNewCount }}</div>
+          <div class="tip_box" v-if="is_tip_mx && schoolResourcesNewCount != 0">+{{ schoolResourcesNewCount }}</div>
           <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/mingxiao.png" mode=""></image>
           <view class="title">
             <text>名校资源</text>
@@ -191,7 +191,9 @@
         is_totul: false,
         invest: 0,
         renew: 0,
-        platform: ""
+        platform: "",
+        examsSchoolNewCount :"0",
+       schoolResourcesNewCount :"0",
       };
     },
     computed: mapState([
@@ -356,6 +358,8 @@
           console.log(res.data);
           _this.banner_list = res.data.banner;
           _this.student_info = res.data;
+          _this.examsSchoolNewCount = res.data.examsSchoolNewCount;
+          _this.schoolResourcesNewCount = res.data.schoolResourcesNewCount;
           _this.login(res.data.user)
           _this.is_vip = res.data.user.is_vip;
           _this.vip_time = res.data.user.vip_time;
