@@ -90,7 +90,6 @@
       }
     },
     onShow() {
-      this.semester = "上"
       this.open();
     },
     onLoad(options) {
