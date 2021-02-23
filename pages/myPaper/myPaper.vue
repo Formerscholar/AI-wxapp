@@ -14,15 +14,13 @@
       </view>
       <view class="l-item" v-for="(item, i) of student_list" :key="i" @click="chakan(item.based_id, item.get_base.title,item.get_base.is_based_dir)">
         <view class="num">
-          <image :src="subject_icon"></image>
+         <image :src="item.get_base.is_based_dir === 1 ?subject_icon : 'https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/folder.png'"></image>
           <view>
             <view class="paperTitle">{{ item.get_base.title }}</view>
             <view class="time">{{ item.get_base.add_time * 1000 | timer }}</view>
           </view>
         </view>
-        <image v-if="item.get_base.is_based_dir == 1" style="width: 12rpx;"  src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"
-          class="right"></image>
-        <image v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/folder.png" class="right"></image>
+        <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" style="width: 12rpx;"  class="right"></image>
       </view>
       <view v-if="is_more2 == 0" class="is_more">没有更多试卷了</view>
     </view>
@@ -30,15 +28,13 @@
     <view class="list" v-show="type == 3">
       <view class="l-item" v-for="(item, i) of xb_list" :key="i" @click="chakan(item.based_id, item.get_base.title,item.get_base.is_based_dir)">
         <view class="num">
-          <image :src="subject_icon"></image>
+          <image :src="item.get_base.is_based_dir === 1 ?subject_icon : 'https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/folder.png'"></image>
           <view>
             <view class="paperTitle">{{ item.get_base.title }}</view>
             <view class="time">{{ item.get_base.add_time * 1000 | timer }}</view>
           </view>
         </view>
-        <image v-if="item.get_base.is_based_dir == 1" style="width: 12rpx;"  src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png"
-          class="right"></image>
-        <image v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/folder.png" class="right"></image>
+        <image src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" style="width: 12rpx;"  class="right"></image>
       </view>
       <view v-if="is_more == 0" class="is_more">没有更多试卷了</view>
     </view>

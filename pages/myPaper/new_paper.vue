@@ -14,7 +14,7 @@
       </view>
       <view class="l-item" v-for="(item, i) of student_list" :key="i" @click="chakan(item.id, item.title,item.is_based_dir)">
         <view class="num">
-          <image :src="subject_icon"></image>
+          <image :src="item.is_based_dir === 1 ?subject_icon : 'https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/folder.png'"></image>
           <view>
             <view class="paperTitle">{{ item.title }}</view>
             <view class="time">{{ item.add_time * 1000 | timer }}</view>
@@ -23,7 +23,7 @@
         <view class="right">
           <image v-if="item.is_based_dir === 1" @click.stop="generated(item.id,item.title,0)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png"
             class="download"></image>
-          <image v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/folder.png" style="width: 26rpx; height: 26rpx;"></image>
+          <image v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" style="width: 10rpx; height: 25rpx;"></image>
         </view>
       </view>
       <view v-if="is_more2 == 0" class="is_more">没有更多试卷了</view>
@@ -32,7 +32,7 @@
     <view class="list" v-show="type == 3">
       <view class="l-item" v-for="(item, i) of xb_list" :key="i" @click="chakan(item.id, item.title,item.is_based_dir)">
         <view class="num">
-          <image :src="subject_icon"></image>
+          <image :src="item.is_based_dir === 1 ?subject_icon : 'https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/folder.png'"></image>
           <view>
             <view class="paperTitle">{{ item.title }}</view>
             <view class="time">{{ item.add_time*1000 | timer}}</view>
@@ -41,7 +41,7 @@
         <view class="right">
           <image v-if="item.is_based_dir === 1" @click.stop="generated(item.id,item.title,1)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png"
             class="download"></image>
-          <image v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/folder.png" style="width: 26rpx; height: 26rpx;"></image>
+          <image v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" style="width: 10rpx; height: 25rpx;"></image>
         </view>
         <!-- <image src='//aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png' class='right'></image> -->
       </view>
