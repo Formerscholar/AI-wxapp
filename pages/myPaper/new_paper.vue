@@ -23,7 +23,7 @@
         <view class="right">
           <image v-if="item.is_based_dir === 1" @click.stop="generated(item.id,item.title,0)" src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/download_de.png"
             class="download"></image>
-          <image v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/right.png" style="width: 10rpx; height: 25rpx;"></image>
+          <image v-else src="https://aictb.oss-cn-shanghai.aliyuncs.com/wx_xcx/icon/folder.png" style="width: 26rpx; height: 26rpx;"></image>
         </view>
       </view>
       <view v-if="is_more2 == 0" class="is_more">没有更多试卷了</view>
