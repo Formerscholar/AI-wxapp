@@ -3,6 +3,7 @@ import store from './store'
 import App from './App'
 
 //封装的请求
+//封装的请求
 import api from './common/api.js'
 
 Vue.config.productionTip = false
